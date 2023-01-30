@@ -3,8 +3,14 @@ import {
   TabFeedProvider,
   ContentItemProvider,
   FeatureFeedProvider,
+  ContentFeedProvider,
 } from '../providers';
-import { Feed, ContentSingle, FeatureFeedList } from '../components';
+import {
+  Feed,
+  ContentSingle,
+  FeatureFeedList,
+  ContentChannel,
+} from '../components';
 import { Box } from '../ui-kit';
 import { useSearchParams } from 'react-router-dom';
 
@@ -29,7 +35,12 @@ const FeatureFeed = (props) => {
       );
     }
     case 'ContentChannel': {
-      return <h1>Content Channel Component</h1>;
+      const options = {
+        variables: { id: `${type}:${randomId}` },
+      };
+      return (
+        <ContentFeedProvider Component={ContentChannel} options={options} />
+      );
     }
     case 'Url': {
       return <h1>External Url</h1>;
