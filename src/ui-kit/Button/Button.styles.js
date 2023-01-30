@@ -17,20 +17,18 @@ const buttonState = ({ theme, type, disabled, focused, hovered, pressed }) => {
   if (disabled) {
     return css`
       opacity: 0.5;
-      background-color: ${type === 'secondary'
+      background: ${type === 'secondary'
         ? 'transparent'
         : theme.colors.base.gray};
-      border-color: ${type === 'secondary'
-        ? theme.colors.base.gray
-        : 'transparent'};
+      border: ${type === 'secondary' ? theme.colors.base.gray : 'transparent'};
       cursor: not-allowed;
     `;
   }
 
   if (pressed) {
     return css`
-      background-color: ${theme.colors.base.gray};
-      border-color: ${type === 'secondary'
+      background: ${theme.colors.base.gray};
+      border: ${type === 'secondary'
         ? theme.colors.fill.system
         : 'transparent'};
       transform: scale(0.98);
@@ -39,7 +37,7 @@ const buttonState = ({ theme, type, disabled, focused, hovered, pressed }) => {
 
   if (focused || hovered) {
     return css`
-      border-color: transparent;
+      border: transparent;
     `;
   }
 
@@ -58,14 +56,14 @@ const buttonTypeProp = ({ theme, type, focused, hovered }) => {
   switch (type) {
     default:
       return css`
-        background-color: ${darken(
+        background: ${darken(
           theme.colors.text.action,
           focused || hovered ? 0 : 0.16
         )};
       `;
     case 'primary':
       return css`
-        background-color: ${darken(
+        background: ${darken(
           theme.colors.base.primary,
           focused || hovered ? 0 : 0.16
         )};
@@ -74,7 +72,7 @@ const buttonTypeProp = ({ theme, type, focused, hovered }) => {
     case 'secondary':
       return css`
         border-width: 2px;
-        border-color: ${darken(
+        border: ${darken(
           theme.colors.base.secondary,
           focused || hovered ? 0 : 0.16
         )};
@@ -82,6 +80,7 @@ const buttonTypeProp = ({ theme, type, focused, hovered }) => {
     case 'link':
       return css`
         border-width: 2px;
+        background: none;
       `;
   }
 };
@@ -107,15 +106,15 @@ const buttonSizeProp = ({ size }) => {
 const activeLink = ({ focused, hovered, pressed, type }) => {
   if (pressed && type === 'link') {
     return css`
-      background-color: none;
-      border-color: transparent;
+      background: none;
+      border: transparent;
     `;
   }
 
   if ((focused || hovered) && type === 'link') {
     return css`
-      background-color: none;
-      border-color: transparent;
+      background: none;
+      border: transparent;
     `;
   }
   return null;
@@ -135,8 +134,9 @@ const Button = withTheme(styled.button`
   align-items: center;
   border-width: 2px;
   text-align: center;
-  border-color: transparent;
+  border: transparent;
   border-radius: ${themeGet('radii.base')};
+  cursor: pointer;
   ${buttonTypeProp}
   ${webTransition}
   ${buttonState}
