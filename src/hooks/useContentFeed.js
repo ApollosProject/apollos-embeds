@@ -1,8 +1,8 @@
 import { gql, useQuery } from '@apollo/client';
 
 export const GET_CONTENT_FEED = gql`
-  query getContentFeed($itemId: ID!, $after: String, $first: Int) {
-    node(id: $itemId) {
+  query getContentFeed($id: ID!, $after: String, $first: Int) {
+    node(id: $id) {
       ... on ContentChannel {
         id
         childContentItemsConnection(after: $after, first: $first) {
