@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes } from '../../../ui-kit';
+import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
 
 function HorizontalCardListFeature(props = {}) {
   const navigate = useNavigate();
@@ -14,9 +14,29 @@ function HorizontalCardListFeature(props = {}) {
     });
   };
 
+  const handlePrimaryActionPress = (action) => {
+    navigate({
+      pathname: '/',
+      search: `?id=${getURLFromType(
+        props?.feature?.primaryAction.relatedNode
+      )}`,
+    });
+  };
+
   return (
     <Box pb="l" {...props}>
-      <H3 mb="xs">{props.feature.title}</H3>
+      <Box display="flex">
+        <H3 flex="1" mb="xs">
+          {props.feature.title}
+        </H3>
+        {props?.feature?.cards.length >= 5 && props?.feature?.primaryAction ? (
+          <Button
+            title="View All >"
+            type="link"
+            onClick={handlePrimaryActionPress}
+          />
+        ) : null}
+      </Box>
       <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
         {props.feature?.cards?.map((item, index) => (
           <ContentCard
