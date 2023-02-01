@@ -5,7 +5,7 @@ import { useContentFeed } from '../hooks';
 
 function ContentFeedProvider({ Component, options, ...props }) {
   const { loading, error, content, fetchMore } = useContentFeed(options);
-  console.log('ContentFeedPr', options);
+
   return (
     <Component
       data={content}

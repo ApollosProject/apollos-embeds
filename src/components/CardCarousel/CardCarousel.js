@@ -33,14 +33,14 @@ function CardCarousel(props = {}) {
   const innerGap = utils.stripUnit(
     utils.px(theme.space[props.innerGap || 'xs'])
   );
-  console.log('visibleCount', visibleCount);
+
   // Carousel state
   const [page, setPage] = useState(0);
   const dataLength =
     primaryAction?.action === 'OPEN_CHANNEL' ? data.length + 1 : data.length;
-  console.log('dataLength', dataLength);
+
   const totalPages = Math.ceil(dataLength / visibleCount);
-  console.log('totalPages', totalPages);
+
   const lastPage = totalPages - 1; // Zero index offset
 
   // ℹ️ Since we need to do detailed layout measuring math, important
@@ -66,7 +66,7 @@ function CardCarousel(props = {}) {
       windowWidth -
       innerGap * visibleCount - // Gap between items
       (outerGap * 2 - innerGap); // Gap around all X visible items
-    console.log('targetWidth', targetWidth);
+
     setPageWidth(windowWidth - outerGap * 2 + innerGap);
     setItemWidth(targetWidth / visibleCount);
   }, [windowWidth, innerGap, outerGap, totalPages, visibleCount]);
@@ -92,7 +92,6 @@ function CardCarousel(props = {}) {
   };
 
   const handleNextPage = () => {
-    console.log('NEXT');
     setPage(Math.min(page + 1, lastPage));
   };
 
