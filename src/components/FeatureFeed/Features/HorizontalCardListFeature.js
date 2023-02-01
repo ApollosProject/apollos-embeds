@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+import CardCarousel from '../../CardCarousel';
+import { useBreakpoint } from '../../../providers/BreakpointProvider';
 
 function HorizontalCardListFeature(props = {}) {
   const navigate = useNavigate();
+  const { responsive } = useBreakpoint();
 
   const handleActionPress = (item) => {
     navigate({
@@ -37,17 +40,28 @@ function HorizontalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
-      <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
-        {props.feature?.cards?.map((item, index) => (
+      <CardCarousel
+        data={props.feature.cards}
+        primaryAction={props.feature.primaryAction}
+        featureTitle={props.feature.title}
+        outerGap={responsive({
+          _: 'base',
+          lg: 'xl',
+        })}
+        visibleCount={responsive({
+          _: 1,
+          md: 2,
+          lg: 4,
+          xl: 5,
+        })}
+        renderItem={({ item }) => (
           <ContentCard
-            key={item.title}
             image={item.coverImage}
             title={item.title}
-            summary={item.summary}
-            onClick={() => handleActionPress(item)}
+            // onClick={() => handleActionPress(item)}
           />
-        ))}
-      </Box>
+        )}
+      />
     </Box>
   );
 }
