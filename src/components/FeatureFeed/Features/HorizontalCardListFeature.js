@@ -3,12 +3,29 @@ import { useNavigate } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
-import CardCarousel from '../../CardCarousel';
-import { useBreakpoint } from '../../../providers/BreakpointProvider';
+
+import Carousel from 'react-multi-carousel';
+
+const responsive = {
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3,
+    partialVisibilityGutter: 30,
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2,
+    partialVisibilityGutter: 30,
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1,
+    partialVisibilityGutter: 30,
+  },
+};
 
 function HorizontalCardListFeature(props = {}) {
   const navigate = useNavigate();
-  const { responsive } = useBreakpoint();
 
   const handleActionPress = (item) => {
     navigate({
@@ -40,28 +57,26 @@ function HorizontalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
-      <CardCarousel
-        data={props.feature.cards}
-        primaryAction={props.feature.primaryAction}
-        featureTitle={props.feature.title}
-        outerGap={responsive({
-          _: 'base',
-          lg: 'xl',
-        })}
-        visibleCount={responsive({
-          _: 1,
-          md: 2,
-          lg: 4,
-          xl: 5,
-        })}
-        renderItem={({ item }) => (
+      <Carousel
+        swipeable={true}
+        draggable={false}
+        showDots={false}
+        responsive={responsive}
+        ssr={true} // means to render carousel on server-side.
+        infinite={true}
+        autoPlaySpeed={1000}
+        keyBoardControl={true}
+      >
+        {props.feature?.cards?.map((item, index) => (
           <ContentCard
+            key={item.title}
             image={item.coverImage}
             title={item.title}
-            // onClick={() => handleActionPress(item)}
+            summary={item.summary}
+            onClick={() => handleActionPress(item)}
           />
-        )}
-      />
+        ))}
+      </Carousel>
     </Box>
   );
 }

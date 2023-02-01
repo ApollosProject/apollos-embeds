@@ -11,7 +11,12 @@ import {
 
 function ContentCard(props = {}) {
   return (
-    <Box flex={1} cursor={props.onClick ? 'pointer' : 'default'} {...props}>
+    <Box
+      flex={1}
+      m={'0 10px'}
+      cursor={props.onClick ? 'pointer' : 'default'}
+      {...props}
+    >
       {/* Content */}
       <Box
         position="relative"
