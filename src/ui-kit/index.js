@@ -11,6 +11,8 @@ import Button from './Button';
 import ContentCard from './ContentCard';
 import Loader from './Loader';
 import Longform from './Longform';
+import Layout from './Layout';
+import Icons from './Icons';
 
 import {
   BodyText,
@@ -36,6 +38,8 @@ export {
   ContentCard,
   Loader,
   Longform,
+  Layout,
+  Icons,
   // Typography
   BodyText,
   H1,
