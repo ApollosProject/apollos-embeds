@@ -1,11 +1,8 @@
 import React from 'react';
+import { AuthManager } from '../components';
 
 const Auth = (props) => {
-  return (
-    <div>
-      <p>This is a Auth component/widget for {props.church} church</p>
-    </div>
-  );
+  return <AuthManager />;
 };
 
 Auth.propTypes = {};
