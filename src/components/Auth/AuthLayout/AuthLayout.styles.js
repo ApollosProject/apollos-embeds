@@ -7,6 +7,7 @@ import { themeGet } from '@styled-system/theme-get';
 import { system, TypeStyles, utils } from '../../../ui-kit';
 
 const Container = withTheme(styled.div`
+  display: flex;
   flex: 1;
   flex-direction: row;
   justify-content: flex-end;
@@ -43,6 +44,8 @@ const SubHeading = withTheme(styled.h3`
 
 // :: Main Instructions Panel
 const InstructionsPanel = withTheme(styled.div`
+  display: flex;
+  justify-content: center;
   background-color: ${themeGet('colors.fill.screen')};
   padding-top: ${themeGet('space.xxl')};
   padding-left: ${themeGet('space.xl')};
@@ -61,6 +64,7 @@ const Steps = withTheme(styled.div`
 `);
 
 const Step = withTheme(styled.div`
+  display: flex;
   flex-direction: row;
   margin-bottom: ${themeGet('space.l')};
 `);
@@ -77,12 +81,14 @@ const StepText = withTheme(styled.h3`
 `);
 
 const MobileAppContainer = withTheme(styled.div`
+  display: flex;
   margin-top: ${themeGet('space.base')};
   flex-direction: row;
   align-items: center;
 `);
 
 const MobileAppLogoContainer = withTheme(styled.div`
+  display: flex;
   align-self: flex-start;
   box-shadow: ${themeGet('shadows.medium')};
 `);
@@ -103,6 +109,7 @@ const codeBoxErrorState = ({ error, theme }) => {
 };
 
 const CodeBox = withTheme(styled.div`
+  display: flex;
   align-self: flex-start;
   border-color: ${themeGet('colors.base.secondary')};
   border-radius: ${themeGet('radii.base')};

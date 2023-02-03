@@ -11,6 +11,13 @@ const Styled = withTheme(styled.div`
   max-width: '100vw';
   height: 'auto';
   min-height: '100vh';
+  display: flex;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 9999;
   ${system}
 `);
 
