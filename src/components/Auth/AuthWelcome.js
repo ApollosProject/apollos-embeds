@@ -14,7 +14,7 @@ const AuthWelcome = () => {
 
   return (
     <AuthLayout>
-      <Box flexDirection="row" mt="xxl" pt="xl" justifyContent="center">
+      <Box mt="xxl">
         <Button
           mr="l"
           title={'Login'}
