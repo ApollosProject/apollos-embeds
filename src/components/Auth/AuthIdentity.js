@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import authSteps from './authSteps';
 import { useForm, useRequestLogin, useRequestRegister } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
-import { Box, Button } from '../../ui-kit';
+import { Box, Button, Card, H2, H5, Input } from '../../ui-kit';
 import { validateEmail, validatePhoneNumber } from '../../utils';
 
 import AuthLayout from './AuthLayout';
@@ -86,32 +86,38 @@ const AuthIdentity = () => {
   const isLoading = status === 'LOADING';
 
   return (
-    <AuthLayout
-      heading={state.type === 'login' ? 'Login' : 'Sign up'}
-      subHeading={`Enter your email or phone number to ${
-        state.type === 'login' ? 'log in' : 'sign up'
-      }. We will send you a code to verify your identity.`}
+    <Box
+      position="fixed"
+      top="0"
+      bottom="0"
+      left="0"
+      right="0"
+      background="red"
+      zIndex={9999}
+      justifyContent="center"
+      display="flex"
+      alignItems="center"
+      backgroundColor="neutral.gray6"
     >
-      <Box mt="xxl">
-        <input
-          id="identity"
-          placeholder="Enter your email or phone number..."
-          maxLength={128}
-          value={values.identity || ''}
-          error={error?.identity}
-          onChange={(text) => setFieldValue('identity', text)}
-          mb="base"
-          mt="l"
+      <Card p="l" display="flex" flexDirection="column" width="440px">
+        <H2>We’re glad you’re here.</H2>
+        <H5>
+          If you’ve attended with us before, we’ll sync your history and help
+          personalize what’s next.
+        </H5>
+        <Input
+          id="email"
+          placeholder="Phone or Email"
+          required
+          autoFocus={true}
         />
-        <Box alignSelf="center">
-          <Button
-            title={isLoading ? 'Submitting...' : 'Submit'}
-            disabled={!values.identity}
-            onClick={handleSubmit}
-          />
-        </Box>
-      </Box>
-    </AuthLayout>
+        <Button
+          title={isLoading ? 'Submitting...' : 'Submit'}
+          onClick={handleSubmit}
+          mt="base"
+        />
+      </Card>
+    </Box>
   );
 };
 
