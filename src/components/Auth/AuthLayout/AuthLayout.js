@@ -25,9 +25,9 @@ function AuthLayout(props = {}) {
           <Icons.Dot
             linearGradient
             opacity={0.05}
-            size={1250}
+            size={1050}
             position="absolute"
-            bottom={-410}
+            top={-410}
             left={-430}
           />
           <Icons.Dot
@@ -35,16 +35,16 @@ function AuthLayout(props = {}) {
             opacity={0.9}
             size={200}
             position="absolute"
-            bottom={290}
-            left={680}
+            top={290}
+            left={480}
           />
           <Icons.Dot
             fill="base.secondary"
             opacity={0.5}
             size={100}
             position="absolute"
-            bottom={230}
-            left={770}
+            top={430}
+            left={600}
           />
           <LogoSlot>
             <Logo size={96} fill="base.secondary" alignSelf="center" />
