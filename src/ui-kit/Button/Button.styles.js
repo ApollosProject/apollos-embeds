@@ -48,8 +48,6 @@ const webTransition = ({ theme }) => {
   return css`
     transition: all ${theme.timing.base} ease-out;
   `;
-
-  return null;
 };
 
 const buttonTypeProp = ({ theme, type, focused, hovered }) => {
@@ -129,9 +127,6 @@ const buttonTypeLink = ({ type }) => {
 };
 
 const Button = withTheme(styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   border-width: 2px;
   text-align: center;
   border: transparent;
