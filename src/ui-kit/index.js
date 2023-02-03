@@ -13,6 +13,8 @@ import Loader from './Loader';
 import Longform from './Longform';
 import Layout from './Layout';
 import Icons from './Icons';
+import Input from './Input';
+import Card from './Card';
 
 import {
   BodyText,
@@ -40,6 +42,8 @@ export {
   Longform,
   Layout,
   Icons,
+  Input,
+  Card,
   // Typography
   BodyText,
   H1,
