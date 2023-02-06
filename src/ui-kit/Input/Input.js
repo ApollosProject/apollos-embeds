@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Box, systemPropTypes, SystemText } from '..';
 import Styled from './Input.styles';
 
-const Input = ({ placeholder }, ...props) => {
+const Input = ({ placeholder, ...props }) => {
   const textInputRef = useRef();
   const [hasValue, setHasValue] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -17,7 +17,7 @@ const Input = ({ placeholder }, ...props) => {
       setHasValue(true);
     }
 
-    props.onChange(text);
+    props.handleOnChange(text.target.value);
   };
 
   const handleFocus = () => {
@@ -33,16 +33,21 @@ const Input = ({ placeholder }, ...props) => {
     focused,
     hasValue,
   };
-
+  console.log(props);
+  if (props.error) {
+    textInputRef.current.value = '';
+  }
   return (
     <Box {...props}>
       <Box position="relative" display="flex">
         <Styled.Input
+          ref={textInputRef}
+          maxLength={props.maxLength}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChangeText}
-          ref={textInputRef}
           flex="1"
+          {...props}
         />
 
         <Styled.Label {...interactionStateProps}>{placeholder}</Styled.Label>
@@ -59,7 +64,12 @@ const Input = ({ placeholder }, ...props) => {
 Input.propTypes = {
   error: PropTypes.string,
   placeholder: PropTypes.string.isRequired,
-  onChange: PropTypes.func,
+  handleOnChange: PropTypes.func,
+  id: PropTypes.string,
+  value: PropTypes.string,
+  required: PropTypes.bool,
+  autoFocus: PropTypes.bool,
+  maxLength: PropTypes.number,
   ...systemPropTypes,
 };
 
