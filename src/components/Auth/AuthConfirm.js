@@ -4,9 +4,9 @@ import { useValidateLogin } from '../../hooks';
 // import amplitude from '../../libs/amplitude';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button } from '../../ui-kit';
+import { Box, Button, Input } from '../../ui-kit';
 import AuthLayout from './AuthLayout';
-import AuthOTP from './AuthOTP';
+
 import authSteps from './authSteps';
 
 const AuthConfirm = () => {
@@ -19,7 +19,15 @@ const AuthConfirm = () => {
   const [isPinReady, setIsPinReady] = useState(false);
   const codeLength = 6;
 
-  const router = useNavigate();
+  useEffect(() => {
+    setIsPinReady(otpCode.length === codeLength);
+
+    return () => {
+      setIsPinReady(false);
+    };
+  }, [otpCode]);
+
+  const navigate = useNavigate();
   const [validateLogin] = useValidateLogin();
 
   const onError = () => {
@@ -31,8 +39,9 @@ const AuthConfirm = () => {
 
   const onSuccess = ({ token, user }) => {
     setStatus('SUCCESS');
-
+    console.log('success login');
     if (state.userExists) {
+      console.log('success userExists');
       dispatch(updateAuth({ token }));
       // amplitude.trackEvent({
       //   eventName: 'UserLogin',
@@ -45,7 +54,10 @@ const AuthConfirm = () => {
       //     campusName: user?.profile?.campus?.name || null,
       //   },
       // });
-      router.push('/welcome');
+      navigate({
+        pathname: '/',
+        search: `?login=true`,
+      });
     } else {
       dispatch(
         updateAuth({ token, step: authSteps.Details, userExists: true })
@@ -83,13 +95,15 @@ const AuthConfirm = () => {
     >
       <Box mt="xxl">
         <Box mt="xl" mb="base">
-          <AuthOTP
-            code={otpCode}
-            codeLength={codeLength}
+          <Input
+            id="passcode"
+            placeholder="6-Digit Code"
+            value={otpCode || ''}
+            handleOnChange={(text) => setOTPCode(text)}
+            required
+            maxLength={codeLength}
+            autoFocus={true}
             error={error?.passcode}
-            isPinReady={isPinReady}
-            setCode={setOTPCode}
-            setIsPinReady={setIsPinReady}
           />
         </Box>
         <Box alignSelf="center">

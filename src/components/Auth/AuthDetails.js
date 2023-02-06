@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 
 import { useForm, useUpdateProfileFields } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
-import { Box, Button } from '../../ui-kit';
+import { Box, Button, Input } from '../../ui-kit';
+
 import { useNavigate } from 'react-router-dom';
 
 import AuthLayout from './AuthLayout';
@@ -56,21 +57,23 @@ function AuthDetails() {
       <Box mt="xxl">
         <Box mt="l" textAlign="left">
           <Box mb="base">
-            <input
+            <Input
               id="firstName"
               placeholder="First Name"
-              onChange={(text) => setFieldValue('firstName', text)}
+              handleOnChange={(text) => setFieldValue('firstName', text)}
               required
-              error={error?.firstName}
+              autoFocus={true}
+              error={error?.identity}
             />
           </Box>
           <Box mb="l">
-            <input
+            <Input
               id="lastName"
               placeholder="Last Name"
-              onChange={(text) => setFieldValue('lastName', text)}
+              handleOnChange={(text) => setFieldValue('lastName', text)}
               required
-              error={error?.lastName}
+              autoFocus={true}
+              error={error?.identity}
             />
           </Box>
         </Box>

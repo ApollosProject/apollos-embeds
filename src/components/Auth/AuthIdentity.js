@@ -6,8 +6,6 @@ import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Card, H2, H5, Input } from '../../ui-kit';
 import { validateEmail, validatePhoneNumber } from '../../utils';
 
-import AuthLayout from './AuthLayout';
-
 const AuthIdentity = () => {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
@@ -67,7 +65,7 @@ const AuthIdentity = () => {
     const validEmail = validateEmail(identity);
     const validPhoneNumber = validatePhoneNumber(identity);
     const validIdentity = validEmail || validPhoneNumber;
-
+    console.log('asdfas', values);
     if (validIdentity) {
       setStatus('LOADING');
       requestLogin({
@@ -106,10 +104,13 @@ const AuthIdentity = () => {
           personalize what’s next.
         </H5>
         <Input
-          id="email"
+          id="identity"
           placeholder="Phone or Email"
+          value={values.identity || ''}
+          handleOnChange={(text) => setFieldValue('identity', text)}
           required
           autoFocus={true}
+          error={error?.identity}
         />
         <Button
           title={isLoading ? 'Submitting...' : 'Submit'}
