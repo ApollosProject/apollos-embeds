@@ -19,7 +19,7 @@ const onAuthError = async () => {
 
 const cache = initCache();
 const errorLink = buildErrorLink(onAuthError);
-const link = ApolloLink.from([apollosApiLink, errorLink, httpLink]);
+const link = ApolloLink.from([apollosApiLink, errorLink, authLink, httpLink]);
 
 const client = new ApolloClient({
   link,
