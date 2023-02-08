@@ -25,15 +25,36 @@ const AuthIdentity = () => {
   };
 
   const [requestRegister] = useRequestRegister();
-  const [requestLogin] = useRequestLogin({
-    fetchPolicy: 'network-only',
-    onCompleted: async (data) => {
-      const { identity } = values;
-      const userExists = data?.requestLogin.result !== 'NO_USER';
+  const [requestLogin] = useRequestLogin();
 
-      const validEmail = validateEmail(identity);
+  const { values, handleSubmit, setFieldValue } = useForm(() => {
+    const { identity } = values;
+    const validEmail = validateEmail(identity);
+    const validPhoneNumber = validatePhoneNumber(identity);
+    const validIdentity = validEmail || validPhoneNumber;
 
-      if (!userExists) {
+    if (validIdentity) {
+      setStatus('LOADING');
+      if (state.type === 'login') {
+        try {
+          requestLogin({
+            variables: {
+              identity: validEmail
+                ? { email: values.identity }
+                : { phone: values.identity },
+            },
+          });
+          onSuccess({
+            identity: validEmail ? { email: identity } : { phone: identity },
+            userExists: true,
+            nextStep: authSteps.Confirm,
+            type: validEmail ? 'email' : 'phone',
+          });
+        } catch (e) {
+          console.log(JSON.stringify(e));
+        }
+      }
+      if (state.type === 'signup') {
         try {
           requestRegister({
             variables: {
@@ -49,32 +70,7 @@ const AuthIdentity = () => {
         } catch (e) {
           console.log(JSON.stringify(e));
         }
-      } else {
-        onSuccess({
-          identity: validEmail ? { email: identity } : { phone: identity },
-          userExists: true,
-          nextStep: authSteps.Confirm,
-          type: validEmail ? 'email' : 'phone',
-        });
       }
-    },
-  });
-
-  const { values, handleSubmit, setFieldValue } = useForm(() => {
-    const { identity } = values;
-    const validEmail = validateEmail(identity);
-    const validPhoneNumber = validatePhoneNumber(identity);
-    const validIdentity = validEmail || validPhoneNumber;
-    console.log('asdfas', values);
-    if (validIdentity) {
-      setStatus('LOADING');
-      requestLogin({
-        variables: {
-          identity: validEmail
-            ? { email: values.identity }
-            : { phone: values.identity },
-        },
-      });
     } else {
       setStatus('ERROR');
       setError({ identity: 'Please enter a valid email or phone number.' });
@@ -90,7 +86,7 @@ const AuthIdentity = () => {
       bottom="0"
       left="0"
       right="0"
-      background="red"
+      overflow="scroll"
       zIndex={9999}
       justifyContent="center"
       display="flex"
