@@ -29,6 +29,7 @@ const initialState = {
   userExists: false,
   onSuccess: () => false,
   userProfile: [],
+  sharedProfiles: [],
   anonymousId: null,
 };
 
