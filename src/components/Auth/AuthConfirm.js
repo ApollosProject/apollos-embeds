@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { useValidateLogin } from '../../hooks';
+import { useValidateLogin, useValidateRegister } from '../../hooks';
 // import amplitude from '../../libs/amplitude';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { useNavigate } from 'react-router-dom';
@@ -29,6 +29,7 @@ const AuthConfirm = () => {
 
   const navigate = useNavigate();
   const [validateLogin] = useValidateLogin();
+  const [validateRegister] = useValidateRegister();
 
   const onError = () => {
     setStatus('ERROR');
@@ -37,12 +38,10 @@ const AuthConfirm = () => {
     });
   };
 
-  const onSuccess = ({ token, user }) => {
+  const onSuccess = ({ token, user, sharedProfiles }) => {
     setStatus('SUCCESS');
-    console.log('success login');
     if (state.userExists) {
-      console.log('success userExists');
-      dispatch(updateAuth({ token }));
+      dispatch(updateAuth({ token, step: authSteps.Success }));
       // amplitude.trackEvent({
       //   eventName: 'UserLogin',
       //   properties: {
@@ -54,31 +53,62 @@ const AuthConfirm = () => {
       //     campusName: user?.profile?.campus?.name || null,
       //   },
       // });
-      navigate({
-        pathname: '/',
-        search: `?login=true`,
-      });
     } else {
-      dispatch(
-        updateAuth({ token, step: authSteps.Details, userExists: true })
-      );
+      if (sharedProfiles.length > 1) {
+        dispatch(
+          updateAuth({
+            token,
+            step: authSteps.Merge,
+            userExists: true,
+            sharedProfiles: sharedProfiles,
+          })
+        );
+      } else {
+        dispatch(
+          updateAuth({
+            token,
+            step: authSteps.Details,
+            userExists: true,
+          })
+        );
+      }
     }
   };
 
   const handleSignInSubmit = async () => {
     setStatus('LOADING');
-
     try {
-      await validateLogin({
-        variables: { identity: state.identity, otp: otpCode },
-        update: (
-          cache,
-          { data: { validateLogin: { accessToken, person } = {} } = {} }
-        ) => {
-          onSuccess({ token: accessToken, user: person });
-        },
-        onError,
-      });
+      if (state.userExists) {
+        await validateLogin({
+          variables: { identity: state.identity, otp: otpCode },
+          update: (
+            cache,
+            { data: { validateLogin: { accessToken, person } = {} } = {} }
+          ) => {
+            onSuccess({ token: accessToken, user: person });
+          },
+          onError,
+        });
+      } else {
+        await validateRegister({
+          variables: { identity: state.identity, otp: otpCode },
+          update: (
+            cache,
+            {
+              data: {
+                validateRegister: { accessToken, person, sharedProfiles } = {},
+              } = {},
+            }
+          ) => {
+            onSuccess({
+              token: accessToken,
+              user: person,
+              sharedProfiles,
+            });
+          },
+          onError,
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -109,7 +139,7 @@ const AuthConfirm = () => {
         <Box alignSelf="center">
           <Button
             title={isLoading ? 'Signing in...' : 'Sign in'}
-            disabled={!isPinReady}
+            // disabled={!isPinReady}
             onClick={handleSignInSubmit}
           />
         </Box>
