@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useForm, useUpdateProfileFields } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Input } from '../../ui-kit';
+import authSteps from '../Auth/authSteps';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -39,7 +40,7 @@ function AuthDetails() {
         })
       );
       await updateProfileFields({ variables: { input: userProfile } });
-      router.push('/welcome');
+      dispatch(updateAuth({ step: authSteps.Success }));
     } catch (e) {
       onError(e);
       console.log(JSON.stringify(e));
