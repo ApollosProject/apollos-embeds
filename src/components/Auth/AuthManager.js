@@ -4,6 +4,7 @@ import { useAuth } from '../../providers/AuthProvider';
 import { Box } from '../../ui-kit';
 import Confirm from './AuthConfirm';
 import Details from './AuthDetails';
+import Merge from './AuthMerge';
 import Identity from './AuthIdentity';
 import authSteps from './authSteps';
 import Welcome from './AuthWelcome';
@@ -21,6 +22,9 @@ function AuthManager(props = {}) {
       }
       case authSteps.Details: {
         return <Details />;
+      }
+      case authSteps.Merge: {
+        return <Merge />;
       }
       case authSteps.Confirm: {
         return <Confirm />;
