@@ -1,21 +1,23 @@
-import useTabFeed from './useTabFeed';
+import useContentFeed from './useContentFeed';
 import useContentItem from './useContentItem';
 import useFeatureFeed from './useFeatureFeed';
-import useContentFeed from './useContentFeed';
-import useUpdateProfileFields from './useUpdateProfileFields';
 import useForm from './useForm';
-import useValidateLogin from './useValidateLogin';
-import useRequestRegister from './useRequestRegister';
 import useRequestLogin from './useRequestLogin';
+import useRequestRegister from './useRequestRegister';
+import useTabFeed from './useTabFeed';
+import useUpdateProfileFields from './useUpdateProfileFields';
+import useValidateLogin from './useValidateLogin';
+import useValidateRegister from './useValidateRegister';
 
 export {
-  useTabFeed,
+  useContentFeed,
   useContentItem,
   useFeatureFeed,
-  useContentFeed,
-  useUpdateProfileFields,
   useForm,
-  useValidateLogin,
-  useRequestRegister,
   useRequestLogin,
+  useRequestRegister,
+  useTabFeed,
+  useUpdateProfileFields,
+  useValidateLogin,
+  useValidateRegister,
 };
