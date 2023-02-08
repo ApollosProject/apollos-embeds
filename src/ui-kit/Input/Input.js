@@ -33,7 +33,7 @@ const Input = ({ placeholder, ...props }) => {
     focused,
     hasValue,
   };
-  console.log(props);
+
   if (props.error) {
     textInputRef.current.value = '';
   }
