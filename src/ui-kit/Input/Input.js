@@ -43,6 +43,7 @@ const Input = ({ placeholder, ...props }) => {
         <Styled.Input
           ref={textInputRef}
           maxLength={props.maxLength}
+          type={props.type}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChangeText}
@@ -63,13 +64,14 @@ const Input = ({ placeholder, ...props }) => {
 
 Input.propTypes = {
   error: PropTypes.string,
-  placeholder: PropTypes.string.isRequired,
+  placeholder: PropTypes.string,
   handleOnChange: PropTypes.func,
   id: PropTypes.string,
   value: PropTypes.string,
   required: PropTypes.bool,
   autoFocus: PropTypes.bool,
   maxLength: PropTypes.number,
+  type: PropTypes.string,
   ...systemPropTypes,
 };
 
