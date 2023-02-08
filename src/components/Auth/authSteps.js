@@ -3,7 +3,8 @@ const authSteps = {
   Identity: 1,
   Details: 2,
   Confirm: 3,
-  Success: 4,
+  Merge: 4,
+  Success: 5,
 };
 
 export default authSteps;
