@@ -8,18 +8,12 @@ const Auth = (props) => {
   const [{ step }] = useAuth();
 
   if (
-    process.env.REACT_APP_ENABLE_AUTH === 'true' &&
-    !window.localStorage.getItem(AUTH_TOKEN_KEY)
-  ) {
-    return <AuthManager />;
-  }
-  if (
-    step === authSteps.Success &&
-    window.localStorage.getItem(AUTH_TOKEN_KEY)
+    process.env.REACT_APP_ENABLE_AUTH === 'false' ||
+    (step === authSteps.Success && window.localStorage.getItem(AUTH_TOKEN_KEY))
   ) {
     return null;
   }
-  return null;
+  return <AuthManager />;
 };
 
 Auth.propTypes = {};
