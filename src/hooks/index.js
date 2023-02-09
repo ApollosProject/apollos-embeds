@@ -1,3 +1,4 @@
+import useCompleteRegister from './useCompleteRegister';
 import useContentFeed from './useContentFeed';
 import useContentItem from './useContentItem';
 import useFeatureFeed from './useFeatureFeed';
@@ -10,6 +11,7 @@ import useValidateLogin from './useValidateLogin';
 import useValidateRegister from './useValidateRegister';
 
 export {
+  useCompleteRegister,
   useContentFeed,
   useContentItem,
   useFeatureFeed,

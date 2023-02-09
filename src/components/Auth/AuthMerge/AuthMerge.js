@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 
 import { useForm } from '../../../hooks';
 import { update as updateAuth, useAuth } from '../../../providers/AuthProvider';
@@ -13,50 +13,38 @@ import {
   H6,
   SmallBodyText,
 } from '../../../ui-kit';
+import authSteps from '../authSteps';
+import { useCompleteRegister } from '../../../hooks';
 
 import { Heading, SubHeading } from './AuthMerge.styles';
 
 function AuthMerge() {
-  // const router = useNavigate();
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [state, dispatch] = useAuth();
-  const [value, setValue] = useState();
+  const [mergeProfileId, setMergeProfileId] = useState();
 
-  // const [updateProfileFields] = useUpdateProfileFields();
+  const [completeRegister] = useCompleteRegister();
 
-  // const onError = (e) => {
-  //   setStatus('ERROR');
-  //   setError(e);
-  // };
-  const onChange = useCallback((e) => setValue(e.target.value), []);
+  const onError = (e) => {
+    setStatus('ERROR');
+    setError(e);
+  };
+  const onChange = useCallback((e) => setMergeProfileId(e.target.value), []);
 
   const { values, handleSubmit, setFieldValue } = useForm(async () => {
     setStatus('LOADING');
 
     try {
-      // dispatch(
-      //   updateAuth({
-      //     userProfile,
-      //   })
-      // );
-      // await updateProfileFields({ variables: { input: userProfile } });
-      // router.push('/welcome');
+      await completeRegister({ variables: { mergeProfileId } });
+      dispatch(updateAuth({ step: authSteps.Details }));
     } catch (e) {
+      onError();
       console.log(JSON.stringify(e));
     }
   });
 
   const isLoading = status === 'LOADING';
-
-  // const sharedProfiles = [
-  //   {
-  //     firstName: 'Jordan',
-  //     lastName: 'Wade',
-  //     birthdate: '12 years old',
-  //     photo: { uri: 'https://placebeard.it/250/250' },
-  //   },
-  // ];
 
   return (
     <Box
@@ -87,7 +75,7 @@ function AuthMerge() {
               mr="xxs"
               key={item.id}
               value={item.id}
-              checked={item.id === value}
+              checked={item.id === mergeProfileId}
               onChange={onChange}
             />
             <Avatar src="http://placebeard.it/250/250" alt="thing" mr="s" />
@@ -104,7 +92,7 @@ function AuthMerge() {
         ))}
         <Button
           title={isLoading ? 'Submitting...' : 'Next'}
-          disabled={!value}
+          disabled={!mergeProfileId}
           onClick={handleSubmit}
           mt="base"
         />
