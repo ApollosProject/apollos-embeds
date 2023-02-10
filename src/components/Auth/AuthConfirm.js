@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useValidateLogin, useValidateRegister } from '../../hooks';
 // import amplitude from '../../libs/amplitude';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
-import { useNavigate } from 'react-router-dom';
+
 import { Box, Button, Input } from '../../ui-kit';
 import AuthLayout from './AuthLayout';
 
@@ -27,7 +27,6 @@ const AuthConfirm = () => {
     };
   }, [otpCode]);
 
-  const navigate = useNavigate();
   const [validateLogin] = useValidateLogin();
   const [validateRegister] = useValidateRegister();
 
@@ -40,8 +39,19 @@ const AuthConfirm = () => {
 
   const onSuccess = ({ token, user, sharedProfiles }) => {
     setStatus('SUCCESS');
+    const needsOnboarding =
+      user?.firstName === null ||
+      user?.lastName === null ||
+      user?.gender === null ||
+      user?.birthDate === null;
+    console.log('user', user);
+    console.log('state', state);
     if (state.userExists) {
-      dispatch(updateAuth({ token, step: authSteps.Success }));
+      if (needsOnboarding) {
+        dispatch(updateAuth({ token, step: authSteps.Details }));
+      } else {
+        dispatch(updateAuth({ token, step: authSteps.Success }));
+      }
       // amplitude.trackEvent({
       //   eventName: 'UserLogin',
       //   properties: {
@@ -64,13 +74,20 @@ const AuthConfirm = () => {
           })
         );
       } else {
-        dispatch(
-          updateAuth({
-            token,
-            step: authSteps.Details,
-            userExists: true,
-          })
-        );
+        if (needsOnboarding) {
+          dispatch(
+            updateAuth({
+              token,
+              step: authSteps.Details,
+              userExists: true,
+              user,
+            })
+          );
+        } else {
+          dispatch(
+            updateAuth({ token, step: authSteps.Success, userExists: true })
+          );
+        }
       }
     }
   };
