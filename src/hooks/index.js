@@ -1,6 +1,8 @@
+import useAuthQuery from './useAuthQuery';
 import useCompleteRegister from './useCompleteRegister';
 import useContentFeed from './useContentFeed';
 import useContentItem from './useContentItem';
+import useCurrentUser from './useCurrentUser';
 import useFeatureFeed from './useFeatureFeed';
 import useForm from './useForm';
 import useRequestLogin from './useRequestLogin';
@@ -11,9 +13,11 @@ import useValidateLogin from './useValidateLogin';
 import useValidateRegister from './useValidateRegister';
 
 export {
+  useAuthQuery,
   useCompleteRegister,
   useContentFeed,
   useContentItem,
+  useCurrentUser,
   useFeatureFeed,
   useForm,
   useRequestLogin,
