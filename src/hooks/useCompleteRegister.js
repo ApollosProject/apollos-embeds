@@ -4,6 +4,10 @@ export const COMPLETE_REGISTER = gql`
   mutation completeRegistration($mergeProfileId: ID) {
     completeRegistration(mergeProfileId: $mergeProfileId) {
       id
+      birthDate
+      gender
+      firstName
+      lastName
     }
   }
 `;
