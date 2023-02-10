@@ -30,14 +30,47 @@ function AuthMerge() {
     setStatus('ERROR');
     setError(e);
   };
+
+  const onSuccess = ({ birthDate, gender, firstName, lastName }) => {
+    setStatus('SUCCESS');
+    const needsOnboarding =
+      firstName === null ||
+      lastName === null ||
+      gender === null ||
+      birthDate === null;
+
+    if (needsOnboarding) {
+      dispatch(
+        updateAuth({
+          user: { birthDate, gender, firstName, lastName },
+          step: authSteps.Details,
+        })
+      );
+    } else {
+      dispatch(updateAuth({ step: authSteps.Success }));
+    }
+  };
+
   const onChange = useCallback((e) => setMergeProfileId(e.target.value), []);
 
   const { values, handleSubmit, setFieldValue } = useForm(async () => {
     setStatus('LOADING');
 
     try {
-      await completeRegister({ variables: { mergeProfileId } });
-      dispatch(updateAuth({ step: authSteps.Details }));
+      await completeRegister({
+        variables: { mergeProfileId },
+        update: (
+          cache,
+          {
+            data: {
+              completeRegister: { birthDate, gender, firstName, lastName } = {},
+            } = {},
+          }
+        ) => {
+          onSuccess({ birthDate, gender, firstName, lastName });
+        },
+        onError,
+      });
     } catch (e) {
       onError();
       console.log(JSON.stringify(e));
