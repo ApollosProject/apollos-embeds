@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-import { useForm, useUpdateProfileFields } from '../../hooks';
+import { useForm, useUpdateProfileFields, useCurrentUser } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Input } from '../../ui-kit';
 import authSteps from '../Auth/authSteps';
-
-import { useNavigate } from 'react-router-dom';
 
 import AuthLayout from './AuthLayout';
 
@@ -14,11 +12,16 @@ function upperFirst(string) {
 }
 
 function AuthDetails() {
-  const router = useNavigate();
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
+  const [user, setUser] = useState(null);
   const [state, dispatch] = useAuth();
   const [updateProfileFields] = useUpdateProfileFields();
+  const { currentUser } = useCurrentUser();
+
+  useEffect(() => {
+    setUser(currentUser);
+  }, [currentUser]);
 
   const onError = (e) => {
     setStatus('ERROR');
@@ -57,26 +60,50 @@ function AuthDetails() {
     >
       <Box mt="xxl">
         <Box mt="l" textAlign="left">
-          <Box mb="base">
-            <Input
-              id="firstName"
-              placeholder="First Name"
-              handleOnChange={(text) => setFieldValue('firstName', text)}
-              required
-              autoFocus={true}
-              error={error?.identity}
-            />
-          </Box>
-          <Box mb="l">
-            <Input
-              id="lastName"
-              placeholder="Last Name"
-              handleOnChange={(text) => setFieldValue('lastName', text)}
-              required
-              autoFocus={true}
-              error={error?.identity}
-            />
-          </Box>
+          {user?.profile?.firstName === null ? (
+            <Box mb="base">
+              <Input
+                id="firstName"
+                placeholder="First Name"
+                handleOnChange={(text) => setFieldValue('firstName', text)}
+                required
+                error={error?.identity}
+              />
+            </Box>
+          ) : null}
+          {!user.profile?.lastName ? (
+            <Box mb="base">
+              <Input
+                id="lastName"
+                placeholder="Last Name"
+                handleOnChange={(text) => setFieldValue('lastName', text)}
+                required
+                error={error?.identity}
+              />
+            </Box>
+          ) : null}
+          {!user.profile?.gender ? (
+            <Box mb="base">
+              <Input
+                id="gender"
+                placeholder="Gender"
+                handleOnChange={(text) => setFieldValue('gender', text)}
+                required
+                error={error?.identity}
+              />
+            </Box>
+          ) : null}
+          {!user.profile?.birthDate ? (
+            <Box mb="base">
+              <Input
+                id="birthDate"
+                placeholder="Birthdate"
+                handleOnChange={(text) => setFieldValue('birthDate', text)}
+                required
+                error={error?.identity}
+              />
+            </Box>
+          ) : null}
         </Box>
         <Box flexDirection="row" justifyContent="flex-end">
           <Button
