@@ -101,7 +101,7 @@ function AuthMerge() {
         </SubHeading>
 
         {state.sharedProfiles.map((item, index) => (
-          <Box display="flex" alignItems="center" mb="s">
+          <Box key={item.id} display="flex" alignItems="center" mb="s">
             <Input
               id="merge"
               type="radio"
@@ -111,16 +111,15 @@ function AuthMerge() {
               checked={item.id === mergeProfileId}
               onChange={onChange}
             />
-            <Avatar src="http://placebeard.it/250/250" alt="thing" mr="s" />
+            {item.photo?.uri ? (
+              <Avatar src={item.photo?.uri} alt="avatar" mr="s" />
+            ) : null}
             <Box>
               <H6>{item.firstName}</H6>
               <SmallBodyText color="text.secondary">
                 {item.lastName}
               </SmallBodyText>
             </Box>
-            {item.photo?.uri ? (
-              <img alt="avatar" src={item.photo?.uri} />
-            ) : null}
           </Box>
         ))}
         <Button
