@@ -58,62 +58,58 @@ function AuthDetails() {
       subHeading="Help us learn a little more about you so we can connect you with the
       best ministries and events."
     >
-      <Box mt="xxl">
-        <Box mt="l" textAlign="left">
-          {user?.profile?.firstName === null ? (
-            <Box mb="base">
-              <Input
-                id="firstName"
-                placeholder="First Name"
-                handleOnChange={(text) => setFieldValue('firstName', text)}
-                required
-                error={error?.identity}
-              />
-            </Box>
-          ) : null}
-          {!user.profile?.lastName ? (
-            <Box mb="base">
-              <Input
-                id="lastName"
-                placeholder="Last Name"
-                handleOnChange={(text) => setFieldValue('lastName', text)}
-                required
-                error={error?.identity}
-              />
-            </Box>
-          ) : null}
-          {!user.profile?.gender ? (
-            <Box mb="base">
-              <Input
-                id="gender"
-                placeholder="Gender"
-                handleOnChange={(text) => setFieldValue('gender', text)}
-                required
-                error={error?.identity}
-              />
-            </Box>
-          ) : null}
-          {!user.profile?.birthDate ? (
-            <Box mb="base">
-              <Input
-                id="birthDate"
-                placeholder="Birthdate"
-                handleOnChange={(text) => setFieldValue('birthDate', text)}
-                required
-                error={error?.identity}
-              />
-            </Box>
-          ) : null}
-        </Box>
-        <Box flexDirection="row" justifyContent="flex-end">
-          <Button
-            status={status}
-            title={`Finish${isLoading ? 'ing...' : ''}`}
-            onClick={handleSubmit}
-            disabled={!(values.firstName && values.lastName) || isLoading}
-          />
-        </Box>
+      <Box textAlign="left">
+        {user?.profile?.firstName === null ? (
+          <Box mb="base">
+            <Input
+              id="firstName"
+              placeholder="First Name"
+              handleOnChange={(text) => setFieldValue('firstName', text)}
+              required
+              error={error?.identity}
+            />
+          </Box>
+        ) : null}
+        {!user?.profile?.lastName ? (
+          <Box mb="base">
+            <Input
+              id="lastName"
+              placeholder="Last Name"
+              handleOnChange={(text) => setFieldValue('lastName', text)}
+              required
+              error={error?.identity}
+            />
+          </Box>
+        ) : null}
+        {!user?.profile?.gender ? (
+          <Box mb="base">
+            <Input
+              id="gender"
+              placeholder="Gender"
+              handleOnChange={(text) => setFieldValue('gender', text)}
+              required
+              error={error?.identity}
+            />
+          </Box>
+        ) : null}
+        {!user?.profile?.birthDate ? (
+          <Box mb="base">
+            <Input
+              id="birthDate"
+              placeholder="Birthdate"
+              handleOnChange={(text) => setFieldValue('birthDate', text)}
+              required
+              error={error?.identity}
+            />
+          </Box>
+        ) : null}
       </Box>
+      <Button
+        status={status}
+        title={`Finish${isLoading ? 'ing...' : ''}`}
+        onClick={handleSubmit}
+        disabled={!(values.firstName && values.lastName) || isLoading}
+      />
     </AuthLayout>
   );
 }
