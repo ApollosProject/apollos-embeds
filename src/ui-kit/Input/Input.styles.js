@@ -14,7 +14,7 @@ const labelColor = ({ theme, focused, error }) => {
   }
 
   return css`
-    color: ${focused ? theme.colors.base.primary : theme.colors.text.secondary};
+    color: ${focused ? theme.colors.text.action : theme.colors.text.secondary};
   `;
 };
 
@@ -35,16 +35,18 @@ const Label = withTheme(styled.p`
   ${labelColor};
 `);
 
-const textInputStateStyle = ({ theme, focused, error }) => {
+const textInputStateStyle = ({ theme, error }) => {
   if (error) {
     return css`
-      border-bottom: 2px solid ${theme.colors.base.alert};
+      border-bottom: 1px solid ${theme.colors.base.alert};
     `;
   }
 
   return css`
-    border-bottom: 2px solid
-      ${focused ? theme.colors.text.action : theme.colors.text.secondary};
+    border-bottom: 1px solid ${theme.colors.text.secondary};
+    &:focus {
+      border-bottom-color: ${theme.colors.text.action};
+    }
   `;
 };
 
@@ -55,7 +57,9 @@ const Input = withTheme(styled.input`
   placeholder-text-color: ${({ theme }) =>
     Color(theme.colors.text.secondary).alpha(0)};
   caret-color: ${themeGet('colors.base.primary')};
-  border: 0;
+  border-top: 0;
+  border-left: 0;
+  border-right: 0;
   ${textInputStateStyle};
 
   ${system};
