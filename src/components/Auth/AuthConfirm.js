@@ -44,8 +44,7 @@ const AuthConfirm = () => {
       user?.lastName === null ||
       user?.gender === null ||
       user?.birthDate === null;
-    console.log('user', user);
-    console.log('state', state);
+
     if (state.userExists) {
       if (needsOnboarding) {
         dispatch(updateAuth({ token, step: authSteps.Details }));
@@ -135,32 +134,28 @@ const AuthConfirm = () => {
 
   return (
     <AuthLayout
-      heading="Enter your code"
-      subHeading={`We sent a one-time confirmation code to your ${
+      heading="We sent you a code..."
+      subHeading={`Verify the code we sent to your ${
         state.type === 'email' ? 'email' : 'phone'
       }.`}
     >
-      <Box mt="xxl">
-        <Box mt="xl" mb="base">
-          <Input
-            id="passcode"
-            placeholder="6-Digit Code"
-            value={otpCode || ''}
-            handleOnChange={(text) => setOTPCode(text)}
-            required
-            maxLength={codeLength}
-            autoFocus={true}
-            error={error?.passcode}
-          />
-        </Box>
-        <Box alignSelf="center">
-          <Button
-            title={isLoading ? 'Signing in...' : 'Sign in'}
-            // disabled={!isPinReady}
-            onClick={handleSignInSubmit}
-          />
-        </Box>
+      <Box mb="base">
+        <Input
+          id="passcode"
+          placeholder="6-Digit Code"
+          value={otpCode || ''}
+          handleOnChange={(text) => setOTPCode(text)}
+          required
+          maxLength={codeLength}
+          autoFocus={true}
+          error={error?.passcode}
+        />
       </Box>
+      <Button
+        title={`Verify${isLoading ? 'ing...' : ''}`}
+        // disabled={!isPinReady}
+        onClick={handleSignInSubmit}
+      />
     </AuthLayout>
   );
 };
