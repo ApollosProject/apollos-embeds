@@ -1,68 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Logo from '../../Logo';
-import { Layout, Icons } from '../../../ui-kit';
-
-import {
-  BrandPanel,
-  Container,
-  Heading,
-  InstructionsPanel,
-  LogoSlot,
-  SubHeading,
-  GradientOverlay,
-} from './AuthLayout.styles';
+import { Box, Card } from '../../../ui-kit';
 import customizations from './customizations';
+import { Heading, SubHeading } from './AuthLayout.styles';
 
 function AuthLayout(props = {}) {
   return (
-    <Layout backgroundColor="#1C1C1E">
-      <GradientOverlay />
-
-      <Container>
-        <BrandPanel>
-          <Icons.Dot
-            linearGradient
-            opacity={0.05}
-            size={1050}
-            position="absolute"
-            top={-410}
-            left={-430}
-          />
-          <Icons.Dot
-            fill="base.primary"
-            opacity={0.9}
-            size={200}
-            position="absolute"
-            top={290}
-            left={480}
-          />
-          <Icons.Dot
-            fill="base.secondary"
-            opacity={0.5}
-            size={100}
-            position="absolute"
-            top={430}
-            left={600}
-          />
-          <LogoSlot>
-            <Logo size={96} fill="base.secondary" alignSelf="center" />
-          </LogoSlot>
-          <Heading>{props.heading || customizations.defaulthHeading}</Heading>
-          <SubHeading>
-            {props.subHeading || customizations.defaultSubHeading}
-          </SubHeading>
-        </BrandPanel>
-
-        <InstructionsPanel>{props.children}</InstructionsPanel>
-      </Container>
-    </Layout>
+    <Box
+      position="fixed"
+      top="0"
+      bottom="0"
+      left="0"
+      right="0"
+      overflow="scroll"
+      zIndex={9999}
+      justifyContent="center"
+      display="flex"
+      alignItems="center"
+      backgroundColor="neutral.gray6"
+    >
+      <Card
+        p="l"
+        display="flex"
+        flexDirection="column"
+        width="440px"
+        {...props}
+      >
+        <Heading>{props.heading || customizations.defaulthHeading}</Heading>
+        <SubHeading>
+          {props.subHeading || customizations.defaultSubHeading}
+        </SubHeading>
+        {props.children}
+      </Card>
+    </Box>
   );
 }
 
 AuthLayout.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]).isRequired,
+  heading: PropTypes.string,
   subHeading: PropTypes.string,
 };
 
