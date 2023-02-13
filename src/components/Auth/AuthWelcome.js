@@ -14,9 +14,9 @@ const AuthWelcome = () => {
 
   return (
     <AuthLayout>
-      <Box mt="xxl">
+      <Box flexDirection="row">
         <Button
-          mr="l"
+          mr="base"
           title={'Login'}
           onClick={() => handleSubmit({ step: steps.Identity, type: 'login' })}
         />
