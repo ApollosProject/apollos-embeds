@@ -6,7 +6,7 @@ import Color from 'color';
 import { TypeStyles } from '../Typography';
 import { system } from '../_lib/system';
 
-const labelColor = ({ theme, focused, error }) => {
+const labelColor = ({ theme, focused, hasValue, error }) => {
   if (error) {
     return css`
       color: ${theme.colors.base.alert};
@@ -14,7 +14,9 @@ const labelColor = ({ theme, focused, error }) => {
   }
 
   return css`
-    color: ${focused ? theme.colors.text.action : theme.colors.text.secondary};
+    color: ${focused || hasValue
+      ? theme.colors.text.action
+      : theme.colors.text.secondary};
   `;
 };
 

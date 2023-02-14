@@ -9,11 +9,11 @@ const Input = ({ placeholder, ...props }) => {
   const [focused, setFocused] = useState(false);
 
   const handleChangeText = (text) => {
-    if (text?.length === 0 && hasValue) {
+    if (text.target.value?.length === 0 && hasValue) {
       setHasValue(false);
     }
 
-    if (text?.length >= 1 && !hasValue) {
+    if (text.target.value?.length >= 1 && !hasValue) {
       setHasValue(true);
     }
 
