@@ -8,7 +8,7 @@ import AuthProvider from './AuthProvider';
 
 function AppProvider(props = {}) {
   return (
-    <ApolloProvider client={client} {...props}>
+    <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
         <ThemeProvider>{props.children}</ThemeProvider>
       </AuthProvider>

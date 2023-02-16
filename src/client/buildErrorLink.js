@@ -27,13 +27,14 @@ const clearPendingRequests = () => {
   pendingRequests = [];
 };
 
-async function fetchNewAccessToken() {
+async function fetchNewAccessToken(church_slug) {
   const refreshToken = window.localStorage.getItem(AUTH_REFRESH_TOKEN_KEY);
+
   if (!refreshToken) throw new Error('Refresh Token not found.');
   return fetch(uri, {
     method: 'POST',
     headers: {
-      'x-church': X_CHURCH_VALUE,
+      'x-church': church_slug,
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
@@ -81,7 +82,7 @@ function getAuthTokenFromOperation(operation) {
   return authToken;
 }
 
-const buildErrorLink = (onAuthError) =>
+const buildErrorLink = (onAuthError, church_slug) =>
   onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
       const hasUnauthenticatedError =
@@ -93,7 +94,7 @@ const buildErrorLink = (onAuthError) =>
           setIsRefreshing(true);
           let newToken = null;
           return fromPromise(
-            fetchNewAccessToken()
+            fetchNewAccessToken(church_slug)
               .then((res) => {
                 return res.json();
               })
