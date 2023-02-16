@@ -5,6 +5,8 @@ export const UPDATE_PROFILE_FIELDS = gql`
     updateProfileFields(input: $input) {
       firstName
       lastName
+      birthDate
+      gender
     }
   }
 `;
