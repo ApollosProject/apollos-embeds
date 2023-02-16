@@ -119,11 +119,11 @@ const AuthIdentity = () => {
 
         <SmallSystemText color="text.secondary">
           I agree to the{' '}
-          <Box display="inline" fontWeight={700}>
+          <Box as="span" display="inline" fontWeight={700}>
             terms of use
           </Box>{' '}
           and{' '}
-          <Box display="inline" fontWeight={700}>
+          <Box as="span" display="inline" fontWeight={700}>
             privacy policy
           </Box>{' '}
           laid out by this church.
