@@ -75,9 +75,10 @@ function ContentSingle(props = {}) {
     <>
       <Box width="100%" margin="0 auto" backgroundColor="material.regular">
         <Box mb="base">
-          {props.data?.videos[0]?.embedHtml ? (
+          {props.data?.videos[0] ? (
             <VideoPlayer
-              dangerouslySetInnerHTML={props.data?.videos[0]?.embedHtml}
+              videos={props.data?.videos[0]}
+              coverImage={coverImage?.sources[0]?.uri}
             />
           ) : (
             <Box
