@@ -8,7 +8,8 @@ export const VALIDATE_LOGIN = gql`
     validateLogin(identity: $identity, otp: $otp) {
       person {
         firstName
-        lastName
+        birthDate
+        gender
         id
       }
       accessToken
