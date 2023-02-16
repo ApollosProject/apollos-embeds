@@ -29,7 +29,9 @@ function AuthManager(props = {}) {
       case authSteps.Confirm: {
         return <Confirm />;
       }
-
+      case authSteps.Success: {
+        return null;
+      }
       default: {
         return <Welcome />;
       }
