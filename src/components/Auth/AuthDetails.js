@@ -96,7 +96,7 @@ function AuthDetails() {
           <Box mb="base">
             <Input
               id="birthDate"
-              placeholder="Birthdate"
+              type="date"
               handleOnChange={(text) => setFieldValue('birthDate', text)}
               required
               error={error?.identity}
