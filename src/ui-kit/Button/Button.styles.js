@@ -48,34 +48,35 @@ const webTransition = ({ theme }) => {
   return css`
     transition: all ${theme.timing.base} ease-out;
   `;
-
-  return null;
 };
 
-const buttonTypeProp = ({ theme, type, focused, hovered }) => {
+const buttonTypeProp = ({ theme, type }) => {
   switch (type) {
     default:
       return css`
-        background: ${darken(
-          theme.colors.text.action,
-          focused || hovered ? 0 : 0.16
-        )};
+        background: ${theme.colors.text.action};
+        &:focus,
+        &:hover {
+          background: ${darken(theme.colors.text.action, 0.06)};
+        }
       `;
     case 'primary':
       return css`
-        background: ${darken(
-          theme.colors.base.primary,
-          focused || hovered ? 0 : 0.16
-        )};
+        background: ${theme.colors.base.primary};
+        &:focus,
+        &:hover {
+          background: ${darken(theme.colors.text.primary, 0.06)};
+        }
       `;
 
     case 'secondary':
       return css`
         border-width: 2px;
-        border: ${darken(
-          theme.colors.base.secondary,
-          focused || hovered ? 0 : 0.16
-        )};
+        border: ${theme.colors.base.secondary};
+        &:focus,
+        &:hover {
+          border: ${darken(theme.colors.text.secondary, 0.06)};
+        }
       `;
     case 'link':
       return css`
@@ -129,9 +130,6 @@ const buttonTypeLink = ({ type }) => {
 };
 
 const Button = withTheme(styled.button`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   border-width: 2px;
   text-align: center;
   border: transparent;
@@ -206,9 +204,8 @@ const titleSizeProp = ({ size }) => {
     default:
     case 'large':
       return css`
-        ${TypeStyles.LargeSystemText}
+        ${TypeStyles.SystemText}
       `;
-
     case 'small':
       return css`
         ${TypeStyles.SystemText}

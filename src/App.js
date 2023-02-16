@@ -25,7 +25,7 @@ function App(props) {
   // Widgets require a church slug to get the correct data
   if (WidgetComponent && props.church) {
     return (
-      <AppProvider>
+      <AppProvider church={props.church}>
         <RouterProvider router={router} />
       </AppProvider>
     );

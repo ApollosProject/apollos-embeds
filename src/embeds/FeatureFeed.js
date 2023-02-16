@@ -47,7 +47,7 @@ const FeatureFeed = (props) => {
     }
     case 'FeatureFeed': {
       const options = {
-        variables: { id: `${type}:${randomId}` },
+        variables: { itemId: `${type}:${randomId}` },
       };
       return (
         <FeatureFeedProvider Component={FeatureFeedList} options={options} />

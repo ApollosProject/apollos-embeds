@@ -35,6 +35,32 @@ export const FEED_FEATURES = gql`
               }
             }
           }
+          ... on VerticalCardListFeature {
+            title
+            cards {
+              id
+              title
+              summary
+              coverImage {
+                sources {
+                  uri
+                }
+              }
+              hasAction
+              action
+              actionIcon
+              relatedNode {
+                id
+                __typename
+                ... on ContentItem {
+                  title
+                }
+                ... on Url {
+                  url
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -46,6 +72,7 @@ function useFeatureFeed(options = {}) {
     fetchPolicy: 'cache-and-network',
     ...options,
   });
+  console.log('query', query);
 
   return {
     features: query?.data?.node || {},

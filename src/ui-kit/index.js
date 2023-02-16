@@ -6,11 +6,16 @@ import * as utils from './_utils';
 import ThemeProvider from './ThemeProvider';
 
 // UI Kit components
+import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
 import ContentCard from './ContentCard';
 import Loader from './Loader';
 import Longform from './Longform';
+import Layout from './Layout';
+import Icons from './Icons';
+import Input from './Input';
+import Card from './Card';
 
 import {
   BodyText,
@@ -31,11 +36,17 @@ export {
   // ====================
   ThemeProvider,
   // ====================
+  Avatar,
   Box,
   Button,
   ContentCard,
   Loader,
   Longform,
+  Layout,
+  Icons,
+  Input,
+  Card,
+
   // Typography
   BodyText,
   H1,
