@@ -49,7 +49,7 @@ function HorizontalCardListFeature(props = {}) {
         <H3 flex="1" mb="xs">
           {props.feature.title}
         </H3>
-        {props?.feature?.cards.length >= 5 && props?.feature?.primaryAction ? (
+        {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
           <Button
             title="View All >"
             type="link"
