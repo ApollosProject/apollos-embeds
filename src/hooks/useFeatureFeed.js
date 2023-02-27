@@ -70,6 +70,7 @@ export const FEED_FEATURES = gql`
 function useFeatureFeed(options = {}) {
   const query = useQuery(FEED_FEATURES, {
     fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
     ...options,
   });
   console.log('query', query);

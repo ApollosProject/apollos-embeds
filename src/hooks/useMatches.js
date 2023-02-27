@@ -20,6 +20,7 @@ export const GET_USERS = gql`
 export default function useMatches() {
   const query = useQuery(GET_USERS, {
     fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
   });
 
   return {
