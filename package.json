@@ -1,15 +1,11 @@
 {
-  "name": "@apollos-project/apollos-embeds",
+  "name": "@apollosproject/apollos-embeds",
   "description": "Apollos React embed widgets",
-  "version": "0.0.01",
-  "author": {
-    "name": "Apollos Project",
-    "email": "jjwade31@gmail.com"
-  },
+  "version": "0.0.1",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ApollosProject/apollos-embeds.git"
+    "url": "git+https://github.com/ApollosProject/apollos-embeds.git"
   },
   "dependencies": {
     "@apollo/client": "^3.7.4",
@@ -69,5 +65,10 @@
     "parcel": "^2.8.3",
     "parcel-bundler": "^1.8.1",
     "parcel-reporter-static-files-copy": "^1.5.0"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/ApollosProject/apollos-embeds/issues"
+  },
+  "homepage": "https://github.com/ApollosProject/apollos-embeds#readme",
+  "main": "widget/index.js"
 }
