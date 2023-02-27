@@ -1,7 +1,7 @@
 {
   "name": "@apollosproject/apollos-embeds",
   "description": "Apollos React embed widgets",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
     "date-fns": "^2.29.3",
     "dompurify": "^2.4.3",
     "graphql": "^16.6.0",
+    "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "postcss": "^7.0.39",
     "prop-types": "^15.8.1",
@@ -66,9 +67,9 @@
     "parcel-bundler": "^1.8.1",
     "parcel-reporter-static-files-copy": "^1.5.0"
   },
-  "bugs": {
-    "url": "https://github.com/ApollosProject/apollos-embeds/issues"
-  },
-  "homepage": "https://github.com/ApollosProject/apollos-embeds#readme",
-  "main": "widget/index.js"
+  "targets": {
+    "global": {
+      "context": "browser"
+    }
+  }
 }
