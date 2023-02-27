@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import isNil from 'lodash';
 
 import { Box, Loader } from '../../ui-kit';
 
@@ -51,10 +52,12 @@ const Feed = (props) => {
     );
   }
 
-  const features = props.data?.features;
-  const renderedFeatures = features?.map(renderFeature);
+  const features = props.data?.features.filter(
+    (feature) => feature.cards !== null
+  );
+  const renderedFeatures = features?.map(renderFeature).filter(isNil);
 
-  if (props.error || !renderedFeatures || !renderedFeatures.length) {
+  if (!renderedFeatures || !renderedFeatures?.length) {
     return (
       <Box
         display="flex"
