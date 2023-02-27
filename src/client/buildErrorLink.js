@@ -4,8 +4,9 @@ import base64 from 'base-64';
 
 import { AUTH_TOKEN_KEY, AUTH_REFRESH_TOKEN_KEY } from '../config/keys';
 
-const uri = process.env.REACT_APP_APP_DATA_URL;
-const X_CHURCH_VALUE = process.env.REACT_APP_APOLLOS_CHURCH_SLUG;
+const uri = (
+  process.env.REACT_APP_APP_DATA_URL || 'https://cdn.apollos.app'
+).replace('localhost');
 
 let isRefreshing = false;
 let pendingRequests = [];
