@@ -152,6 +152,7 @@ export const TAB_FEED_FEATURES = gql`
 function useTabFeed(options = {}) {
   const query = useQuery(TAB_FEED_FEATURES, {
     fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
     ...options,
   });
 
