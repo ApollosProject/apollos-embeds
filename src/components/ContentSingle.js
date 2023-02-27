@@ -73,7 +73,7 @@ function ContentSingle(props = {}) {
 
   return (
     <>
-      <Box width="100%" margin="0 auto" backgroundColor="material.regular">
+      <Box width="750px" margin="0 auto">
         <Box mb="base">
           {props.data?.videos[0] ? (
             <VideoPlayer
