@@ -101,6 +101,11 @@ const cursor = style({
   cssProperty: 'cursor',
 });
 
+const objectFit = style({
+  prop: 'objectFit',
+  cssProperty: 'object-fit',
+});
+
 export const core = compose(color, fontSize, space, width);
 
 export const typography = compose(
@@ -177,7 +182,8 @@ export const misc = compose(
   boxShadow,
   cursor,
   opacity,
-  overflow
+  overflow,
+  objectFit
 );
 
 export const system = compose(
