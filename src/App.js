@@ -1,4 +1,5 @@
 import React from 'react';
+import * as Sentry from '@sentry/react';
 import { FeatureFeed, Auth } from './embeds';
 import { AppProvider } from './providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
@@ -9,6 +10,13 @@ const WidgetComponentMap = {
   FeatureFeed,
   Auth,
 };
+
+Sentry.init({
+  dsn: process.env.REACT_APP_SENTRY_DSN,
+  // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
+  // We recommend adjusting this value in production.
+  tracesSampleRate: 1.0,
+});
 
 function App(props) {
   // Lookup the component responsible for rendering this Widget
