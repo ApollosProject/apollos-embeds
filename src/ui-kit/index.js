@@ -16,6 +16,7 @@ import Layout from './Layout';
 import Icons from './Icons';
 import Input from './Input';
 import Card from './Card';
+import ProgressBar from './ProgressBar';
 
 import {
   BodyText,
@@ -46,6 +47,7 @@ export {
   Icons,
   Input,
   Card,
+  ProgressBar,
 
   // Typography
   BodyText,
