@@ -73,7 +73,6 @@ function useFeatureFeed(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
-  console.log('query', query);
 
   return {
     features: query?.data?.node || {},
