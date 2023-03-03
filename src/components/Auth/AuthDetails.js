@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
-import { useForm, useUpdateProfileFields, useCurrentUser } from '../../hooks';
-import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
-import { Box, Button, Input } from '../../ui-kit';
-import authSteps from '../Auth/authSteps';
+import { useForm, useUpdateProfileFields, useCurrentUser } from "../../hooks";
+import { update as updateAuth, useAuth } from "../../providers/AuthProvider";
+import { Box, Button, Input, Select } from "../../ui-kit";
+import authSteps from "../Auth/authSteps";
 
-import AuthLayout from './AuthLayout';
+import AuthLayout from "./AuthLayout";
 
 function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function AuthDetails() {
-  const [status, setStatus] = useState('IDLE');
+  const [status, setStatus] = useState("IDLE");
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [state, dispatch] = useAuth();
@@ -24,12 +24,12 @@ function AuthDetails() {
   }, [currentUser]);
 
   const onError = (e) => {
-    setStatus('ERROR');
+    setStatus("ERROR");
     setError(e);
   };
 
   const { values, handleSubmit, setFieldValue } = useForm(async () => {
-    setStatus('LOADING');
+    setStatus("LOADING");
 
     const userProfile = Object.keys(values).map((key) => ({
       field: upperFirst(key),
@@ -50,7 +50,12 @@ function AuthDetails() {
     }
   });
 
-  const isLoading = status === 'LOADING';
+  const isLoading = status === "LOADING";
+  const genderOptions = [
+    { value: "Male", label: "Male" },
+    { value: "Female", label: "Female" },
+    { value: "Prefer not to say", label: "Prefer not to say" },
+  ];
 
   return (
     <AuthLayout
@@ -64,7 +69,7 @@ function AuthDetails() {
             <Input
               id="firstName"
               placeholder="First Name"
-              handleOnChange={(text) => setFieldValue('firstName', text)}
+              handleOnChange={(text) => setFieldValue("firstName", text)}
               required
               error={error?.identity}
             />
@@ -75,7 +80,7 @@ function AuthDetails() {
             <Input
               id="lastName"
               placeholder="Last Name"
-              handleOnChange={(text) => setFieldValue('lastName', text)}
+              handleOnChange={(text) => setFieldValue("lastName", text)}
               required
               error={error?.identity}
             />
@@ -83,10 +88,11 @@ function AuthDetails() {
         ) : null}
         {!user?.profile?.gender ? (
           <Box mb="base">
-            <Input
+            <Select
               id="gender"
               placeholder="Gender"
-              handleOnChange={(text) => setFieldValue('gender', text)}
+              options={genderOptions}
+              handleOnChange={(text) => setFieldValue("gender", text)}
               required
               error={error?.identity}
             />
@@ -97,7 +103,7 @@ function AuthDetails() {
             <Input
               id="birthDate"
               type="date"
-              handleOnChange={(text) => setFieldValue('birthDate', text)}
+              handleOnChange={(text) => setFieldValue("birthDate", text)}
               required
               error={error?.identity}
             />
@@ -106,7 +112,7 @@ function AuthDetails() {
       </Box>
       <Button
         status={status}
-        title={`Finish${isLoading ? 'ing...' : ''}`}
+        title={`Finish${isLoading ? "ing..." : ""}`}
         onClick={handleSubmit}
         disabled={!(values.firstName && values.lastName) || isLoading}
       />
