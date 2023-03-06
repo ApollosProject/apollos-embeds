@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
@@ -26,21 +26,40 @@ const responsive = {
 
 function HorizontalCardListFeature(props = {}) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleActionPress = (item) => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
+    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`, {
+      state: {
+        ...location.state,
+        ...{
+          [window.history.state.idx - 1]: {
+            url: `?id=${getURLFromType(item.relatedNode)}`,
+            title: item.title,
+          },
+        },
+      },
     });
   };
 
   const handlePrimaryActionPress = (action) => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(
-        props?.feature?.primaryAction.relatedNode
-      )}`,
-    });
+    setSearchParams(
+      `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+      {
+        state: {
+          ...location.state,
+          ...{
+            [window.history.state.idx - 1]: {
+              url: `?id=${getURLFromType(
+                props?.feature?.primaryAction.relatedNode
+              )}`,
+              title: props?.feature?.title,
+            },
+          },
+        },
+      }
+    );
   };
 
   return (
