@@ -8,11 +8,10 @@ const ResourceCard = withTheme(styled.div`
   display: flex;
   padding: ${themeGet("space.xs")};
   border-radius: 8px;
-  background: rgba(242, 242, 247, 0.65);
+  background: ${themeGet("colors.neutral.gray6")};
   align-items: center;
   width: 100%;
   height: 72px;
-
   gap: ${themeGet("space.xs")};
   ${system};
 `);
