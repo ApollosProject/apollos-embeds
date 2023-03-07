@@ -1,13 +1,14 @@
 import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
-import ReactPlayer from 'react-player';
+
 import { round } from 'lodash';
 
 import { useInteractWithNode } from '../../hooks';
+import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
-import Styled from './VideoPlayer.styles';
+import { EmbededPlayer, VideoPlayer as Player } from './VideoPlayer.styles';
 
 const PROGRESS_CHECK_INTERVAL_SECONDS = 10;
 
@@ -193,25 +194,30 @@ function VideoPlayer(props = {}) {
     );
 
     return (
-      <Styled {...props} dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+      <EmbededPlayer
+        {...props}
+        dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+      />
     );
   } else if (source) {
     return (
-      <ReactPlayer
-        ref={playerRef}
-        controls={true}
-        onEnded={handleVideoEnded}
-        onError={handleVideoError}
-        onReady={handleVideoLoad}
-        onPlaybackRateChange={handleVideoPlaybackRateChange}
-        onProgress={handleVideoProgress}
-        onPause={handleVideoPaused}
-        onPlay={handleVideoPlayed}
-        url={source}
-        light={<img src={props.coverImage} alt="Thumbnail" />}
-        width="100%"
-        height="auto"
-      />
+      <Box position="relative" paddingTop="56.25%">
+        <Player
+          ref={playerRef}
+          controls={true}
+          onEnded={handleVideoEnded}
+          onError={handleVideoError}
+          onReady={handleVideoLoad}
+          onPlaybackRateChange={handleVideoPlaybackRateChange}
+          onProgress={handleVideoProgress}
+          onPause={handleVideoPaused}
+          onPlay={handleVideoPlayed}
+          url={source}
+          light={props.coverImage}
+          width="100%"
+          height="100%"
+        />
+      </Box>
     );
   }
 
