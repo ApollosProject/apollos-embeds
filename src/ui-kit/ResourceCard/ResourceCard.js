@@ -84,29 +84,31 @@ function ResourceCard({
   );
 
   return (
-    <Box
+    <Styled.ResourceCard
       cursor={props.onClick ? "pointer" : "default"}
       onClick={props.onClick && handleActionPress}
     >
-      <Styled.ResourceCard>
-        <Box display="flex" justifyContent="center" alignItems="center">
-          {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
-          {LeadingIcon}
-        </Box>
-        <Styled.Wrapper>
-          {/* Title and Subtitle */}
-          <Styled.Heading>
-            <Styled.Title>{title}</Styled.Title>
-            <Styled.Subtitle>{subtitle}</Styled.Subtitle>
-          </Styled.Heading>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
+        {LeadingIcon}
+      </Box>
+      <Styled.Wrapper>
+        {/* Title and Subtitle */}
+        <Styled.Heading>
+          <Styled.Title>
+            <Styled.Ellipse>{title}</Styled.Ellipse>
+          </Styled.Title>
+          <Styled.Subtitle>
+            <Styled.Ellipse>{subtitle}</Styled.Ellipse>
+          </Styled.Subtitle>
+        </Styled.Heading>
 
-          {/* Tailing Icon => defaults to arrow if undefined */}
-          <Styled.TailingIcon>
-            {tailingIcon ? tailingIcon : Arrow}
-          </Styled.TailingIcon>
-        </Styled.Wrapper>
-      </Styled.ResourceCard>
-    </Box>
+        {/* Tailing Icon => defaults to arrow if undefined */}
+        <Styled.TailingIcon>
+          {tailingIcon ? tailingIcon : Arrow}
+        </Styled.TailingIcon>
+      </Styled.Wrapper>
+    </Styled.ResourceCard>
   );
 }
 
