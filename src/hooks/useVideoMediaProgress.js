@@ -16,7 +16,7 @@ export const GET_VIDEO_MEDIA_PROGRESS = gql`
 
 function useVideoMediaProgress(options = {}) {
   const query = useQuery(GET_VIDEO_MEDIA_PROGRESS, {
-    fetchPolicy: 'cache-and-network',
+    fetchPolicy: 'network',
     ...options,
   });
 

@@ -101,7 +101,8 @@ function ContentSingle(props = {}) {
   const inProgress = !isNil(userProgress?.playhead) && !isComplete;
   const percentWatched = getPercentWatched({ duration, userProgress });
   const showProgressBar = inProgress && !isNil(percentWatched);
-
+  console.log('userProgresssingle', userProgress);
+  console.log('videoMedia?.id', videoMedia?.id);
   const handleActionPress = (item) => {
     navigate({
       pathname: '/',

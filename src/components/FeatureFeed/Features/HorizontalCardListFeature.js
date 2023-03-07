@@ -42,7 +42,7 @@ function HorizontalCardListFeature(props = {}) {
       )}`,
     });
   };
-
+  console.log('props.feature?.cards', props.feature?.cards);
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
@@ -74,6 +74,7 @@ function HorizontalCardListFeature(props = {}) {
             title={item.title}
             summary={item.summary}
             onClick={() => handleActionPress(item)}
+            videoMedia={item.relatedNode?.videos[0]}
           />
         ))}
       </Carousel>
