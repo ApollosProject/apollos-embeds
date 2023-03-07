@@ -17,6 +17,7 @@ import Icons from "./Icons";
 import Input from "./Input";
 import Card from "./Card";
 import Select from "./Select";
+import ResourceCard from "./ResourceCard";
 
 import {
   BodyText,
@@ -48,6 +49,7 @@ export {
   Input,
   Card,
   Select,
+  ResourceCard,
 
   // Typography
   BodyText,
