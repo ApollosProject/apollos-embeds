@@ -16,7 +16,7 @@ function ResourceCard({
 }) {
   // If item has link, redirect to URL
   const navigate = useNavigate();
-  const handleActionPress = (item) => {
+  const handleActionPress = () => {
     navigate({
       pathname: "/",
       search: `?id=${getURLFromType(node)}`,
@@ -85,8 +85,8 @@ function ResourceCard({
 
   return (
     <Styled.ResourceCard
-      cursor={props.onClick ? "pointer" : "default"}
-      onClick={props.onClick && handleActionPress}
+      cursor={node ? "pointer" : "default"}
+      onClick={node && handleActionPress}
     >
       <Box display="flex" justifyContent="center" alignItems="center">
         {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
