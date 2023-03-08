@@ -17,6 +17,7 @@ import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
 import {
   Box,
+  H1,
   H2,
   H4,
   Loader,
@@ -87,7 +88,7 @@ function ContentSingle(props = {}) {
 
   const publishDate = new Date(parseInt(props?.data?.publishDate));
 
-  const formatedPublishDate = props?.data?.publishDate
+  const formattedPublishDate = props?.data?.publishDate
     ? format(
         addMinutes(publishDate, publishDate.getTimezoneOffset()),
         'MMMM do, yyyy'
@@ -96,13 +97,13 @@ function ContentSingle(props = {}) {
 
   const sanitizedHTML = DOMPurify.sanitize(htmlContent);
 
-  // Additional Video Details
-  const isComplete = userProgress?.complete || false;
-  const inProgress = !isNil(userProgress?.playhead) && !isComplete;
-  const percentWatched = getPercentWatched({ duration, userProgress });
-  const showProgressBar = inProgress && !isNil(percentWatched);
-  console.log('userProgresssingle', userProgress);
-  console.log('videoMedia?.id', videoMedia?.id);
+  // We'll conditionally place this divider as needed
+  const infoDivider = (
+    <BodyText color="text.tertiary" mx="xs">
+      |
+    </BodyText>
+  );
+
   const handleActionPress = (item) => {
     navigate({
       pathname: '/',
@@ -132,29 +133,25 @@ function ContentSingle(props = {}) {
 
         <Box mb="l">
           {/* Title */}
-          {title ? <H2 mb="xxxs">{title}</H2> : null}
 
-          {/* Duration */}
-          {duration ? (
-            <H4 color="text.secondary">{getDurationString(duration)}</H4>
-          ) : null}
-          {/* User Progress */}
-          {showProgressBar ? (
-            <Box flex={1} maxWidth="45%">
-              <ProgressBar percent={percentWatched} />
-            </Box>
-          ) : null}
-          {/* Complete Indicator */}
-          {isComplete ? (
-            <Box flexDirection="row" alignItems="center">
-              <H4 fontWeight="bold">Watched</H4>
-            </Box>
-          ) : null}
-          {formatedPublishDate ? (
-            <BodyText color="text.secondary" mb="s">
-              {formatedPublishDate}
-            </BodyText>
-          ) : null}
+          {title && !hasChildContent ? <H2>{title}</H2> : null}
+          {title && hasChildContent ? <H1>{title}</H1> : null}
+          <Box display="flex" flexDirection="row" mb="s">
+            {parentChannel.name ? (
+              <BodyText
+                color="text.secondary"
+                mb={title && !hasChildContent ? 'xxs' : ''}
+              >
+                {parentChannel.name}
+              </BodyText>
+            ) : null}
+
+            {/* ( Optional Divider ) */}
+            {formattedPublishDate ? infoDivider : null}
+            {formattedPublishDate ? (
+              <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
+            ) : null}
+          </Box>
           {/* Children Count */}
           {showEpisodeCount ? (
             <H4 color="text.secondary" mr="xl">
