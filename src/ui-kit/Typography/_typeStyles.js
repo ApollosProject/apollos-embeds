@@ -24,7 +24,7 @@ const H1 = () => css`
 
 const H2 = () => css`
   font-size: ${utils.rem('36px')};
-  line-height: ${utils.rem('40px')};
+  line-height: ${utils.rem('45px')};
   font-weight: 700;
   ${shared}
 `;
