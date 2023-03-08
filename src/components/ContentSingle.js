@@ -1,17 +1,11 @@
-import React, { useEffect, memo } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
-import isNil from 'lodash/isNil';
 
-import {
-  getURLFromType,
-  videoFilters,
-  getPercentWatched,
-  getDurationString,
-} from '../utils';
+import { getURLFromType, videoFilters } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
@@ -22,11 +16,9 @@ import {
   H4,
   Loader,
   Longform,
-  utils,
   H3,
   ContentCard,
   BodyText,
-  ProgressBar,
 } from '../ui-kit';
 import { useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
@@ -37,9 +29,7 @@ function ContentSingle(props = {}) {
   const invalidPage = !props.loading && !props.data;
 
   // Video details
-  const showPlayButton = videoFilters.hasValidVideoMedia(props?.data?.videos);
   const videoMedia = props.data?.videos[0];
-  const duration = videoMedia?.duration;
 
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
     {
