@@ -27,8 +27,7 @@ function ContentCard(props = {}) {
       skip: !props.videoMedia?.id,
     }
   );
-  console.log('userProgresscard', userProgress);
-  console.log('props.videoMedia?.id', props.videoMedia?.id);
+
   const percentWatched = getPercentWatched({
     duration: props.videoMedia?.duration,
     userProgress,
