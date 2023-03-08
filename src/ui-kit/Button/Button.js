@@ -1,32 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React from "react";
+import PropTypes from "prop-types";
 
-import { systemPropTypes } from '../_lib/system';
-import Styled from './Button.styles';
+import { systemPropTypes } from "../_lib/system";
+import Styled from "./Button.styles";
 
 const Button = (props = {}) => {
   return (
     <Styled.Button disabled={props.disabled} {...props}>
-      {props?.icon}
-      <Styled.Title disabled={props.disabled} {...props}>
-        {props.title}
-      </Styled.Title>
+      <Styled.Content>
+        <Styled.Title disabled={props.disabled} {...props}>
+          {props.title}
+        </Styled.Title>
+        <Styled.Icon>{props?.icon}</Styled.Icon>
+      </Styled.Content>
     </Styled.Button>
   );
 };
 
 Button.propTypes = {
   ...systemPropTypes,
-  size: PropTypes.oneOf(['micro', 'small', 'large']),
-  type: PropTypes.oneOf(['primary', 'secondary', 'link']),
+  size: PropTypes.oneOf(["micro", "small", "large"]),
+  type: PropTypes.oneOf(["primary", "secondary", "link"]),
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
 };
 
 Button.defaultProps = {
-  size: 'large',
+  size: "large",
   // eslint-disable-next-line no-console
-  onClick: () => console.log('Please attach a method to this component'),
+  onClick: () => console.log("Please attach a method to this component"),
   icon: null,
 };
 

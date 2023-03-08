@@ -1,10 +1,10 @@
-import Color from 'color';
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
+import Color from "color";
+import { withTheme } from "styled-components";
+import styled, { css } from "styled-components";
+import { themeGet } from "@styled-system/theme-get";
 
-import { TypeStyles } from '../Typography';
-import { system } from '../_lib/system';
+import { TypeStyles } from "../Typography";
+import { system } from "../_lib/system";
 
 // Button
 // --------------------------------------------------------
@@ -17,10 +17,10 @@ const buttonState = ({ theme, type, disabled, focused, hovered, pressed }) => {
   if (disabled) {
     return css`
       opacity: 0.5;
-      background: ${type === 'secondary'
-        ? 'transparent'
+      background: ${type === "secondary"
+        ? "transparent"
         : theme.colors.base.gray};
-      border: ${type === 'secondary' ? theme.colors.base.gray : 'transparent'};
+      border: ${type === "secondary" ? theme.colors.base.gray : "transparent"};
       cursor: not-allowed;
     `;
   }
@@ -28,9 +28,9 @@ const buttonState = ({ theme, type, disabled, focused, hovered, pressed }) => {
   if (pressed) {
     return css`
       background: ${theme.colors.base.gray};
-      border: ${type === 'secondary'
+      border: ${type === "secondary"
         ? theme.colors.fill.system
-        : 'transparent'};
+        : "transparent"};
       transform: scale(0.98);
     `;
   }
@@ -60,7 +60,7 @@ const buttonTypeProp = ({ theme, type }) => {
           background: ${darken(theme.colors.text.action, 0.06)};
         }
       `;
-    case 'primary':
+    case "primary":
       return css`
         background: ${theme.colors.base.primary};
         &:focus,
@@ -69,7 +69,7 @@ const buttonTypeProp = ({ theme, type }) => {
         }
       `;
 
-    case 'secondary':
+    case "secondary":
       return css`
         border-width: 2px;
         border: ${theme.colors.base.secondary};
@@ -78,7 +78,16 @@ const buttonTypeProp = ({ theme, type }) => {
           border: ${darken(theme.colors.text.secondary, 0.06)};
         }
       `;
-    case 'link':
+    case "cta":
+      return css`
+        background: #00b2eb;
+        border: ${theme.colors.base.secondary};
+        &:focus,
+        &:hover {
+          border: ${darken(theme.colors.text.secondary, 0.06)};
+        }
+      `;
+    case "link":
       return css`
         border-width: 2px;
         background: none;
@@ -89,30 +98,30 @@ const buttonTypeProp = ({ theme, type }) => {
 const buttonSizeProp = ({ size }) => {
   switch (size) {
     default:
-    case 'large':
+    case "large":
       return css`
-        padding: ${themeGet('space.xs')} ${themeGet('space.l')};
+        padding: ${themeGet("space.xs")} ${themeGet("space.l")};
       `;
-    case 'small':
+    case "small":
       return css`
-        padding: ${themeGet('space.xxs')} ${themeGet('space.base')};
+        padding: ${themeGet("space.xxs")} ${themeGet("space.base")};
       `;
-    case 'micro':
+    case "micro":
       return css`
-        padding: ${themeGet('space.xxs')} ${themeGet('space.xs')};
+        padding: ${themeGet("space.xxs")} ${themeGet("space.xs")};
       `;
   }
 };
 
 const activeLink = ({ focused, hovered, pressed, type }) => {
-  if (pressed && type === 'link') {
+  if (pressed && type === "link") {
     return css`
       background: none;
       border: transparent;
     `;
   }
 
-  if ((focused || hovered) && type === 'link') {
+  if ((focused || hovered) && type === "link") {
     return css`
       background: none;
       border: transparent;
@@ -121,7 +130,7 @@ const activeLink = ({ focused, hovered, pressed, type }) => {
   return null;
 };
 const buttonTypeLink = ({ type }) => {
-  if (type === 'link') {
+  if (type === "link") {
     return css`
       padding: 0;
     `;
@@ -133,7 +142,7 @@ const Button = withTheme(styled.button`
   border-width: 2px;
   text-align: center;
   border: transparent;
-  border-radius: ${themeGet('radii.base')};
+  border-radius: ${themeGet("radii.base")};
   cursor: pointer;
   ${buttonTypeProp}
   ${webTransition}
@@ -164,13 +173,13 @@ const titleState = ({ theme, disabled, focused, hovered }) => {
 };
 
 const titleStateLink = ({ theme, disabled, focused, hovered, type }) => {
-  if (disabled && type === 'link') {
+  if (disabled && type === "link") {
     return css`
       color: ${theme.colors.text.secondary};
     `;
   }
 
-  if ((focused || hovered) && type === 'link') {
+  if ((focused || hovered) && type === "link") {
     return css`
       color: ${theme.colors.text.primary};
     `;
@@ -183,18 +192,18 @@ const titleTypeProp = ({ type }) => {
   switch (type) {
     default:
       return css`
-        color: ${themeGet('colors.fill.paper')};
+        color: ${themeGet("colors.fill.paper")};
       `;
-    case 'primary':
+    case "primary":
       return null;
 
-    case 'secondary':
+    case "secondary":
       return css`
-        color: ${themeGet('colors.text.action')};
+        color: ${themeGet("colors.text.action")};
       `;
-    case 'link':
+    case "link":
       return css`
-        color: ${themeGet('colors.text.action')};
+        color: ${themeGet("colors.text.action")};
       `;
   }
 };
@@ -202,15 +211,15 @@ const titleTypeProp = ({ type }) => {
 const titleSizeProp = ({ size }) => {
   switch (size) {
     default:
-    case 'large':
+    case "large":
       return css`
         ${TypeStyles.SystemText}
       `;
-    case 'small':
+    case "small":
       return css`
         ${TypeStyles.SystemText}
       `;
-    case 'micro':
+    case "micro":
       return css`
         ${TypeStyles.SmallSystemText}
       `;
@@ -225,7 +234,22 @@ const Title = withTheme(styled.span`
   ${titleStateLink}
 `);
 
+const Content = withTheme(styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`);
+
+const Icon = withTheme(styled.div`
+  padding-left: ${themeGet("space.xxs")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`);
+
 export default {
   Button,
   Title,
+  Content,
+  Icon,
 };
