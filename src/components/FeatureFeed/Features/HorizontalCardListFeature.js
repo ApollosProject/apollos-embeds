@@ -42,7 +42,7 @@ function HorizontalCardListFeature(props = {}) {
       )}`,
     });
   };
-  console.log('props.feature?.cards', props.feature?.cards);
+
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
