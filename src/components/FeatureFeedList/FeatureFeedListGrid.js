@@ -5,27 +5,25 @@ import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
+import {
+  add as addBreadcrumb,
+  useBreadcrumb,
+} from '../../providers/BreadcrumbProvider';
 
 function FeatureFeedListGrid(props = {}) {
-  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-
+  const [state, dispatch] = useBreadcrumb();
   // const [viewWidth, setViewWidth] = React.useState(0);
   // const boxWidth = viewWidth * 0.25 - 66;
-  console.log('location2', location);
 
   const handleActionPress = (item) => {
-    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`, {
-      state: {
-        ...location.state,
-        ...{
-          [window.history.state.idx - 1]: {
-            url: `?id=${getURLFromType(item.relatedNode)}`,
-            title: item.title,
-          },
-        },
-      },
-    });
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(item.relatedNode)}`,
+        title: item.relatedNode?.title,
+      })
+    );
+    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
   };
 
   return (
