@@ -75,7 +75,7 @@ function RenderFeatures(props) {
 
 const FeatureFeed = (props) => {
   const location = useLocation();
-  console.log('location', location);
+
   return (
     <>
       <Breadcrumbs />
