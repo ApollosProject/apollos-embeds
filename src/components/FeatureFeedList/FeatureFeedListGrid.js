@@ -1,22 +1,29 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
+import {
+  add as addBreadcrumb,
+  useBreadcrumb,
+} from '../../providers/BreadcrumbProvider';
 
 function FeatureFeedListGrid(props = {}) {
-  const navigate = useNavigate();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [state, dispatch] = useBreadcrumb();
   // const [viewWidth, setViewWidth] = React.useState(0);
   // const boxWidth = viewWidth * 0.25 - 66;
 
   const handleActionPress = (item) => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
-    });
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(item.relatedNode)}`,
+        title: item.relatedNode?.title,
+      })
+    );
+    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
   };
 
   return (

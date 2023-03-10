@@ -10,12 +10,14 @@ import {
   ContentSingle,
   FeatureFeedList,
   ContentChannel,
+  Breadcrumbs,
 } from '../components';
 import { Box } from '../ui-kit';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useLocation } from 'react-router-dom';
 
-const FeatureFeed = (props) => {
+function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
+
   const _id = searchParams.get('id');
 
   const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
@@ -69,6 +71,17 @@ const FeatureFeed = (props) => {
       );
     }
   }
+}
+
+const FeatureFeed = (props) => {
+  const location = useLocation();
+
+  return (
+    <>
+      <Breadcrumbs />
+      <RenderFeatures {...props} />
+    </>
+  );
 };
 
 FeatureFeed.propTypes = {};

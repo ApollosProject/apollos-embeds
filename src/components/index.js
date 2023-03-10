@@ -5,9 +5,11 @@ import VideoPlayer from './VideoPlayer';
 import ContentChannel from './ContentChannel';
 import AuthManager from './Auth';
 import Logo from './Logo';
+import Breadcrumbs from './Breadcrumbs';
 
 export {
   Feed,
+  Breadcrumbs,
   ContentSingle,
   FeatureFeedList,
   VideoPlayer,

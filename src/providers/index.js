@@ -1,13 +1,15 @@
 import AppProvider from './AppProvider';
-import TabFeedProvider from './TabFeedProvider';
+import BreadcrumbProvider from './BreadcrumbProvider';
+import ContentFeedProvider from './ContentFeedProvider';
 import ContentItemProvider from './ContentItemProvider';
 import FeatureFeedProvider from './FeatureFeedProvider';
-import ContentFeedProvider from './ContentFeedProvider';
+import TabFeedProvider from './TabFeedProvider';
 
 export {
   AppProvider,
-  TabFeedProvider,
+  BreadcrumbProvider,
+  ContentFeedProvider,
   ContentItemProvider,
   FeatureFeedProvider,
-  ContentFeedProvider,
+  TabFeedProvider,
 };
