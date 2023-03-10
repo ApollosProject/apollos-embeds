@@ -5,25 +5,38 @@ import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
 
-import { getURLFromType } from '../utils';
+import { getURLFromType, videoFilters } from '../utils';
 import FeatureFeed from './FeatureFeed';
+import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
+
 import {
   Box,
+  H1,
   H2,
   H4,
   Loader,
   Longform,
-  utils,
   H3,
   ContentCard,
   BodyText,
 } from '../ui-kit';
+import { useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
 
   const invalidPage = !props.loading && !props.data;
+
+  // Video details
+  const videoMedia = props.data?.videos[0];
+
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
+    {
+      variables: { id: videoMedia?.id },
+      skip: !videoMedia?.id,
+    }
+  );
 
   useEffect(() => {
     if (invalidPage) {
@@ -48,14 +61,24 @@ function ContentSingle(props = {}) {
     );
   }
 
+  // Content Details
   const coverImage = props?.data?.coverImage;
-  const edges = props?.data?.childContentItemsConnection?.edges;
+
   const htmlContent = props?.data?.htmlContent;
   const summary = props?.data?.summary;
   const title = props?.data?.title;
+  const parentChannel = props.data?.parentChannel;
+  const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const hasChildContent = childContentItems?.length > 0;
+  const validFeatures = props.data?.featureFeed?.features.filter(
+    (feature) => FeatureFeedComponentMap[feature.__typename]
+  );
+  const hasFeatures = validFeatures?.length;
+  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
+
   const publishDate = new Date(parseInt(props?.data?.publishDate));
 
-  const formatedPublishDate = props?.data?.publishDate
+  const formattedPublishDate = props?.data?.publishDate
     ? format(
         addMinutes(publishDate, publishDate.getTimezoneOffset()),
         'MMMM do, yyyy'
@@ -63,6 +86,13 @@ function ContentSingle(props = {}) {
     : null;
 
   const sanitizedHTML = DOMPurify.sanitize(htmlContent);
+
+  // We'll conditionally place this divider as needed
+  const infoDivider = (
+    <BodyText color="text.tertiary" mx="xs">
+      |
+    </BodyText>
+  );
 
   const handleActionPress = (item) => {
     navigate({
@@ -73,11 +103,12 @@ function ContentSingle(props = {}) {
 
   return (
     <>
-      <Box width="750px" margin="0 auto">
+      <Box margin="0 auto">
         <Box mb="base">
           {props.data?.videos[0] ? (
             <VideoPlayer
-              videos={props.data?.videos[0]}
+              userProgress={userProgress}
+              parentNode={props.data}
               coverImage={coverImage?.sources[0]?.uri}
             />
           ) : (
@@ -91,18 +122,39 @@ function ContentSingle(props = {}) {
         </Box>
 
         <Box mb="l">
-          {title ? <H2 mb="xxxs">{title}</H2> : null}
-          {formatedPublishDate ? (
-            <BodyText color="text.secondary" mb="s">
-              {formatedPublishDate}
-            </BodyText>
+          {/* Title */}
+
+          {title && !hasChildContent ? <H2>{title}</H2> : null}
+          {title && hasChildContent ? <H1>{title}</H1> : null}
+          <Box display="flex" flexDirection="row" mb="s">
+            {parentChannel.name ? (
+              <BodyText
+                color="text.secondary"
+                mb={title && !hasChildContent ? 'xxs' : ''}
+              >
+                {parentChannel.name}
+              </BodyText>
+            ) : null}
+
+            {/* ( Optional Divider ) */}
+            {formattedPublishDate ? infoDivider : null}
+            {formattedPublishDate ? (
+              <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
+            ) : null}
+          </Box>
+          {/* Children Count */}
+          {showEpisodeCount ? (
+            <H4 color="text.secondary" mr="xl">
+              {childContentItems.length}{' '}
+              {`Episode${childContentItems.length === 1 ? '' : 's'}`}
+            </H4>
           ) : null}
           {htmlContent ? (
             <Longform dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
           ) : null}
         </Box>
 
-        {edges?.length > 0 ? (
+        {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature.title}</H3>
             <Box
@@ -110,21 +162,25 @@ function ContentSingle(props = {}) {
               gridTemplateColumns="repeat(3, 1fr)"
               gridGap="20px"
             >
-              {props.feature?.cards?.map((item, index) => (
+              {childContentItems?.map((item, index) => (
                 <ContentCard
                   key={item.title}
                   image={item.coverImage}
                   title={item.title}
                   summary={item.summary}
                   onClick={() => handleActionPress(item)}
+                  videoMedia={item.relatedNode?.videos[0]}
                 />
               ))}
             </Box>
           </Box>
         ) : null}
 
-        {props.data?.featureFeed?.features.length > 0 ? (
-          <FeatureFeed data={props?.data?.featureFeed} />
+        {/* Sub-Feature Feed */}
+        {hasFeatures ? (
+          <Box my="l">
+            <FeatureFeed data={props.data?.featureFeed} />
+          </Box>
         ) : null}
       </Box>
     </>

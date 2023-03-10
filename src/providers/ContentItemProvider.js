@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 
 import { useContentItem } from '../hooks';
 
-function ContentItemProvider({ Component, options, ...props }) {
+function ContentItemProvider({ Component, options }) {
   const { loading, error, item } = useContentItem(options);
 
-  return <Component data={item} loading={loading} error={error} {...props} />;
+  return <Component data={item} loading={loading} error={error} />;
 }
 
 ContentItemProvider.propTypes = {

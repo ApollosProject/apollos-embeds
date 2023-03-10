@@ -1,5 +1,7 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
+import isNil from 'lodash/isNil';
+import { Check } from 'phosphor-react';
 
 import {
   BodyText,
@@ -7,9 +9,30 @@ import {
   Box,
   H4,
   systemPropTypes,
+  ProgressBar,
 } from '../../ui-kit';
+import { useVideoMediaProgress } from '../../hooks';
+import { getPercentWatched } from '../../utils';
+import {
+  Title,
+  Image,
+  BottomSlot,
+  CompleteIndicator,
+} from './ContentCard.styles';
 
 function ContentCard(props = {}) {
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
+    {
+      variables: { id: props.videoMedia?.id },
+      skip: !props.videoMedia?.id,
+    }
+  );
+
+  const percentWatched = getPercentWatched({
+    duration: props.videoMedia?.duration,
+    userProgress,
+  });
+
   return (
     <Box
       flex={1}
@@ -22,15 +45,27 @@ function ContentCard(props = {}) {
       height="100%"
       {...props}
     >
-      {/* Image */}
-      <Box
-        backgroundSize="cover"
-        paddingBottom="56.25%"
-        backgroundPosition="center"
-        backgroundImage={`url(${
-          props.image?.sources[0].uri ? props.image.sources[0].uri : null
-        })`}
-      />
+      <Box position="relative">
+        {/* Image */}
+        <Box
+          backgroundSize="cover"
+          paddingBottom="56.25%"
+          backgroundPosition="center"
+          backgroundImage={`url(${
+            props.image?.sources[0].uri ? props.image.sources[0].uri : null
+          })`}
+        />
+        {/* Progress / Completed Indicators */}
+        <BottomSlot>
+          {userProgress?.complete ? (
+            <CompleteIndicator alignSelf="flex-end">
+              <Check size={18} />
+            </CompleteIndicator>
+          ) : null}
+
+          {percentWatched > 0 ? <ProgressBar percent={percentWatched} /> : null}
+        </BottomSlot>
+      </Box>
       {/* Masthead */}
       <Box
         padding="base"
