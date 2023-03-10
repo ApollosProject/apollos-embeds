@@ -3,13 +3,10 @@
   "description": "Apollos React embed widgets",
   "version": "0.0.3",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ApollosProject/apollos-embeds.git"
-  },
   "dependencies": {
     "@apollo/client": "^3.7.4",
     "@craco/craco": "^7.0.0",
+    "@sentry/react": "^7.40.0",
     "@styled-system/theme-get": "^5.1.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -24,6 +21,7 @@
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
+    "phosphor-react": "^1.4.1",
     "postcss": "^7.0.39",
     "prop-types": "^15.8.1",
     "react": "^17.0.1",

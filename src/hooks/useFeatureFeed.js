@@ -1,6 +1,9 @@
 import { gql, useQuery } from '@apollo/client';
+import { VIDEO_MEDIA_FIELDS } from '../fragments';
 
 export const FEED_FEATURES = gql`
+  ${VIDEO_MEDIA_FIELDS}
+
   query featureFeed($itemId: ID!) {
     node(id: $itemId) {
       ... on FeatureFeed {
@@ -28,6 +31,9 @@ export const FEED_FEATURES = gql`
                 __typename
                 ... on ContentItem {
                   title
+                  videos {
+                    ...VideoMediaFields
+                  }
                 }
                 ... on Url {
                   url
@@ -54,6 +60,9 @@ export const FEED_FEATURES = gql`
                 __typename
                 ... on ContentItem {
                   title
+                  videos {
+                    ...VideoMediaFields
+                  }
                 }
                 ... on Url {
                   url
@@ -73,7 +82,6 @@ function useFeatureFeed(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
-  console.log('query', query);
 
   return {
     features: query?.data?.node || {},

@@ -1,22 +1,24 @@
-import theme from "./_config/theme";
+import theme from './_config/theme';
 
-import { system, systemPropTypes } from "./_lib/system";
-import * as utils from "./_utils";
+import { system, systemPropTypes } from './_lib/system';
+import * as utils from './_utils';
 
-import ThemeProvider from "./ThemeProvider";
+import ThemeProvider from './ThemeProvider';
 
 // UI Kit components
-import Avatar from "./Avatar";
-import Box from "./Box";
-import Button from "./Button";
-import ContentCard from "./ContentCard";
-import Loader from "./Loader";
-import Longform from "./Longform";
-import Layout from "./Layout";
-import Icons from "./Icons";
-import Input from "./Input";
-import Card from "./Card";
-import Select from "./Select";
+import Avatar from './Avatar';
+import Box from './Box';
+import Button from './Button';
+import Card from './Card';
+import ContentCard from './ContentCard';
+import Icons from './Icons';
+import Input from './Input';
+import Layout from './Layout';
+import Loader from './Loader';
+import Longform from './Longform';
+import ProgressBar from './ProgressBar';
+import ResourceCard from './ResourceCard';
+import Select from './Select';
 
 import {
   BodyText,
@@ -31,7 +33,7 @@ import {
   SmallSystemText,
   SystemText,
   TypeStyles,
-} from "./Typography";
+} from './Typography';
 
 export {
   // ====================
@@ -40,13 +42,15 @@ export {
   Avatar,
   Box,
   Button,
+  Card,
   ContentCard,
-  Loader,
-  Longform,
-  Layout,
   Icons,
   Input,
-  Card,
+  Layout,
+  Loader,
+  Longform,
+  ProgressBar,
+  ResourceCard,
   Select,
 
   // Typography

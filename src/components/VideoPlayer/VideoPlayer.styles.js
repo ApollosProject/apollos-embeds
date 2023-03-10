@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import ReactPlayer from 'react-player';
 
 import { system } from '../../ui-kit';
 
-const VideoPlayer = styled.div`
+const EmbededPlayer = styled.div`
   background-color: ${themeGet('colors.fill.screen')};
   border-radius: ${themeGet('radii.base')};
   display: block;
@@ -30,4 +31,11 @@ const VideoPlayer = styled.div`
   ${system}
 `;
 
-export default VideoPlayer;
+const VideoPlayer = styled(ReactPlayer)`
+  left: 0;
+  position: absolute;
+  top: 0;
+  ${system}
+`;
+
+export { EmbededPlayer, VideoPlayer };

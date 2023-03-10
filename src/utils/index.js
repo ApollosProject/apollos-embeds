@@ -1,10 +1,11 @@
+import * as videoFilters from './filterVideoSources';
 import cleanMarkup from './cleanMarkup';
 import createMarkup from './createMarkup';
 import getDurationString from './getDurationString';
-import getURLFromType from './getURLFromType';
 import getPathFromType from './getPathFromType';
 import getPercentWatched from './getPercentWatched';
 import getPropTypesFromObject from './getPropTypesFromObject';
+import getURLFromType from './getURLFromType';
 import getWatchButtonLabel from './getWatchButtonLabel';
 import slugify from './slugify';
 import validateEmail from './validateEmail';
@@ -14,12 +15,13 @@ export {
   cleanMarkup,
   createMarkup,
   getDurationString,
-  getURLFromType,
   getPathFromType,
   getPercentWatched,
   getPropTypesFromObject,
+  getURLFromType,
   getWatchButtonLabel,
   slugify,
   validateEmail,
   validatePhoneNumber,
+  videoFilters,
 };

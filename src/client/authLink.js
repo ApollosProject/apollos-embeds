@@ -13,7 +13,7 @@ export default setContext(async (request, { headers }) => {
     return {
       headers: {
         ...headers,
-        authorization: `Bearer ${authToken}` || '',
+        authorization: authToken ? `Bearer ${authToken}` : '',
       },
     };
   } catch (err) {
