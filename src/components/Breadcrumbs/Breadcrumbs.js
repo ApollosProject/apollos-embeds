@@ -1,5 +1,6 @@
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import { Button } from '../../ui-kit';
+import { CaretRight } from 'phosphor-react';
+import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,
   useBreadcrumb,
@@ -17,27 +18,43 @@ function Breadcrumbs(props = {}) {
     setSearchParams(`${url}`);
   }
   return (
-    <>
-      <div>Breadcrumbs</div>
+    <Box display="flex" alignItems="center" mb="xs">
       {state.length > 0 ? (
         <Button
           type="link"
-          title={`Home`}
+          title={`Featured`}
           onClick={() => handleBreadClick({ id: -1, url: '' })}
         />
       ) : null}
 
-      {state.map(function (index) {
-        console.log('index', index);
+      {state.map(function (item) {
+        if (state.length === item.id + 1) {
+          return (
+            <>
+              <Box display="flex" color="text.secondary" mx="xxs">
+                <CaretRight />
+              </Box>
+              <SystemText as="span" color="text.secondary">
+                {item.title}
+              </SystemText>
+            </>
+          );
+        }
         return (
-          <Button
-            type="link"
-            title={` > ${index.title}`}
-            onClick={() => handleBreadClick({ id: index.id, url: index.url })}
-          />
+          <>
+            <Box display="flex" color="text.secondary" mx="xxs">
+              <CaretRight />
+            </Box>
+
+            <Button
+              type="link"
+              title={item.title}
+              onClick={() => handleBreadClick({ id: item.id, url: item.url })}
+            />
+          </>
         );
       })}
-    </>
+    </Box>
   );
 }
 
