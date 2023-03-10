@@ -63,9 +63,7 @@ function ContentCard(props = {}) {
             </CompleteIndicator>
           ) : null}
 
-          {!isNil(percentWatched) ? (
-            <ProgressBar percent={percentWatched} />
-          ) : null}
+          {percentWatched > 0 ? <ProgressBar percent={percentWatched} /> : null}
         </BottomSlot>
       </Box>
       {/* Masthead */}

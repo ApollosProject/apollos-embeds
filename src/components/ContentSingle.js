@@ -169,6 +169,7 @@ function ContentSingle(props = {}) {
                   title={item.title}
                   summary={item.summary}
                   onClick={() => handleActionPress(item)}
+                  videoMedia={item.relatedNode?.videos[0]}
                 />
               ))}
             </Box>
