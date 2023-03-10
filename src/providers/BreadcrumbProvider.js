@@ -22,7 +22,6 @@ const remove = (payload) => ({
 });
 
 function reducer(state, action) {
-  console.log('action', action);
   switch (action.type) {
     case actionTypes.add: {
       return [
@@ -37,11 +36,8 @@ function reducer(state, action) {
       ];
     }
     case actionTypes.remove: {
-      console.log('state', state);
-      console.log('action.payload', action.payload);
-
+      // Probably should move dropRight to utils
       const dropRight = (arr, n = 1) => arr.slice(0, -n);
-      console.log('dropRight', dropRight(state, action.payload + 1));
       return dropRight(state, action.payload + 1);
     }
 
