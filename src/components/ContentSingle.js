@@ -5,20 +5,22 @@ import format from "date-fns/format";
 import addMinutes from "date-fns/addMinutes";
 import { useNavigate } from "react-router-dom";
 
-import { getURLFromType } from "../utils";
+import { getURLFromType, videoFilters } from "../utils";
 import FeatureFeed from "./FeatureFeed";
+import FeatureFeedComponentMap from "./FeatureFeed/FeatureFeedComponentMap";
+
 import {
   Box,
+  H1,
   H2,
   H4,
   Loader,
   Longform,
-  utils,
   H3,
   ContentCard,
   BodyText,
-  Button,
 } from "../ui-kit";
+import { useVideoMediaProgress } from "../hooks";
 import VideoPlayer from "./VideoPlayer";
 
 function ContentSingle(props = {}) {
@@ -26,6 +28,16 @@ function ContentSingle(props = {}) {
   console.log(props);
 
   const invalidPage = !props.loading && !props.data;
+
+  // Video details
+  const videoMedia = props.data?.videos[0];
+
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
+    {
+      variables: { id: videoMedia?.id },
+      skip: !videoMedia?.id,
+    }
+  );
 
   useEffect(() => {
     if (invalidPage) {
@@ -50,30 +62,24 @@ function ContentSingle(props = {}) {
     );
   }
 
-  const smileyFace = (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M12 2.25C10.0716 2.25 8.18657 2.82183 6.58319 3.89317C4.97982 4.96451 3.73013 6.48726 2.99218 8.26884C2.25422 10.0504 2.06114 12.0108 2.43735 13.9021C2.81355 15.7934 3.74215 17.5307 5.10571 18.8943C6.46928 20.2579 8.20656 21.1865 10.0979 21.5627C11.9892 21.9389 13.9496 21.7458 15.7312 21.0078C17.5127 20.2699 19.0355 19.0202 20.1068 17.4168C21.1782 15.8134 21.75 13.9284 21.75 12C21.745 9.41566 20.7162 6.93859 18.8888 5.11118C17.0614 3.28378 14.5843 2.25496 12 2.25ZM15.375 9C15.5975 9 15.815 9.06598 16 9.1896C16.185 9.31321 16.3292 9.48891 16.4144 9.69448C16.4995 9.90005 16.5218 10.1262 16.4784 10.3445C16.435 10.5627 16.3278 10.7632 16.1705 10.9205C16.0132 11.0778 15.8127 11.185 15.5945 11.2284C15.3763 11.2718 15.1501 11.2495 14.9445 11.1644C14.7389 11.0792 14.5632 10.935 14.4396 10.75C14.316 10.565 14.25 10.3475 14.25 10.125C14.25 9.82663 14.3685 9.54048 14.5795 9.3295C14.7905 9.11853 15.0766 9 15.375 9ZM8.625 9C8.84751 9 9.06502 9.06598 9.25002 9.1896C9.43503 9.31321 9.57922 9.48891 9.66437 9.69448C9.74952 9.90005 9.7718 10.1262 9.72839 10.3445C9.68498 10.5627 9.57783 10.7632 9.4205 10.9205C9.26317 11.0778 9.06271 11.185 8.84448 11.2284C8.62625 11.2718 8.40005 11.2495 8.19449 11.1644C7.98892 11.0792 7.81322 10.935 7.6896 10.75C7.56598 10.565 7.5 10.3475 7.5 10.125C7.5 9.82663 7.61853 9.54048 7.82951 9.3295C8.04049 9.11853 8.32664 9 8.625 9ZM16.5469 14.625C16.0861 15.4232 15.4234 16.0861 14.6252 16.5469C13.8271 17.0078 12.9217 17.2504 12 17.2504C11.0784 17.2504 10.1729 17.0078 9.37479 16.5469C8.57664 16.0861 7.91388 15.4232 7.45313 14.625C7.39443 14.5398 7.35398 14.4435 7.33432 14.3419C7.31466 14.2404 7.31621 14.1359 7.33888 14.035C7.36154 13.9341 7.40484 13.8389 7.46604 13.7556C7.52723 13.6722 7.60502 13.6024 7.69449 13.5505C7.78397 13.4986 7.88321 13.4658 7.98597 13.4541C8.08874 13.4425 8.1928 13.4522 8.29164 13.4826C8.39047 13.5131 8.48193 13.5637 8.56028 13.6312C8.63862 13.6988 8.70215 13.7817 8.74688 13.875C9.07718 14.4453 9.55159 14.9187 10.1226 15.2478C10.6935 15.577 11.341 15.7502 12 15.7502C12.659 15.7502 13.3065 15.577 13.8775 15.2478C14.4484 14.9187 14.9228 14.4453 15.2531 13.875C15.3603 13.7196 15.5221 13.6103 15.7063 13.5689C15.8905 13.5275 16.0835 13.5571 16.2468 13.6518C16.4101 13.7465 16.5317 13.8993 16.5873 14.0797C16.643 14.2601 16.6285 14.4548 16.5469 14.625Z"
-        fill="#F4F7F8"
-        fill-opacity="0.6"
-      />
-    </svg>
-  );
-
+  // Content Details
   const coverImage = props?.data?.coverImage;
-  const edges = props?.data?.childContentItemsConnection?.edges;
+
   const htmlContent = props?.data?.htmlContent;
   const summary = props?.data?.summary;
   const title = props?.data?.title;
+  const parentChannel = props.data?.parentChannel;
+  const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const hasChildContent = childContentItems?.length > 0;
+  const validFeatures = props.data?.featureFeed?.features.filter(
+    (feature) => FeatureFeedComponentMap[feature.__typename]
+  );
+  const hasFeatures = validFeatures?.length;
+  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
+
   const publishDate = new Date(parseInt(props?.data?.publishDate));
 
-  const formatedPublishDate = props?.data?.publishDate
+  const formattedPublishDate = props?.data?.publishDate
     ? format(
         addMinutes(publishDate, publishDate.getTimezoneOffset()),
         "MMMM do, yyyy"
@@ -81,6 +87,13 @@ function ContentSingle(props = {}) {
     : null;
 
   const sanitizedHTML = DOMPurify.sanitize(htmlContent);
+
+  // We'll conditionally place this divider as needed
+  const infoDivider = (
+    <BodyText color="text.tertiary" mx="xs">
+      |
+    </BodyText>
+  );
 
   const handleActionPress = (item) => {
     navigate({
@@ -91,11 +104,12 @@ function ContentSingle(props = {}) {
 
   return (
     <>
-      <Box width="750px" margin="0 auto">
+      <Box margin="0 auto">
         <Box mb="base">
           {props.data?.videos[0] ? (
             <VideoPlayer
-              videos={props.data?.videos[0]}
+              userProgress={userProgress}
+              parentNode={props.data}
               coverImage={coverImage?.sources[0]?.uri}
             />
           ) : (
@@ -107,32 +121,43 @@ function ContentSingle(props = {}) {
             />
           )}
         </Box>
-        <Box>
-          <Box display="flex" justifyContent="space-between">
-            <Box mb="">
-              {title ? <H2 mb="xxxs">{title}</H2> : null}
-              {formatedPublishDate ? (
-                <BodyText color="text.secondary" mb="s">
-                  {formatedPublishDate}
-                </BodyText>
-              ) : null}
-            </Box>
-            <Box>
-              <Button
-                title="Primary CTA"
-                type="cta"
-                icon={smileyFace}
-                padding="xs"
-              />
-            </Box>
+
+        <Box mb="l">
+          {/* Title */}
+
+          {title && !hasChildContent ? <H2>{title}</H2> : null}
+          {title && hasChildContent ? <H1>{title}</H1> : null}
+          <Box display="flex" flexDirection="row" mb="s">
+            {parentChannel.name ? (
+              <BodyText
+                color="text.secondary"
+                mb={title && !hasChildContent ? "xxs" : ""}
+              >
+                {parentChannel.name}
+              </BodyText>
+            ) : null}
+
+            {/* ( Optional Divider ) */}
+            {formattedPublishDate ? infoDivider : null}
+            {formattedPublishDate ? (
+              <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
+            ) : null}
           </Box>
+          {/* Children Count */}
+          {showEpisodeCount ? (
+            <H4 color="text.secondary" mr="xl">
+              {childContentItems.length}{" "}
+              {`Episode${childContentItems.length === 1 ? "" : "s"}`}
+            </H4>
+          ) : null}
           {htmlContent ? (
             <>
               <Longform dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
             </>
           ) : null}
         </Box>
-        {edges?.length > 0 ? (
+
+        {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature.title}</H3>
             <Box
@@ -140,20 +165,25 @@ function ContentSingle(props = {}) {
               gridTemplateColumns="repeat(3, 1fr)"
               gridGap="20px"
             >
-              {props.feature?.cards?.map((item, index) => (
+              {childContentItems?.map((item, index) => (
                 <ContentCard
                   key={item.title}
                   image={item.coverImage}
                   title={item.title}
                   summary={item.summary}
                   onClick={() => handleActionPress(item)}
+                  videoMedia={item.relatedNode?.videos[0]}
                 />
               ))}
             </Box>
           </Box>
         ) : null}
-        {props.data?.featureFeed?.features.length > 0 ? (
-          <FeatureFeed data={props?.data?.featureFeed} />
+
+        {/* Sub-Feature Feed */}
+        {hasFeatures ? (
+          <Box my="l">
+            <FeatureFeed data={props.data?.featureFeed} />
+          </Box>
         ) : null}
       </Box>
     </>
