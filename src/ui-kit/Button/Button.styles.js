@@ -95,7 +95,8 @@ const buttonTypeProp = ({ theme, type }) => {
   }
 };
 
-const buttonSizeProp = ({ size }) => {
+const buttonSizeProp = ({ size, ...props }) => {
+  console.log(props);
   switch (size) {
     default:
     case "large":
@@ -109,6 +110,18 @@ const buttonSizeProp = ({ size }) => {
     case "micro":
       return css`
         padding: ${themeGet("space.xxs")} ${themeGet("space.xs")};
+      `;
+    case "button-feature":
+      return css`
+        width: 100%;
+        padding: ${themeGet("space.xs")};
+        @media screen and (min-width: ${themeGet("breakpoints.md")}) {
+          width: 250px;
+        }
+
+        @media screen and (min-width: ${themeGet("breakpoints.lg")}) {
+          width: 400px;
+        }
       `;
   }
 };
@@ -138,6 +151,12 @@ const buttonTypeLink = ({ type }) => {
   return null;
 };
 
+const buttonWidth = ({ width }) => {
+  return css`
+    width: ${width};
+  `;
+};
+
 const Button = withTheme(styled.button`
   border-width: 2px;
   text-align: center;
@@ -150,6 +169,7 @@ const Button = withTheme(styled.button`
   ${buttonSizeProp}
   ${buttonTypeLink}
   ${activeLink}
+  ${buttonWidth}
   ${system}
 `);
 
