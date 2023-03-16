@@ -1,7 +1,7 @@
-import React from 'react';
-import { withTheme } from 'styled-components';
-import isNil from 'lodash/isNil';
-import { Check } from 'phosphor-react';
+import React from "react";
+import { withTheme } from "styled-components";
+import isNil from "lodash/isNil";
+import { Check } from "phosphor-react";
 
 import {
   BodyText,
@@ -10,15 +10,16 @@ import {
   H4,
   systemPropTypes,
   ProgressBar,
-} from '../../ui-kit';
-import { useVideoMediaProgress } from '../../hooks';
-import { getPercentWatched } from '../../utils';
+} from "../../ui-kit";
+import { useVideoMediaProgress } from "../../hooks";
+import { getPercentWatched } from "../../utils";
 import {
   Title,
   Image,
   BottomSlot,
   CompleteIndicator,
-} from './ContentCard.styles';
+  Ellipsis,
+} from "./ContentCard.styles";
 
 function ContentCard(props = {}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
@@ -36,8 +37,8 @@ function ContentCard(props = {}) {
   return (
     <Box
       flex={1}
-      m={'0 10px'}
-      cursor={props.onClick ? 'pointer' : 'default'}
+      m={"0 10px"}
+      cursor={props.onClick ? "pointer" : "default"}
       borderRadius="xl"
       overflow="hidden"
       backgroundColor="neutral.gray6"
@@ -73,8 +74,12 @@ function ContentCard(props = {}) {
         backdrop-filter="blur(64px)"
       >
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
-        <H4>{props.title}</H4>
-        <SmallBodyText color="text.secondary">{props.summary}</SmallBodyText>
+        <H4>
+          <Ellipsis>{props.title}</Ellipsis>
+        </H4>
+        <SmallBodyText color="text.secondary">
+          <Ellipsis>{props.summary}</Ellipsis>
+        </SmallBodyText>
       </Box>
     </Box>
   );
