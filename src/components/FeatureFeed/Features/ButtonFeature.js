@@ -22,9 +22,9 @@ function ButtonFeature(props = {}) {
       title={props.title}
       type="primary"
       icon={props.icon}
-      size="button-feature"
       cursor={props.relatedNode ? "pointer" : "default"}
       onClick={props.relatedNode && handleActionPress}
+      width="100%"
     />
   );
 }
