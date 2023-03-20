@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { systemPropTypes } from "../_lib/system";
 import Styled from "./Button.styles";
 
-const Button = (props = {}) => {
+const Button = ({ onClick, ...props }) => {
   return (
     <Styled.Button disabled={props.disabled} {...props}>
       <Styled.Content>
