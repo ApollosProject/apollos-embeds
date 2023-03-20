@@ -78,15 +78,6 @@ const buttonTypeProp = ({ theme, type }) => {
           border: ${darken(theme.colors.text.secondary, 0.06)};
         }
       `;
-    case "cta":
-      return css`
-        background: #00b2eb;
-        border: ${theme.colors.base.secondary};
-        &:focus,
-        &:hover {
-          border: ${darken(theme.colors.text.secondary, 0.06)};
-        }
-      `;
     case "link":
       return css`
         border-width: 2px;
@@ -110,18 +101,6 @@ const buttonSizeProp = ({ size, ...props }) => {
     case "micro":
       return css`
         padding: ${themeGet("space.xxs")} ${themeGet("space.xs")};
-      `;
-    case "button-feature":
-      return css`
-        width: 100%;
-        padding: ${themeGet("space.xs")};
-        @media screen and (min-width: ${themeGet("breakpoints.md")}) {
-          width: 250px;
-        }
-
-        @media screen and (min-width: ${themeGet("breakpoints.lg")}) {
-          width: 400px;
-        }
       `;
   }
 };
