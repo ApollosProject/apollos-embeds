@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CaretLeft } from 'phosphor-react';
 
 import { Box, Card, Button } from '../../../ui-kit';
 import customizations from './customizations';
@@ -44,9 +45,13 @@ function AuthLayout(props = {}) {
         {state.prevStep === authSteps.Identity ? (
           <Button
             type="link"
-            title="< Back"
+            title="Back"
             onClick={() => onGoBack()}
             alignSelf="flex-end"
+            color="text.action"
+            alignItems="center"
+            display="flex"
+            icon={<CaretLeft />}
           />
         ) : null}
         <Heading>{props.heading || customizations.defaulthHeading}</Heading>
