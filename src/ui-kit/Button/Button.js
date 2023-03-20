@@ -19,7 +19,7 @@ const Button = ({ onClick, ...props }) => {
 
 Button.propTypes = {
   ...systemPropTypes,
-  size: PropTypes.oneOf(["micro", "small", "large", "button-feature"]),
+  size: PropTypes.oneOf(["micro", "small", "large"]),
   type: PropTypes.oneOf(["primary", "secondary", "link"]),
   title: PropTypes.string.isRequired,
   onClick: PropTypes.func,
