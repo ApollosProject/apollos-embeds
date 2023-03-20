@@ -1,8 +1,12 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+import {
+  add as addBreadcrumb,
+  useBreadcrumb,
+} from '../../../providers/BreadcrumbProvider';
 
 import Carousel from 'react-multi-carousel';
 
@@ -25,22 +29,28 @@ const responsive = {
 };
 
 function HorizontalCardListFeature(props = {}) {
-  const navigate = useNavigate();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [state, dispatch] = useBreadcrumb();
   const handleActionPress = (item) => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
-    });
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(item.relatedNode)}`,
+        title: item.relatedNode?.title,
+      })
+    );
+    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
   };
 
-  const handlePrimaryActionPress = (action) => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(
-        props?.feature?.primaryAction.relatedNode
-      )}`,
-    });
+  const handlePrimaryActionPress = () => {
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+        title: props?.feature?.title,
+      })
+    );
+    setSearchParams(
+      `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+    );
   };
 
   return (
