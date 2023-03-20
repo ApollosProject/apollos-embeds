@@ -24,6 +24,7 @@ const AuthIdentity = () => {
         userExists,
         userProfile,
         step: nextStep,
+        prevStep: state.step,
       })
     );
   };
