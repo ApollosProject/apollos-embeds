@@ -44,9 +44,10 @@ function ContentCard(props = {}) {
       backgroundColor="neutral.gray6"
       boxShadow="medium"
       height="100%"
+      display={props.horizontal ? "flex" : ""}
       {...props}
     >
-      <Box position="relative">
+      <Box position="relative" width={props.horizontal ? "50%" : ""}>
         {/* Image */}
         <Box
           backgroundSize="cover"
@@ -55,6 +56,7 @@ function ContentCard(props = {}) {
           backgroundImage={`url(${
             props.image?.sources[0].uri ? props.image.sources[0].uri : null
           })`}
+          height="100%"
         />
         {/* Progress / Completed Indicators */}
         <BottomSlot>
@@ -72,14 +74,11 @@ function ContentCard(props = {}) {
         padding="base"
         background="material.regular"
         backdrop-filter="blur(64px)"
+        width={props.horizontal ? "50%" : ""}
       >
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
-        <H4>
-          <Ellipsis>{props.title}</Ellipsis>
-        </H4>
-        <SmallBodyText color="text.secondary">
-          <Ellipsis>{props.summary}</Ellipsis>
-        </SmallBodyText>
+        <H4>{props.title}</H4>
+        <SmallBodyText color="text.secondary">{props.summary}</SmallBodyText>
       </Box>
     </Box>
   );
