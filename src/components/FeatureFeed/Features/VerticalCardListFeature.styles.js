@@ -7,38 +7,23 @@ import { themeGet } from "@styled-system/theme-get";
 
 import { TypeStyles } from "../../../ui-kit/Typography";
 
-const VerticalCarouselContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 800px;
-  position: relative;
-`;
-
-const VerticalCarouselList = styled(Carousel)`
-  display: flex;
-  align-items: center;
-  transform: rotate(90deg);
-  width: 800px;
-  min-width: 800px;
-  height: 400px;
-
-  .react-multi-carousel-track {
-    align-items: center;
+const VerticalListContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  grid-auto-rows: 1fr;
+  grid-auto-columns: 1fr;
+  grid-gap: 20px;
+  @media screen and (max-width: ${themeGet("breakpoints.lg")}) {
+    grid-template-columns: repeat(2, 1fr);
   }
-
-  .react-multi-carousel-item {
+  @media screen and (max-width: ${themeGet("breakpoints.md")}) {
+    grid-template-columns: repeat(1, 1fr);
   }
-`;
-
-const VerticalCarouselItem = styled.div`
-  transform: rotate(-90deg);
 `;
 
 const VerticalCardList = {
-  VerticalCarouselContainer,
-  VerticalCarouselList,
-  VerticalCarouselItem,
+  VerticalListContainer,
 };
 
 export default VerticalCardList;

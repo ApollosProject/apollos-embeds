@@ -1,48 +1,41 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
 
 import { getURLFromType } from "../../../utils";
 import { ContentCard, Box, H3, systemPropTypes, Button } from "../../../ui-kit";
+import {
+  add as addBreadcrumb,
+  useBreadcrumb,
+} from "../../../providers/BreadcrumbProvider";
 
 import VerticalCardList from "./VerticalCardListFeature.styles";
 
-const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-    partialVisibilityGutter: 30,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 3,
-    partialVisibilityGutter: 30,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 3,
-    partialVisibilityGutter: 30,
-  },
-};
-
 function VerticalCardListFeature(props = {}) {
-  const navigate = useNavigate();
-
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [state, dispatch] = useBreadcrumb();
   const handleActionPress = (item) => {
-    navigate({
-      pathname: "/",
-      search: `?id=${getURLFromType(item.relatedNode)}`,
-    });
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(item.relatedNode)}`,
+        title: item.relatedNode?.title,
+      })
+    );
+    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
   };
 
-  const handlePrimaryActionPress = (action) => {
-    navigate({
-      pathname: "/",
-      search: `?id=${getURLFromType(
-        props?.feature?.primaryAction.relatedNode
-      )}`,
-    });
+  const handlePrimaryActionPress = () => {
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+        title: props?.feature?.title,
+      })
+    );
+    setSearchParams(
+      `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+    );
   };
-
+  const cards = props.feature?.cards.slice(1);
+  console.log("CARD", cards);
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
@@ -57,19 +50,21 @@ function VerticalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
-      <VerticalCardList.VerticalCarouselContainer>
-        <VerticalCardList.VerticalCarouselList
-          swipeable={true}
-          draggable={false}
-          showDots={false}
-          responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
-          infinite={true}
-          autoPlaySpeed={1000}
-          keyBoardControl={true}
-        >
-          {props.feature?.cards?.map((item, index) => (
-            <VerticalCardList.VerticalCarouselItem>
+      {cards.length === 1 ? (
+        <ContentCard
+          key={cards[0].title}
+          image={cards[0].coverImage}
+          title={cards[0].title}
+          summary={cards[0].summary}
+          onClick={() => handleActionPress(cards[0])}
+          videoMedia={cards[0].relatedNode?.videos[0]}
+          horizontal={true}
+        />
+      ) : (
+        <VerticalCardList.VerticalListContainer>
+          {cards.map((item, index) => {
+            if (index >= 6) return <></>;
+            return (
               <ContentCard
                 key={item.title}
                 image={item.coverImage}
@@ -78,10 +73,10 @@ function VerticalCardListFeature(props = {}) {
                 onClick={() => handleActionPress(item)}
                 videoMedia={item.relatedNode?.videos[0]}
               />
-            </VerticalCardList.VerticalCarouselItem>
-          ))}
-        </VerticalCardList.VerticalCarouselList>
-      </VerticalCardList.VerticalCarouselContainer>
+            );
+          })}
+        </VerticalCardList.VerticalListContainer>
+      )}
     </Box>
   );
 }
