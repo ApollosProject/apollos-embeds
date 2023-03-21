@@ -1,8 +1,8 @@
-import React from "react";
-import { withTheme } from "styled-components";
+import React from 'react';
+import { withTheme } from 'styled-components';
 
-import { useNavigate } from "react-router-dom";
-import { getURLFromType } from "../../../utils";
+import { useNavigate } from 'react-router-dom';
+import { getURLFromType } from '../../../utils';
 
 import {
   BodyText,
@@ -13,7 +13,7 @@ import {
   H3,
   H4,
   systemPropTypes,
-} from "../../../ui-kit";
+} from '../../../ui-kit';
 
 function HeroListFeature(props = {}) {
   const navigate = useNavigate();
@@ -21,13 +21,13 @@ function HeroListFeature(props = {}) {
   // Event Handlers
   const handleWatchNowPress = () => {
     navigate({
-      pathname: "/",
+      pathname: '/',
       search: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
     });
   };
   const handlePrimaryActionClick = () => {
     navigate({
-      pathname: "/",
+      pathname: '/',
       search: `?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`,
     });
   };

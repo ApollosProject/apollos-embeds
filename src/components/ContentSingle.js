@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import PropTypes from "prop-types";
-import DOMPurify from "dompurify";
-import format from "date-fns/format";
-import addMinutes from "date-fns/addMinutes";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import DOMPurify from 'dompurify';
+import format from 'date-fns/format';
+import addMinutes from 'date-fns/addMinutes';
+import { useNavigate } from 'react-router-dom';
 
-import { getURLFromType, videoFilters } from "../utils";
-import FeatureFeed from "./FeatureFeed";
-import FeatureFeedComponentMap from "./FeatureFeed/FeatureFeedComponentMap";
+import { getURLFromType, videoFilters } from '../utils';
+import FeatureFeed from './FeatureFeed';
+import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
 import {
   Box,
@@ -19,9 +19,9 @@ import {
   H3,
   ContentCard,
   BodyText,
-} from "../ui-kit";
-import { useVideoMediaProgress } from "../hooks";
-import VideoPlayer from "./VideoPlayer";
+} from '../ui-kit';
+import { useVideoMediaProgress } from '../hooks';
+import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
@@ -42,7 +42,7 @@ function ContentSingle(props = {}) {
   useEffect(() => {
     if (invalidPage) {
       navigate({
-        pathname: "/",
+        pathname: '/',
       });
     }
   }, [invalidPage, navigate]);
@@ -82,7 +82,7 @@ function ContentSingle(props = {}) {
   const formattedPublishDate = props?.data?.publishDate
     ? format(
         addMinutes(publishDate, publishDate.getTimezoneOffset()),
-        "MMMM do, yyyy"
+        'MMMM do, yyyy'
       )
     : null;
 
@@ -97,7 +97,7 @@ function ContentSingle(props = {}) {
 
   const handleActionPress = (item) => {
     navigate({
-      pathname: "/",
+      pathname: '/',
       search: `?id=${getURLFromType(item.relatedNode)}`,
     });
   };
@@ -131,7 +131,7 @@ function ContentSingle(props = {}) {
             {parentChannel.name ? (
               <BodyText
                 color="text.secondary"
-                mb={title && !hasChildContent ? "xxs" : ""}
+                mb={title && !hasChildContent ? 'xxs' : ''}
               >
                 {parentChannel.name}
               </BodyText>
@@ -146,8 +146,8 @@ function ContentSingle(props = {}) {
           {/* Children Count */}
           {showEpisodeCount ? (
             <H4 color="text.secondary" mr="xl">
-              {childContentItems.length}{" "}
-              {`Episode${childContentItems.length === 1 ? "" : "s"}`}
+              {childContentItems.length}{' '}
+              {`Episode${childContentItems.length === 1 ? '' : 's'}`}
             </H4>
           ) : null}
           {htmlContent ? (
