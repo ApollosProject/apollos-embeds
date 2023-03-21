@@ -34,8 +34,7 @@ function VerticalCardListFeature(props = {}) {
       `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
     );
   };
-  const cards = props.feature?.cards.slice(1);
-  console.log("CARD", cards);
+  const cards = props.feature?.cards;
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
