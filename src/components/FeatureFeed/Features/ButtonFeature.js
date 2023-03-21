@@ -20,7 +20,6 @@ function ButtonFeature(props = {}) {
   return (
     <Button
       title={props.title}
-      type="primary"
       icon={props.icon}
       cursor={props.relatedNode ? "pointer" : "default"}
       onClick={props.relatedNode && handleActionPress}
