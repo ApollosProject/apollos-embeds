@@ -86,7 +86,7 @@ const buttonTypeProp = ({ theme, type }) => {
   }
 };
 
-const buttonSizeProp = ({ size }) => {
+const buttonSizeProp = ({ size, ...props }) => {
   switch (size) {
     default:
     case 'large':
@@ -129,6 +129,12 @@ const buttonTypeLink = ({ type }) => {
   return null;
 };
 
+const buttonWidth = ({ width }) => {
+  return css`
+    width: ${width};
+  `;
+};
+
 const Button = withTheme(styled.button`
   border-width: 2px;
   text-align: center;
@@ -141,6 +147,7 @@ const Button = withTheme(styled.button`
   ${buttonSizeProp}
   ${buttonTypeLink}
   ${activeLink}
+  ${buttonWidth}
   ${system}
 `);
 
@@ -225,7 +232,22 @@ const Title = withTheme(styled.span`
   ${titleStateLink}
 `);
 
+const Content = withTheme(styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`);
+
+const Icon = withTheme(styled.div`
+  padding-left: ${themeGet('space.xxs')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`);
+
 export default {
   Button,
   Title,
+  Content,
+  Icon,
 };
