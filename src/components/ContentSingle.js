@@ -25,7 +25,6 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
-  console.log(props);
 
   const invalidPage = !props.loading && !props.data;
 

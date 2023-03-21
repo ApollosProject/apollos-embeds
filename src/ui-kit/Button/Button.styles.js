@@ -87,7 +87,6 @@ const buttonTypeProp = ({ theme, type }) => {
 };
 
 const buttonSizeProp = ({ size, ...props }) => {
-  console.log(props);
   switch (size) {
     default:
     case 'large':
