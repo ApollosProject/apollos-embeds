@@ -24,6 +24,7 @@ const AuthIdentity = () => {
         userExists,
         userProfile,
         step: nextStep,
+        prevStep: state.step,
       })
     );
   };
@@ -153,6 +154,7 @@ const AuthIdentity = () => {
                 title="Create Account →"
                 type="link"
                 size="micro"
+                onClick={() => dispatch(updateAuth({ type: 'signup' }))}
               />
             </span>
           </SmallSystemText>
@@ -168,6 +170,7 @@ const AuthIdentity = () => {
                 title="Log in →"
                 type="link"
                 size="micro"
+                onClick={() => dispatch(updateAuth({ type: 'login' }))}
               />
             </span>
           </SmallSystemText>

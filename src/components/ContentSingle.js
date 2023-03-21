@@ -150,7 +150,9 @@ function ContentSingle(props = {}) {
             </H4>
           ) : null}
           {htmlContent ? (
-            <Longform dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+            <>
+              <Longform dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+            </>
           ) : null}
         </Box>
 

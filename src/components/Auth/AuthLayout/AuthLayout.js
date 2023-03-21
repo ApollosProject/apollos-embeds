@@ -1,11 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { CaretLeft } from 'phosphor-react';
 
-import { Box, Card } from '../../../ui-kit';
+import { Box, Card, Button } from '../../../ui-kit';
 import customizations from './customizations';
 import { Heading, SubHeading } from './AuthLayout.styles';
+import { update as updateAuth, useAuth } from '../../../providers/AuthProvider';
+import authSteps from '../authSteps';
 
 function AuthLayout(props = {}) {
+  const [state, dispatch] = useAuth();
+
+  const onGoBack = () => {
+    dispatch(
+      updateAuth({
+        step: state.prevStep,
+        prevStep: authSteps.Welcome,
+      })
+    );
+  };
+
   return (
     <Box
       position="fixed"
@@ -22,11 +36,24 @@ function AuthLayout(props = {}) {
     >
       <Card
         p="l"
+        pt="base"
         display="flex"
         flexDirection="column"
         width="440px"
         {...props}
       >
+        {state.prevStep === authSteps.Identity ? (
+          <Button
+            type="link"
+            title="Back"
+            onClick={() => onGoBack()}
+            alignSelf="flex-end"
+            color="text.action"
+            alignItems="center"
+            display="flex"
+            icon={<CaretLeft />}
+          />
+        ) : null}
         <Heading>{props.heading || customizations.defaulthHeading}</Heading>
         <SubHeading>
           {props.subHeading || customizations.defaultSubHeading}
