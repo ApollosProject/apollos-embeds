@@ -8,8 +8,6 @@ import options from './options';
 import icons from './icons';
 
 const ShareButton = (props = {}) => {
-  console.log('PROPS', props);
-  console.log('URL', window.location.href);
   // Define state variable isMessageVisible with initial value false
   const [isMessageVisible, setMessageVisible] = useState(false);
   const [copyLabel, setCopyLabel] = useState('Copy Link');

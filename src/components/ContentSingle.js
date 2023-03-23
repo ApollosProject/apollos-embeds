@@ -26,8 +26,6 @@ import { useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
-  console.log('PROPS', props);
-  console.log('URL', window.location.href);
   const navigate = useNavigate();
 
   const invalidPage = !props.loading && !props.data;
