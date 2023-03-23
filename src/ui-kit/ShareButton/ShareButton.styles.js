@@ -16,6 +16,7 @@ const Option = withTheme(styled.div`
   border-bottom: 1px solid ${themeGet('colors.neutral.gray3')};
   &:hover {
     color: ${themeGet('colors.base.secondary')};
+    cursor: pointer;
   }
 `);
 
