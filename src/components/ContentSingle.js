@@ -19,11 +19,15 @@ import {
   H3,
   ContentCard,
   BodyText,
+  Button,
+  ShareButton,
 } from '../ui-kit';
 import { useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
+  console.log('PROPS', props);
+  console.log('URL', window.location.href);
   const navigate = useNavigate();
 
   const invalidPage = !props.loading && !props.data;
@@ -122,26 +126,39 @@ function ContentSingle(props = {}) {
         </Box>
 
         <Box mb="l">
-          {/* Title */}
+          <Box
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
+          >
+            <Box>
+              {/* Title */}
+              {title && !hasChildContent ? <H2>{title}</H2> : null}
+              {title && hasChildContent ? <H1>{title}</H1> : null}
+              <Box display="flex" flexDirection="row" mb="s">
+                {parentChannel.name ? (
+                  <BodyText
+                    color="text.secondary"
+                    mb={title && !hasChildContent ? 'xxs' : ''}
+                  >
+                    {parentChannel.name}
+                  </BodyText>
+                ) : null}
 
-          {title && !hasChildContent ? <H2>{title}</H2> : null}
-          {title && hasChildContent ? <H1>{title}</H1> : null}
-          <Box display="flex" flexDirection="row" mb="s">
-            {parentChannel.name ? (
-              <BodyText
-                color="text.secondary"
-                mb={title && !hasChildContent ? 'xxs' : ''}
-              >
-                {parentChannel.name}
-              </BodyText>
-            ) : null}
-
-            {/* ( Optional Divider ) */}
-            {formattedPublishDate ? infoDivider : null}
-            {formattedPublishDate ? (
-              <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
-            ) : null}
+                {/* ( Optional Divider ) */}
+                {formattedPublishDate ? infoDivider : null}
+                {formattedPublishDate ? (
+                  <BodyText color="text.secondary">
+                    {formattedPublishDate}
+                  </BodyText>
+                ) : null}
+              </Box>
+            </Box>
+            <Box>
+              <ShareButton contentTitle={title} />
+            </Box>
           </Box>
+
           {/* Children Count */}
           {showEpisodeCount ? (
             <H4 color="text.secondary" mr="xl">
