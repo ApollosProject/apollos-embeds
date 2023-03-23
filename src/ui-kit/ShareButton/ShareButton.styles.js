@@ -6,44 +6,51 @@ import { system } from '../_lib/system';
 
 const List = withTheme(styled.div`
   width: 100%;
+  ${system}
 `);
 
 const Option = withTheme(styled.div`
   display: flex;
   font-size: 16px;
   align-items: center;
-  padding: 10px 30px 10px 10px;
+  padding: ${themeGet('space.xs')} ${themeGet('space.base')}
+    ${themeGet('space.xs')} ${themeGet('space.xs')};
   border-bottom: 1px solid ${themeGet('colors.neutral.gray3')};
   &:hover {
     color: ${themeGet('colors.base.secondary')};
     cursor: pointer;
   }
+  ${system}
 `);
 
 const BorderlessOption = withTheme(styled.div`
   display: flex;
   font-size: 16px;
   align-items: center;
-  padding: 10px 30px 10px 10px;
+  padding: ${themeGet('space.xs')} ${themeGet('space.base')}
+    ${themeGet('space.xs')} ${themeGet('space.xs')};
   &:hover {
     color: ${themeGet('colors.base.secondary')};
   }
+  ${system}
 `);
 
 const Icon = withTheme(styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  ${system}
 `);
 
 const Label = withTheme(styled.div`
-  margin-left: 10px;
+  margin-left: ${themeGet('space.xs')};
   min-width: 100px;
+  ${system}
 `);
 
 const Wrapper = withTheme(styled.div`
   position: absolute;
-  background-color: #ffffff;
+  background-color: ${themeGet('colors.base.white')};
   border-radius: 4px;
   margin-bottom: 20px;
   top: 113%;
@@ -67,11 +74,14 @@ const Wrapper = withTheme(styled.div`
     top: -9px;
     border-width: 0 10px 10px 10px;
     border-style: solid;
-    border-color: transparent transparent #ffffff transparent;
+    border-color: transparent transparent ${themeGet(
+      'colors.base.white'
+    )} transparent;
   }
 
   border: 1px solid ${themeGet('colors.neutral.gray3')};
   box-sizing: border-box;
+  ${system}
 `);
 
 const Styled = {
