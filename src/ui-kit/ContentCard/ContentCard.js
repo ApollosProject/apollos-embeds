@@ -1,7 +1,7 @@
-import React from 'react';
-import { withTheme } from 'styled-components';
-import isNil from 'lodash/isNil';
-import { Check } from 'phosphor-react';
+import React from "react";
+import { withTheme } from "styled-components";
+import isNil from "lodash/isNil";
+import { Check } from "phosphor-react";
 
 import {
   BodyText,
@@ -10,15 +10,16 @@ import {
   H4,
   systemPropTypes,
   ProgressBar,
-} from '../../ui-kit';
-import { useVideoMediaProgress } from '../../hooks';
-import { getPercentWatched } from '../../utils';
+} from "../../ui-kit";
+import { useVideoMediaProgress } from "../../hooks";
+import { getPercentWatched } from "../../utils";
 import {
   Title,
   Image,
   BottomSlot,
   CompleteIndicator,
-} from './ContentCard.styles';
+  Ellipsis,
+} from "./ContentCard.styles";
 
 function ContentCard(props = {}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
@@ -36,16 +37,17 @@ function ContentCard(props = {}) {
   return (
     <Box
       flex={1}
-      m={'0 10px'}
-      cursor={props.onClick ? 'pointer' : 'default'}
+      m={"0 10px"}
+      cursor={props.onClick ? "pointer" : "default"}
       borderRadius="xl"
       overflow="hidden"
       backgroundColor="neutral.gray6"
       boxShadow="medium"
       height="100%"
+      display={props.horizontal ? "flex" : ""}
       {...props}
     >
-      <Box position="relative">
+      <Box position="relative" width={props.horizontal ? "50%" : ""}>
         {/* Image */}
         <Box
           backgroundSize="cover"
@@ -54,6 +56,7 @@ function ContentCard(props = {}) {
           backgroundImage={`url(${
             props.image?.sources[0].uri ? props.image.sources[0].uri : null
           })`}
+          height="100%"
         />
         {/* Progress / Completed Indicators */}
         <BottomSlot>
@@ -71,6 +74,7 @@ function ContentCard(props = {}) {
         padding="base"
         background="material.regular"
         backdrop-filter="blur(64px)"
+        width={props.horizontal ? "50%" : ""}
       >
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
         <H4>{props.title}</H4>

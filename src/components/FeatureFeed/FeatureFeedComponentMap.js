@@ -1,6 +1,7 @@
 import {
   HeroListFeature,
   HorizontalCardListFeature,
+  VerticalCardListFeature,
   ButtonFeature,
 } from './Features';
 
@@ -8,6 +9,7 @@ import {
 const FeatureFeedComponentMap = {
   HeroListFeature,
   HorizontalCardListFeature,
+  VerticalCardListFeature,
   ButtonFeature,
 };
 
