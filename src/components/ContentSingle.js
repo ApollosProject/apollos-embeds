@@ -128,12 +128,13 @@ function ContentSingle(props = {}) {
             display="flex"
             justifyContent="space-between"
             alignItems="center"
+            mb="s"
           >
             <Box>
               {/* Title */}
               {title && !hasChildContent ? <H2>{title}</H2> : null}
               {title && hasChildContent ? <H1>{title}</H1> : null}
-              <Box display="flex" flexDirection="row" mb="s">
+              <Box display="flex" flexDirection="row">
                 {parentChannel.name ? (
                   <BodyText
                     color="text.secondary"
