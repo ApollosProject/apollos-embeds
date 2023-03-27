@@ -19,6 +19,7 @@ import Longform from './Longform';
 import ProgressBar from './ProgressBar';
 import ResourceCard from './ResourceCard';
 import Select from './Select';
+import ShareButton from './ShareButton';
 
 import {
   BodyText,
@@ -52,6 +53,7 @@ export {
   ProgressBar,
   ResourceCard,
   Select,
+  ShareButton,
 
   // Typography
   BodyText,
