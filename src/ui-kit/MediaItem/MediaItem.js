@@ -11,29 +11,16 @@ import {
   systemPropTypes,
   ProgressBar,
 } from '../../ui-kit';
-import { useVideoMediaProgress } from '../../hooks';
-import { getPercentWatched } from '../../utils';
+
 import {
   Title,
   Image,
   BottomSlot,
   CompleteIndicator,
   Ellipsis,
-} from './ContentCard.styles';
+} from './MediaItem.styles';
 
-function ContentCard(props = {}) {
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: props.videoMedia?.id },
-      skip: !props.videoMedia?.id,
-    }
-  );
-
-  const percentWatched = getPercentWatched({
-    duration: props.videoMedia?.duration,
-    userProgress,
-  });
-
+function MediaItem(props = {}) {
   return (
     <Box
       flex={1}
@@ -83,8 +70,8 @@ function ContentCard(props = {}) {
   );
 }
 
-ContentCard.propTypes = {
+MediaItem.propTypes = {
   ...systemPropTypes,
 };
 
-export default withTheme(ContentCard);
+export default withTheme(MediaItem);
