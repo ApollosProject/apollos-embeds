@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 
 import { round } from 'lodash';
 
-import { useInteractWithNode } from '../../hooks';
+import { useInteractWithNode, useLivestreamIsActive } from '../../hooks';
 import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
@@ -24,7 +24,7 @@ function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
 
-  const isLiveStreaming = props?.livestream?.isLive;
+  const isLiveStreaming = useLivestreamIsActive(props.parentNode);
 
   // Player state
   const playerRef = useRef(null);
@@ -34,7 +34,7 @@ function VideoPlayer(props = {}) {
   const [paused, setPaused] = useState(false);
 
   // will find the first HLS video playlist provided
-  const videoMedia = props.parentNode?.videos.find((video) => {
+  const videoMedia = props.parentNode?.videos?.find((video) => {
     const sources = videoFilters.filterVideoSources(video.sources);
 
     return sources.length > 0;
@@ -181,7 +181,7 @@ function VideoPlayer(props = {}) {
   };
 
   const source = isLiveStreaming
-    ? props.livestream?.media?.sources[0]?.uri
+    ? props.parentNode?.stream?.sources[0]?.uri
     : videoMedia?.sources[0]?.uri;
 
   if (props.parentNode?.videos?.embedHtml) {
