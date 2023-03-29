@@ -1,3 +1,4 @@
 import { default as MediaItem } from './MediaItem';
+import LiveChip from './LiveChip';
 
-export default MediaItem;
+export { MediaItem as default, LiveChip };
