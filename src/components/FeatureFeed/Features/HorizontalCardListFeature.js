@@ -67,27 +67,48 @@ function HorizontalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
-      <Carousel
-        swipeable={true}
-        draggable={false}
-        showDots={false}
-        responsive={responsive}
-        ssr={true} // means to render carousel on server-side.
-        infinite={true}
-        autoPlaySpeed={1000}
-        keyBoardControl={true}
-      >
-        {props.feature?.cards?.map((item, index) => (
-          <ContentCard
-            key={item.title}
-            image={item.coverImage}
-            title={item.title}
-            summary={item.summary}
-            onClick={() => handleActionPress(item)}
-            videoMedia={item.relatedNode?.videos[0]}
-          />
-        ))}
-      </Carousel>
+      {props?.feature?.cards?.length >= 1 ? (
+        <Carousel
+          swipeable={true}
+          draggable={false}
+          showDots={false}
+          responsive={responsive}
+          ssr={true} // means to render carousel on server-side.
+          infinite={true}
+          autoPlaySpeed={1000}
+          keyBoardControl={true}
+        >
+          {props.feature?.cards?.map((item, index) => (
+            <ContentCard
+              key={item.title}
+              image={item.coverImage}
+              title={item.title}
+              summary={item.summary}
+              onClick={() => handleActionPress(item)}
+              videoMedia={item.relatedNode?.videos[0]}
+            />
+          ))}
+        </Carousel>
+      ) : (
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          pt="l"
+          px="l"
+          textAlign="center"
+        >
+          {props.feature.title === 'Continue Watching' ? (
+            <Box fontSize="16px" fontWeight="600" color="base.primary">
+              All caught up? Check out our other sections for more options.
+            </Box>
+          ) : (
+            <Box fontStyle="italic" fontSize="14px">
+              Sorry, there is no media available at this time.
+            </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
