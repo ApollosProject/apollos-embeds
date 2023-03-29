@@ -1,19 +1,21 @@
-import Feed from './FeatureFeed';
+import AuthManager from './Auth';
+import Breadcrumbs from './Breadcrumbs';
+import ContentChannel from './ContentChannel';
 import ContentSingle from './ContentSingle';
 import FeatureFeedList from './FeatureFeedList';
-import VideoPlayer from './VideoPlayer';
-import ContentChannel from './ContentChannel';
-import AuthManager from './Auth';
+import Feed from './FeatureFeed';
+import LivestreamSingle from './LivestreamSingle';
 import Logo from './Logo';
-import Breadcrumbs from './Breadcrumbs';
+import VideoPlayer from './VideoPlayer';
 
 export {
-  Feed,
+  AuthManager,
   Breadcrumbs,
+  ContentChannel,
   ContentSingle,
   FeatureFeedList,
-  VideoPlayer,
-  ContentChannel,
-  AuthManager,
+  Feed,
+  LivestreamSingle,
   Logo,
+  VideoPlayer,
 };
