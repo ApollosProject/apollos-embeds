@@ -144,6 +144,36 @@ export const TAB_FEED_FEATURES = gql`
             }
           }
         }
+        ... on HorizontalMediaListFeature {
+          id
+          title
+          items {
+            id
+            __typename
+            title
+            coverImage {
+              sources {
+                uri
+              }
+            }
+            relatedNode {
+              id
+              ... on Livestream {
+                __typename
+                title
+                start
+                durationInSeconds
+                stream {
+                  id
+                  duration
+                  sources {
+                    uri
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
