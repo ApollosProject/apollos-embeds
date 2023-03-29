@@ -12,6 +12,18 @@ export const GET_CONTENT_ITEM = gql`
       ... on MediaContentItem {
         originId
       }
+      ... on Livestream {
+        __typename
+        title
+        start
+        durationInSeconds
+        stream {
+          id
+          sources {
+            uri
+          }
+        }
+      }
       ... on ContentItem {
         publishDate
         title
