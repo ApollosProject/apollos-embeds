@@ -6,6 +6,7 @@ import useCurrentUser from './useCurrentUser';
 import useFeatureFeed from './useFeatureFeed';
 import useForm from './useForm';
 import useInteractWithNode from './useInteractWithNode';
+import useLivestreamIsActive from './useLivestreamIsActive';
 import useRequestLogin from './useRequestLogin';
 import useRequestRegister from './useRequestRegister';
 import useTabFeed from './useTabFeed';
@@ -23,6 +24,7 @@ export {
   useFeatureFeed,
   useForm,
   useInteractWithNode,
+  useLivestreamIsActive,
   useRequestLogin,
   useRequestRegister,
   useTabFeed,
