@@ -45,6 +45,7 @@ function ContentCard(props = {}) {
           backgroundSize="cover"
           paddingBottom="56.25%"
           backgroundPosition="center"
+          backgroundColor="material.regular"
           backgroundImage={`url(${
             props.image?.sources[0].uri ? props.image.sources[0].uri : null
           })`}
@@ -64,7 +65,6 @@ function ContentCard(props = {}) {
       {/* Masthead */}
       <Box
         padding="base"
-        background="material.regular"
         backdrop-filter="blur(64px)"
         width={props.horizontal ? '50%' : ''}
       >
