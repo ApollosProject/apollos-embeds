@@ -54,7 +54,7 @@ const textInputStateStyle = ({ theme, error }) => {
 
 const Input = withTheme(styled.input`
   ${TypeStyles.LargeSystemText}
-  padding: ${themeGet('space.xs')} 0;
+  padding: ${themeGet('space.s')} 0 ${themeGet('space.xxs')} 0;
   transition: all ${themeGet('timing.xl')} ease-out;
   placeholder-text-color: ${({ theme }) =>
     Color(theme.colors.text.secondary).alpha(0)};
