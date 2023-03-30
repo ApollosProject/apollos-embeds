@@ -78,7 +78,9 @@ function MediaItem(props = {}) {
         backdrop-filter="blur(64px)"
         width={props.horizontal ? '50%' : ''}
       >
-        <H4>{props.title}</H4>
+        <H4>
+          <Ellipsis>{props.title}</Ellipsis>
+        </H4>
       </Box>
     </Box>
   );
