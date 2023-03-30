@@ -30,14 +30,14 @@ function Breadcrumbs(props = {}) {
       {state.map(function (item) {
         if (state.length === item.id + 1) {
           return (
-            <>
+            <Box key={item.id} display="flex" alignItems="center">
               <Box display="flex" color="text.secondary" mx="xxs">
                 <CaretRight />
               </Box>
               <SystemText as="span" color="text.secondary">
                 {item.title}
               </SystemText>
-            </>
+            </Box>
           );
         }
         return (
