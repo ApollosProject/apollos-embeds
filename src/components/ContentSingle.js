@@ -174,7 +174,7 @@ function ContentSingle(props = {}) {
 
         {hasChildContent ? (
           <Box mb="l">
-            <H3 mb="xs">{props.feature.title}</H3>
+            <H3 mb="xs">{props.feature?.title}</H3>
             <Box
               display="grid"
               gridTemplateColumns="repeat(3, 1fr)"
