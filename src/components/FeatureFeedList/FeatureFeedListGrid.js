@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
@@ -28,7 +28,15 @@ function FeatureFeedListGrid(props = {}) {
 
   return (
     <Box pb="l" {...props}>
-      <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
+      <Box
+        display="grid"
+        gridGap="20px"
+        gridTemplateColumns={{
+          _: 'repeat(1, 1fr)',
+          md: 'repeat(2, 1fr)',
+          lg: 'repeat(3, 1fr)',
+        }}
+      >
         {props.data.features[0]?.cards?.map((item, index) => (
           <ContentCard
             key={item.title}

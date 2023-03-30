@@ -1,14 +1,14 @@
-import React from "react";
-import { useNavigate, useSearchParams, useLocation } from "react-router-dom";
+import React from 'react';
+import { useSearchParams } from 'react-router-dom';
 
-import { getURLFromType } from "../../../utils";
-import { ContentCard, Box, H3, systemPropTypes, Button } from "../../../ui-kit";
+import { getURLFromType } from '../../../utils';
+import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
 import {
   add as addBreadcrumb,
   useBreadcrumb,
-} from "../../../providers/BreadcrumbProvider";
+} from '../../../providers/BreadcrumbProvider';
 
-import VerticalCardList from "./VerticalCardListFeature.styles";
+import VerticalCardList from './VerticalCardListFeature.styles';
 
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();

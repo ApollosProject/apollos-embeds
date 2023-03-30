@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
@@ -17,12 +17,12 @@ const responsive = {
     partialVisibilityGutter: 30,
   },
   tablet: {
-    breakpoint: { max: 1024, min: 464 },
+    breakpoint: { max: 1024, min: 600 },
     items: 2,
     partialVisibilityGutter: 30,
   },
   mobile: {
-    breakpoint: { max: 464, min: 0 },
+    breakpoint: { max: 600, min: 0 },
     items: 1,
     partialVisibilityGutter: 30,
   },
