@@ -80,6 +80,13 @@ const colors = {
       system3: 'rgba(142, 142, 147, 0.12)', // 12% gray
       system4: 'rgba(142, 142, 147, 0.08)', // 8% gray
     },
+    material: {
+      thick: 'rgba(28, 28, 30, 0.90)', // 90% paper
+      regular: 'rgba(28, 28, 30, 0.70)', // 70% paper
+      thin: 'rgba(28, 28, 30, 0.50)', // 50% paper
+      ultrathin: 'rgba(28, 28, 30, 0.40)', // 40% paper
+      chrome: 'rgba(28, 28, 30, 0.95)', // 95% paper
+    },
     text: {
       primary: '#27272E',
       secondary: 'rgba(39, 39, 46, 0.6)', // 60% primary
