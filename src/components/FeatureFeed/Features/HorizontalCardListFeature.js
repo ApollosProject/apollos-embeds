@@ -100,7 +100,7 @@ function HorizontalCardListFeature(props = {}) {
         >
           {props.feature.title === 'Continue Watching' ? (
             <Box fontSize="16px" fontWeight="600" color="base.primary">
-              All caught up? Check out our other sections for more options.
+              All caught up? Check out our other sections for more content!
             </Box>
           ) : (
             <Box fontStyle="italic" fontSize="14px">
