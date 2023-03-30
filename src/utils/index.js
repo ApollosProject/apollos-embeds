@@ -8,6 +8,7 @@ import getPropTypesFromObject from './getPropTypesFromObject';
 import getURLFromType from './getURLFromType';
 import getWatchButtonLabel from './getWatchButtonLabel';
 import slugify from './slugify';
+import unit from './unit';
 import validateEmail from './validateEmail';
 import validatePhoneNumber from './validatePhoneNumber';
 
@@ -21,6 +22,7 @@ export {
   getURLFromType,
   getWatchButtonLabel,
   slugify,
+  unit,
   validateEmail,
   validatePhoneNumber,
   videoFilters,
