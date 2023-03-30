@@ -15,7 +15,8 @@ function getURLFromType(node) {
     case 'UniversalContentItem':
     case 'ContentChannel':
     case 'FeatureFeed':
-    case 'Livestream': {
+    case 'Livestream':
+    case 'ContentSeriesContentItem': {
       return `${type}-${randomId}`;
     }
     case 'Url': {

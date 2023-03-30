@@ -28,7 +28,8 @@ function RenderFeatures(props) {
     case 'InformationalContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
-    case 'UniversalContentItem': {
+    case 'UniversalContentItem':
+    case 'ContentSeriesContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
