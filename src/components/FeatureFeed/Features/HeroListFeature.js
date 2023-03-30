@@ -58,10 +58,6 @@ function HeroListFeature(props = {}) {
             height="100%"
           />
         </Box>
-
-        {/* {props.feature.heroCard.coverImage?.sources[0]?.uri} */}
-        {/* {'https://wallpaperaccess.com/full/2427256.jpg'} */}
-
         {/* Masthead */}
         <Box
           padding="base"
