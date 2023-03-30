@@ -11,7 +11,8 @@ import {
   systemPropTypes,
   ProgressBar,
 } from '../../ui-kit';
-
+import { useVideoMediaProgress } from '../../hooks';
+import { getPercentWatched } from '../../utils';
 import {
   Title,
   Image,
@@ -19,8 +20,21 @@ import {
   CompleteIndicator,
   Ellipsis,
 } from './MediaItem.styles';
+import LiveChip from './LiveChip';
 
 function MediaItem(props = {}) {
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
+    {
+      variables: { id: props.videoMedia?.id },
+      skip: !props.videoMedia?.id,
+    }
+  );
+
+  const percentWatched = getPercentWatched({
+    duration: props.videoMedia?.duration,
+    userProgress,
+  });
+
   return (
     <Box
       flex={1}
@@ -45,7 +59,7 @@ function MediaItem(props = {}) {
           })`}
           height="100%"
         />
-        {isLive ? <LiveChip /> : null}
+        {props.isLive ? <LiveChip /> : null}
         {/* Progress / Completed Indicators */}
         <BottomSlot>
           {userProgress?.complete ? (

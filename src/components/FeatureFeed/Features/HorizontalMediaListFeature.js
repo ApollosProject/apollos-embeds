@@ -1,8 +1,17 @@
 import React from 'react';
+import get from 'lodash/get';
 import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+import {
+  ContentCard,
+  Box,
+  H3,
+  systemPropTypes,
+  Button,
+  MediaItem,
+} from '../../../ui-kit';
+import { useLivestreamIsActive } from '../../../hooks';
 import {
   add as addBreadcrumb,
   useBreadcrumb,
@@ -28,40 +37,10 @@ const responsive = {
   },
 };
 
-const MediaItemWithLiveStreamManager = ({ item, boxWidth, onPress }) => {
-  const isLive = useLivestreamIsActive(item?.relatedNode);
-
-  return (
-    <MediaItem
-      isLive={isLive}
-      coverImage={item.coverImage}
-      title={item.title}
-      duration={get(item, 'relatedNode.videos[0].duration', null)}
-      userProgress={get(item, 'relatedNode.videos[0].userProgress', null)}
-      onPress={onPress}
-      width={boxWidth}
-      contentId={item.relatedNode.id}
-      height="100%"
-      last={item?.last ?? false}
-      px="xs"
-    />
-  );
-};
-
-{
-  /* <ContentCard
-key={item.title}
-image={item.coverImage}
-title={item.title}
-summary={item.summary}
-onClick={() => handleActionPress(item)}
-videoMedia={item.relatedNode?.videos[0]}
-/> */
-}
-
 function HorizontalMediaListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
+
   const handleActionPress = (item) => {
     dispatch(
       addBreadcrumb({
@@ -108,9 +87,20 @@ function HorizontalMediaListFeature(props = {}) {
         autoPlaySpeed={1000}
         keyBoardControl={true}
       >
-        {props.feature?.items?.map((item, index) => (
-          <MediaItemWithLiveStreamManager item={item} />
-        ))}
+        {props.feature?.items?.map((item, index) => {
+          const isLive = useLivestreamIsActive(item?.relatedNode);
+          return (
+            <MediaItem
+              isLive={isLive}
+              key={item.id}
+              image={item.coverImage}
+              title={item.title}
+              summary={item.summary}
+              onClick={() => handleActionPress(item)}
+              videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+            />
+          );
+        })}
       </Carousel>
     </Box>
   );

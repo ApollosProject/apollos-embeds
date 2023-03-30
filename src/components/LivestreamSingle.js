@@ -23,7 +23,7 @@ import {
   Longform,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress } from '../hooks';
+import { useVideoMediaProgress, useLivestreamIsActive } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 function LivestreamSingle(props = {}) {
@@ -71,7 +71,6 @@ function LivestreamSingle(props = {}) {
   const htmlContent = props?.data?.htmlContent;
   const summary = props?.data?.summary;
   const title = props?.data?.title;
-  const parentChannel = props.data?.parentChannel;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features.filter(
@@ -109,7 +108,7 @@ function LivestreamSingle(props = {}) {
     <>
       <Box margin="0 auto">
         <Box mb="base">
-          {props.data?.videos[0] ? (
+          {props.data?.stream.sources[0] ? (
             <VideoPlayer
               userProgress={userProgress}
               parentNode={props.data}
@@ -138,14 +137,12 @@ function LivestreamSingle(props = {}) {
               {title && !hasChildContent ? <H2>{title}</H2> : null}
               {title && hasChildContent ? <H1>{title}</H1> : null}
               <Box display="flex" flexDirection="row">
-                {parentChannel.name ? (
-                  <BodyText
-                    color="text.secondary"
-                    mb={title && !hasChildContent ? 'xxs' : ''}
-                  >
-                    {parentChannel.name}
-                  </BodyText>
-                ) : null}
+                <BodyText
+                  color="text.secondary"
+                  mb={title && !hasChildContent ? 'xxs' : ''}
+                >
+                  Livestream
+                </BodyText>
 
                 {/* ( Optional Divider ) */}
                 {formattedPublishDate ? infoDivider : null}
@@ -216,10 +213,6 @@ LivestreamSingle.propTypes = {
     featureFeed: PropTypes.shape({}),
     htmlContent: PropTypes.string,
     id: PropTypes.string,
-    parentChannel: PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    }),
     publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
