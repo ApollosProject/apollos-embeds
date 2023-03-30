@@ -62,6 +62,7 @@ const colors = {
       warning: '#F4B740',
       success: '#17B569',
       wordOfChrist: '#8B0000',
+      live: '#cb1114',
     },
     neutral: {
       gray: '#8E8E93',
