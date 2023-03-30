@@ -90,7 +90,7 @@ function HorizontalMediaListFeature(props = {}) {
         <H3 flex="1" mb="xs">
           {props.feature.title}
         </H3>
-        {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
+        {props?.feature?.items?.length >= 5 && props?.feature?.primaryAction ? (
           <Button
             title="View All >"
             type="link"
@@ -108,7 +108,7 @@ function HorizontalMediaListFeature(props = {}) {
         autoPlaySpeed={1000}
         keyBoardControl={true}
       >
-        {props.feature?.cards?.map((item, index) => (
+        {props.feature?.items?.map((item, index) => (
           <MediaItemWithLiveStreamManager item={item} />
         ))}
       </Carousel>
