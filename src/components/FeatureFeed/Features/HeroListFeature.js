@@ -33,7 +33,7 @@ function HeroListFeature(props = {}) {
   };
 
   return (
-    <Box mb="base" {...props}>
+    <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
       <Box
         position="relative"
@@ -42,10 +42,26 @@ function HeroListFeature(props = {}) {
         overflow="hidden"
       >
         {/* Image */}
-        <img
-          src={props.feature.heroCard.coverImage?.sources[0]?.uri}
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          backgroundColor="white"
           width="100%"
-        />
+          maxHeight="700px"
+          overflow="hidden"
+        >
+          <Box
+            as="img"
+            src={props.feature.heroCard.coverImage?.sources[0]?.uri}
+            width="100%"
+            height="100%"
+          />
+        </Box>
+
+        {/* {props.feature.heroCard.coverImage?.sources[0]?.uri} */}
+        {/* {'https://wallpaperaccess.com/full/2427256.jpg'} */}
+
         {/* Masthead */}
         <Box
           padding="base"
@@ -59,10 +75,24 @@ function HeroListFeature(props = {}) {
           <Box
             display="flex"
             alignSelf="flex-start"
-            flexDirection="row"
+            flexDirection={{
+              _: 'column',
+              md: 'row',
+            }}
             mt="base"
           >
-            <Button mr="base" title="Watch now" onClick={handleWatchNowPress} />
+            <Button
+              mr={{
+                _: '0',
+                md: 'base',
+              }}
+              mb={{
+                _: 'base',
+                md: '0',
+              }}
+              title="Watch now"
+              onClick={handleWatchNowPress}
+            />
             {props.feature.primaryAction ? (
               <Button
                 title={props.feature.primaryAction.title}
@@ -72,7 +102,6 @@ function HeroListFeature(props = {}) {
             ) : null}
           </Box>
         </Box>
-
         {/* Actions / Cards list */}
         {props.feature.actions?.length ? (
           <Box>
