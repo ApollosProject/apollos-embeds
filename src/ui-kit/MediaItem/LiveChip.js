@@ -14,7 +14,9 @@ export const ANIMATION_DURATION = 1300;
 const LiveChip = () => {
   return (
     <LiveChipContainer>
-      <SmallSystemText color="white">LIVE</SmallSystemText>
+      <SmallSystemText fontWeight="700" color="white">
+        LIVE
+      </SmallSystemText>
     </LiveChipContainer>
   );
 };
