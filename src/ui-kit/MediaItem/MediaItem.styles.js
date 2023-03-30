@@ -5,6 +5,7 @@ import { themeGet } from '@styled-system/theme-get';
 
 import { system } from '../_lib/system';
 import { rem } from '../_utils';
+import { unit } from '../../utils';
 import { TypeStyles } from '../Typography';
 
 export const BottomSlot = withTheme(styled.div`
@@ -38,12 +39,11 @@ export const Ellipsis = withTheme(styled.div`
 
 // :: Chip
 export const LiveChipContainer = withTheme(styled.div`
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  z-index: 1,
-  // todo : we should consider a better base color that more accurately reflects the nature of "live" items. Even if it's the same color as error, a better name could help with the DX
+  position: absolute;
+  top: ${unit(4)};
+  left: ${unit(4)};
+  z-index: 1;
   background-color: ${themeGet('colors.base.live')};
-  border-radius: ${themeGet('radii.xxl')};
-  padding: ${themeGet('space.xxl')}; ${themeGet('space.xxl')};
+  border-radius: ${unit(1)};
+  padding: ${unit(1)} ${unit(3)};
 `);
