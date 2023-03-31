@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CaretRight } from 'phosphor-react';
 import { Box, Button, SystemText } from '../../ui-kit';
