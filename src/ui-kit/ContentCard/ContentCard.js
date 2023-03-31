@@ -11,7 +11,12 @@ import {
 } from '../../ui-kit';
 import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
-import { BottomSlot, CompleteIndicator, Ellipsis } from './ContentCard.styles';
+import {
+  BottomSlot,
+  CompleteIndicator,
+  Title,
+  Summary,
+} from './ContentCard.styles';
 
 function ContentCard(props = {}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
@@ -69,12 +74,8 @@ function ContentCard(props = {}) {
         width={props.horizontal ? '50%' : ''}
       >
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
-        <H4>
-          <Ellipsis>{props.title}</Ellipsis>
-        </H4>
-        <SmallBodyText color="text.secondary">
-          <Ellipsis>{props.summary}</Ellipsis>
-        </SmallBodyText>
+        <Title>{props.title}</Title>
+        <Summary color="text.secondary">{props.summary} </Summary>
       </Box>
     </Box>
   );
