@@ -53,6 +53,13 @@ function HorizontalCardListFeature(props = {}) {
     );
   };
 
+  if (
+    props.feature.title === 'Continue Watching' &&
+    props?.feature?.cards?.length < 1
+  ) {
+    return <></>;
+  }
+
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
