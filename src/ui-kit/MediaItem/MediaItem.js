@@ -60,7 +60,11 @@ function MediaItem(props = {}) {
           overflow="hidden"
           paddingBottom="56.25%"
         />
-        {props.isLive ? <LiveChip /> : null}
+        {props.isLive ? (
+          <Box position="absolute" top={unit(4)} left={unit(4)} zIndex={1}>
+            <LiveChip />
+          </Box>
+        ) : null}
         {/* Progress / Completed Indicators */}
         <BottomSlot>
           {userProgress?.complete ? (

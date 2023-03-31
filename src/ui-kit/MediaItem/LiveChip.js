@@ -11,9 +11,9 @@ import { LiveChipContainer } from './MediaItem.styles';
 
 export const ANIMATION_DURATION = 1300;
 
-const LiveChip = () => {
+const LiveChip = (props) => {
   return (
-    <LiveChipContainer>
+    <LiveChipContainer {...props}>
       <SmallSystemText fontWeight="700" color="white">
         LIVE
       </SmallSystemText>

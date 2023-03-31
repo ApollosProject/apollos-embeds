@@ -39,11 +39,8 @@ export const Ellipsis = withTheme(styled.div`
 
 // :: Chip
 export const LiveChipContainer = withTheme(styled.div`
-  position: absolute;
-  top: ${unit(4)};
-  left: ${unit(4)};
-  z-index: 1;
   background-color: ${themeGet('colors.base.live')};
   border-radius: ${unit(1)};
   padding: ${unit(1)} ${unit(3)};
+  ${system}
 `);
