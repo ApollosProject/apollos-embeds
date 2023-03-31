@@ -132,7 +132,7 @@ function LivestreamSingle(props = {}) {
             mb="s"
           >
             <Box>
-              {isLive ? <LiveChip /> : null}
+              {isLive ? <LiveChip display="inline-block" /> : null}
               {/* Title */}
               {title && !hasChildContent ? <H2>{title}</H2> : null}
               {title && hasChildContent ? <H1>{title}</H1> : null}
