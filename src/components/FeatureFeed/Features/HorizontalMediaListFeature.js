@@ -19,6 +19,8 @@ import {
 
 import Carousel from 'react-multi-carousel';
 
+const SHOW_VIEW_ALL_LIMIT = 5;
+
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
@@ -69,7 +71,8 @@ function HorizontalMediaListFeature(props = {}) {
         <H3 flex="1" mb="xs">
           {props.feature.title}
         </H3>
-        {props?.feature?.items?.length >= 5 && props?.feature?.primaryAction ? (
+        {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT &&
+        props?.feature?.primaryAction ? (
           <Button
             title="View All >"
             type="link"

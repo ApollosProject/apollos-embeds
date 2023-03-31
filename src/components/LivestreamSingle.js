@@ -26,6 +26,8 @@ import {
 import { useVideoMediaProgress, useLivestreamIsActive } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
+const MAX_EPISODE_COUNT = 20;
+
 function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
 
@@ -77,7 +79,8 @@ function LivestreamSingle(props = {}) {
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
   const hasFeatures = validFeatures?.length;
-  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
+  const showEpisodeCount =
+    hasChildContent && childContentItems.length < MAX_EPISODE_COUNT;
 
   const publishDate = new Date(parseInt(props?.data?.publishDate));
 
