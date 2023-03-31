@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 
 import { round } from 'lodash';
 
-import { useInteractWithNode } from '../../hooks';
+import { useInteractWithNode, useLivestreamIsActive } from '../../hooks';
 import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
@@ -24,7 +24,7 @@ function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
 
-  const isLiveStreaming = props?.livestream?.isLive;
+  const isLiveStreaming = useLivestreamIsActive(props.parentNode);
 
   // Player state
   const playerRef = useRef(null);
@@ -34,7 +34,7 @@ function VideoPlayer(props = {}) {
   const [paused, setPaused] = useState(false);
 
   // will find the first HLS video playlist provided
-  const videoMedia = props.parentNode?.videos.find((video) => {
+  const videoMedia = props.parentNode?.videos?.find((video) => {
     const sources = videoFilters.filterVideoSources(video.sources);
 
     return sources.length > 0;
@@ -43,7 +43,6 @@ function VideoPlayer(props = {}) {
   const userProgress = props.userProgress || { playhead: 0, complete: false };
   // Callback wrapper for more concise invocation syntax, and so we can
   // automatically keep cache in sync with new interaction data.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const interactWithVideo = useCallback(
     (action, data) => {
       console.table(data?.progress, previouslyReportedPlayhead.current);
@@ -92,7 +91,7 @@ function VideoPlayer(props = {}) {
   );
 
   const catchUpLivestream = () => {
-    const eventStartTime = props.livestream?.eventStartTime;
+    const eventStartTime = props.parentNode?.start;
     const millisecondsSinceStart = new Date() - new Date(eventStartTime);
     const livestreamCurrentTime = millisecondsSinceStart / 1000;
     playerRef.current?.seekTo(livestreamCurrentTime);
@@ -181,7 +180,7 @@ function VideoPlayer(props = {}) {
   };
 
   const source = isLiveStreaming
-    ? props.livestream?.media?.sources[0]?.uri
+    ? props.parentNode?.stream?.sources[0]?.uri
     : videoMedia?.sources[0]?.uri;
 
   if (props.parentNode?.videos?.embedHtml) {

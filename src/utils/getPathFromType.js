@@ -14,7 +14,9 @@ function getPathFromType(node) {
     case 'ContentSeriesContentItem': {
       return '/watch';
     }
-
+    case 'Livestream': {
+      return '/live';
+    }
     case 'ContentChannel': {
       return '/channel';
     }

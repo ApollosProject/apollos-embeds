@@ -10,28 +10,32 @@ import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
 import {
+  BodyText,
   Box,
+  Button,
+  ContentCard,
   H1,
   H2,
+  H3,
   H4,
+  LiveChip,
   Loader,
   Longform,
-  H3,
-  ContentCard,
-  BodyText,
-  Button,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress } from '../hooks';
+import { useVideoMediaProgress, useLivestreamIsActive } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
-function ContentSingle(props = {}) {
+const MAX_EPISODE_COUNT = 20;
+
+function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
 
   const invalidPage = !props.loading && !props.data;
+  const isLive = useLivestreamIsActive(props?.data);
 
   // Video details
-  const videoMedia = props.data?.videos[0];
+  const videoMedia = props.data?.stream?.sources?.uri;
 
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
     {
@@ -69,14 +73,14 @@ function ContentSingle(props = {}) {
   const htmlContent = props?.data?.htmlContent;
   const summary = props?.data?.summary;
   const title = props?.data?.title;
-  const parentChannel = props.data?.parentChannel;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features.filter(
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
   const hasFeatures = validFeatures?.length;
-  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
+  const showEpisodeCount =
+    hasChildContent && childContentItems.length < MAX_EPISODE_COUNT;
 
   const publishDate = new Date(parseInt(props?.data?.publishDate));
 
@@ -107,7 +111,7 @@ function ContentSingle(props = {}) {
     <>
       <Box margin="0 auto">
         <Box mb="base">
-          {props.data?.videos[0] ? (
+          {props.data?.stream.sources[0] ? (
             <VideoPlayer
               userProgress={userProgress}
               parentNode={props.data}
@@ -131,18 +135,17 @@ function ContentSingle(props = {}) {
             mb="s"
           >
             <Box>
+              {isLive ? <LiveChip display="inline-block" /> : null}
               {/* Title */}
               {title && !hasChildContent ? <H2>{title}</H2> : null}
               {title && hasChildContent ? <H1>{title}</H1> : null}
               <Box display="flex" flexDirection="row">
-                {parentChannel.name ? (
-                  <BodyText
-                    color="text.secondary"
-                    mb={title && !hasChildContent ? 'xxs' : ''}
-                  >
-                    {parentChannel.name}
-                  </BodyText>
-                ) : null}
+                <BodyText
+                  color="text.secondary"
+                  mb={title && !hasChildContent ? 'xxs' : ''}
+                >
+                  Livestream
+                </BodyText>
 
                 {/* ( Optional Divider ) */}
                 {formattedPublishDate ? infoDivider : null}
@@ -174,7 +177,7 @@ function ContentSingle(props = {}) {
 
         {hasChildContent ? (
           <Box mb="l">
-            <H3 mb="xs">{props.feature?.title}</H3>
+            <H3 mb="xs">{props.feature.title}</H3>
             <Box
               display="grid"
               gridTemplateColumns="repeat(3, 1fr)"
@@ -205,7 +208,7 @@ function ContentSingle(props = {}) {
   );
 }
 
-ContentSingle.propTypes = {
+LivestreamSingle.propTypes = {
   contentMaxWidth: PropTypes.string,
   data: PropTypes.shape({
     childContentItemsConnection: PropTypes.shape(),
@@ -213,10 +216,6 @@ ContentSingle.propTypes = {
     featureFeed: PropTypes.shape({}),
     htmlContent: PropTypes.string,
     id: PropTypes.string,
-    parentChannel: PropTypes.shape({
-      id: PropTypes.string,
-      name: PropTypes.string,
-    }),
     publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
@@ -225,4 +224,4 @@ ContentSingle.propTypes = {
   loading: PropTypes.bool,
 };
 
-export default ContentSingle;
+export default LivestreamSingle;

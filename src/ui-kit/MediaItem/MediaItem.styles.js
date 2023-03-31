@@ -5,6 +5,7 @@ import { themeGet } from '@styled-system/theme-get';
 
 import { system } from '../_lib/system';
 import { rem } from '../_utils';
+import { unit } from '../../utils';
 import { TypeStyles } from '../Typography';
 
 export const BottomSlot = withTheme(styled.div`
@@ -29,18 +30,17 @@ export const CompleteIndicator = withTheme(styled.div`
   ${system}
 `);
 
-export const Summary = withTheme(styled.div`
-  ${TypeStyles.SmallBodyText}
+export const Ellipsis = withTheme(styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   ${system}
 `);
 
-export const Title = withTheme(styled.div`
-  ${TypeStyles.H4}
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+// :: Chip
+export const LiveChipContainer = withTheme(styled.div`
+  background-color: ${themeGet('colors.base.live')};
+  border-radius: ${unit(1)};
+  padding: ${unit(1)} ${unit(3)};
   ${system}
 `);

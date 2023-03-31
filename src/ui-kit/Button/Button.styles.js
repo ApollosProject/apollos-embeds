@@ -135,26 +135,7 @@ const buttonWidth = ({ width }) => {
   `;
 };
 
-const Button = withTheme(styled.button`
-  border-width: 2px;
-  text-align: center;
-  border: transparent;
-  border-radius: ${themeGet('radii.base')};
-  cursor: pointer;
-  ${buttonTypeProp}
-  ${webTransition}
-  ${buttonState}
-  ${buttonSizeProp}
-  ${buttonTypeLink}
-  ${activeLink}
-  ${buttonWidth}
-  ${system}
-`);
-
-// Title
-// --------------------------------------------------------
-
-const titleState = ({ theme, disabled, focused, hovered }) => {
+const buttonColorState = ({ theme, disabled, focused, hovered }) => {
   if (disabled) {
     return css`
       color: ${theme.colors.text.secondary};
@@ -170,7 +151,7 @@ const titleState = ({ theme, disabled, focused, hovered }) => {
   return null;
 };
 
-const titleStateLink = ({ theme, disabled, focused, hovered, type }) => {
+const buttonColorStateLink = ({ theme, disabled, focused, hovered, type }) => {
   if (disabled && type === 'link') {
     return css`
       color: ${theme.colors.text.secondary};
@@ -186,7 +167,7 @@ const titleStateLink = ({ theme, disabled, focused, hovered, type }) => {
   return null;
 };
 
-const titleTypeProp = ({ type }) => {
+const buttonColorTypeProp = ({ type }) => {
   switch (type) {
     default:
       return css`
@@ -205,6 +186,29 @@ const titleTypeProp = ({ type }) => {
       `;
   }
 };
+
+const Button = withTheme(styled.button`
+  border-width: 2px;
+  text-align: center;
+  border: transparent;
+  border-radius: ${themeGet('radii.base')};
+  cursor: pointer;
+  align-items: center;
+  ${buttonTypeProp}
+  ${webTransition}
+  ${buttonState}
+  ${buttonSizeProp}
+  ${buttonTypeLink}
+  ${activeLink}
+  ${buttonWidth}
+  ${buttonColorTypeProp}
+  ${buttonColorState}
+  ${buttonColorStateLink}
+  ${system}
+`);
+
+// Title
+// --------------------------------------------------------
 
 const titleSizeProp = ({ size }) => {
   switch (size) {
@@ -226,10 +230,8 @@ const titleSizeProp = ({ size }) => {
 
 const Title = withTheme(styled.span`
   ${titleSizeProp}
-  ${titleTypeProp}
+  color: inherit;
   font-weight: 600;
-  ${titleState}
-  ${titleStateLink}
 `);
 
 const Content = withTheme(styled.div`

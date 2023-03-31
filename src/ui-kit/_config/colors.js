@@ -62,6 +62,7 @@ const colors = {
       warning: '#F4B740',
       success: '#17B569',
       wordOfChrist: '#8B0000',
+      live: '#cb1114',
     },
     neutral: {
       gray: '#8E8E93',
@@ -78,6 +79,13 @@ const colors = {
       system2: 'rgba(142, 142, 147, 0.16)', // 16% gray
       system3: 'rgba(142, 142, 147, 0.12)', // 12% gray
       system4: 'rgba(142, 142, 147, 0.08)', // 8% gray
+    },
+    material: {
+      thick: 'rgba(28, 28, 30, 0.90)', // 90% paper
+      regular: 'rgba(28, 28, 30, 0.70)', // 70% paper
+      thin: 'rgba(28, 28, 30, 0.50)', // 50% paper
+      ultrathin: 'rgba(28, 28, 30, 0.40)', // 40% paper
+      chrome: 'rgba(28, 28, 30, 0.95)', // 95% paper
     },
     text: {
       primary: '#27272E',

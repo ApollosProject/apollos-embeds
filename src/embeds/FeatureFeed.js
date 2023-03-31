@@ -11,6 +11,7 @@ import {
   FeatureFeedList,
   ContentChannel,
   Breadcrumbs,
+  LivestreamSingle,
 } from '../components';
 import { Box } from '../ui-kit';
 import { useSearchParams, useLocation } from 'react-router-dom';
@@ -27,13 +28,23 @@ function RenderFeatures(props) {
     case 'InformationalContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
-    case 'UniversalContentItem': {
+    case 'UniversalContentItem':
+    case 'ContentSeriesContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
       return (
         <ContentItemProvider Component={ContentSingle} options={options} />
+      );
+    }
+    case 'Livestream': {
+      const options = {
+        variables: { id: `${type}:${randomId}` },
+      };
+
+      return (
+        <ContentItemProvider Component={LivestreamSingle} options={options} />
       );
     }
     case 'ContentChannel': {
@@ -57,7 +68,7 @@ function RenderFeatures(props) {
     }
     default: {
       return (
-        <Box padding="40px">
+        <Box>
           <TabFeedProvider
             Component={Feed}
             options={{
@@ -77,10 +88,10 @@ const FeatureFeed = (props) => {
   const location = useLocation();
 
   return (
-    <>
+    <Box padding="40px">
       <Breadcrumbs />
       <RenderFeatures {...props} />
-    </>
+    </Box>
   );
 };
 

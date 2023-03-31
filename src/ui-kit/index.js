@@ -16,6 +16,7 @@ import Input from './Input';
 import Layout from './Layout';
 import Loader from './Loader';
 import Longform from './Longform';
+import MediaItem, { LiveChip } from './MediaItem';
 import ProgressBar from './ProgressBar';
 import ResourceCard from './ResourceCard';
 import Select from './Select';
@@ -50,6 +51,8 @@ export {
   Layout,
   Loader,
   Longform,
+  MediaItem,
+  LiveChip,
   ProgressBar,
   ResourceCard,
   Select,
