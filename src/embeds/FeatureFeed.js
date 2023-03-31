@@ -68,7 +68,7 @@ function RenderFeatures(props) {
     }
     default: {
       return (
-        <Box padding="40px">
+        <Box>
           <TabFeedProvider
             Component={Feed}
             options={{
@@ -88,10 +88,10 @@ const FeatureFeed = (props) => {
   const location = useLocation();
 
   return (
-    <>
+    <Box padding="40px">
       <Breadcrumbs />
       <RenderFeatures {...props} />
-    </>
+    </Box>
   );
 };
 
