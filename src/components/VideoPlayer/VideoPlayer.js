@@ -43,7 +43,6 @@ function VideoPlayer(props = {}) {
   const userProgress = props.userProgress || { playhead: 0, complete: false };
   // Callback wrapper for more concise invocation syntax, and so we can
   // automatically keep cache in sync with new interaction data.
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const interactWithVideo = useCallback(
     (action, data) => {
       console.table(data?.progress, previouslyReportedPlayhead.current);
@@ -92,7 +91,7 @@ function VideoPlayer(props = {}) {
   );
 
   const catchUpLivestream = () => {
-    const eventStartTime = props.livestream?.eventStartTime;
+    const eventStartTime = props.parentNode?.start;
     const millisecondsSinceStart = new Date() - new Date(eventStartTime);
     const livestreamCurrentTime = millisecondsSinceStart / 1000;
     playerRef.current?.seekTo(livestreamCurrentTime);
