@@ -11,7 +11,7 @@ import {
   Button,
   MediaItem,
 } from '../../../ui-kit';
-import { useLivestreamIsActive } from '../../../hooks';
+
 import {
   add as addBreadcrumb,
   useBreadcrumb,
@@ -91,11 +91,10 @@ function HorizontalMediaListFeature(props = {}) {
         keyBoardControl={true}
       >
         {props.feature?.items?.map((item, index) => {
-          const isLive = useLivestreamIsActive(item?.relatedNode);
           return (
             <MediaItem
-              isLive={isLive}
               key={item.id}
+              relatedNode={item.relatedNode}
               image={item.coverImage}
               title={item.title}
               summary={item.summary}
