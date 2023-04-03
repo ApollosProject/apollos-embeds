@@ -4,8 +4,8 @@ import { VIDEO_MEDIA_FIELDS } from '../fragments';
 export const TAB_FEED_FEATURES = gql`
   ${VIDEO_MEDIA_FIELDS}
 
-  query tabFeed($tab: Tab!) {
-    tabFeedFeatures(tab: $tab) {
+  query tabFeed($campusId: ID, $tab: Tab!) {
+    tabFeedFeatures(campusId: $campusId, tab: $tab) {
       id
       features {
         id

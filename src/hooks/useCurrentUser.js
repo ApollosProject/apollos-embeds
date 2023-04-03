@@ -26,7 +26,11 @@ export const GET_CURRENT_USER = gql`
 `;
 
 function useCurrentUser(options = {}) {
-  const query = useAuthQuery(GET_CURRENT_USER, options);
+  const query = useAuthQuery(GET_CURRENT_USER, {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
+    ...options,
+  });
 
   return {
     currentUser: query?.data?.currentUser || null,

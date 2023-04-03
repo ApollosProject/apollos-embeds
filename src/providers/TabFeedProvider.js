@@ -32,6 +32,7 @@ TabFeedProvider.propTypes = {
   ]).isRequired,
   options: PropTypes.shape({
     variables: PropTypes.shape({
+      campusId: PropTypes.string,
       tab: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,

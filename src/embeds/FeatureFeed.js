@@ -14,11 +14,12 @@ import {
   LivestreamSingle,
 } from '../components';
 import { Box } from '../ui-kit';
+import { useCurrentUser } from '../hooks';
 import { useSearchParams, useLocation } from 'react-router-dom';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
-
+  const { currentUser } = useCurrentUser();
   const _id = searchParams.get('id');
 
   const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
@@ -73,6 +74,7 @@ function RenderFeatures(props) {
             Component={Feed}
             options={{
               variables: {
+                campusId: currentUser?.campus?.id,
                 tab: 'TV',
               },
             }}
