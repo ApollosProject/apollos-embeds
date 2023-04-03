@@ -14,3 +14,7 @@ Follow the steps below to deploy your apollos-embeds:
 The JS file used to embed these widgets is hosted on GitHub and picked up by jsdelivr.com automatically, as long as the repository is public.
 
 That's it! Your updated version of the apollos-embeds will be available for use.
+
+***
+
+_⚠️  React needs to be imported in every file it is used, otherwise the js build file will error when you embed it in your website._
