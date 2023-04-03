@@ -1,4 +1,4 @@
-# apollos-embeds
+# Apollos Embeds
 
 Apollo React Embeds are pre-built components that can be easily added to third-party websites, such as Webflow. These components provide a convenient way to integrate features such as authentication, a feature feed, and a banner widget, and ensure a consistent look and feel across all digital products.
 
