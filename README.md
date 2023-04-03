@@ -11,7 +11,7 @@ Follow the steps below to deploy your apollos-embeds:
 3. Commit and push the new JS and CSS build files to GitHub.
 4. Finally, run `npm publish`. Note that you need to be a member of the apollosproject organization to publish.
 
-The JS file used to embed these widgets is hosted on GitHub and picked up by jsdelivr.com automatically, as long as the repository is public.
+The JS file used to embed these widgets is hosted on GitHub and picked up by [jsdelivr.com](https://www.jsdelivr.com/) automatically, as long as the repository is public.
 
 That's it! Your updated version of the apollos-embeds will be available for use.
 
