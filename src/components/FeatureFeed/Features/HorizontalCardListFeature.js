@@ -8,7 +8,7 @@ import {
   H3,
   systemPropTypes,
   Button,
-  CustomArrow,
+  ButtonGroup,
 } from '../../../ui-kit';
 import {
   add as addBreadcrumb,
@@ -67,20 +67,8 @@ function HorizontalCardListFeature(props = {}) {
     return <></>;
   }
 
-  const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
-    const {
-      carouselState: { currentSlide },
-    } = rest;
-    return (
-      <div className="carousel-button-group">
-        <button onClick={() => goToSlide(currentSlide - 1)}>Previous</button>
-        <button onClick={() => goToSlide(currentSlide + 1)}>Next</button>
-      </div>
-    );
-  };
-
   return (
-    <Box pb="l" {...props}>
+    <Box pb="xl" {...props}>
       <Box display="flex">
         <H3 flex="1" mb="xs">
           {props.feature.title}
@@ -96,8 +84,7 @@ function HorizontalCardListFeature(props = {}) {
 
       {props?.feature?.cards?.length >= 1 ? (
         <Carousel
-          // arrows={false}
-          arrows
+          arrows={false}
           swipeable={true}
           draggable={false}
           showDots={false}
@@ -106,7 +93,8 @@ function HorizontalCardListFeature(props = {}) {
           infinite={true}
           autoPlaySpeed={1000}
           keyBoardControl={true}
-          // customButtonGroup={<ButtonGroup />}
+          customButtonGroup={<ButtonGroup />}
+          renderButtonGroupOutside
           // customLeftArrow={<CustomArrow direction={'left'} />}
           // customRightArrow={<CustomArrow direction={'right'} />}
         >
