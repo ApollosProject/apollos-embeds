@@ -59,7 +59,7 @@ function ContentCard(props = {}) {
         {/* Progress / Completed Indicators */}
         <BottomSlot>
           {userProgress?.complete ? (
-            <CompleteIndicator alignSelf="flex-end">
+            <CompleteIndicator color="fill.paper" alignSelf="flex-end">
               <Check size={18} />
             </CompleteIndicator>
           ) : null}
