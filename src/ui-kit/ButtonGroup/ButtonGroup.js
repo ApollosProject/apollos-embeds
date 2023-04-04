@@ -16,10 +16,10 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
   return (
     <Styled.ButtonGroup>
       <Styled.Button onClick={() => goToSlide(currentSlide - 1)}>
-        {<CaretLeft weight="bold" size={24} />}
+        {<CaretLeft weight="bold" size={20} />}
       </Styled.Button>
       <Styled.Button onClick={() => goToSlide(currentSlide + 1)}>
-        {<CaretRight weight="bold" size={24} />}
+        {<CaretRight weight="bold" size={20} />}
       </Styled.Button>
     </Styled.ButtonGroup>
   );
