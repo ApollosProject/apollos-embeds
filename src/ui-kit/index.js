@@ -11,7 +11,7 @@ import Box from './Box';
 import Button from './Button';
 import Card from './Card';
 import ContentCard from './ContentCard';
-import CustomArrow from './CustomArrow';
+import ButtonGroup from './ButtonGroup';
 import Icons from './Icons';
 import Input from './Input';
 import Layout from './Layout';
@@ -47,7 +47,7 @@ export {
   Button,
   Card,
   ContentCard,
-  CustomArrow,
+  ButtonGroup,
   Icons,
   Input,
   Layout,
