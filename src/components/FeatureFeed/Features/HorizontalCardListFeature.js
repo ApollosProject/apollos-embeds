@@ -2,7 +2,14 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+import {
+  ContentCard,
+  Box,
+  H3,
+  systemPropTypes,
+  Button,
+  CustomArrow,
+} from '../../../ui-kit';
 import {
   add as addBreadcrumb,
   useBreadcrumb,
@@ -60,6 +67,18 @@ function HorizontalCardListFeature(props = {}) {
     return <></>;
   }
 
+  const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
+    const {
+      carouselState: { currentSlide },
+    } = rest;
+    return (
+      <div className="carousel-button-group">
+        <button onClick={() => goToSlide(currentSlide - 1)}>Previous</button>
+        <button onClick={() => goToSlide(currentSlide + 1)}>Next</button>
+      </div>
+    );
+  };
+
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
@@ -74,8 +93,11 @@ function HorizontalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
+
       {props?.feature?.cards?.length >= 1 ? (
         <Carousel
+          // arrows={false}
+          arrows
           swipeable={true}
           draggable={false}
           showDots={false}
@@ -84,6 +106,9 @@ function HorizontalCardListFeature(props = {}) {
           infinite={true}
           autoPlaySpeed={1000}
           keyBoardControl={true}
+          // customButtonGroup={<ButtonGroup />}
+          // customLeftArrow={<CustomArrow direction={'left'} />}
+          // customRightArrow={<CustomArrow direction={'right'} />}
         >
           {props.feature?.cards?.map((item, index) => (
             <ContentCard
