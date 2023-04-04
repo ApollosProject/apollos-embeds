@@ -10,6 +10,7 @@ import {
   systemPropTypes,
   Button,
   MediaItem,
+  ButtonGroup,
 } from '../../../ui-kit';
 
 import {
@@ -66,7 +67,7 @@ function HorizontalMediaListFeature(props = {}) {
   };
 
   return (
-    <Box pb="l" {...props}>
+    <Box pb="xl" {...props}>
       <Box display="flex">
         <H3 flex="1" mb="xs">
           {props.feature.title}
@@ -81,6 +82,7 @@ function HorizontalMediaListFeature(props = {}) {
         ) : null}
       </Box>
       <Carousel
+        arrows={false}
         swipeable={true}
         draggable={false}
         showDots={false}
@@ -89,6 +91,8 @@ function HorizontalMediaListFeature(props = {}) {
         infinite={true}
         autoPlaySpeed={1000}
         keyBoardControl={true}
+        customButtonGroup={<ButtonGroup />}
+        renderButtonGroupOutside
       >
         {props.feature?.items?.map((item, index) => {
           return (
