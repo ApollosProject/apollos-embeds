@@ -95,8 +95,6 @@ function HorizontalCardListFeature(props = {}) {
           keyBoardControl={true}
           customButtonGroup={<ButtonGroup />}
           renderButtonGroupOutside
-          // customLeftArrow={<CustomArrow direction={'left'} />}
-          // customRightArrow={<CustomArrow direction={'right'} />}
         >
           {props.feature?.cards?.map((item, index) => (
             <ContentCard
