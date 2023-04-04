@@ -158,6 +158,9 @@ export const TAB_FEED_FEATURES = gql`
             }
             relatedNode {
               id
+              ... on ContentItem {
+                title
+              }
               ... on Livestream {
                 __typename
                 title
