@@ -81,33 +81,52 @@ function HorizontalMediaListFeature(props = {}) {
           />
         ) : null}
       </Box>
-      <Carousel
-        arrows={false}
-        swipeable={true}
-        draggable={false}
-        showDots={false}
-        responsive={responsive}
-        ssr={true} // means to render carousel on server-side.
-        infinite={true}
-        autoPlaySpeed={1000}
-        keyBoardControl={true}
-        customButtonGroup={<ButtonGroup />}
-        renderButtonGroupOutside
-      >
-        {props.feature?.items?.map((item, index) => {
-          return (
-            <MediaItem
-              key={item.id}
-              relatedNode={item.relatedNode}
-              image={item.coverImage}
-              title={item.title}
-              summary={item.summary}
-              onClick={() => handleActionPress(item)}
-              videoMedia={get(item, 'relatedNode?.videos[0]', null)}
-            />
-          );
-        })}
-      </Carousel>
+
+      {props?.feature?.items?.length >= 1 ? (
+        <Carousel
+          arrows={false}
+          swipeable={true}
+          draggable={false}
+          showDots={false}
+          responsive={responsive}
+          keyBoardControl={true}
+          customButtonGroup={<ButtonGroup />}
+          renderButtonGroupOutside
+        >
+          {props.feature?.items?.map((item, index) => {
+            return (
+              <MediaItem
+                key={item.id}
+                relatedNode={item.relatedNode}
+                image={item.coverImage}
+                title={item.title}
+                summary={item.summary}
+                onClick={() => handleActionPress(item)}
+                videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+              />
+            );
+          })}
+        </Carousel>
+      ) : (
+        <Box
+          width="100%"
+          display="flex"
+          justifyContent="center"
+          pt="l"
+          px="l"
+          textAlign="center"
+        >
+          {props.feature.title === 'Continue Watching' ? (
+            <Box fontSize="16px" fontWeight="600" color="base.primary">
+              All caught up? Check out our other sections for more content!
+            </Box>
+          ) : (
+            <Box fontStyle="italic" fontSize="14px">
+              Sorry, there is no media available at this time.
+            </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }
