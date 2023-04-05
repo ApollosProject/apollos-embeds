@@ -1,10 +1,9 @@
 import React from 'react';
 import get from 'lodash/get';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
 import {
-  ContentCard,
   Box,
   H3,
   systemPropTypes,
@@ -12,7 +11,6 @@ import {
   MediaItem,
   ButtonGroup,
 } from '../../../ui-kit';
-
 import {
   add as addBreadcrumb,
   useBreadcrumb,
@@ -65,6 +63,13 @@ function HorizontalMediaListFeature(props = {}) {
       `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
     );
   };
+
+  if (
+    props.feature.title === 'Continue Watching' &&
+    props?.feature?.cards?.length < 1
+  ) {
+    return <></>;
+  }
 
   return (
     <Box pb="xl" {...props}>
