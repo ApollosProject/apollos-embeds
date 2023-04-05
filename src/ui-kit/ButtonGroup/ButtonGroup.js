@@ -6,7 +6,6 @@ import Styled from './ButtonGroup.styles';
 import { CaretLeft, CaretRight } from 'phosphor-react';
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
-  console.log(rest);
   const {
     carouselState: { currentSlide, slidesToShow, totalItems },
   } = rest;
