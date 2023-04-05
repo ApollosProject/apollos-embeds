@@ -176,6 +176,17 @@ export const TAB_FEED_FEATURES = gql`
               }
             }
           }
+          primaryAction {
+            title
+            action
+            relatedNode {
+              id
+              __typename
+              ... on ContentItem {
+                title
+              }
+            }
+          }
         }
       }
     }

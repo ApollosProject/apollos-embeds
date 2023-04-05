@@ -1,4 +1,5 @@
 import React from 'react';
+import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
@@ -16,6 +17,8 @@ import {
 } from '../../../providers/BreadcrumbProvider';
 
 import Carousel from 'react-multi-carousel';
+
+const SHOW_VIEW_ALL_LIMIT = 5;
 
 const responsive = {
   desktop: {
@@ -38,6 +41,7 @@ const responsive = {
 function HorizontalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
+
   const handleActionPress = (item) => {
     dispatch(
       addBreadcrumb({
@@ -73,7 +77,8 @@ function HorizontalCardListFeature(props = {}) {
         <H3 flex="1" mb="xs">
           {props.feature.title}
         </H3>
-        {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
+        {props?.feature?.cards?.length >= SHOW_VIEW_ALL_LIMIT &&
+        props?.feature?.primaryAction ? (
           <Button
             title="View All >"
             type="link"
@@ -89,9 +94,6 @@ function HorizontalCardListFeature(props = {}) {
           draggable={false}
           showDots={false}
           responsive={responsive}
-          ssr={true} // means to render carousel on server-side.
-          infinite={true}
-          autoPlaySpeed={1000}
           keyBoardControl={true}
           customButtonGroup={<ButtonGroup />}
           renderButtonGroupOutside
@@ -103,7 +105,7 @@ function HorizontalCardListFeature(props = {}) {
               title={item.title}
               summary={item.summary}
               onClick={() => handleActionPress(item)}
-              videoMedia={item.relatedNode?.videos[0]}
+              videoMedia={get(item, 'relatedNode?.videos[0]', null)}
             />
           ))}
         </Carousel>
