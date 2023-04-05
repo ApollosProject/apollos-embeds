@@ -13,6 +13,25 @@ const ButtonGroup = withTheme(styled.div`
   ${system};
 `);
 
+const buttonState = ({ theme, type, disabled }) => {
+  return css`
+    &:hover {
+      background: ${themeGet('colors.neutral.gray5')};
+    }
+    &:disabled {
+      opacity: 0.5;
+      background: ${type === 'secondary'
+        ? 'transparent'
+        : theme.colors.neutral.gray6};
+      border: ${type === 'secondary' ? theme.colors.base.gray : 'transparent'};
+      cursor: not-allowed;
+    }
+    &:hover &:disabled {
+      background: ${themeGet('colors.neutral.gray6')};
+    }
+  `;
+};
+
 const Button = withTheme(styled.button`
   background: ${themeGet('colors.neutral.gray6')};
   padding: 10px;
@@ -22,9 +41,7 @@ const Button = withTheme(styled.button`
   cursor: pointer;
   transition: 0.2s;
 
-  &:hover {
-    background: ${themeGet('colors.neutral.gray5')};
-  }
+  ${buttonState}
 `);
 
 const Styled = {

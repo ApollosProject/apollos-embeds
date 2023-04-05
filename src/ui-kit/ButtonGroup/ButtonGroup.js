@@ -10,15 +10,24 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
   const {
     carouselState: { currentSlide, slidesToShow, totalItems },
   } = rest;
-  if (totalItems < slidesToShow) {
+
+  const isRightEndReach = !(currentSlide + slidesToShow < totalItems);
+
+  if (totalItems <= slidesToShow) {
     return <></>;
   }
   return (
     <Styled.ButtonGroup>
-      <Styled.Button onClick={() => goToSlide(currentSlide - 1)}>
+      <Styled.Button
+        disabled={currentSlide === 0}
+        onClick={() => goToSlide(currentSlide - 1)}
+      >
         {<CaretLeft weight="bold" size={20} />}
       </Styled.Button>
-      <Styled.Button onClick={() => goToSlide(currentSlide + 1)}>
+      <Styled.Button
+        disabled={isRightEndReach}
+        onClick={() => goToSlide(currentSlide + 1)}
+      >
         {<CaretRight weight="bold" size={20} />}
       </Styled.Button>
     </Styled.ButtonGroup>
