@@ -238,6 +238,7 @@ const Content = withTheme(styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${system}
 `);
 
 const Icon = withTheme(styled.div`
@@ -245,6 +246,7 @@ const Icon = withTheme(styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${system}
 `);
 
 export default {
