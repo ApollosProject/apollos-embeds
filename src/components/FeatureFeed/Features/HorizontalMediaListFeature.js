@@ -73,8 +73,8 @@ function HorizontalMediaListFeature(props = {}) {
 
   return (
     <Box pb="xl" {...props}>
-      <Box display="flex">
-        <H3 flex="1" mb="xs">
+      <Box display="flex" alignItems="center" mb="xs">
+        <H3 flex="1" mr="xs">
           {props.feature.title}
         </H3>
         {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT &&
