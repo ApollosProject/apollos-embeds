@@ -90,7 +90,7 @@ const FeatureFeed = (props) => {
   const location = useLocation();
 
   return (
-    <Box padding="40px">
+    <Box>
       <Breadcrumbs />
       <RenderFeatures {...props} />
     </Box>
