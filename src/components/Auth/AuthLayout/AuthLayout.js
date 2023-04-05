@@ -51,6 +51,7 @@ function AuthLayout(props = {}) {
             color="text.action"
             alignItems="center"
             display="flex"
+            flexDirection="row-reverse"
             icon={<CaretLeft />}
           />
         ) : null}
