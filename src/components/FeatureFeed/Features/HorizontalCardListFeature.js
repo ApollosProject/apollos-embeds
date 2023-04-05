@@ -2,7 +2,14 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+import {
+  ContentCard,
+  Box,
+  H3,
+  systemPropTypes,
+  Button,
+  ButtonGroup,
+} from '../../../ui-kit';
 import {
   add as addBreadcrumb,
   useBreadcrumb,
@@ -61,7 +68,7 @@ function HorizontalCardListFeature(props = {}) {
   }
 
   return (
-    <Box pb="l" {...props}>
+    <Box pb="xl" {...props}>
       <Box display="flex">
         <H3 flex="1" mb="xs">
           {props.feature.title}
@@ -74,8 +81,10 @@ function HorizontalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
+
       {props?.feature?.cards?.length >= 1 ? (
         <Carousel
+          arrows={false}
           swipeable={true}
           draggable={false}
           showDots={false}
@@ -84,6 +93,8 @@ function HorizontalCardListFeature(props = {}) {
           infinite={true}
           autoPlaySpeed={1000}
           keyBoardControl={true}
+          customButtonGroup={<ButtonGroup />}
+          renderButtonGroupOutside
         >
           {props.feature?.cards?.map((item, index) => (
             <ContentCard
