@@ -1,7 +1,6 @@
 const customizations = {
   defaulthHeading: 'Welcome.',
-  defaultSubHeading:
-    'We’re glad you’re here.\nYou know, wherever “here” is for you.',
+  defaultSubHeading: 'Please login to continue.',
 };
 
 export default customizations;

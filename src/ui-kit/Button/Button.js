@@ -7,7 +7,7 @@ import Styled from './Button.styles';
 const Button = ({ onClick, ...props }) => {
   return (
     <Styled.Button disabled={props.disabled} onClick={onClick} {...props}>
-      <Styled.Content>
+      <Styled.Content flexDirection={props.flexDirection}>
         <Styled.Title disabled={props.disabled} {...props}>
           {props.title}
         </Styled.Title>

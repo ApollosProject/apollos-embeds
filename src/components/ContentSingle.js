@@ -125,8 +125,15 @@ function ContentSingle(props = {}) {
         <Box mb="l">
           <Box
             display="flex"
+            flexDirection={{
+              _: 'column',
+              md: 'row',
+            }}
             justifyContent="space-between"
-            alignItems="center"
+            alignItems={{
+              _: 'start',
+              md: 'center',
+            }}
             mb="s"
           >
             <Box>
@@ -152,7 +159,12 @@ function ContentSingle(props = {}) {
                 ) : null}
               </Box>
             </Box>
-            <Box>
+            <Box
+              mt={{
+                _: 'xs',
+                md: '0',
+              }}
+            >
               <ShareButton contentTitle={title} />
             </Box>
           </Box>
