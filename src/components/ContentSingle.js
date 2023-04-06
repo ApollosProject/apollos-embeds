@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
 
-import { getURLFromType, videoFilters } from '../utils';
+import { getURLFromType } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
@@ -17,9 +17,8 @@ import {
   Loader,
   Longform,
   H3,
-  ContentCard,
+  MediaItem,
   BodyText,
-  Button,
   ShareButton,
 } from '../ui-kit';
 import { useVideoMediaProgress } from '../hooks';
@@ -72,7 +71,7 @@ function ContentSingle(props = {}) {
   const parentChannel = props.data?.parentChannel;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
-  const validFeatures = props.data?.featureFeed?.features.filter(
+  const validFeatures = props.data?.featureFeed?.features?.filter(
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
   const hasFeatures = validFeatures?.length;
@@ -99,7 +98,7 @@ function ContentSingle(props = {}) {
   const handleActionPress = (item) => {
     navigate({
       pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
+      search: `?id=${getURLFromType(item)}`,
     });
   };
 
@@ -181,13 +180,13 @@ function ContentSingle(props = {}) {
               gridGap="20px"
             >
               {childContentItems?.map((item, index) => (
-                <ContentCard
-                  key={item.title}
-                  image={item.coverImage}
-                  title={item.title}
-                  summary={item.summary}
-                  onClick={() => handleActionPress(item)}
-                  videoMedia={item.relatedNode?.videos[0]}
+                <MediaItem
+                  key={item.node?.title}
+                  image={item.node?.coverImage}
+                  title={item.node?.title}
+                  summary={item.node?.summary}
+                  onClick={() => handleActionPress(item.node)}
+                  videoMedia={item.node?.videos[0]}
                 />
               ))}
             </Box>

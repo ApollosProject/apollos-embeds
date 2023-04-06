@@ -64,11 +64,8 @@ function HorizontalCardListFeature(props = {}) {
     );
   };
 
-  if (
-    props.feature.title === 'Continue Watching' &&
-    props?.feature?.cards?.length < 1
-  ) {
-    return <></>;
+  if (!props?.feature?.cards) {
+    return null;
   }
 
   return (

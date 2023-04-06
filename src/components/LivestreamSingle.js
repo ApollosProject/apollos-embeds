@@ -5,15 +5,14 @@ import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
 
-import { getURLFromType, videoFilters } from '../utils';
+import { getURLFromType } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
 import {
   BodyText,
   Box,
-  Button,
-  ContentCard,
+  MediaItem,
   H1,
   H2,
   H3,
@@ -75,7 +74,7 @@ function LivestreamSingle(props = {}) {
   const title = props?.data?.title;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
-  const validFeatures = props.data?.featureFeed?.features.filter(
+  const validFeatures = props.data?.featureFeed?.features?.filter(
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
   const hasFeatures = validFeatures?.length;
@@ -184,13 +183,13 @@ function LivestreamSingle(props = {}) {
               gridGap="20px"
             >
               {childContentItems?.map((item, index) => (
-                <ContentCard
-                  key={item.title}
-                  image={item.coverImage}
-                  title={item.title}
-                  summary={item.summary}
-                  onClick={() => handleActionPress(item)}
-                  videoMedia={item.relatedNode?.videos[0]}
+                <MediaItem
+                  key={item.node?.title}
+                  image={item.node?.coverImage}
+                  title={item.node?.title}
+                  summary={item.node?.summary}
+                  onClick={() => handleActionPress(item.node)}
+                  videoMedia={item.node?.videos[0]}
                 />
               ))}
             </Box>

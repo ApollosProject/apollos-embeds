@@ -64,11 +64,8 @@ function HorizontalMediaListFeature(props = {}) {
     );
   };
 
-  if (
-    props.feature.title === 'Continue Watching' &&
-    props?.feature?.cards?.length < 1
-  ) {
-    return <></>;
+  if (!props?.feature?.items) {
+    return null;
   }
 
   return (
