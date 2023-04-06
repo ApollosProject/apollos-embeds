@@ -38,9 +38,22 @@ export const Ellipsis = withTheme(styled.div`
 `);
 
 // :: Chip
+
+const chipBackground = ({ status }) => {
+  if (status) {
+    return css`
+      background-color: ${status === 'isLive'
+        ? themeGet('colors.base.live')
+        : themeGet('colors.neutral.gray2')};
+    `;
+  }
+  return null;
+};
+
 export const LiveChipContainer = withTheme(styled.div`
-  background-color: ${themeGet('colors.base.live')};
   border-radius: ${unit(1)};
   padding: ${unit(1)} ${unit(3)};
+  ${chipBackground}
+
   ${system}
 `);

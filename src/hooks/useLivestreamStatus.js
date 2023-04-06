@@ -1,11 +1,3 @@
-/**
- * useLivestreamIsActive.js
- *
- * Hook that will manage the timers and report on the status of a Livestream.
- *
- * note : this hook will note fetch the livestream data
- */
-
 import { useState, useEffect } from 'react';
 import {
   isWithinInterval,
@@ -16,11 +8,12 @@ import {
   isValid,
 } from 'date-fns';
 
-const useLivestreamIsActive = (livestream) => {
+const useLivestreamStatus = (livestream) => {
   const id = livestream?.id;
   const start = livestream?.start;
   const durationInSeconds = livestream?.durationInSeconds;
   const [isLive, setIsLive] = useState(false);
+  const [comingUp, setComingUp] = useState(false);
 
   useEffect(() => {
     if (!start || !durationInSeconds) {
@@ -50,8 +43,10 @@ const useLivestreamIsActive = (livestream) => {
 
     // The current time is before the Live Stream STARTS, so we need to trigger the state to enable the label when it's live
     if (isBefore(now, liveStreamStart)) {
+      setComingUp(true);
       timeouts.push(
         setTimeout(() => {
+          setComingUp(false);
           setIsLive(true);
         }, differenceInMilliseconds(liveStreamStart, now))
       );
@@ -71,7 +66,7 @@ const useLivestreamIsActive = (livestream) => {
     };
   }, [start, durationInSeconds, id]);
 
-  return isLive;
+  return { status: isLive ? 'isLive' : comingUp ? 'comingUp' : null };
 };
 
-export default useLivestreamIsActive;
+export default useLivestreamStatus;

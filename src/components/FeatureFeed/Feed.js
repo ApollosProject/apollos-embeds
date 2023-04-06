@@ -52,7 +52,7 @@ const Feed = (props) => {
     );
   }
 
-  const features = props.data?.features.filter(
+  const features = props?.data?.features?.filter(
     (feature) => feature.cards !== null
   );
   const renderedFeatures = features?.map(renderFeature).filter(isNil);
