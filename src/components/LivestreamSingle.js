@@ -22,7 +22,7 @@ import {
   Longform,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress, useLivestreamIsActive } from '../hooks';
+import { useVideoMediaProgress, useLivestreamStatus } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 const MAX_EPISODE_COUNT = 20;
@@ -31,7 +31,7 @@ function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
 
   const invalidPage = !props.loading && !props.data;
-  const isLive = useLivestreamIsActive(props?.data);
+  const { status } = useLivestreamStatus(props?.data);
 
   // Video details
   const videoMedia = props.data?.stream?.sources?.uri;
@@ -134,7 +134,9 @@ function LivestreamSingle(props = {}) {
             mb="s"
           >
             <Box>
-              {isLive ? <LiveChip display="inline-block" /> : null}
+              {status ? (
+                <LiveChip display="inline-block" status={status} />
+              ) : null}
               {/* Title */}
               {title && !hasChildContent ? <H2>{title}</H2> : null}
               {title && hasChildContent ? <H1>{title}</H1> : null}

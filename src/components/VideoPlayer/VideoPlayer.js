@@ -4,7 +4,7 @@ import DOMPurify from 'dompurify';
 
 import { round } from 'lodash';
 
-import { useInteractWithNode, useLivestreamIsActive } from '../../hooks';
+import { useInteractWithNode, useLivestreamStatus } from '../../hooks';
 import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
@@ -24,7 +24,8 @@ function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
 
-  const isLiveStreaming = useLivestreamIsActive(props.parentNode);
+  const { status } = useLivestreamStatus(props.parentNode);
+  const isLiveStreaming = status === 'isLive';
 
   // Player state
   const playerRef = useRef(null);

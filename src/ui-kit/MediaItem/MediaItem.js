@@ -22,7 +22,7 @@ import {
   Ellipsis,
 } from './MediaItem.styles';
 import LiveChip from './LiveChip';
-import { useLivestreamIsActive } from '../../hooks';
+import { useLivestreamStatus } from '../../hooks';
 function MediaItem(props = {}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
     {
@@ -36,7 +36,7 @@ function MediaItem(props = {}) {
     userProgress,
   });
 
-  const isLive = useLivestreamIsActive(props.relatedNode);
+  const { status } = useLivestreamStatus(props.relatedNode);
 
   return (
     <Box
@@ -62,9 +62,9 @@ function MediaItem(props = {}) {
           overflow="hidden"
           paddingBottom="56.25%"
         />
-        {isLive ? (
+        {status ? (
           <Box position="absolute" top={unit(4)} left={unit(4)} zIndex={1}>
-            <LiveChip />
+            <LiveChip status={status} />
           </Box>
         ) : null}
         {/* Progress / Completed Indicators */}
