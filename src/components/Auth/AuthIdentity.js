@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 
 import authSteps from './authSteps';
 import { useForm, useRequestLogin, useRequestRegister } from '../../hooks';
@@ -11,9 +11,6 @@ const AuthIdentity = () => {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [state, dispatch] = useAuth();
-  const [checked, setChecked] = useState(false);
-
-  const onChange = () => setChecked(!checked);
 
   const onSuccess = ({ identity, type, userExists, userProfile, nextStep }) => {
     setStatus('SUCCESS');
@@ -109,31 +106,6 @@ const AuthIdentity = () => {
         error={error?.identity}
         mb="xs"
       />
-      <Box display="flex" mb="base" alignItems="baseline">
-        <Box
-          as="input"
-          id="policy"
-          type="radio"
-          mr="xxs"
-          key="policy"
-          value={checked}
-          checked={checked === true}
-          onClick={onChange}
-          onChange={onChange}
-        />
-
-        <SmallSystemText color="text.secondary">
-          I agree to the{' '}
-          <Box as="span" display="inline" fontWeight={700}>
-            terms of use
-          </Box>{' '}
-          and{' '}
-          <Box as="span" display="inline" fontWeight={700}>
-            privacy policy
-          </Box>{' '}
-          laid out by this church.
-        </SmallSystemText>
-      </Box>
       <SmallSystemText fontWeight={700} color="text.secondary" mb="s">
         We’ll text or email you a code to continue.
       </SmallSystemText>
