@@ -15,7 +15,7 @@ const LiveChip = (props) => {
   return (
     <LiveChipContainer {...props}>
       <SmallSystemText fontWeight="700" color="white">
-        LIVE
+        {props.status === 'isLive' ? 'LIVE' : 'COMING UP'}
       </SmallSystemText>
     </LiveChipContainer>
   );
