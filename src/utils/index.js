@@ -7,6 +7,7 @@ import getPercentWatched from './getPercentWatched';
 import getPropTypesFromObject from './getPropTypesFromObject';
 import getURLFromType from './getURLFromType';
 import getWatchButtonLabel from './getWatchButtonLabel';
+import parseDescriptionLinks from './parseDescriptionLinks';
 import slugify from './slugify';
 import unit from './unit';
 import validateEmail from './validateEmail';
@@ -21,6 +22,7 @@ export {
   getPropTypesFromObject,
   getURLFromType,
   getWatchButtonLabel,
+  parseDescriptionLinks,
   slugify,
   unit,
   validateEmail,
