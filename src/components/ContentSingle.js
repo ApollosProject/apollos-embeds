@@ -5,7 +5,7 @@ import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
 
-import { getURLFromType } from '../utils';
+import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 
@@ -178,7 +178,11 @@ function ContentSingle(props = {}) {
           ) : null}
           {htmlContent ? (
             <>
-              <Longform dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+              <Longform
+                dangerouslySetInnerHTML={{
+                  __html: parseDescriptionLinks(sanitizedHTML),
+                }}
+              />
             </>
           ) : null}
         </Box>
