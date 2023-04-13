@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import { CaretRight } from 'phosphor-react';
 import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,
+  add as addBreadcrumb,
   useBreadcrumb,
 } from '../../providers/BreadcrumbProvider';
 
@@ -11,13 +12,64 @@ function Breadcrumbs(props = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
-  // const [viewWidth, setViewWidth] = React.useState(0);
-  // const boxWidth = viewWidth * 0.25 - 66;
+  const prevIdxRef = useRef(null);
+  const prevStateRef = useRef(null);
+  const currentIdx = window.history.state ? window.history.state.idx : null;
+  const currentState = state[state.length - 1];
+
+  useEffect(() => {
+    const handleHistoryChange = () => {
+      //If they refreshed the page,
+      console.log('INITIAL');
+      // console.log('prevStateRef', prevStateRef.current);
+      console.log('currentState', currentState);
+      // console.log('prevIdxRef', prevIdxRef.current);
+      // console.log('currentIdx', currentIdx);
+      if (currentState) {
+        if (currentState) {
+          // prevStateRef.current = currentState;
+          dispatch(removeBreadcrumb(currentState.id));
+          console.log('Removing... prevStateRef set and dispatched');
+        }
+        // else {
+        //   dispatch(
+        //     addBreadcrumb({
+        //       url: prevStateRef.current.url,
+        //       title: prevStateRef.current.title,
+        //     })
+        //   );
+        //   prevStateRef.current = null;
+        //   console.log('Adding... prevStateRef removed and dispatched');
+        // }
+      }
+
+      // if (prevIdxRef.current > currentIdx) {
+      //   console.log('BACK');
+      //   // console.log('prevStateRef', prevStateRef.current);
+      //   // console.log('currentState', currentState);
+      //   console.log('prevIdxRef', prevIdxRef.current);
+      //   console.log('currentIdx', currentIdx);
+      //   // Do something when user clicks back button
+      // } else {
+      //   console.log('NOTHING');
+      //   // console.log('prevStateRef', prevStateRef.current);
+      //   // console.log('currentState', currentState);
+      //   console.log('prevIdxRef', prevIdxRef.current);
+      //   console.log('currentIdx', currentIdx);
+      // }
+    };
+
+    window.addEventListener('popstate', handleHistoryChange);
+    return () => {
+      window.removeEventListener('popstate', handleHistoryChange);
+    };
+  }, [currentState, dispatch, state]);
 
   function handleBreadClick({ id, url }) {
     dispatch(removeBreadcrumb(id));
     setSearchParams(`${url}`);
   }
+
   return (
     <Box display="flex" alignItems="center" mb="xs">
       {state.length > 0 ? (
@@ -42,7 +94,7 @@ function Breadcrumbs(props = {}) {
           );
         }
         return (
-          <>
+          <React.Fragment key={item.id}>
             <Box display="flex" color="text.secondary" mx="xxs">
               <CaretRight />
             </Box>
@@ -52,7 +104,7 @@ function Breadcrumbs(props = {}) {
               title={item.title}
               onClick={() => handleBreadClick({ id: item.id, url: item.url })}
             />
-          </>
+          </React.Fragment>
         );
       })}
     </Box>
