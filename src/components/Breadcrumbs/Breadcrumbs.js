@@ -5,6 +5,7 @@ import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,
   add as addBreadcrumb,
+  reset as resetBreadcrumb,
   useBreadcrumb,
 } from '../../providers/BreadcrumbProvider';
 
@@ -12,51 +13,13 @@ function Breadcrumbs(props = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
-  const prevIdxRef = useRef(null);
-  const prevStateRef = useRef(null);
-  const currentIdx = window.history.state ? window.history.state.idx : null;
   const currentState = state[state.length - 1];
 
   useEffect(() => {
     const handleHistoryChange = () => {
-      //If they refreshed the page,
-      console.log('INITIAL');
-      // console.log('prevStateRef', prevStateRef.current);
-      console.log('currentState', currentState);
-      // console.log('prevIdxRef', prevIdxRef.current);
-      // console.log('currentIdx', currentIdx);
       if (currentState) {
-        if (currentState) {
-          // prevStateRef.current = currentState;
-          dispatch(removeBreadcrumb(currentState.id));
-          console.log('Removing... prevStateRef set and dispatched');
-        }
-        // else {
-        //   dispatch(
-        //     addBreadcrumb({
-        //       url: prevStateRef.current.url,
-        //       title: prevStateRef.current.title,
-        //     })
-        //   );
-        //   prevStateRef.current = null;
-        //   console.log('Adding... prevStateRef removed and dispatched');
-        // }
+        dispatch(removeBreadcrumb(currentState.id));
       }
-
-      // if (prevIdxRef.current > currentIdx) {
-      //   console.log('BACK');
-      //   // console.log('prevStateRef', prevStateRef.current);
-      //   // console.log('currentState', currentState);
-      //   console.log('prevIdxRef', prevIdxRef.current);
-      //   console.log('currentIdx', currentIdx);
-      //   // Do something when user clicks back button
-      // } else {
-      //   console.log('NOTHING');
-      //   // console.log('prevStateRef', prevStateRef.current);
-      //   // console.log('currentState', currentState);
-      //   console.log('prevIdxRef', prevIdxRef.current);
-      //   console.log('currentIdx', currentIdx);
-      // }
     };
 
     window.addEventListener('popstate', handleHistoryChange);
