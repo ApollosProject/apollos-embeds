@@ -9,6 +9,7 @@ const initialState = [];
 const actionTypes = {
   add: 'add',
   remove: 'remove',
+  reset: 'reset',
 };
 
 const add = (payload) => ({
@@ -19,6 +20,10 @@ const add = (payload) => ({
 const remove = (payload) => ({
   type: 'remove',
   payload,
+});
+
+const reset = () => ({
+  type: 'reset',
 });
 
 function reducer(state, action) {
@@ -105,4 +110,5 @@ export {
   actionTypes,
   add,
   remove,
+  reset,
 };
