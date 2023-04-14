@@ -130,10 +130,11 @@ function AuthDetails() {
         disabled={
           !user ||
           !(
-            values.firstName &&
-            values.lastName &&
-            values.gender &&
-            values.birthDate
+            isProfileCompleted ||
+            (values.firstName &&
+              values.lastName &&
+              values.gender &&
+              values.birthDate)
           ) ||
           isLoading
         }
