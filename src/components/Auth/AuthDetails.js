@@ -1,18 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react';
 
-import { useForm, useUpdateProfileFields, useCurrentUser } from "../../hooks";
-import { update as updateAuth, useAuth } from "../../providers/AuthProvider";
-import { Box, Button, Input, Select } from "../../ui-kit";
-import authSteps from "../Auth/authSteps";
+import { useForm, useUpdateProfileFields, useCurrentUser } from '../../hooks';
+import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
+import { Box, Button, Input, Select } from '../../ui-kit';
+import authSteps from '../Auth/authSteps';
 
-import AuthLayout from "./AuthLayout";
+import AuthLayout from './AuthLayout';
 
 function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function AuthDetails() {
-  const [status, setStatus] = useState("IDLE");
+  const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
   const [state, dispatch] = useAuth();
@@ -24,12 +24,12 @@ function AuthDetails() {
   }, [currentUser]);
 
   const onError = (e) => {
-    setStatus("ERROR");
+    setStatus('ERROR');
     setError(e);
   };
 
   const { values, handleSubmit, setFieldValue } = useForm(async () => {
-    setStatus("LOADING");
+    setStatus('LOADING');
 
     const userProfile = Object.keys(values).map((key) => ({
       field: upperFirst(key),
@@ -50,60 +50,73 @@ function AuthDetails() {
     }
   });
 
-  const isLoading = status === "LOADING";
+  const isLoading = status === 'LOADING';
   const genderOptions = [
-    { value: "Male", label: "Male" },
-    { value: "Female", label: "Female" },
-    { value: "Prefer not to say", label: "Prefer not to say" },
+    { value: 'Male', label: 'Male' },
+    { value: 'Female', label: 'Female' },
+    { value: 'Prefer not to say', label: 'Prefer not to say' },
   ];
+
+  const isProfileCompleted =
+    user?.profile?.firstName &&
+    user?.profile?.lastName &&
+    user?.profile?.gender &&
+    user?.profile?.birthDate
+      ? true
+      : false;
 
   return (
     <AuthLayout
-      heading="Complete your profile"
-      subHeading="Help us learn a little more about you so we can connect you with the
-      best ministries and events."
+      heading={
+        user && isProfileCompleted ? 'Welcome back!' : 'Complete your profile'
+      }
+      subHeading={
+        user && isProfileCompleted
+          ? 'Your login has been verified.'
+          : 'Help us learn a little more about you so we can connect you with the best ministries and events.'
+      }
     >
       <Box textAlign="left">
-        {user?.profile?.firstName === null ? (
+        {!isProfileCompleted ? (
           <Box mb="base">
             <Input
               id="firstName"
               placeholder="First Name"
-              handleOnChange={(text) => setFieldValue("firstName", text)}
+              handleOnChange={(text) => setFieldValue('firstName', text)}
               required
               error={error?.identity}
             />
           </Box>
         ) : null}
-        {!user?.profile?.lastName ? (
+        {!isProfileCompleted ? (
           <Box mb="base">
             <Input
               id="lastName"
               placeholder="Last Name"
-              handleOnChange={(text) => setFieldValue("lastName", text)}
+              handleOnChange={(text) => setFieldValue('lastName', text)}
               required
               error={error?.identity}
             />
           </Box>
         ) : null}
-        {!user?.profile?.gender ? (
+        {!isProfileCompleted ? (
           <Box mb="base">
             <Select
               id="gender"
               placeholder="Gender"
               options={genderOptions}
-              handleOnChange={(text) => setFieldValue("gender", text)}
+              handleOnChange={(text) => setFieldValue('gender', text)}
               required
               error={error?.identity}
             />
           </Box>
         ) : null}
-        {!user?.profile?.birthDate ? (
+        {!isProfileCompleted ? (
           <Box mb="base">
             <Input
               id="birthDate"
               type="date"
-              handleOnChange={(text) => setFieldValue("birthDate", text)}
+              handleOnChange={(text) => setFieldValue('birthDate', text)}
               required
               error={error?.identity}
             />
@@ -112,9 +125,18 @@ function AuthDetails() {
       </Box>
       <Button
         status={status}
-        title={`Finish${isLoading ? "ing..." : ""}`}
+        title={`Finish${isLoading ? 'ing...' : ''}`}
         onClick={handleSubmit}
-        disabled={!(values.firstName && values.lastName) || isLoading}
+        disabled={
+          !user ||
+          !(
+            values.firstName &&
+            values.lastName &&
+            values.gender &&
+            values.birthDate
+          ) ||
+          isLoading
+        }
       />
     </AuthLayout>
   );
