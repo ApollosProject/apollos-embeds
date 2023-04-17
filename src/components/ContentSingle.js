@@ -101,7 +101,6 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
-    console.log(item);
     dispatch(
       addBreadcrumb({
         url: `?id=${getURLFromType(item)}`,
