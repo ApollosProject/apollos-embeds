@@ -10,6 +10,7 @@ const actionTypes = {
   add: 'add',
   remove: 'remove',
   reset: 'reset',
+  set: 'set',
 };
 
 const add = (payload) => ({
@@ -19,6 +20,11 @@ const add = (payload) => ({
 
 const remove = (payload) => ({
   type: 'remove',
+  payload,
+});
+
+const set = (payload) => ({
+  type: 'set',
   payload,
 });
 
@@ -45,7 +51,10 @@ function reducer(state, action) {
       const dropRight = (arr, n = 1) => arr.slice(0, -n);
       return dropRight(state, action.payload + 1);
     }
-
+    case actionTypes.set: {
+      console.log('Returning this payload:', action.payload);
+      return action.payload;
+    }
     case actionTypes.reset: {
       return initialState;
     }
@@ -111,4 +120,5 @@ export {
   add,
   remove,
   reset,
+  set,
 };
