@@ -8,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
+import {
+  add as addBreadcrumb,
+  useBreadcrumb,
+} from '../providers/BreadcrumbProvider';
 
 import {
   Box,
@@ -26,6 +30,7 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
+  const [state, dispatch] = useBreadcrumb();
 
   const invalidPage = !props.loading && !props.data;
 
@@ -96,6 +101,13 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
+    console.log(item);
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(item)}`,
+        title: item.title,
+      })
+    );
     navigate({
       pathname: '/',
       search: `?id=${getURLFromType(item)}`,
