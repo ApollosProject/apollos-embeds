@@ -6,6 +6,7 @@ import {
   remove as removeBreadcrumb,
   add as addBreadcrumb,
   reset as resetBreadcrumb,
+  set as setBreadcrumb,
   useBreadcrumb,
 } from '../../providers/BreadcrumbProvider';
 
@@ -13,14 +14,26 @@ function Breadcrumbs(props = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
+  const prevStateRef = useRef(state);
   const currentState = state[state.length - 1];
 
   useEffect(() => {
+    console.log('prevStateRef useEffect', prevStateRef.current);
+    console.log('state useEffect', state);
     const handleHistoryChange = () => {
+      // console.log('prevStateRef popstate', prevStateRef.current);
+      // console.log('state popstate', state);
       if (currentState) {
-        dispatch(removeBreadcrumb(currentState.id));
+        // prevStateRef.current = prevStateRef.current.pop();
+        dispatch(setBreadcrumb(prevStateRef.current.slice(0, -1)));
       }
+      // if (prevStateRef.current === state) {
+      //   console.log('FORWARD');
+      // }
     };
+    console.log('prevStateRef Before update:', prevStateRef.current);
+    prevStateRef.current = state;
+    console.log('prevStateRef After update:', prevStateRef.current);
 
     window.addEventListener('popstate', handleHistoryChange);
     return () => {
