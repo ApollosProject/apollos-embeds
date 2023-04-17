@@ -21,21 +21,25 @@ function Breadcrumbs(props = {}) {
     console.log('prevStateRef useEffect', prevStateRef.current);
     console.log('state useEffect', state);
     const handleHistoryChange = () => {
-      // console.log('prevStateRef popstate', prevStateRef.current);
-      // console.log('state popstate', state);
+      console.log('prevStateRef popstate', prevStateRef.current);
+      console.log('state popstate', state);
       if (currentState) {
         // prevStateRef.current = prevStateRef.current.pop();
-        dispatch(setBreadcrumb(prevStateRef.current.slice(0, -1)));
+        if (prevStateRef.current.length > state.length) {
+          console.log('FORWARD');
+          dispatch(setBreadcrumb(prevStateRef.current));
+          prevStateRef.current = state;
+        } else {
+          console.log('BACKWARD');
+          prevStateRef.current = state;
+          dispatch(setBreadcrumb(prevStateRef.current.slice(0, -1)));
+        }
       }
-      // if (prevStateRef.current === state) {
-      //   console.log('FORWARD');
-      // }
     };
+    window.addEventListener('popstate', handleHistoryChange);
     console.log('prevStateRef Before update:', prevStateRef.current);
-    prevStateRef.current = state;
     console.log('prevStateRef After update:', prevStateRef.current);
 
-    window.addEventListener('popstate', handleHistoryChange);
     return () => {
       window.removeEventListener('popstate', handleHistoryChange);
     };
