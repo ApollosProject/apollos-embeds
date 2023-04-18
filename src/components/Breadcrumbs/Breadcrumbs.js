@@ -15,41 +15,31 @@ function Breadcrumbs(props = {}) {
   const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
-  //use back and forward states???
   const prevStateRef = useRef(state);
   const currentState = state[state.length - 1];
-  console.log(location);
 
   useEffect(() => {
     if (location.search === '') {
       dispatch(resetBreadcrumb());
     }
-    console.log('prevStateRef useEffect', prevStateRef.current);
-    console.log('state useEffect', state);
     const handleHistoryChange = () => {
-      console.log('prevStateRef popstate', prevStateRef.current);
-      console.log('state popstate', state);
       if (currentState) {
-        // prevStateRef.current = prevStateRef.current.pop();
         if (prevStateRef.current.length > state.length) {
-          console.log('FORWARD');
           dispatch(setBreadcrumb(prevStateRef.current));
           prevStateRef.current = state;
         } else {
-          console.log('BACKWARD');
           prevStateRef.current = state;
           dispatch(setBreadcrumb(prevStateRef.current.slice(0, -1)));
         }
       }
     };
     window.addEventListener('popstate', handleHistoryChange);
-    console.log('prevStateRef Before update:', prevStateRef.current);
-    console.log('prevStateRef After update:', prevStateRef.current);
 
     return () => {
       window.removeEventListener('popstate', handleHistoryChange);
     };
-  }, [currentState, dispatch, state]);
+  }, [state]);
+
   function handleBreadClick({ id, url }) {
     dispatch(removeBreadcrumb(id));
     setSearchParams(`${url}`);
