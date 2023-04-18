@@ -1,7 +1,7 @@
-import React, { useState, useRef } from "react";
-import PropTypes from "prop-types";
-import { Box, systemPropTypes, SystemText } from "..";
-import Styled from "./Select.styles";
+import React, { useState, useRef } from 'react';
+import PropTypes from 'prop-types';
+import { Box, systemPropTypes, SystemText } from '..';
+import Styled from './Select.styles';
 
 const Select = ({ label = false, placeholder, options, ...props }) => {
   const textInputRef = useRef();
@@ -35,7 +35,7 @@ const Select = ({ label = false, placeholder, options, ...props }) => {
   };
 
   if (props.error) {
-    textInputRef.current.value = "";
+    textInputRef.current.value = '';
   }
   return (
     <Box {...props}>
