@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { CaretRight } from 'phosphor-react';
 import { Box, Button, SystemText } from '../../ui-kit';
 import {
@@ -12,12 +12,18 @@ import {
 
 function Breadcrumbs(props = {}) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
+  //use back and forward states???
   const prevStateRef = useRef(state);
   const currentState = state[state.length - 1];
+  console.log(location);
 
   useEffect(() => {
+    if (location.search === '') {
+      dispatch(resetBreadcrumb());
+    }
     console.log('prevStateRef useEffect', prevStateRef.current);
     console.log('state useEffect', state);
     const handleHistoryChange = () => {
@@ -44,7 +50,6 @@ function Breadcrumbs(props = {}) {
       window.removeEventListener('popstate', handleHistoryChange);
     };
   }, [currentState, dispatch, state]);
-
   function handleBreadClick({ id, url }) {
     dispatch(removeBreadcrumb(id));
     setSearchParams(`${url}`);
