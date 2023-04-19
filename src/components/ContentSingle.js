@@ -190,10 +190,19 @@ function ContentSingle(props = {}) {
         {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature?.title}</H3>
+
             <Box
               display="grid"
-              gridTemplateColumns="repeat(3, 1fr)"
-              gridGap="20px"
+              gridGap="30px"
+              gridTemplateColumns={{
+                _: 'repeat(1, 1fr)',
+                md: 'repeat(2, 1fr)',
+                lg: 'repeat(3, 1fr)',
+              }}
+              padding={{
+                _: '30px',
+                md: '0',
+              }}
             >
               {childContentItems?.map((item, index) => (
                 <MediaItem
