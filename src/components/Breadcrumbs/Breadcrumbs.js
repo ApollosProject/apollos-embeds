@@ -1,23 +1,50 @@
-import React from 'react';
-import { useSearchParams, useNavigate } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
 import { CaretRight } from 'phosphor-react';
 import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,
+  add as addBreadcrumb,
+  reset as resetBreadcrumb,
+  set as setBreadcrumb,
   useBreadcrumb,
 } from '../../providers/BreadcrumbProvider';
 
 function Breadcrumbs(props = {}) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useBreadcrumb();
-  // const [viewWidth, setViewWidth] = React.useState(0);
-  // const boxWidth = viewWidth * 0.25 - 66;
+  const prevStateRef = useRef(state);
+  const currentState = state[state.length - 1];
+
+  useEffect(() => {
+    if (location.search === '') {
+      dispatch(resetBreadcrumb());
+    }
+    const handleHistoryChange = () => {
+      if (currentState) {
+        if (prevStateRef.current.length > state.length) {
+          dispatch(setBreadcrumb(prevStateRef.current));
+          prevStateRef.current = state;
+        } else {
+          prevStateRef.current = state;
+          dispatch(setBreadcrumb(prevStateRef.current.slice(0, -1)));
+        }
+      }
+    };
+    window.addEventListener('popstate', handleHistoryChange);
+
+    return () => {
+      window.removeEventListener('popstate', handleHistoryChange);
+    };
+  }, [state]);
 
   function handleBreadClick({ id, url }) {
     dispatch(removeBreadcrumb(id));
     setSearchParams(`${url}`);
   }
+
   return (
     <Box display="flex" alignItems="center" mb="xs">
       {state.length > 0 ? (
@@ -42,7 +69,7 @@ function Breadcrumbs(props = {}) {
           );
         }
         return (
-          <>
+          <React.Fragment key={item.id}>
             <Box display="flex" color="text.secondary" mx="xxs">
               <CaretRight />
             </Box>
@@ -52,7 +79,7 @@ function Breadcrumbs(props = {}) {
               title={item.title}
               onClick={() => handleBreadClick({ id: item.id, url: item.url })}
             />
-          </>
+          </React.Fragment>
         );
       })}
     </Box>
