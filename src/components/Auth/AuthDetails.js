@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
-import { useForm, useUpdateProfileFields, useCurrentUser } from '../../hooks';
+import {
+  useForm,
+  useUpdateProfileFields,
+  useCurrentUser,
+  useCompleteRegister,
+} from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Input, Select } from '../../ui-kit';
 import authSteps from '../Auth/authSteps';
@@ -17,6 +22,7 @@ function AuthDetails() {
   const [user, setUser] = useState(null);
   const [state, dispatch] = useAuth();
   const [updateProfileFields] = useUpdateProfileFields();
+  const [completeRegister] = useCompleteRegister();
   const { currentUser } = useCurrentUser();
 
   useEffect(() => {
@@ -43,6 +49,8 @@ function AuthDetails() {
         })
       );
       await updateProfileFields({ variables: { input: userProfile } });
+      await completeRegister();
+
       dispatch(updateAuth({ step: authSteps.Success }));
     } catch (e) {
       onError(e);
