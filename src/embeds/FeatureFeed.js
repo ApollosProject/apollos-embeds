@@ -91,7 +91,6 @@ const FeatureFeed = (props) => {
 
   return (
     <Box>
-      <Breadcrumbs />
       <RenderFeatures {...props} />
     </Box>
   );
