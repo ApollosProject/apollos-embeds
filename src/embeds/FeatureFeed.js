@@ -10,7 +10,6 @@ import {
   ContentSingle,
   FeatureFeedList,
   ContentChannel,
-  Breadcrumbs,
   LivestreamSingle,
 } from '../components';
 import { Box } from '../ui-kit';
