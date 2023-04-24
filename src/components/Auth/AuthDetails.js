@@ -49,7 +49,7 @@ function AuthDetails() {
         })
       );
       await updateProfileFields({ variables: { input: userProfile } });
-      await completeRegister(user.id);
+      await completeRegister();
 
       dispatch(updateAuth({ step: authSteps.Success }));
     } catch (e) {
