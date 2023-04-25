@@ -70,7 +70,10 @@ function ContentSingle(props = {}) {
   const title = props?.data?.title;
   const parentChannel = props.data?.parentChannel;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const siblingContentItems = props.data?.siblingContentItemsConnection?.edges;
+  console.log('siblingContentItems', siblingContentItems);
   const hasChildContent = childContentItems?.length > 0;
+  const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features?.filter(
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
@@ -196,6 +199,28 @@ function ContentSingle(props = {}) {
               gridGap="20px"
             >
               {childContentItems?.map((item, index) => (
+                <MediaItem
+                  key={item.node?.title}
+                  image={item.node?.coverImage}
+                  title={item.node?.title}
+                  summary={item.node?.summary}
+                  onClick={() => handleActionPress(item.node)}
+                  videoMedia={item.node?.videos[0]}
+                />
+              ))}
+            </Box>
+          </Box>
+        ) : null}
+
+        {hasSiblingContent ? (
+          <Box mb="l">
+            <H3 mb="xs">{props.feature?.title}</H3>
+            <Box
+              display="grid"
+              gridTemplateColumns="repeat(3, 1fr)"
+              gridGap="20px"
+            >
+              {siblingContentItems?.map((item, index) => (
                 <MediaItem
                   key={item.node?.title}
                   image={item.node?.coverImage}
