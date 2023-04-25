@@ -10,7 +10,6 @@ import {
   ContentSingle,
   FeatureFeedList,
   ContentChannel,
-  Breadcrumbs,
   LivestreamSingle,
 } from '../components';
 import { Box } from '../ui-kit';
@@ -91,7 +90,6 @@ const FeatureFeed = (props) => {
 
   return (
     <Box>
-      <Breadcrumbs />
       <RenderFeatures {...props} />
     </Box>
   );

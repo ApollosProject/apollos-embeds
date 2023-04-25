@@ -8,6 +8,10 @@ import { useNavigate } from 'react-router-dom';
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
+import {
+  add as addBreadcrumb,
+  useBreadcrumb,
+} from '../providers/BreadcrumbProvider';
 
 import {
   Box,
@@ -26,6 +30,7 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
+  const [state, dispatch] = useBreadcrumb();
 
   const invalidPage = !props.loading && !props.data;
 
@@ -99,6 +104,12 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
+    dispatch(
+      addBreadcrumb({
+        url: `?id=${getURLFromType(item)}`,
+        title: item.title,
+      })
+    );
     navigate({
       pathname: '/',
       search: `?id=${getURLFromType(item)}`,
@@ -193,10 +204,19 @@ function ContentSingle(props = {}) {
         {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature?.title}</H3>
+
             <Box
               display="grid"
-              gridTemplateColumns="repeat(3, 1fr)"
-              gridGap="20px"
+              gridGap="30px"
+              gridTemplateColumns={{
+                _: 'repeat(1, minmax(0, 1fr));',
+                md: 'repeat(2, minmax(0, 1fr));',
+                lg: 'repeat(3, minmax(0, 1fr));',
+              }}
+              padding={{
+                _: '30px',
+                md: '0',
+              }}
             >
               {childContentItems?.map((item, index) => (
                 <MediaItem
