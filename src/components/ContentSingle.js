@@ -76,7 +76,6 @@ function ContentSingle(props = {}) {
   const parentChannel = props.data?.parentChannel;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
   const siblingContentItems = props.data?.siblingContentItemsConnection?.edges;
-  console.log('siblingContentItems', siblingContentItems);
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features?.filter(
@@ -200,7 +199,7 @@ function ContentSingle(props = {}) {
             </>
           ) : null}
         </Box>
-
+        {/* Display content for series */}
         {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature?.title}</H3>
@@ -231,14 +230,22 @@ function ContentSingle(props = {}) {
             </Box>
           </Box>
         ) : null}
-
+        {/* Display content for sermons */}
         {hasSiblingContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature?.title}</H3>
             <Box
               display="grid"
-              gridTemplateColumns="repeat(3, 1fr)"
-              gridGap="20px"
+              gridGap="30px"
+              gridTemplateColumns={{
+                _: 'repeat(1, minmax(0, 1fr));',
+                md: 'repeat(2, minmax(0, 1fr));',
+                lg: 'repeat(3, minmax(0, 1fr));',
+              }}
+              padding={{
+                _: '30px',
+                md: '0',
+              }}
             >
               {siblingContentItems?.map((item, index) => (
                 <MediaItem
