@@ -75,7 +75,9 @@ function ContentSingle(props = {}) {
   const title = props?.data?.title;
   const parentChannel = props.data?.parentChannel;
   const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const siblingContentItems = props.data?.siblingContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
+  const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features?.filter(
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
@@ -197,7 +199,7 @@ function ContentSingle(props = {}) {
             </>
           ) : null}
         </Box>
-
+        {/* Display content for series */}
         {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature?.title}</H3>
@@ -216,6 +218,36 @@ function ContentSingle(props = {}) {
               }}
             >
               {childContentItems?.map((item, index) => (
+                <MediaItem
+                  key={item.node?.title}
+                  image={item.node?.coverImage}
+                  title={item.node?.title}
+                  summary={item.node?.summary}
+                  onClick={() => handleActionPress(item.node)}
+                  videoMedia={item.node?.videos[0]}
+                />
+              ))}
+            </Box>
+          </Box>
+        ) : null}
+        {/* Display content for sermons */}
+        {hasSiblingContent ? (
+          <Box mb="l">
+            <H3 mb="xs">{props.feature?.title}</H3>
+            <Box
+              display="grid"
+              gridGap="30px"
+              gridTemplateColumns={{
+                _: 'repeat(1, minmax(0, 1fr));',
+                md: 'repeat(2, minmax(0, 1fr));',
+                lg: 'repeat(3, minmax(0, 1fr));',
+              }}
+              padding={{
+                _: '30px',
+                md: '0',
+              }}
+            >
+              {siblingContentItems?.map((item, index) => (
                 <MediaItem
                   key={item.node?.title}
                   image={item.node?.coverImage}
