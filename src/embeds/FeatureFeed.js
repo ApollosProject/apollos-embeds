@@ -11,6 +11,7 @@ import {
   FeatureFeedList,
   ContentChannel,
   LivestreamSingle,
+  Breadcrumbs,
 } from '../components';
 import { Box } from '../ui-kit';
 import { useCurrentUser } from '../hooks';
@@ -90,6 +91,7 @@ const FeatureFeed = (props) => {
 
   return (
     <Box>
+      <Breadcrumbs />
       <RenderFeatures {...props} />
     </Box>
   );
