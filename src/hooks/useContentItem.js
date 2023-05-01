@@ -132,7 +132,7 @@ function useContentItem(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
-  console.log('query', query);
+
   return {
     item: query?.data?.node,
     ...query,
