@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { createContext, useContext, useReducer } from 'react';
-
+import { getContentFromURL } from '../utils';
 const ModalStateContext = createContext();
 const ModalDispatchContext = createContext();
 
@@ -34,13 +34,15 @@ const set = (payload) => ({
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.open:
-      console.log(state);
       console.log('opened');
       return { ...state, isOpen: true };
     case actionTypes.close:
+      console.log('closed');
       return { ...state, isOpen: false };
     case actionTypes.set:
-      return { ...state, content: action.payload };
+      console.log('set');
+      console.log('payload', action.payload);
+      return { ...state, content: getContentFromURL(`${action.payload}`) };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);
     }
