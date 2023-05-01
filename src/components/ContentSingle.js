@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
@@ -31,7 +31,7 @@ import VideoPlayer from './VideoPlayer';
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
   const [state, dispatch] = useBreadcrumb();
-
+  const [searchParams, setSearchParams] = useSearchParams();
   const invalidPage = !props.loading && !props.data;
 
   // Video details
@@ -103,16 +103,20 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(item)}`,
-        title: item.title,
-      })
-    );
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item)}`,
-    });
+    if (searchParams.get('id') !== getURLFromType(item)) {
+      dispatch(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item)}`,
+          title: item.title,
+        })
+      );
+      navigate({
+        pathname: '/',
+        search: `?id=${getURLFromType(item)}`,
+      });
+    } else {
+      return null;
+    }
   };
 
   return (

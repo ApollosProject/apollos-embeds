@@ -17,13 +17,17 @@ function FeatureFeedListGrid(props = {}) {
   // const boxWidth = viewWidth * 0.25 - 66;
 
   const handleActionPress = (item) => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(item.relatedNode)}`,
-        title: item.relatedNode?.title,
-      })
-    );
-    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
+      dispatch(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item.relatedNode)}`,
+          title: item.relatedNode?.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    } else {
+      return null;
+    }
   };
 
   return (

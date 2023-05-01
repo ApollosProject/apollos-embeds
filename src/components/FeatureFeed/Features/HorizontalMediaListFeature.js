@@ -43,25 +43,38 @@ function HorizontalMediaListFeature(props = {}) {
   const [state, dispatch] = useBreadcrumb();
 
   const handleActionPress = (item) => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(item.relatedNode)}`,
-        title: item.relatedNode?.title,
-      })
-    );
-    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
+      dispatch(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item.relatedNode)}`,
+          title: item.relatedNode?.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    } else {
+      return null;
+    }
   };
 
   const handlePrimaryActionPress = () => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-        title: props?.feature?.title,
-      })
-    );
-    setSearchParams(
-      `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
-    );
+    if (
+      searchParams.get('id') !==
+      getURLFromType(props?.feature?.primaryAction.relatedNode)
+    ) {
+      dispatch(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(
+            props?.feature?.primaryAction.relatedNode
+          )}`,
+          title: props?.feature?.title,
+        })
+      );
+      setSearchParams(
+        `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+      );
+    } else {
+      return null;
+    }
   };
 
   if (!props?.feature?.items) {
