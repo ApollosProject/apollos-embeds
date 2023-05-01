@@ -48,8 +48,12 @@ function reducer(state, action) {
     }
     case actionTypes.remove: {
       // Probably should move dropRight to utils
-      const dropRight = (arr, n = 1) => arr.slice(0, -n);
-      return dropRight(state, action.payload + 1);
+      const dropRight = (arr, n = 1) => {
+        const amountToDrop = arr.length - (n + 1);
+        return arr.slice(0, -amountToDrop);
+      };
+
+      return dropRight(state, action.payload);
     }
     case actionTypes.set: {
       console.log('Returning this payload:', action.payload);
