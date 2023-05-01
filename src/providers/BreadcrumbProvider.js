@@ -52,7 +52,6 @@ function reducer(state, action) {
       return dropRight(state, action.payload + 1);
     }
     case actionTypes.set: {
-      console.log('Returning this payload:', action.payload);
       return action.payload;
     }
     case actionTypes.reset: {

@@ -34,14 +34,10 @@ const set = (payload) => ({
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.open:
-      console.log('opened');
       return { ...state, isOpen: true };
     case actionTypes.close:
-      console.log('closed');
       return { ...state, isOpen: false };
     case actionTypes.set:
-      console.log('set');
-      console.log('payload', action.payload);
       return { ...state, content: getContentFromURL(`${action.payload}`) };
     default: {
       throw new Error(`Unhandled action type: ${action.type}`);

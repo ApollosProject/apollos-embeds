@@ -18,7 +18,6 @@ import { close as closeModal, useModal } from '../../providers/ModalProvider';
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
-  console.log(state);
   useEffect(() => {
     // Define event listener to handle clicks outside of modal
     function handleClickOutside(event) {
