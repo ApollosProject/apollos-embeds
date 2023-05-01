@@ -6,13 +6,16 @@ import client from '../client';
 import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import BreadcrumbProvider from './BreadcrumbProvider';
+import ModalProvider from './ModalProvider';
 
 function AppProvider(props = {}) {
   return (
     <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
         <BreadcrumbProvider>
-          <ThemeProvider>{props.children}</ThemeProvider>
+          <ModalProvider>
+            <ThemeProvider>{props.children}</ThemeProvider>
+          </ModalProvider>
         </BreadcrumbProvider>
       </AuthProvider>
     </ApolloProvider>
