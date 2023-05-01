@@ -4,7 +4,6 @@ import { CaretRight } from 'phosphor-react';
 import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,
-  add as addBreadcrumb,
   reset as resetBreadcrumb,
   set as setBreadcrumb,
   useBreadcrumb,
