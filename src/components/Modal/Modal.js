@@ -18,36 +18,20 @@ import { close as closeModal, useModal } from '../../providers/ModalProvider';
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
-  useEffect(() => {
-    // Define event listener to handle clicks outside of modal
-    function handleClickOutside(event) {
-      // Check if modal is visible and click is outside of modal
-      if (state.isOpen && !event.target.closest('#modal')) {
-        // If both conditions are true, hide modal by updating state
-        handleCloseModal();
-      }
-    }
-
-    // Add event listener to document object
-    document.addEventListener('click', handleClickOutside);
-
-    // Remove event listener when component unmounts to avoid memory leaks
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [state.isOpen]);
 
   function handleCloseModal() {
     dispatch(closeModal());
   }
 
+  console.log('modal', state);
+
   return (
     <Box>
       {state.isOpen ? (
-        <Styled.Modal>
-          <Styled.ModalContainer id="modal">
+        <Styled.Modal onClick={handleCloseModal}>
+          <Styled.ModalContainer onClick={(e) => e.stopPropagation()}>
             <Box onClick={handleCloseModal}>Buttons</Box>
-            {state.content}
+            <Box width="100%">{state.content}</Box>
           </Styled.ModalContainer>
         </Styled.Modal>
       ) : null}
