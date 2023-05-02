@@ -8,6 +8,7 @@ const ModalDispatchContext = createContext();
 const initialState = {
   isOpen: false,
   content: null,
+  modal: true,
 };
 
 // Define the actionTypes that can be performed on the modal state
@@ -46,7 +47,10 @@ const reducer = (state, action) => {
 };
 
 function ModalProvider(props = {}) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState, // spread the original initialState object
+    modal: props.modal === 'false' ? false : Boolean(props.modal), // overwrite the modal key with the prop value, if provided
+  });
 
   return (
     <ModalStateContext.Provider value={state}>
@@ -86,6 +90,7 @@ function useModal() {
 
 ModalProvider.propTypes = {
   children: PropTypes.oneOfType([PropTypes.element, PropTypes.node]),
+  modal: PropTypes.string,
 };
 
 export {
