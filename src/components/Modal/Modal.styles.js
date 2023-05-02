@@ -43,6 +43,12 @@ const Icon = withTheme(styled.div`
   border-radius: 50%;
   padding: 8px;
   background: rgba(242, 242, 247, 0.8);
+  transition: 0.2s;
+
+  &:hover {
+    color: ${themeGet('colors.base.secondary')};
+    cursor: pointer;
+  }
   ${system};
 `);
 
