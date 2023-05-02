@@ -7,29 +7,41 @@ import {
   add as addBreadcrumb,
   useBreadcrumb,
 } from '../../../providers/BreadcrumbProvider';
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../../../providers/ModalProvider';
 
 import VerticalCardList from './VerticalCardListFeature.styles';
 
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useBreadcrumb();
+  const [state, dispatch] = useModal();
+
   const handleActionPress = (item) => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(item.relatedNode)}`,
-        title: item.relatedNode?.title,
-      })
-    );
-    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    if (state.modal) {
+      const url = getURLFromType(item.relatedNode);
+      dispatch(setModal(url));
+      dispatch(openModal());
+    } else {
+      // dispatch(
+      //   addBreadcrumb({
+      //     url: `?id=${getURLFromType(item.relatedNode)}`,
+      //     title: item.relatedNode?.title,
+      //   })
+      // );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
   };
 
   const handlePrimaryActionPress = () => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-        title: props?.feature?.title,
-      })
-    );
+    // dispatch(
+    //   addBreadcrumb({
+    //     url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+    //     title: props?.feature?.title,
+    //   })
+    // );
     setSearchParams(
       `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
     );
