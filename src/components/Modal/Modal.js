@@ -24,8 +24,6 @@ const Modal = (props = {}) => {
     dispatch(closeModal());
   }
 
-  console.log('modal', state);
-
   return (
     <Box>
       {state.isOpen ? (
