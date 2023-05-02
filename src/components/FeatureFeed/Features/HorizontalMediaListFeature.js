@@ -64,12 +64,12 @@ function HorizontalMediaListFeature(props = {}) {
   };
 
   const handlePrimaryActionPress = () => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-        title: props?.feature?.title,
-      })
-    );
+    // dispatch(
+    //   addBreadcrumb({
+    //     url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+    //     title: props?.feature?.title,
+    //   })
+    // );
     setSearchParams(
       `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
     );
