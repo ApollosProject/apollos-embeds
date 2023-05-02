@@ -15,6 +15,7 @@ import {
 } from '../../ui-kit';
 
 import { close as closeModal, useModal } from '../../providers/ModalProvider';
+import { X } from 'phosphor-react';
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
@@ -30,7 +31,17 @@ const Modal = (props = {}) => {
       {state.isOpen ? (
         <Styled.Modal onClick={handleCloseModal}>
           <Styled.ModalContainer onClick={(e) => e.stopPropagation()}>
-            <Box onClick={handleCloseModal}>Buttons</Box>
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              justifyContent="end"
+              mb="s"
+            >
+              <Styled.Icon onClick={handleCloseModal}>
+                <X size={16} weight="bold" />
+              </Styled.Icon>
+            </Box>
             <Box width="100%">{state.content}</Box>
           </Styled.ModalContainer>
         </Styled.Modal>

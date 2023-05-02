@@ -30,13 +30,26 @@ const ModalContainer = withTheme(styled.div`
   background-color: #ffffff;
   border-radius: 30px;
   overflow-y: scroll;
-  padding: 20px;
+  padding: 40px;
+  ${system};
+`);
+
+const Icon = withTheme(styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 0;
+  background-color: #ffffff;
+  border-radius: 50%;
+  padding: 8px;
+  background: rgba(242, 242, 247, 0.8);
   ${system};
 `);
 
 const Styled = {
   Modal,
   ModalContainer,
+  Icon,
 };
 
 export default Styled;
