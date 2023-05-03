@@ -58,6 +58,22 @@ export const GET_CONTENT_ITEM = gql`
             }
           }
         }
+        siblingContentItemsConnection {
+          edges {
+            node {
+              id
+              title
+              coverImage {
+                sources {
+                  uri
+                }
+              }
+              videos {
+                ...VideoMediaFields
+              }
+            }
+          }
+        }
         ... on FeaturesNode {
           featureFeed {
             id
@@ -116,7 +132,7 @@ function useContentItem(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
-
+  console.log('query', query);
   return {
     item: query?.data?.node,
     ...query,
