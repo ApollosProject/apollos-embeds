@@ -53,7 +53,7 @@ function HeroListFeature(props = {}) {
         >
           <Box
             as="img"
-            src={props.feature.heroCard.coverImage?.sources[0]?.uri}
+            src={props?.feature?.heroCard?.coverImage?.sources[0]?.uri}
             width="100%"
             height="100%"
           />
@@ -64,8 +64,8 @@ function HeroListFeature(props = {}) {
           backgroundColor="neutral.gray6"
           backdrop-filter="blur(64px)"
         >
-          <H3>{props.feature.heroCard.title}</H3>
-          <BodyText>{props.feature.heroCard.summary}</BodyText>
+          <H3>{props?.feature?.heroCard?.title}</H3>
+          <BodyText>{props?.feature?.heroCard?.summary}</BodyText>
 
           {/* CTAs */}
           <Box
