@@ -21,7 +21,6 @@ Sentry.init({
 function App(props) {
   // Lookup the component responsible for rendering this Widget
   const WidgetComponent = WidgetComponentMap[props.type];
-
   const router = createBrowserRouter([
     {
       path: '/',
@@ -33,7 +32,7 @@ function App(props) {
   // Widgets require a church slug to get the correct data
   if (WidgetComponent && props.church) {
     return (
-      <AppProvider church={props.church}>
+      <AppProvider church={props.church} modal={props.modal}>
         <RouterProvider router={router} />
       </AppProvider>
     );

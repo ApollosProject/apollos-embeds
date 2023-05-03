@@ -10,20 +10,33 @@ import {
   useBreadcrumb,
 } from '../../providers/BreadcrumbProvider';
 
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../../providers/ModalProvider';
+
 function FeatureFeedListGrid(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useBreadcrumb();
+  const [state, dispatch] = useModal();
+  // const [state, dispatch] = useBreadcrumb();
   // const [viewWidth, setViewWidth] = React.useState(0);
   // const boxWidth = viewWidth * 0.25 - 66;
 
   const handleActionPress = (item) => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(item.relatedNode)}`,
-        title: item.relatedNode?.title,
-      })
-    );
-    setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    if (state.modal) {
+      const url = getURLFromType(item.relatedNode);
+      dispatch(setModal(url));
+      dispatch(openModal());
+    } else {
+      // dispatch(
+      //   addBreadcrumb({
+      //     url: `?id=${getURLFromType(item.relatedNode)}`,
+      //     title: item.relatedNode?.title,
+      //   })
+      // );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
   };
 
   return (

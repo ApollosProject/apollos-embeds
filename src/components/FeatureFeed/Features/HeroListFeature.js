@@ -3,6 +3,11 @@ import { withTheme } from 'styled-components';
 
 import { useNavigate } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../../../providers/ModalProvider';
 
 import {
   BodyText,
@@ -18,14 +23,22 @@ import {
 
 function HeroListFeature(props = {}) {
   const navigate = useNavigate();
+  const [state, dispatch] = useModal();
 
   // Event Handlers
   const handleWatchNowPress = () => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
-    });
+    if (state.modal) {
+      const url = getURLFromType(props.feature?.heroCard?.relatedNode);
+      dispatch(setModal(url));
+      dispatch(openModal());
+    } else {
+      navigate({
+        pathname: '/',
+        search: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
+      });
+    }
   };
+
   const handlePrimaryActionClick = () => {
     navigate({
       pathname: '/',
@@ -37,6 +50,7 @@ function HeroListFeature(props = {}) {
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
       <Search />
+      {/* <Modal /> */}
       <Box
         position="relative"
         backgroundColor="neutral.gray6"
