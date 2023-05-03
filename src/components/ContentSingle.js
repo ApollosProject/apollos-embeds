@@ -113,15 +113,11 @@ function ContentSingle(props = {}) {
           title: item.title,
         })
       );
+      setSearchParams(`?id=${getURLFromType(item)}`);
     }
     if (state.modal) {
       const url = getURLFromType(item);
       dispatch(setModal(url));
-    } else {
-      navigate({
-        pathname: '/',
-        search: `?id=${getURLFromType(item)}`,
-      });
     }
   };
 

@@ -1,48 +1,59 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
-
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
 import {
   open as openModal,
   set as setModal,
   useModal,
 } from '../../../providers/ModalProvider';
+import {
+  add as addBreadcrumb,
+  useBreadcrumbDispatch,
+} from '../../../providers/BreadcrumbProvider';
 
 import {
   BodyText,
   Box,
   Button,
-  H1,
-  H2,
   H3,
   H4,
   systemPropTypes,
 } from '../../../ui-kit';
 
 function HeroListFeature(props = {}) {
-  const navigate = useNavigate();
   const [state, dispatch] = useModal();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
 
   // Event Handlers
   const handleWatchNowPress = () => {
+    if (
+      searchParams.get('id') !==
+      getURLFromType(props.feature?.heroCard?.relatedNode)
+    ) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
+          title: props.feature?.heroCard?.relatedNode?.title,
+        })
+      );
+      setSearchParams(
+        `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`
+      );
+    }
+
     if (state.modal) {
       const url = getURLFromType(props.feature?.heroCard?.relatedNode);
       dispatch(setModal(url));
       dispatch(openModal());
-    } else {
-      navigate({
-        pathname: '/',
-        search: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
-      });
     }
   };
 
   const handlePrimaryActionClick = () => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`,
-    });
+    setSearchParams(
+      `?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`
+    );
   };
 
   return (

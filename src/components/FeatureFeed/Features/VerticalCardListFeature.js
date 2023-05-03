@@ -28,13 +28,12 @@ function VerticalCardListFeature(props = {}) {
           title: item.relatedNode?.title,
         })
       );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
     if (state.modal) {
       const url = getURLFromType(item.relatedNode);
       dispatch(setModal(url));
       dispatch(openModal());
-    } else {
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
   };
 
