@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 
 const BreadcrumbStateContext = createContext();
 const BreadcrumbDispatchContext = createContext();
@@ -70,6 +70,32 @@ function reducer(state, action) {
 
 function BreadcrumbProvider(props = {}) {
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    const handlePopstate = () => {
+      const newBreadcrumbHistory =
+        window.history.state?.breadcrumbHistory || [];
+      dispatch(set(newBreadcrumbHistory));
+    };
+
+    window.addEventListener('popstate', handlePopstate);
+
+    return () => {
+      window.removeEventListener('popstate', handlePopstate);
+    };
+  }, []);
+
+  useEffect(() => {
+    const breadcrumbHistory = state.map((breadcrumb) => ({
+      id: breadcrumb.id,
+      title: breadcrumb.title,
+      url: breadcrumb.url,
+    }));
+    window.history.replaceState(
+      { ...window.history.state, breadcrumbHistory },
+      ''
+    );
+  }, [state]);
 
   return (
     <BreadcrumbStateContext.Provider value={state}>
