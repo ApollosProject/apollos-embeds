@@ -3,6 +3,7 @@ import BreadcrumbProvider from './BreadcrumbProvider';
 import ContentFeedProvider from './ContentFeedProvider';
 import ContentItemProvider from './ContentItemProvider';
 import FeatureFeedProvider from './FeatureFeedProvider';
+import ModalProvider from './ModalProvider';
 import TabFeedProvider from './TabFeedProvider';
 
 export {
@@ -11,5 +12,6 @@ export {
   ContentFeedProvider,
   ContentItemProvider,
   FeatureFeedProvider,
+  ModalProvider,
   TabFeedProvider,
 };

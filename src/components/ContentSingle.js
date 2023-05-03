@@ -10,8 +10,9 @@ import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../providers/BreadcrumbProvider';
+import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import {
   Box,
@@ -30,8 +31,10 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
-  const [state, dispatch] = useBreadcrumb();
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const [state, dispatch] = useModal();
+
   const invalidPage = !props.loading && !props.data;
 
   // Video details
@@ -45,7 +48,7 @@ function ContentSingle(props = {}) {
   );
 
   useEffect(() => {
-    if (invalidPage) {
+    if (!state.modal && invalidPage) {
       navigate({
         pathname: '/',
       });
@@ -104,18 +107,21 @@ function ContentSingle(props = {}) {
 
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
-      dispatch(
+      dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
         })
       );
+    }
+    if (state.modal) {
+      const url = getURLFromType(item);
+      dispatch(setModal(url));
+    } else {
       navigate({
         pathname: '/',
         search: `?id=${getURLFromType(item)}`,
       });
-    } else {
-      return null;
     }
   };
 

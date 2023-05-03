@@ -54,6 +54,7 @@ const Wrapper = withTheme(styled.div`
   border-radius: 4px;
   margin-bottom: 20px;
   top: 113%;
+  z-index: 9999;
 
   ::before {
     content: '';

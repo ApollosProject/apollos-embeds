@@ -7,26 +7,35 @@ import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
+
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../../providers/ModalProvider';
 
 function FeatureFeedListGrid(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useBreadcrumb();
-  // const [viewWidth, setViewWidth] = React.useState(0);
-  // const boxWidth = viewWidth * 0.25 - 66;
+  const [state, dispatch] = useModal();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
 
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
-      dispatch(
+      dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item.relatedNode)}`,
           title: item.relatedNode?.title,
         })
       );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
+    if (state.modal) {
+      const url = getURLFromType(item.relatedNode);
+      dispatch(setModal(url));
+      dispatch(openModal());
     } else {
-      return null;
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
   };
 

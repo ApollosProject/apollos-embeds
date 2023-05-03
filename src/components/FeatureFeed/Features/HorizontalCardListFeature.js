@@ -13,8 +13,13 @@ import {
 } from '../../../ui-kit';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../../../providers/BreadcrumbProvider';
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../../../providers/ModalProvider';
 
 import Carousel from 'react-multi-carousel';
 
@@ -40,19 +45,25 @@ const responsive = {
 
 function HorizontalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [state, dispatch] = useBreadcrumb();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
-      dispatch(
+      dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item.relatedNode)}`,
           title: item.relatedNode?.title,
         })
       );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
+
+    if (state.modal) {
+      const url = getURLFromType(item.relatedNode);
+      dispatch(setModal(url));
+      dispatch(openModal());
     } else {
-      return null;
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
   };
 
@@ -61,7 +72,7 @@ function HorizontalCardListFeature(props = {}) {
       searchParams.get('id') !==
       getURLFromType(props?.feature?.primaryAction.relatedNode)
     ) {
-      dispatch(
+      dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(
             props?.feature?.primaryAction.relatedNode
@@ -72,8 +83,6 @@ function HorizontalCardListFeature(props = {}) {
       setSearchParams(
         `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
       );
-    } else {
-      return null;
     }
   };
 
