@@ -14,6 +14,7 @@ import {
   Breadcrumbs,
   Modal,
 } from '../components';
+import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
 import { useCurrentUser } from '../hooks';
 import { useSearchParams, useLocation } from 'react-router-dom';
@@ -88,13 +89,31 @@ function RenderFeatures(props) {
 }
 
 const FeatureFeed = (props) => {
-  const location = useLocation();
+  const state = useModalState();
+  const { currentUser } = useCurrentUser();
 
   return (
     <Box>
-      <Breadcrumbs />
       <Modal />
-      <RenderFeatures {...props} />
+      {state.modal ? (
+        <Box>
+          <TabFeedProvider
+            Component={Feed}
+            options={{
+              variables: {
+                campusId: currentUser?.campus?.id,
+                tab: 'TV',
+              },
+            }}
+            {...props}
+          />
+        </Box>
+      ) : (
+        <>
+          <Breadcrumbs />
+          <RenderFeatures {...props} />
+        </>
+      )}
     </Box>
   );
 };
