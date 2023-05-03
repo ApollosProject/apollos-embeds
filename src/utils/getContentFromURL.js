@@ -1,28 +1,19 @@
 import React from 'react';
 import {
-  TabFeedProvider,
   ContentItemProvider,
   FeatureFeedProvider,
   ContentFeedProvider,
 } from '../providers';
 import {
-  Feed,
   ContentSingle,
   FeatureFeedList,
   ContentChannel,
   LivestreamSingle,
-  Modal,
 } from '../components';
 import { Box } from '../ui-kit';
-import { useCurrentUser } from '../hooks';
-import { useSearchParams, useLocation } from 'react-router-dom';
 
-function RenderFeatures(props) {
-  const [searchParams] = useSearchParams();
-  const { currentUser } = useCurrentUser();
-  const _id = searchParams.get('id');
-
-  const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
+function getContentFromURL(url) {
+  const [type, randomId] = url?.split(/-(.*)/s) ?? [];
 
   switch (type) {
     case 'EventContentItem':
@@ -68,35 +59,9 @@ function RenderFeatures(props) {
       );
     }
     default: {
-      return (
-        <Box>
-          <TabFeedProvider
-            Component={Feed}
-            options={{
-              variables: {
-                campusId: currentUser?.campus?.id,
-                tab: 'TV',
-              },
-            }}
-            {...props}
-          />
-        </Box>
-      );
+      return <Box>No Content</Box>;
     }
   }
 }
 
-const FeatureFeed = (props) => {
-  const location = useLocation();
-
-  return (
-    <Box>
-      <Modal />
-      <RenderFeatures {...props} />
-    </Box>
-  );
-};
-
-FeatureFeed.propTypes = {};
-
-export default FeatureFeed;
+export default getContentFromURL;

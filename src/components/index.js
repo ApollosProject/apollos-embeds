@@ -7,6 +7,7 @@ import Feed from './FeatureFeed';
 import LivestreamSingle from './LivestreamSingle';
 import Logo from './Logo';
 import VideoPlayer from './VideoPlayer';
+import Modal from './Modal';
 
 export {
   AuthManager,
@@ -16,6 +17,7 @@ export {
   FeatureFeedList,
   Feed,
   LivestreamSingle,
+  Modal,
   Logo,
   VideoPlayer,
 };

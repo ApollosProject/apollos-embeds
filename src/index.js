@@ -16,6 +16,7 @@ widgetDivs.forEach((div) => {
         symbol={div.dataset.symbol}
         type={div.dataset.type}
         church={div.dataset.church}
+        modal={div.dataset.modal}
       />
     </React.StrictMode>,
     div

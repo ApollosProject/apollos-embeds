@@ -12,6 +12,11 @@ import {
   add as addBreadcrumb,
   useBreadcrumb,
 } from '../providers/BreadcrumbProvider';
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../providers/ModalProvider';
 
 import {
   Box,
@@ -30,7 +35,8 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
-  const [state, dispatch] = useBreadcrumb();
+  // const [state, dispatch] = useBreadcrumb();
+  const [state, dispatch] = useModal();
 
   const invalidPage = !props.loading && !props.data;
 
@@ -45,7 +51,7 @@ function ContentSingle(props = {}) {
   );
 
   useEffect(() => {
-    if (invalidPage) {
+    if (!state.modal && invalidPage) {
       navigate({
         pathname: '/',
       });
@@ -103,16 +109,21 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
-    dispatch(
-      addBreadcrumb({
-        url: `?id=${getURLFromType(item)}`,
-        title: item.title,
-      })
-    );
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item)}`,
-    });
+    if (state.modal) {
+      const url = getURLFromType(item);
+      dispatch(setModal(url));
+    } else {
+      // dispatch(
+      //   addBreadcrumb({
+      //     url: `?id=${getURLFromType(item)}`,
+      //     title: item.title,
+      //   })
+      // );
+      navigate({
+        pathname: '/',
+        search: `?id=${getURLFromType(item)}`,
+      });
+    }
   };
 
   return (

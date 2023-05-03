@@ -1,6 +1,7 @@
 import * as videoFilters from './filterVideoSources';
 import cleanMarkup from './cleanMarkup';
 import createMarkup from './createMarkup';
+import getContentFromURL from './getContentFromURL';
 import getDurationString from './getDurationString';
 import getPathFromType from './getPathFromType';
 import getPercentWatched from './getPercentWatched';
@@ -16,6 +17,7 @@ import validatePhoneNumber from './validatePhoneNumber';
 export {
   cleanMarkup,
   createMarkup,
+  getContentFromURL,
   getDurationString,
   getPathFromType,
   getPercentWatched,
