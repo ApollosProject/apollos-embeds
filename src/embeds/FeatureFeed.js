@@ -94,9 +94,9 @@ const FeatureFeed = (props) => {
 
   return (
     <Box>
-      <Modal />
       {state.modal ? (
         <Box>
+          <Modal />
           <TabFeedProvider
             Component={Feed}
             options={{
