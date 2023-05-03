@@ -77,7 +77,7 @@ function HorizontalCardListFeature(props = {}) {
     }
   };
 
-  if (!props?.feature?.cards) {
+  if (props?.feature?.cards?.length === 0 || !props?.feature?.cards) {
     return null;
   }
 

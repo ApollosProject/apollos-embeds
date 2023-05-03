@@ -77,7 +77,7 @@ function HorizontalMediaListFeature(props = {}) {
     }
   };
 
-  if (!props?.feature?.items) {
+  if (props?.feature?.items?.length === 0 || !props?.feature?.items) {
     return null;
   }
 
