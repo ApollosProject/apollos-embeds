@@ -35,6 +35,7 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
+  // const [state, dispatch] = useBreadcrumb();
   const [state, dispatch] = useModal();
 
   const invalidPage = !props.loading && !props.data;
