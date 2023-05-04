@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { systemPropTypes } from '../_lib/system';
@@ -19,17 +19,30 @@ const Search = (props = {}) => {
   const textPrompt = (
     <Styled.TextPrompt>
       {firstName === '' ? (
-        <Box>
-          <strong>Hey!</strong>
-        </Box>
+        <strong>Hey!</strong>
       ) : (
-        <Box>
-          <strong>Hey {firstName}!&nbsp; </strong>
-        </Box>
+        <strong>Hey {firstName}!&nbsp; </strong>
       )}
-      <Box>Find what's next</Box>
+      <span
+        style={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          width: '150px',
+        }}
+      >
+        Find what's next
+      </span>
     </Styled.TextPrompt>
   );
+
+  const inputRef = useRef(null);
+
+  const handleClick = () => {
+    if (!showDropdown) {
+      inputRef.current.focus();
+    }
+  };
 
   const handleInputFocus = () => {
     setShowDropdown(true);
@@ -60,28 +73,33 @@ const Search = (props = {}) => {
   return (
     <Box>
       <Styled.Wrapper dropdown={showDropdown}>
-        <Styled.Interface>
+        <Styled.Interface onClick={handleClick}>
           <Styled.InterfaceWrapper>
-            <Styled.SearchIcon>
-              <MagnifyingGlass size={18} weight="bold" color="white" />
-            </Styled.SearchIcon>
+            <Box padding="12px">
+              <Styled.SearchIcon>
+                <MagnifyingGlass size={18} weight="bold" color="white" />
+              </Styled.SearchIcon>
+            </Box>
             <Box width="100%" position="relative">
               <Styled.Input
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
                 onChange={handleInputChange}
                 value={inputValue}
+                ref={inputRef}
               />
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
           <CaretDown size={9} weight="bold" />
         </Styled.Interface>
-        <Styled.Profile>
-          <User size={18} color="white" weight="bold" />
-        </Styled.Profile>
+        <Box padding="12px">
+          <Styled.Profile>
+            <User size={18} color="white" weight="bold" />
+          </Styled.Profile>
+        </Box>
       </Styled.Wrapper>
-      {showDropdown ? <Styled.Dropdown>Hello</Styled.Dropdown> : null}
+      {showDropdown ? <Styled.Dropdown></Styled.Dropdown> : null}
     </Box>
   );
 };
