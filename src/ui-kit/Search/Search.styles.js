@@ -9,11 +9,11 @@ import { system } from '../_lib/system';
 const showDropdown = ({ dropdown }) => {
   if (dropdown) {
     return css`
-      border-radius: 39px 39px 0px 0px;
+      border-radius: 30px 30px 0px 0px;
     `;
   } else {
     return css`
-      border-radius: 39px;
+      border-radius: 30px;
     `;
   }
 };
@@ -70,6 +70,7 @@ const SearchIcon = withTheme(styled.div`
 
 const InterfaceWrapper = withTheme(styled.div`
   width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   ${system}
@@ -89,7 +90,7 @@ const Dropdown = withTheme(styled.div`
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-top: none;
   display: flex;
-  border-radius: 0px 0px 39px 39px;
+  border-radius: 0px 0px 30px 30px;
   height: 60px;
   ${system}
 `);
