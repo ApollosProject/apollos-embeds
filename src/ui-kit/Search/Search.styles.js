@@ -23,20 +23,24 @@ const Wrapper = withTheme(styled.div`
   height: 60px;
   background: #ffffff;
   ${showDropdown}
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px;
-  gap: 12px;
   ${system}
 `);
 
 const TextPrompt = withTheme(styled.div`
+  width: 100%;
   position: absolute;
   top: 50%;
   transform: translate(0, -50%);
   display: flex;
+  pointer-events: none;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 17px;
   ${system}
 `);
 
@@ -68,22 +72,22 @@ const InterfaceWrapper = withTheme(styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 16px;
   ${system}
 `);
 
 const Input = withTheme(styled.input`
   width: 100%;
-  height: 36px;
+  height: 100%;
   border: none;
-  font-size: 16px;
+  font-size: 20px;
   ${system}
 `);
 
 const Dropdown = withTheme(styled.div`
   width: 100%;
   background: #ffffff;
-  border: 1px solid black;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-top: none;
   display: flex;
   border-radius: 0px 0px 39px 39px;
   height: 60px;
