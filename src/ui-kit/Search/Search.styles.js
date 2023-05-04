@@ -1,14 +1,28 @@
+import Color from 'color';
 import { withTheme } from 'styled-components';
 import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
+import { TypeStyles } from '../Typography';
 import { system } from '../_lib/system';
+
+const showDropdown = ({ dropdown }) => {
+  if (dropdown) {
+    return css`
+      border-radius: 39px 39px 0px 0px;
+    `;
+  } else {
+    return css`
+      border-radius: 39px;
+    `;
+  }
+};
 
 const Wrapper = withTheme(styled.div`
   width: 100%;
   height: 60px;
   background: #ffffff;
-  border-radius: 39px;
+  ${showDropdown}
   border: 1px solid black;
   display: flex;
   justify-content: space-between;
