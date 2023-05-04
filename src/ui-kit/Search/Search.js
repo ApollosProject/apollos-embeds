@@ -73,7 +73,7 @@ const Search = (props = {}) => {
   };
 
   return (
-    <Box>
+    <Box position="relative">
       <Styled.Wrapper dropdown={showDropdown}>
         <Styled.Interface onClick={handleClick}>
           <Styled.InterfaceWrapper>

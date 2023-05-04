@@ -92,6 +92,8 @@ const Dropdown = withTheme(styled.div`
   display: flex;
   border-radius: 0px 0px 30px 30px;
   height: 60px;
+  position: absolute;
+  z-index: 9999;
   ${system}
 `);
 
