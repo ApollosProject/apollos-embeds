@@ -32,6 +32,14 @@ const Wrapper = withTheme(styled.div`
   ${system}
 `);
 
+const TextPrompt = withTheme(styled.div`
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  display: flex;
+  ${system}
+`);
+
 const Profile = withTheme(styled.div`
   background: #17b582;
   padding: 9px;
@@ -72,6 +80,16 @@ const Input = withTheme(styled.input`
   ${system}
 `);
 
+const Dropdown = withTheme(styled.div`
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid black;
+  display: flex;
+  border-radius: 0px 0px 39px 39px;
+  height: 60px;
+  ${system}
+`);
+
 const Styled = {
   Wrapper,
   Profile,
@@ -79,6 +97,8 @@ const Styled = {
   SearchIcon,
   InterfaceWrapper,
   Input,
+  Dropdown,
+  TextPrompt,
 };
 
 export default Styled;
