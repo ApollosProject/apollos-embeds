@@ -6,8 +6,6 @@ import { Box, Button } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
-import { first } from 'lodash';
-import { te } from 'date-fns/locale';
 
 const Search = (props = {}) => {
   const [showDropdown, setShowDropdown] = useState(false);
@@ -80,7 +78,7 @@ const Search = (props = {}) => {
                 <MagnifyingGlass size={18} weight="bold" color="white" />
               </Styled.SearchIcon>
             </Box>
-            <Box width="100%" position="relative">
+            <Box width="100%" height="58px" position="relative">
               <Styled.Input
                 onFocus={handleInputFocus}
                 onBlur={handleInputBlur}
@@ -91,7 +89,7 @@ const Search = (props = {}) => {
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
-          <CaretDown size={9} weight="bold" />
+          <CaretDown size={14} weight="fill" color="#27272E54" />
         </Styled.Interface>
         <Box padding="12px">
           <Styled.Profile>
