@@ -22,6 +22,7 @@ import ProgressBar from './ProgressBar';
 import ResourceCard from './ResourceCard';
 import Select from './Select';
 import ShareButton from './ShareButton';
+import ListItem from './ListItem';
 
 import {
   BodyText,
@@ -59,6 +60,7 @@ export {
   ResourceCard,
   Select,
   ShareButton,
+  ListItem,
 
   // Typography
   BodyText,
