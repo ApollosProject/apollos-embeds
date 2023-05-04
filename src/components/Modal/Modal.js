@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
-import { Box } from '../../ui-kit';
+import { Box, Search } from '../../ui-kit';
 import Breadcrumbs from '../Breadcrumbs';
 import { useSearchParams } from 'react-router-dom';
 import {
@@ -43,6 +43,7 @@ const Modal = (props = {}) => {
               justifyContent="end"
               mb="s"
             >
+              <Search />
               <Styled.Icon onClick={handleCloseModal}>
                 <X size={16} weight="bold" />
               </Styled.Icon>
