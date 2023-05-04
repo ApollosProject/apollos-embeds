@@ -17,18 +17,16 @@ const Modal = withTheme(styled.div`
   align-items: center;
   z-index: 9999;
   transition: opacity 0.3s ease;
-  background-color: rgba(0, 0, 0, 0.5);
   ${system};
 `);
 
 const ModalContainer = withTheme(styled.div`
-  width: 90%;
-  height: 90%;
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 30px;
   overflow-y: scroll;
   padding: 40px;
   ${system};
