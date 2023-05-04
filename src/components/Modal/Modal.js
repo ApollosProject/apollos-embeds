@@ -34,8 +34,8 @@ const Modal = (props = {}) => {
   return (
     <Box>
       {state.isOpen ? (
-        <Styled.Modal onClick={handleCloseModal}>
-          <Styled.ModalContainer onClick={(e) => e.stopPropagation()}>
+        <Styled.Modal>
+          <Styled.ModalContainer>
             <Box
               width="100%"
               display="flex"
