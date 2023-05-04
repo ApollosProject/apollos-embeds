@@ -3,20 +3,16 @@ import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../providers/BreadcrumbProvider';
-import {
-  open as openModal,
-  set as setModal,
-  useModal,
-} from '../providers/ModalProvider';
+import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import {
   Box,
@@ -35,7 +31,8 @@ import VideoPlayer from './VideoPlayer';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
-  // const [state, dispatch] = useBreadcrumb();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
 
   const invalidPage = !props.loading && !props.data;
@@ -109,20 +106,18 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
+    if (searchParams.get('id') !== getURLFromType(item)) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item)}`,
+          title: item.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item)}`);
+    }
     if (state.modal) {
       const url = getURLFromType(item);
       dispatch(setModal(url));
-    } else {
-      // dispatch(
-      //   addBreadcrumb({
-      //     url: `?id=${getURLFromType(item)}`,
-      //     title: item.title,
-      //   })
-      // );
-      navigate({
-        pathname: '/',
-        search: `?id=${getURLFromType(item)}`,
-      });
     }
   };
 

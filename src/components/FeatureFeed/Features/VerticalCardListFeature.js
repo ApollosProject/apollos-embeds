@@ -5,7 +5,7 @@ import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../../../providers/BreadcrumbProvider';
 import {
   open as openModal,
@@ -17,34 +17,43 @@ import VerticalCardList from './VerticalCardListFeature.styles';
 
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item.relatedNode)}`,
+          title: item.relatedNode?.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
     if (state.modal) {
       const url = getURLFromType(item.relatedNode);
       dispatch(setModal(url));
       dispatch(openModal());
-    } else {
-      // dispatch(
-      //   addBreadcrumb({
-      //     url: `?id=${getURLFromType(item.relatedNode)}`,
-      //     title: item.relatedNode?.title,
-      //   })
-      // );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
   };
 
   const handlePrimaryActionPress = () => {
-    // dispatch(
-    //   addBreadcrumb({
-    //     url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-    //     title: props?.feature?.title,
-    //   })
-    // );
-    setSearchParams(
-      `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
-    );
+    if (
+      searchParams.get('id') !==
+      getURLFromType(props?.feature?.primaryAction.relatedNode)
+    ) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(
+            props?.feature?.primaryAction.relatedNode
+          )}`,
+          title: props?.feature?.title,
+        })
+      );
+      setSearchParams(
+        `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+      );
+    }
   };
   const cards = props.feature?.cards;
   return (

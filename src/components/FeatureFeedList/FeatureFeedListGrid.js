@@ -7,7 +7,7 @@ import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
 
 import {
@@ -19,23 +19,22 @@ import {
 function FeatureFeedListGrid(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useModal();
-  // const [state, dispatch] = useBreadcrumb();
-  // const [viewWidth, setViewWidth] = React.useState(0);
-  // const boxWidth = viewWidth * 0.25 - 66;
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
 
   const handleActionPress = (item) => {
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item.relatedNode)}`,
+          title: item.relatedNode?.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
     if (state.modal) {
       const url = getURLFromType(item.relatedNode);
       dispatch(setModal(url));
       dispatch(openModal());
-    } else {
-      // dispatch(
-      //   addBreadcrumb({
-      //     url: `?id=${getURLFromType(item.relatedNode)}`,
-      //     title: item.relatedNode?.title,
-      //   })
-      // );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
   };
 
