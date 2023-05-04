@@ -8,6 +8,7 @@ import LivestreamSingle from './LivestreamSingle';
 import Logo from './Logo';
 import VideoPlayer from './VideoPlayer';
 import Modal from './Modal';
+import Profile from './Profile';
 
 export {
   AuthManager,
@@ -20,4 +21,5 @@ export {
   Modal,
   Logo,
   VideoPlayer,
+  Profile,
 };
