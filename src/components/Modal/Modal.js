@@ -1,24 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
+import { Box } from '../../ui-kit';
+import Breadcrumbs from '../Breadcrumbs';
+import { useSearchParams } from 'react-router-dom';
 import {
-  Box,
-  H1,
-  H2,
-  H4,
-  Loader,
-  Longform,
-  H3,
-  MediaItem,
-  BodyText,
-  ShareButton,
-} from '../../ui-kit';
-
-import { close as closeModal, useModal } from '../../providers/ModalProvider';
+  open as openModal,
+  close as closeModal,
+  set as setModal,
+  useModal,
+} from '../../providers/ModalProvider';
 import { X } from 'phosphor-react';
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    // Watch for changes to the `id` search param
+    if (searchParams.get('id')) {
+      dispatch(openModal());
+      dispatch(setModal(searchParams.get('id')));
+    }
+    if (searchParams.get('id') === null) {
+      dispatch(closeModal());
+    }
+  }, [dispatch, searchParams]);
 
   function handleCloseModal() {
     dispatch(closeModal());
@@ -40,6 +47,7 @@ const Modal = (props = {}) => {
                 <X size={16} weight="bold" />
               </Styled.Icon>
             </Box>
+            <Breadcrumbs />
             <Box width="100%">{state.content}</Box>
           </Styled.ModalContainer>
         </Styled.Modal>

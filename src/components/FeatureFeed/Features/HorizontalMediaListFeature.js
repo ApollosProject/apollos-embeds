@@ -13,7 +13,7 @@ import {
 } from '../../../ui-kit';
 import {
   add as addBreadcrumb,
-  useBreadcrumb,
+  useBreadcrumbDispatch,
 } from '../../../providers/BreadcrumbProvider';
 import {
   open as openModal,
@@ -45,37 +45,46 @@ const responsive = {
 
 function HorizontalMediaListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item.relatedNode)}`,
+          title: item.relatedNode?.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
     if (state.modal) {
       const url = getURLFromType(item.relatedNode);
       dispatch(setModal(url));
       dispatch(openModal());
-    } else {
-      // dispatch(
-      //   addBreadcrumb({
-      //     url: `?id=${getURLFromType(item.relatedNode)}`,
-      //     title: item.relatedNode?.title,
-      //   })
-      // );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
     }
   };
 
   const handlePrimaryActionPress = () => {
-    // dispatch(
-    //   addBreadcrumb({
-    //     url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-    //     title: props?.feature?.title,
-    //   })
-    // );
-    setSearchParams(
-      `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
-    );
+    if (
+      searchParams.get('id') !==
+      getURLFromType(props?.feature?.primaryAction.relatedNode)
+    ) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(
+            props?.feature?.primaryAction.relatedNode
+          )}`,
+          title: props?.feature?.title,
+        })
+      );
+      setSearchParams(
+        `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+      );
+    }
   };
 
-  if (!props?.feature?.items) {
+  if (props?.feature?.items?.length === 0 || !props?.feature?.items) {
     return null;
   }
 

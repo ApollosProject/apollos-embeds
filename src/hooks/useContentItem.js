@@ -132,6 +132,7 @@ function useContentItem(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
+
   return {
     item: query?.data?.node,
     ...query,

@@ -4,7 +4,6 @@ import { CaretRight } from 'phosphor-react';
 import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,
-  add as addBreadcrumb,
   reset as resetBreadcrumb,
   set as setBreadcrumb,
   useBreadcrumb,
@@ -17,28 +16,6 @@ function Breadcrumbs(props = {}) {
   const [state, dispatch] = useBreadcrumb();
   const prevStateRef = useRef(state);
   const currentState = state[state.length - 1];
-
-  useEffect(() => {
-    if (location.search === '') {
-      dispatch(resetBreadcrumb());
-    }
-    const handleHistoryChange = () => {
-      if (currentState) {
-        if (prevStateRef.current.length > state.length) {
-          dispatch(setBreadcrumb(prevStateRef.current));
-          prevStateRef.current = state;
-        } else {
-          prevStateRef.current = state;
-          dispatch(setBreadcrumb(prevStateRef.current.slice(0, -1)));
-        }
-      }
-    };
-    window.addEventListener('popstate', handleHistoryChange);
-
-    return () => {
-      window.removeEventListener('popstate', handleHistoryChange);
-    };
-  }, [state]);
 
   function handleBreadClick({ id, url }) {
     dispatch(removeBreadcrumb(id));

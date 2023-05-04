@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
-import React, { createContext, useContext, useReducer } from 'react';
+import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { getContentFromURL } from '../utils';
+
 const ModalStateContext = createContext();
 const ModalDispatchContext = createContext();
 
@@ -40,9 +41,8 @@ const reducer = (state, action) => {
       return { ...state, isOpen: false };
     case actionTypes.set:
       return { ...state, content: getContentFromURL(`${action.payload}`) };
-    default: {
+    default:
       throw new Error(`Unhandled action type: ${action.type}`);
-    }
   }
 };
 
