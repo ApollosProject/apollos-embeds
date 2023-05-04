@@ -68,6 +68,10 @@ const Search = (props = {}) => {
     }
   };
 
+  const handleProfile = () => {
+    console.log('Opening Profile menu...');
+  };
+
   return (
     <Box>
       <Styled.Wrapper dropdown={showDropdown}>
@@ -91,7 +95,7 @@ const Search = (props = {}) => {
           </Styled.InterfaceWrapper>
           <CaretDown size={14} weight="fill" color="#27272E54" />
         </Styled.Interface>
-        <Box padding="12px">
+        <Box padding="12px" onClick={handleProfile}>
           <Styled.Profile>
             <User size={18} color="white" weight="bold" />
           </Styled.Profile>
