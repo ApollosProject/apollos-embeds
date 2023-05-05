@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { systemPropTypes } from '../../ui-kit';
+import { systemPropTypes, utils } from '../../ui-kit';
 import { withTheme } from 'styled-components';
 
 import {
@@ -52,7 +52,9 @@ const Profile = ({ theme, ...rest }) => {
             backgroundColor="rgba(23, 181, 130, 0.15)"
             borderRadius="100px"
             title="Sign up or Login"
+            size="small"
             onClick={() => {}}
+            type="secondary"
             color="text.action"
             icon={<ArrowRight size={24} />}
           />
@@ -82,38 +84,50 @@ const Profile = ({ theme, ...rest }) => {
             title="Logout"
           />
         </Box>
-        <Box alignItems="center" display="flex" flexDirection="column">
+        <Box
+          alignItems="center"
+          display="flex"
+          flexDirection="column"
+          backgroundSize="80%"
+          backgroundRepeat="no-repeat"
+          backgroundPosition="center 0"
+          backgroundImage="linear-gradient(to bottom, rgba(255, 255, 255, 0), white), url('./iphone.png')"
+        >
           <Box
             backgroundColor="base.primary"
             padding="s"
             borderRadius="xl"
             mb="s"
+            mt={utils.rem('108px')}
           >
             <Logo />
           </Box>
           <H4>{rest.adTitle || 'Stay Connected'}</H4>
-          <BodyText maxWidth="285px" textAlign="center">
+          <BodyText maxWidth="285px" textAlign="center" mb="base">
             {rest.adBody ||
               'Explore your faith and build daily habits with our online community.'}
           </BodyText>
-          <Box>
-            <Button
-              type="secondary"
-              title="Get it on iOS"
-              onClick={() => {}}
-              color="text.action"
-              borderRadius="100px"
-              icon={<AppleLogo weight="fill" size="24" />}
-            />
-            <Button
-              type="secondary"
-              title="Get it on Android"
-              onClick={() => {}}
-              color="text.action"
-              borderRadius="100px"
-              icon={<AndroidLogo weight="fill" size="24" />}
-            />
-          </Box>
+        </Box>
+        <Box>
+          <Button
+            type="secondary"
+            title="Get it on iOS"
+            size="small"
+            onClick={() => {}}
+            color="text.action"
+            borderRadius="100px"
+            icon={<AppleLogo weight="fill" size="24" />}
+            mr="s"
+          />
+          <Button
+            type="secondary"
+            title="Get it on Android"
+            size="small"
+            onClick={() => {}}
+            color="text.action"
+            borderRadius="100px"
+            icon={<AndroidLogo weight="fill" size="24" />}
+          />
         </Box>
       </Card>
     </Styled.Profile>
