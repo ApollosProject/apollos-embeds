@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 import { systemPropTypes } from '../_lib/system';
 import Styled from './Button.styles';
 
-const Button = ({ onClick, ...props }) => {
+const Button = ({ onClick, backgroundColor, ...props }) => {
   return (
-    <Styled.Button disabled={props.disabled} onClick={onClick} {...props}>
+    <Styled.Button
+      disabled={props.disabled}
+      onClick={onClick}
+      backgroundColor={backgroundColor}
+      {...props}
+    >
       <Styled.Content flexDirection={props.flexDirection}>
         <Styled.Title disabled={props.disabled} {...props}>
           {props.title}

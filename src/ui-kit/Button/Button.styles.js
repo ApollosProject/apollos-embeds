@@ -219,7 +219,7 @@ const titleSizeProp = ({ size }) => {
       `;
     case 'small':
       return css`
-        ${TypeStyles.SystemText}
+        ${TypeStyles.SmallSystemText}
       `;
     case 'micro':
       return css`
@@ -232,6 +232,7 @@ const Title = withTheme(styled.span`
   ${titleSizeProp}
   color: inherit;
   font-weight: 600;
+  ${system}
 `);
 
 const Content = withTheme(styled.div`
