@@ -8,7 +8,7 @@ import ErrorPage from './error-page';
 // Maps a widget name to a Component to render it.
 const WidgetComponentMap = {
   FeatureFeed,
-  Auth,
+  // Auth,
 };
 
 Sentry.init({
