@@ -16,8 +16,8 @@ const Search = (props = {}) => {
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [inputValue, setInputValue] = useState('');
   const { currentUser } = useCurrentUser();
+  const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
-
   const textPrompt = (
     <Styled.TextPrompt>
       {firstName === '' ? (
@@ -84,7 +84,11 @@ const Search = (props = {}) => {
           <Styled.InterfaceWrapper>
             <Box padding="12px">
               <Styled.SearchIcon>
-                <MagnifyingGlass size={18} weight="bold" color="white" />
+                <MagnifyingGlass
+                  size={18}
+                  weight="bold"
+                  color={userExist ? 'white' : null}
+                />
               </Styled.SearchIcon>
             </Box>
             <Box width="100%" height="58px" position="relative">
@@ -103,7 +107,7 @@ const Search = (props = {}) => {
         <Box padding="12px" onClick={handleProfile}>
           <Styled.Profile>
             {/* TODO: When there is a user profile image, add conditional to check if user profile image exists and use that instead */}
-            <User size={18} color="white" weight="bold" />
+            <User size={18} weight="bold" color={userExist ? 'white' : null} />
           </Styled.Profile>
         </Box>
       </Styled.Wrapper>

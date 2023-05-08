@@ -45,10 +45,20 @@ const TextPrompt = withTheme(styled.div`
 `);
 
 const Profile = withTheme(styled.div`
-  background: #17b582;
+  background: ${(props) => props.theme.colors.base.primary};
   padding: 9px;
   border-radius: 50%;
   line-height: 0;
+  color: ${(props) => props.theme.colors.base.secondary};
+  ${system}
+`);
+
+const SearchIcon = withTheme(styled.div`
+  background: ${(props) => props.theme.colors.base.primary};
+  padding: 9px;
+  border-radius: 50%;
+  line-height: 0;
+  color: ${(props) => props.theme.colors.base.secondary};
   ${system}
 `);
 
@@ -57,14 +67,6 @@ const Interface = withTheme(styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  ${system}
-`);
-
-const SearchIcon = withTheme(styled.div`
-  background: #17b582;
-  padding: 9px;
-  border-radius: 50%;
-  line-height: 0;
   ${system}
 `);
 
