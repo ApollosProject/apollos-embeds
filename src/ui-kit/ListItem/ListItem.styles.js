@@ -7,7 +7,7 @@ import { system } from '../_lib/system';
 const ListItem = withTheme(styled.div`
   display: flex;
   padding: ${themeGet('space.xs')};
-  border-radius: 8px;
+  border-radius: ${themeGet('radii.xl')};
   background: ${themeGet('colors.neutral.gray6')};
   align-items: center;
   width: 100%;
