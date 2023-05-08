@@ -13,7 +13,7 @@ const Button = ({ onClick, backgroundColor, ...props }) => {
       {...props}
     >
       <Styled.Content flexDirection={props.flexDirection}>
-        <Styled.Title disabled={props.disabled} {...props}>
+        <Styled.Title disabled={props.disabled} size={props.size}>
           {props.title}
         </Styled.Title>
         <Styled.Icon>{props?.icon}</Styled.Icon>
