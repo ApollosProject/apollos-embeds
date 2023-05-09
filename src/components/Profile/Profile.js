@@ -98,7 +98,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                       color={themeGet('colors.text.secondary')({ theme })}
                     />
                   }
-                  title="Personal Detatils"
+                  title="Personal Details"
                 />
               </Box>
               <Box mt="s" mb="base">
