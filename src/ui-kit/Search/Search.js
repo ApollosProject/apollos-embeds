@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { systemPropTypes } from '../_lib/system';
-import { Box, Button } from '../../ui-kit';
+import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
@@ -105,10 +105,21 @@ const Search = (props = {}) => {
           <CaretDown size={14} weight="fill" color="#27272E54" />
         </Styled.Interface>
         <Box padding="12px" onClick={handleProfile}>
-          <Styled.Profile>
-            {/* TODO: When there is a user profile image, add conditional to check if user profile image exists and use that instead */}
-            <User size={18} weight="bold" color={userExist ? 'white' : null} />
-          </Styled.Profile>
+          {currentUser?.profile?.photo?.uri ? (
+            <Avatar
+              src={currentUser?.profile?.photo?.uri}
+              width="38px"
+              alt="avatar"
+            />
+          ) : (
+            <Styled.Profile>
+              <User
+                size={18}
+                weight="bold"
+                color={userExist ? 'white' : null}
+              />
+            </Styled.Profile>
+          )}
         </Box>
       </Styled.Wrapper>
       {showDropdown ? <Styled.Dropdown></Styled.Dropdown> : null}
