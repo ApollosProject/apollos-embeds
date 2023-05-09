@@ -21,6 +21,7 @@ import MediaItem, { LiveChip } from './MediaItem';
 import ProgressBar from './ProgressBar';
 import ResourceCard from './ResourceCard';
 import Select from './Select';
+import Search from './Search';
 import ShareButton from './ShareButton';
 import ListItem from './ListItem';
 
@@ -59,6 +60,7 @@ export {
   ProgressBar,
   ResourceCard,
   Select,
+  Search,
   ShareButton,
   ListItem,
 
