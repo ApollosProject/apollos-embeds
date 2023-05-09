@@ -19,6 +19,7 @@ import {
   H3,
   H4,
   systemPropTypes,
+  Search,
 } from '../../../ui-kit';
 
 function HeroListFeature(props = {}) {
@@ -59,6 +60,8 @@ function HeroListFeature(props = {}) {
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
+      <Search />
+      {/* <Modal /> */}
       <Box
         position="relative"
         backgroundColor="neutral.gray6"

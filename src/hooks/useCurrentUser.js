@@ -20,6 +20,9 @@ export const GET_CURRENT_USER = gql`
         lastName
         gender
         birthDate
+        photo {
+          uri
+        }
       }
     }
   }
