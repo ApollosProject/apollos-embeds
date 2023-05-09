@@ -27,6 +27,7 @@ const Wrapper = withTheme(styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  max-width: 520px;
   ${system}
 `);
 

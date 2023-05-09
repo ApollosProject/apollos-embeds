@@ -6,12 +6,12 @@ import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
-import { AuthManager } from '../../components';
+import { AuthManager, Profile } from '../../components';
 import { AUTH_TOKEN_KEY } from '../../config/keys';
 import { Auth } from '../../embeds';
 
 const Search = (props = {}) => {
-  const [showAuth, setShowAuth] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [inputValue, setInputValue] = useState('');
@@ -74,11 +74,17 @@ const Search = (props = {}) => {
 
   const handleProfile = () => {
     console.log('Opening Profile menu...');
-    setShowAuth(!showAuth);
+    setShowProfile(!showProfile);
   };
 
   return (
-    <Box position="relative">
+    <Box
+      position="relative"
+      alignItems="center"
+      display="flex"
+      flexDirection="column"
+      {...props}
+    >
       <Styled.Wrapper dropdown={showDropdown}>
         <Styled.Interface onClick={handleClick}>
           <Styled.InterfaceWrapper>
@@ -123,8 +129,7 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
       {showDropdown ? <Styled.Dropdown></Styled.Dropdown> : null}
-      {/* TODO: Move Auth to signup modal in profile. Currently here just to have some way of logging in until merge */}
-      {showAuth ? <Auth /> : null}
+      {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
 };
