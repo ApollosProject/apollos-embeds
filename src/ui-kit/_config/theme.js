@@ -20,7 +20,7 @@ const theme = {
     base: rem('6px'),
     l: rem('10px'),
     xl: rem('16px'),
-    xxl: rem('25px'),
+    xxl: rem('30px'),
     round: rem('999px'),
   },
   shadows: {
