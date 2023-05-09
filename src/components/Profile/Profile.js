@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { systemPropTypes, utils } from '../../ui-kit';
 import { withTheme } from 'styled-components';
 import { AuthManager } from '../../components';
@@ -9,7 +9,6 @@ import {
   BodyText,
   Box,
   Card,
-  H6,
   H4,
   ListItem,
 } from '../../ui-kit';
@@ -21,6 +20,7 @@ import {
   AppleLogo,
   User,
   ArrowSquareOut,
+  X,
 } from 'phosphor-react';
 import Styled from './Profile.styles';
 
@@ -28,11 +28,12 @@ import { useCurrentUser } from '../../hooks';
 import themeGet from '@styled-system/theme-get';
 import { logout, useAuth } from '../../providers/AuthProvider';
 
-const Profile = ({ theme, ...rest }) => {
+const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const { currentUser } = useCurrentUser();
 
   const [state, dispatch] = useAuth();
   const [showAuth, setShowAuth] = useState(false);
+
   const handleLogout = () => {
     setShowAuth(false);
     dispatch(logout());
@@ -41,7 +42,17 @@ const Profile = ({ theme, ...rest }) => {
   return (
     <>
       <Styled.Profile>
-        <Card p="l" borderRadius="xxl" maxWidth="520px">
+        <Card
+          p="xs"
+          borderRadius="xxl"
+          width="520px"
+          border="1px solid rgba(0, 0, 0, 0.1)"
+        >
+          <Box display="flex" alignItems="center" justifyContent="end">
+            <Styled.CloseIcon onClick={handleCloseProfile}>
+              <X size={18} weight="bold" />
+            </Styled.CloseIcon>
+          </Box>
           <Box
             display="flex"
             alignItems="center"
@@ -128,7 +139,7 @@ const Profile = ({ theme, ...rest }) => {
                 'Explore your faith and build daily habits with our online community.'}
             </BodyText>
           </Box>
-          <Box>
+          <Box display="flex" justifyContent="center">
             <Button
               type="secondary"
               title="Get it on iOS"
