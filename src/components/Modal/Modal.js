@@ -36,14 +36,8 @@ const Modal = (props = {}) => {
       {state.isOpen ? (
         <Styled.Modal>
           <Styled.ModalContainer>
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="end"
-              mb="s"
-            >
-              <Search />
+            <Box width="100%" display="flex" alignItems="center" mb="s">
+              <Search flex="1" width="100%" />
               <Styled.Icon onClick={handleCloseModal}>
                 <X size={16} weight="bold" />
               </Styled.Icon>
