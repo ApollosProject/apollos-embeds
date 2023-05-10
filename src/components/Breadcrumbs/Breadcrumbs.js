@@ -23,7 +23,7 @@ function Breadcrumbs(props = {}) {
   }
 
   return (
-    <Box display="flex" alignItems="center" mb="xs">
+    <Box display="flex" alignItems="center" mb="xl">
       {state.length > 0 ? (
         <Button
           type="link"

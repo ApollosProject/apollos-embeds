@@ -60,18 +60,14 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             mb="base"
           >
             {currentUser?.profile?.photo?.uri ? (
-              <Avatar
-                src={currentUser?.profile?.photo?.uri}
-                alt="avatar"
-                mr="s"
-              />
+              <Avatar src={currentUser?.profile?.photo?.uri} alt="avatar" />
             ) : (
               <Box color="text.action">
                 <UserCirclePlus size={84} weight="fill" />
               </Box>
             )}
             {currentUser?.profile.firstName ? (
-              <H4>Hey {currentUser?.profile?.firstName}</H4>
+              <H4 mt="xxs">Hey {currentUser?.profile?.firstName}</H4>
             ) : null}
             {!state.token ? (
               <Button
@@ -120,7 +116,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             alignItems="center"
             display="flex"
             flexDirection="column"
-            backgroundSize="80%"
+            backgroundSize="63%"
             backgroundRepeat="no-repeat"
             backgroundPosition="center 0"
             backgroundImage="linear-gradient(to bottom, rgba(255, 255, 255, 0), white), url('./iphone.png')"
@@ -129,12 +125,12 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               backgroundColor="base.primary"
               borderRadius="xl"
               mb="s"
-              mt={utils.rem('85px')}
+              mt={utils.rem('90px')}
             >
               <Logo />
             </Box>
-            <H4>{rest.adTitle || 'Stay Connected'}</H4>
-            <BodyText maxWidth="285px" textAlign="center" mb="base">
+            <H4 mb="xxs">{rest.adTitle || 'Stay Connected'}</H4>
+            <BodyText maxWidth="285px" textAlign="center" mb="l">
               {rest.adBody ||
                 'Explore your faith and build daily habits with our online community.'}
             </BodyText>

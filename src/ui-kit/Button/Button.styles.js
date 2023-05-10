@@ -191,7 +191,7 @@ const Button = withTheme(styled.button`
   border-width: 2px;
   text-align: center;
   border: transparent;
-  border-radius: ${themeGet('radii.base')};
+  border-radius: ${themeGet('radii.xl')};
   cursor: pointer;
   align-items: center;
   ${buttonTypeProp}
