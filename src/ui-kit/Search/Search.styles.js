@@ -10,6 +10,14 @@ const showDropdown = ({ dropdown }) => {
   if (dropdown) {
     return css`
       border-radius: 30px 30px 0px 0px;
+      @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+        border-radius: 0px;
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        right: 0;
+        left: 0;
+      }
     `;
   } else {
     return css`
@@ -22,11 +30,11 @@ const Wrapper = withTheme(styled.div`
   width: 100%;
   height: 60px;
   background: #ffffff;
-  ${showDropdown}
   border: 1px solid rgba(0, 0, 0, 0.1);
   display: flex;
   justify-content: space-between;
   align-items: center;
+  ${showDropdown}
   ${system}
 `);
 
