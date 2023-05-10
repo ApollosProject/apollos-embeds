@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
 import { systemPropTypes } from '../_lib/system';
-import { Box, Avatar } from '../../ui-kit';
+import { Box, Avatar, Card, utils } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
@@ -128,7 +128,19 @@ const Search = (props = {}) => {
           )}
         </Box>
       </Styled.Wrapper>
-      {showDropdown ? <Styled.Dropdown></Styled.Dropdown> : null}
+
+      {showDropdown ? (
+        <Styled.Dropdown>
+          <Card
+            p="xs"
+            borderRadius={`0 0 ${utils.rem('30px')} ${utils.rem('30px')}`}
+            width="520px"
+            borderTop="1px solid rgba(0, 0, 0, 0.1)"
+          >
+            <h4>Search results</h4>
+          </Card>
+        </Styled.Dropdown>
+      ) : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );

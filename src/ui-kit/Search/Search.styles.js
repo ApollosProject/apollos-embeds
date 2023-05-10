@@ -19,15 +19,17 @@ const showDropdown = ({ dropdown }) => {
 };
 
 const Wrapper = withTheme(styled.div`
-  width: 100%;
-  height: 60px;
-  background: #ffffff;
-  ${showDropdown}
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  max-width: 520px;
+  background: #ffffff;
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  width: 520px;
+  box-shadow: ${themeGet('shadows.medium')};
+  margin-bottom: ${themeGet('space.s')};
+
+  ${showDropdown}
+
   ${system}
 `);
 
@@ -88,16 +90,13 @@ const Input = withTheme(styled.input`
 `);
 
 const Dropdown = withTheme(styled.div`
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: none;
   display: flex;
-  border-radius: 0px 0px 30px 30px;
-  height: 60px;
-  position: absolute;
+  top: 60px;
+  justify-content: center;
+  align-items: center;
   z-index: 9999;
-  ${system}
+  transition: opacity 0.3s ease;
+  position: absolute;
 `);
 
 const Styled = {
