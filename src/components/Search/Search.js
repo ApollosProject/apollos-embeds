@@ -1,14 +1,14 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { systemPropTypes } from '../_lib/system';
-import { Box, Avatar, Card, utils } from '../../ui-kit';
+import { systemPropTypes } from '../../ui-kit/_lib/system';
+import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
-import { AuthManager, Profile } from '../../components';
-import { AUTH_TOKEN_KEY } from '../../config/keys';
-import { Auth } from '../../embeds';
+import { Profile } from '..';
+
+import Dropdown from './Dropdown';
 
 const Search = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
@@ -83,6 +83,7 @@ const Search = (props = {}) => {
       alignItems="center"
       display="flex"
       flexDirection="column"
+      mb="xs"
       {...props}
     >
       <Styled.Wrapper dropdown={showDropdown}>
@@ -129,18 +130,7 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showDropdown ? (
-        <Styled.Dropdown>
-          <Card
-            p="xs"
-            borderRadius={`0 0 ${utils.rem('30px')} ${utils.rem('30px')}`}
-            width="520px"
-            borderTop="1px solid rgba(0, 0, 0, 0.1)"
-          >
-            <h4>Search results</h4>
-          </Card>
-        </Styled.Dropdown>
-      ) : null}
+      {showDropdown ? <Dropdown /> : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );

@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
-import { Box, Search } from '../../ui-kit';
+import { Box } from '../../ui-kit';
+import { Search } from '../../components';
 import Breadcrumbs from '../Breadcrumbs';
 import { useSearchParams } from 'react-router-dom';
 import {
