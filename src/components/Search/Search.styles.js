@@ -32,8 +32,8 @@ const Wrapper = withTheme(styled.div`
   display: flex;
   height: 60px;
   justify-content: space-between;
-  width: 520px;
-
+  width: 100%;
+  z-index: 9999;
   ${showDropdown}
 
   ${system}
