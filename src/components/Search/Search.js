@@ -1,17 +1,17 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { systemPropTypes } from '../_lib/system';
+import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
-import { AuthManager } from '../../components';
-import { AUTH_TOKEN_KEY } from '../../config/keys';
-import { Auth } from '../../embeds';
+import { Profile } from '..';
+
+import Dropdown from './Dropdown';
 
 const Search = (props = {}) => {
-  const [showAuth, setShowAuth] = useState(false);
+  const [showProfile, setShowProfile] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [inputValue, setInputValue] = useState('');
@@ -74,11 +74,18 @@ const Search = (props = {}) => {
 
   const handleProfile = () => {
     console.log('Opening Profile menu...');
-    setShowAuth(!showAuth);
+    setShowProfile(!showProfile);
   };
 
   return (
-    <Box position="relative">
+    <Box
+      position="relative"
+      alignItems="center"
+      display="flex"
+      flexDirection="column"
+      mb="xs"
+      {...props}
+    >
       <Styled.Wrapper dropdown={showDropdown}>
         <Styled.Interface onClick={handleClick}>
           <Styled.InterfaceWrapper>
@@ -122,9 +129,9 @@ const Search = (props = {}) => {
           )}
         </Box>
       </Styled.Wrapper>
-      {showDropdown ? <Styled.Dropdown></Styled.Dropdown> : null}
-      {/* TODO: Move Auth to signup modal in profile. Currently here just to have some way of logging in until merge */}
-      {showAuth ? <Auth /> : null}
+
+      {showDropdown ? <Dropdown /> : null}
+      {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
 };

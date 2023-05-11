@@ -57,7 +57,6 @@ function MediaItem(props = {}) {
           backgroundPosition="center"
           backgroundSize="cover"
           borderRadius="xl"
-          boxShadow="medium"
           height="100%"
           overflow="hidden"
           paddingBottom="56.25%"

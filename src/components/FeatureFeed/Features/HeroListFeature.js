@@ -60,7 +60,7 @@ function HeroListFeature(props = {}) {
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
-      <Search />
+
       {/* <Modal /> */}
       <Box
         position="relative"

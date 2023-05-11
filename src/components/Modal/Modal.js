@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
-import { Box, Search } from '../../ui-kit';
+import { Box } from '../../ui-kit';
+import { Search } from '../../components';
 import Breadcrumbs from '../Breadcrumbs';
 import { useSearchParams } from 'react-router-dom';
 import {
@@ -36,14 +37,8 @@ const Modal = (props = {}) => {
       {state.isOpen ? (
         <Styled.Modal>
           <Styled.ModalContainer>
-            <Box
-              width="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="end"
-              mb="s"
-            >
-              <Search />
+            <Box width="100%" display="flex" alignItems="center" mb="s">
+              <Search flex="1" width="100%" />
               <Styled.Icon onClick={handleCloseModal}>
                 <X size={16} weight="bold" />
               </Styled.Icon>
