@@ -20,14 +20,19 @@ const Search = (props = {}) => {
   const { currentUser } = useCurrentUser();
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
+  const [isMobile, setIsMobile] = useState(false);
+
+  const textWelcome =
+    firstName === '' ? (
+      <strong>Hey!&nbsp;</strong>
+    ) : (
+      <strong>Hey {firstName}!&nbsp; </strong>
+    );
 
   const textPrompt = (
     <Styled.TextPrompt>
-      {firstName === '' ? (
-        <strong>Hey!&nbsp;</strong>
-      ) : (
-        <strong>Hey {firstName}!&nbsp; </strong>
-      )}
+      {!isMobile ? textWelcome : null}
+
       <span
         style={{
           overflow: 'hidden',
@@ -40,8 +45,6 @@ const Search = (props = {}) => {
       </span>
     </Styled.TextPrompt>
   );
-
-  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     function handleResize() {
@@ -73,7 +76,7 @@ const Search = (props = {}) => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [showDropdown, inputValue]);
+  }, [showDropdown, inputValue, isMobile]);
 
   const handleClick = () => {
     if (!showDropdown) {
@@ -90,8 +93,12 @@ const Search = (props = {}) => {
     console.log('X');
     if (isMobile) {
       setShowDropdown(false);
+      if (inputValue.trim() === '') {
+        setShowTextPrompt(true);
+      }
+    } else {
+      setInputValue('');
     }
-    setInputValue('');
   };
 
   const handleInputChange = (event) => {
