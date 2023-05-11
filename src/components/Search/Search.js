@@ -1,23 +1,26 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
-import { User, CaretDown, MagnifyingGlass } from 'phosphor-react';
+import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
 import { Profile } from '..';
 
 import Dropdown from './Dropdown';
+import { themeGet } from '@styled-system/theme-get';
 
 const Search = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef(null);
   const { currentUser } = useCurrentUser();
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
+
   const textPrompt = (
     <Styled.TextPrompt>
       {firstName === '' ? (
@@ -38,7 +41,39 @@ const Search = (props = {}) => {
     </Styled.TextPrompt>
   );
 
-  const inputRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth < 450);
+    }
+
+    handleResize(); // set initial state based on screen size
+    window.addEventListener('resize', handleResize); // listen for screen size changes
+
+    return () => {
+      window.removeEventListener('resize', handleResize); // cleanup
+    };
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (showDropdown && !event.target.closest('#search')) {
+        if (!isMobile) {
+          setShowDropdown(false);
+        }
+        if (inputValue.trim() === '') {
+          setShowTextPrompt(true);
+        }
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
+  }, [showDropdown, inputValue]);
 
   const handleClick = () => {
     if (!showDropdown) {
@@ -51,12 +86,23 @@ const Search = (props = {}) => {
     setShowTextPrompt(false);
   };
 
-  const handleInputBlur = () => {
-    setShowDropdown(false);
-    if (inputValue.trim() === '') {
-      setShowTextPrompt(true);
+  const handleX = () => {
+    console.log('X');
+    if (isMobile) {
+      setShowDropdown(false);
     }
+    setInputValue('');
   };
+
+  // const handleInputBlur = () => {
+  //   console.log('Blur');
+  //   if (!isMobile) {
+  //     setShowDropdown(false);
+  //   }
+  //   if (inputValue.trim() === '') {
+  //     setShowTextPrompt(true);
+  //   }
+  // };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
@@ -84,6 +130,7 @@ const Search = (props = {}) => {
       display="flex"
       flexDirection="column"
       mb="xs"
+      id="search"
       {...props}
     >
       <Styled.Wrapper dropdown={showDropdown}>
@@ -101,7 +148,6 @@ const Search = (props = {}) => {
             <Box width="100%" height="58px" position="relative">
               <Styled.Input
                 onFocus={handleInputFocus}
-                onBlur={handleInputBlur}
                 onChange={handleInputChange}
                 value={inputValue}
                 ref={inputRef}
@@ -109,9 +155,16 @@ const Search = (props = {}) => {
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
-          <CaretDown size={14} weight="fill" color="#27272E54" />
+          {showDropdown ? (
+            <Box>
+              <X size={18} weight="fill" color="#27272E54" onClick={handleX} />
+            </Box>
+          ) : null}
+          <Box px="xxs">
+            <CaretDown size={14} weight="fill" color="#27272E54" />
+          </Box>
         </Styled.Interface>
-        <Box padding="12px" onClick={handleProfile}>
+        <Box padding="12px 12px 12px 0;" onClick={handleProfile}>
           {currentUser?.profile?.photo?.uri ? (
             <Avatar
               src={currentUser?.profile?.photo?.uri}
@@ -130,7 +183,7 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showDropdown ? <Dropdown /> : null}
+      {showDropdown ? <Dropdown text={inputValue} /> : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
