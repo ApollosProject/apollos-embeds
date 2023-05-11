@@ -1,18 +1,135 @@
 import React from 'react';
-import { systemPropTypes } from '../../ui-kit';
+import { systemPropTypes, Box } from '../../ui-kit';
 import { withTheme } from 'styled-components';
 
 import Styled from './Dropdown.styles';
 
-const Dropdown = ({ theme, ...rest }) => {
+const Dropdown = ({ theme, text, ...rest }) => {
   return (
-    <>
-      <Styled.Wrapper>
-        <Styled.Dropdown>
-          <p mt="xxs">Put Search Results and Search Feature Feed Here</p>
-        </Styled.Dropdown>
-      </Styled.Wrapper>
-    </>
+    <Styled.Wrapper>
+      <Styled.Dropdown>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+        <Box
+          p="s"
+          onClick={() => console.log('clicked!')}
+          border="1px solid black"
+          width="100%"
+        >
+          {text}
+        </Box>
+      </Styled.Dropdown>
+    </Styled.Wrapper>
   );
 };
 
