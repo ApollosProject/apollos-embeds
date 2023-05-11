@@ -94,19 +94,10 @@ const Search = (props = {}) => {
     setInputValue('');
   };
 
-  // const handleInputBlur = () => {
-  //   console.log('Blur');
-  //   if (!isMobile) {
-  //     setShowDropdown(false);
-  //   }
-  //   if (inputValue.trim() === '') {
-  //     setShowTextPrompt(true);
-  //   }
-  // };
-
   const handleInputChange = (event) => {
     const value = event.target.value;
     setInputValue(value);
+    const dropdown = document.querySelector('#dropdown');
 
     if (value.trim() === '') {
       // Input is empty, do something
@@ -114,7 +105,9 @@ const Search = (props = {}) => {
       console.log(value);
     } else {
       // Input is not empty, do something else
-      console.log(value);
+    }
+    if (isMobile && dropdown) {
+      dropdown.scrollTop = 0;
     }
   };
 
