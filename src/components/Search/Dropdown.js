@@ -7,7 +7,7 @@ import Styled from './Dropdown.styles';
 const Dropdown = ({ theme, text, ...rest }) => {
   return (
     <Styled.Wrapper>
-      <Styled.Dropdown>
+      <Styled.Dropdown id="dropdown">
         <Box
           p="s"
           onClick={() => console.log('clicked!')}
