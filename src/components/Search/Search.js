@@ -9,7 +9,8 @@ import { useCurrentUser } from '../../hooks';
 import { Profile } from '..';
 
 import Dropdown from './Dropdown';
-import { themeGet } from '@styled-system/theme-get';
+
+const MOBILE_BREAKPOINT = 428;
 
 const Search = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
@@ -48,7 +49,7 @@ const Search = (props = {}) => {
 
   useEffect(() => {
     function handleResize() {
-      setIsMobile(window.innerWidth < 450);
+      setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
     }
 
     handleResize(); // set initial state based on screen size
