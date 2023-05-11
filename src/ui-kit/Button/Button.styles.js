@@ -13,14 +13,23 @@ function darken(c, by) {
   return Color(c).darken(by).toString();
 }
 
-const buttonState = ({ theme, type, disabled, focused, hovered, pressed }) => {
+const buttonState = ({
+  theme,
+  variant,
+  disabled,
+  focused,
+  hovered,
+  pressed,
+}) => {
   if (disabled) {
     return css`
       opacity: 0.5;
-      background: ${type === 'secondary'
+      background: ${variant === 'secondary'
         ? 'transparent'
         : theme.colors.base.gray};
-      border: ${type === 'secondary' ? theme.colors.base.gray : 'transparent'};
+      border: ${variant === 'secondary'
+        ? theme.colors.base.gray
+        : 'transparent'};
       cursor: not-allowed;
     `;
   }
@@ -28,7 +37,7 @@ const buttonState = ({ theme, type, disabled, focused, hovered, pressed }) => {
   if (pressed) {
     return css`
       background: ${theme.colors.base.gray};
-      border: ${type === 'secondary'
+      border: ${variant === 'secondary'
         ? theme.colors.fill.system
         : 'transparent'};
       transform: scale(0.98);
@@ -50,8 +59,8 @@ const webTransition = ({ theme }) => {
   `;
 };
 
-const buttonTypeProp = ({ theme, type }) => {
-  switch (type) {
+const buttonTypeProp = ({ theme, variant }) => {
+  switch (variant) {
     default:
       return css`
         background: ${theme.colors.text.action};
@@ -104,15 +113,15 @@ const buttonSizeProp = ({ size, ...props }) => {
   }
 };
 
-const activeLink = ({ focused, hovered, pressed, type }) => {
-  if (pressed && type === 'link') {
+const activeLink = ({ focused, hovered, pressed, variant }) => {
+  if (pressed && variant === 'link') {
     return css`
       background: none;
       border: transparent;
     `;
   }
 
-  if ((focused || hovered) && type === 'link') {
+  if ((focused || hovered) && variant === 'link') {
     return css`
       background: none;
       border: transparent;
@@ -120,8 +129,8 @@ const activeLink = ({ focused, hovered, pressed, type }) => {
   }
   return null;
 };
-const buttonTypeLink = ({ type }) => {
-  if (type === 'link') {
+const buttonTypeLink = ({ variant }) => {
+  if (variant === 'link') {
     return css`
       padding: 0;
     `;
@@ -151,14 +160,20 @@ const buttonColorState = ({ theme, disabled, focused, hovered }) => {
   return null;
 };
 
-const buttonColorStateLink = ({ theme, disabled, focused, hovered, type }) => {
-  if (disabled && type === 'link') {
+const buttonColorStateLink = ({
+  theme,
+  disabled,
+  focused,
+  hovered,
+  variant,
+}) => {
+  if (disabled && variant === 'link') {
     return css`
       color: ${theme.colors.text.secondary};
     `;
   }
 
-  if ((focused || hovered) && type === 'link') {
+  if ((focused || hovered) && variant === 'link') {
     return css`
       color: ${theme.colors.text.primary};
     `;
@@ -167,8 +182,8 @@ const buttonColorStateLink = ({ theme, disabled, focused, hovered, type }) => {
   return null;
 };
 
-const buttonColorTypeProp = ({ type }) => {
-  switch (type) {
+const buttonColorTypeProp = ({ variant }) => {
+  switch (variant) {
     default:
       return css`
         color: ${themeGet('colors.fill.paper')};

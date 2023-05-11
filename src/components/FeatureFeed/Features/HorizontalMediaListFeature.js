@@ -98,7 +98,7 @@ function HorizontalMediaListFeature(props = {}) {
         props?.feature?.primaryAction ? (
           <Button
             title="View All >"
-            type="link"
+            variant="link"
             onClick={handlePrimaryActionPress}
           />
         ) : null}

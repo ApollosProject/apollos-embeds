@@ -26,7 +26,7 @@ function Breadcrumbs(props = {}) {
     <Box display="flex" alignItems="center" mb="xl">
       {state.length > 0 ? (
         <Button
-          type="link"
+          variant="link"
           title={`Featured`}
           onClick={() => handleBreadClick({ id: -1, url: '' })}
         />
@@ -52,7 +52,7 @@ function Breadcrumbs(props = {}) {
             </Box>
 
             <Button
-              type="link"
+              variant="link"
               title={item.title}
               onClick={() => handleBreadClick({ id: item.id, url: item.url })}
             />

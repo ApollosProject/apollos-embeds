@@ -124,7 +124,7 @@ const AuthIdentity = () => {
               <Button
                 display="inline"
                 title="Create Account →"
-                type="link"
+                variant="link"
                 size="micro"
                 onClick={() => dispatch(updateAuth({ type: 'signup' }))}
               />
@@ -140,7 +140,7 @@ const AuthIdentity = () => {
               <Button
                 display="inline"
                 title="Log in →"
-                type="link"
+                variant="link"
                 size="micro"
                 onClick={() => dispatch(updateAuth({ type: 'login' }))}
               />

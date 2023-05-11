@@ -65,7 +65,7 @@ function VerticalCardListFeature(props = {}) {
         {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
           <Button
             title="View All >"
-            type="link"
+            variant="link"
             onClick={handlePrimaryActionPress}
           />
         ) : null}
