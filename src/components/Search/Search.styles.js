@@ -98,6 +98,15 @@ const Input = withTheme(styled.input`
   ${system}
 `);
 
+const X = withTheme(styled.div`
+  color: #27272e54;
+  &:hover {
+    color: ${themeGet('colors.base.secondary')};
+    cursor: pointer;
+  }
+  ${system}
+`);
+
 const Styled = {
   Wrapper,
   Profile,
@@ -106,6 +115,7 @@ const Styled = {
   InterfaceWrapper,
   Input,
   TextPrompt,
+  X,
 };
 
 export default Styled;

@@ -155,11 +155,16 @@ const Search = (props = {}) => {
             </Box>
           </Styled.InterfaceWrapper>
           {showDropdown ? (
-            <Box>
-              <X size={18} weight="fill" color="#27272E54" onClick={handleX} />
-            </Box>
+            <Styled.X>
+              <X size={18} weight="fill" onClick={handleX} />
+            </Styled.X>
           ) : null}
-          <Box px="xxs">
+          <Box
+            px="xxs"
+            onClick={() => {
+              setShowDropdown(!showDropdown);
+            }}
+          >
             <CaretDown size={14} weight="fill" color="#27272E54" />
           </Box>
         </Styled.Interface>
