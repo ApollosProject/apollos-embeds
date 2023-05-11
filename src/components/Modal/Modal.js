@@ -40,19 +40,22 @@ const Modal = (props = {}) => {
             <Box
               width="100%"
               display="flex"
-              alignItems="center"
               mb="s"
+              alignItems="center"
               justifyContent="space-between"
             >
-              <Box></Box>
               <Box
                 width={{
                   _: '260px',
                   sm: '350px',
                   md: '520px',
+                  lg: '700px',
                 }}
+                margin="auto"
+                justifyContent="center"
+                alignItems="center"
               >
-                <Search flex="1" width="100%" />
+                <Search width="100%" />
               </Box>
               <Styled.Icon onClick={handleCloseModal}>
                 <X size={16} weight="bold" />

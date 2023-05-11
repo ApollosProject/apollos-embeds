@@ -129,7 +129,6 @@ const Search = (props = {}) => {
       alignItems="center"
       display="flex"
       flexDirection="column"
-      mb="xs"
       id="search"
       {...props}
     >
