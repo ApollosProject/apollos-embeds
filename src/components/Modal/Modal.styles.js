@@ -44,6 +44,7 @@ const Icon = withTheme(styled.div`
   padding: 8px;
   transition: 0.2s;
   width: 32px;
+  margin-left: 10px;
 
   &:hover {
     color: ${themeGet('colors.base.secondary')};

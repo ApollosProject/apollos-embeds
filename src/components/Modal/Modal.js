@@ -37,8 +37,23 @@ const Modal = (props = {}) => {
       {state.isOpen ? (
         <Styled.Modal>
           <Styled.ModalContainer>
-            <Box width="100%" display="flex" alignItems="center" mb="s">
-              <Search flex="1" width="100%" />
+            <Box
+              width="100%"
+              display="flex"
+              alignItems="center"
+              mb="s"
+              justifyContent="space-between"
+            >
+              <Box></Box>
+              <Box
+                width={{
+                  _: '260px',
+                  sm: '350px',
+                  md: '520px',
+                }}
+              >
+                <Search flex="1" width="100%" />
+              </Box>
               <Styled.Icon onClick={handleCloseModal}>
                 <X size={16} weight="bold" />
               </Styled.Icon>
