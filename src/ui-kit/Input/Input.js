@@ -1,23 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Box, systemPropTypes, SystemText } from '..';
 import Styled from './Input.styles';
 
-const Input = ({ placeholder, ...props }) => {
+const Input = ({ placeholder, value, handleOnChange, ...props }) => {
   const textInputRef = useRef();
   const [hasValue, setHasValue] = useState(false);
   const [focused, setFocused] = useState(false);
 
   const handleChangeText = (text) => {
-    if (text.target.value?.length === 0 && hasValue) {
-      setHasValue(false);
-    }
-
-    if (text.target.value?.length >= 1 && !hasValue) {
-      setHasValue(true);
-    }
-
-    props.handleOnChange(text.target.value);
+    const inputValue = text.target.value;
+    setHasValue(inputValue.length > 0);
+    handleOnChange(inputValue);
   };
 
   const handleFocus = () => {
@@ -28,6 +22,10 @@ const Input = ({ placeholder, ...props }) => {
     setFocused(false);
   };
 
+  useEffect(() => {
+    setHasValue(value && value.length > 0);
+  }, [value]);
+
   const interactionStateProps = {
     error: Boolean(props.error),
     focused,
@@ -37,6 +35,7 @@ const Input = ({ placeholder, ...props }) => {
   if (props.error) {
     textInputRef.current.value = '';
   }
+
   return (
     <Box {...props}>
       <Box position="relative" display="flex">
@@ -48,6 +47,7 @@ const Input = ({ placeholder, ...props }) => {
           onBlur={handleBlur}
           onChange={handleChangeText}
           flex="1"
+          defaultValue={value}
           {...props}
         />
 
