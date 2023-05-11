@@ -124,7 +124,7 @@ function ContentSingle(props = {}) {
   return (
     <>
       <Box margin="0 auto">
-        <Box mb="base">
+        <Box mb="base" borderRadius="xl" overflow="hidden">
           {props.data?.videos[0] ? (
             <VideoPlayer
               userProgress={userProgress}
@@ -190,7 +190,7 @@ function ContentSingle(props = {}) {
 
           {/* Children Count */}
           {showEpisodeCount ? (
-            <H4 color="text.secondary" mr="xl">
+            <H4 color="text.secondary" mr="l">
               {childContentItems.length}{' '}
               {`Episode${childContentItems.length === 1 ? '' : 's'}`}
             </H4>

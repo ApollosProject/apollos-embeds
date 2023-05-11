@@ -1,55 +1,59 @@
-import Color from 'color';
 import { withTheme } from 'styled-components';
 import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
-import { TypeStyles } from '../Typography';
-import { system } from '../_lib/system';
+import { TypeStyles } from '../../ui-kit/Typography';
+import { system } from '../../ui-kit/_lib/system';
 
 const showDropdown = ({ dropdown }) => {
   if (dropdown) {
     return css`
-      border-radius: 30px 30px 0px 0px;
+      border-radius: ${themeGet('radii.xxl')} ${themeGet('radii.xxl')} 0px 0px;
     `;
   } else {
     return css`
-      border-radius: 30px;
+      border-radius: ${themeGet('radii.xxl')};
     `;
   }
 };
 
 const Wrapper = withTheme(styled.div`
-  width: 100%;
-  height: 60px;
-  background: #ffffff;
-  ${showDropdown}
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  background: ${themeGet('colors.base.white')};
+  box-shadow: ${themeGet('shadows.medium')};
+  display: flex;
+  height: 60px;
+  justify-content: space-between;
+  width: 520px;
+
+  ${showDropdown}
+
   ${system}
 `);
 
 const TextPrompt = withTheme(styled.div`
-  width: 100%;
+  ${TypeStyles.BodyText}
+
+  display: flex;
+  overflow: hidden;
+  pointer-events: none;
   position: absolute;
+  text-overflow: ellipsis;
   top: 50%;
   transform: translate(0, -50%);
-  display: flex;
-  pointer-events: none;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 17px;
+  width: 100%;
+
   ${system}
 `);
 
 const Profile = withTheme(styled.div`
   background: ${(props) => props.theme.colors.text.action};
-  padding: 9px;
   border-radius: 50%;
-  line-height: 0;
   color: ${(props) => props.theme.colors.base.white};
+  line-height: 0;
+  padding: 9px;
+
   ${system}
 `);
 
@@ -86,19 +90,6 @@ const Input = withTheme(styled.input`
   ${system}
 `);
 
-const Dropdown = withTheme(styled.div`
-  width: 100%;
-  background: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-top: none;
-  display: flex;
-  border-radius: 0px 0px 30px 30px;
-  height: 60px;
-  position: absolute;
-  z-index: 9999;
-  ${system}
-`);
-
 const Styled = {
   Wrapper,
   Profile,
@@ -106,7 +97,6 @@ const Styled = {
   SearchIcon,
   InterfaceWrapper,
   Input,
-  Dropdown,
   TextPrompt,
 };
 

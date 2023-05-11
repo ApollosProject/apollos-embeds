@@ -61,6 +61,7 @@ function reducer(state, action) {
       };
     }
     case actionTypes.logout: {
+      window.localStorage.removeItem(AUTH_TOKEN_KEY);
       return {
         ...initialState,
         initialized: true,

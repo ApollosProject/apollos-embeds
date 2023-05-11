@@ -33,15 +33,17 @@ const ModalContainer = withTheme(styled.div`
 `);
 
 const Icon = withTheme(styled.div`
-  display: flex;
-  justify-content: center;
   align-items: center;
-  line-height: 0;
   background-color: #ffffff;
-  border-radius: 50%;
-  padding: 8px;
   background: rgba(242, 242, 247, 0.8);
+  border-radius: 50%;
+  display: flex;
+  height: 32px;
+  justify-content: center;
+  line-height: 0;
+  padding: 8px;
   transition: 0.2s;
+  width: 32px;
 
   &:hover {
     color: ${themeGet('colors.base.secondary')};
