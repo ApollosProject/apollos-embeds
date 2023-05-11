@@ -162,7 +162,7 @@ const Search = (props = {}) => {
           <Box
             px="xxs"
             onClick={() => {
-              setShowDropdown(!showDropdown);
+              !isMobile && setShowDropdown(!showDropdown);
             }}
           >
             <CaretDown size={14} weight="fill" color="#27272E54" />
