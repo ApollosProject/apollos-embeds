@@ -8,7 +8,7 @@ function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function ProfileDetails(props = {}) {
+function ProfileDetails(props) {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
@@ -16,8 +16,6 @@ function ProfileDetails(props = {}) {
   const [updateProfileFields] = useUpdateProfileFields();
 
   const { currentUser } = useCurrentUser();
-
-  const { firstName, lastName } = user;
 
   useEffect(() => {
     setUser(currentUser);
@@ -45,44 +43,42 @@ function ProfileDetails(props = {}) {
   });
 
   const isLoading = status === 'LOADING';
+  const { firstName, lastName } = user || {};
 
   return (
-    <>
-      <Box as="form" id="editProfile" action="" onSubmit={handleSubmit}>
-        <>
-          <Box mb="l">
-            <Box mb="base">
-              <Input
-                id="firstName"
-                placeholder="First Name"
-                value={values.firstName || firstName || ''}
-                handleOnChange={(text) => setFieldValue('firstName', text)}
-                required
-                error={error?.identity}
-              />
-            </Box>
+    <Box as="form" id="profileDetails" onSubmit={handleSubmit}>
+      <Box mb="l">
+        <Box mb="base">
+          <Input
+            id="firstName"
+            placeholder="First Name"
+            value={values.firstName || firstName || ''}
+            handleOnChange={(text) => setFieldValue('firstName', text)}
+            required
+            error={error?.identity}
+          />
+        </Box>
 
-            <Box mb="base">
-              <Input
-                id="lastName"
-                placeholder="Last Name"
-                value={values.lastName || lastName || ''}
-                handleOnChange={(text) => setFieldValue('lastName', text)}
-                required
-                error={error?.identity}
-              />
-            </Box>
-            <Button
-              title={`Finish${isLoading ? 'ing...' : ''}`}
-              onClick={handleSubmit}
-              disabled={
-                !user || !(values.firstName && values.lastName) || isLoading
-              }
-            />
-          </Box>
-        </>
+        <Box mb="base">
+          <Input
+            id="lastName"
+            placeholder="Last Name"
+            value={values.lastName || lastName || ''}
+            handleOnChange={(text) => setFieldValue('lastName', text)}
+            required
+            error={error?.identity}
+          />
+        </Box>
+
+        <Button
+          title={`Finish${isLoading ? 'ing...' : ''}`}
+          type="submit"
+          disabled={
+            !user || !(values.firstName && values.lastName) || isLoading
+          }
+        />
       </Box>
-    </>
+    </Box>
   );
 }
 
