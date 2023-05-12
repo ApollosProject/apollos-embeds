@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { systemPropTypes, utils } from '../../ui-kit';
 import { withTheme } from 'styled-components';
 import { AuthManager } from '../../components';
+import ProfileDetails from './ProfileDetails';
 
 import {
   Button,
@@ -33,6 +34,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
 
   const [state, dispatch] = useAuth();
   const [showAuth, setShowAuth] = useState(false);
+  const [showDetails, setShowDetails] = useState(false);
 
   const handleLogout = () => {
     setShowAuth(false);
@@ -53,6 +55,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               <X size={18} weight="bold" />
             </Styled.CloseIcon>
           </Box>
+          {/* Header */}
           <Box
             display="flex"
             alignItems="center"
@@ -69,6 +72,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             {currentUser?.profile.firstName ? (
               <H4 mt="xxs">Hey {currentUser?.profile?.firstName}</H4>
             ) : null}
+
             {!state.token ? (
               <Button
                 backgroundColor="rgba(23, 181, 130, 0.15)"
@@ -76,17 +80,19 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                 title="Sign up or Login"
                 size="small"
                 onClick={() => setShowAuth(true)}
-                type="secondary"
+                variant="secondary"
                 color="text.action"
                 icon={<ArrowRight size={24} />}
               />
             ) : null}
           </Box>
-          {state.token ? (
+          {/* Profile Actions */}
+          {state.token && !showDetails ? (
             <>
               <Styled.Title mb="xs">My Profile</Styled.Title>
               <Box>
                 <ListItem
+                  onClick={() => setShowDetails(true)}
                   leadingIcon={
                     <User
                       size={18}
@@ -112,50 +118,58 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               </Box>
             </>
           ) : null}
-          <Box
-            alignItems="center"
-            display="flex"
-            flexDirection="column"
-            backgroundSize="63%"
-            backgroundRepeat="no-repeat"
-            backgroundPosition="center 0"
-            backgroundImage="linear-gradient(to bottom, rgba(255, 255, 255, 0), white), url('./iphone.png')"
-          >
-            <Box
-              backgroundColor="base.primary"
-              borderRadius="xl"
-              mb="s"
-              mt={utils.rem('90px')}
-            >
-              <Logo />
-            </Box>
-            <H4 mb="xxs">{rest.adTitle || 'Stay Connected'}</H4>
-            <BodyText maxWidth="285px" textAlign="center" mb="l">
-              {rest.adBody ||
-                'Explore your faith and build daily habits with our online community.'}
-            </BodyText>
-          </Box>
-          <Box display="flex" justifyContent="center">
-            <Button
-              type="secondary"
-              title="Get it on iOS"
-              size="small"
-              onClick={() => {}}
-              color="text.action"
-              borderRadius="100px"
-              icon={<AppleLogo weight="fill" size="24" />}
-              mr="s"
-            />
-            <Button
-              type="secondary"
-              title="Get it on Android"
-              size="small"
-              onClick={() => {}}
-              color="text.action"
-              borderRadius="100px"
-              icon={<AndroidLogo weight="fill" size="24" />}
-            />
-          </Box>
+          {showDetails ? (
+            <ProfileDetails setShowDetails={setShowDetails} />
+          ) : null}
+          {/* Mobile App Ad */}
+          {!showDetails ? (
+            <>
+              <Box
+                alignItems="center"
+                display="flex"
+                flexDirection="column"
+                backgroundSize="63%"
+                backgroundRepeat="no-repeat"
+                backgroundPosition="center 0"
+                backgroundImage="linear-gradient(to bottom, rgba(255, 255, 255, 0), white), url('./iphone.png')"
+              >
+                <Box
+                  backgroundColor="base.primary"
+                  borderRadius="xl"
+                  mb="s"
+                  mt={utils.rem('90px')}
+                >
+                  <Logo />
+                </Box>
+                <H4 mb="xxs">{rest.adTitle || 'Stay Connected'}</H4>
+                <BodyText maxWidth="285px" textAlign="center" mb="l">
+                  {rest.adBody ||
+                    'Explore your faith and build daily habits with our online community.'}
+                </BodyText>
+              </Box>
+              <Box display="flex" justifyContent="center">
+                <Button
+                  variant="secondary"
+                  title="Get it on iOS"
+                  size="small"
+                  onClick={() => {}}
+                  color="text.action"
+                  borderRadius="100px"
+                  icon={<AppleLogo weight="fill" size="24" />}
+                  mr="s"
+                />
+                <Button
+                  variant="secondary"
+                  title="Get it on Android"
+                  size="small"
+                  onClick={() => {}}
+                  color="text.action"
+                  borderRadius="100px"
+                  icon={<AndroidLogo weight="fill" size="24" />}
+                />
+              </Box>
+            </>
+          ) : null}
         </Card>
       </Styled.Profile>
       {showAuth && !state.token ? <AuthManager /> : null}
