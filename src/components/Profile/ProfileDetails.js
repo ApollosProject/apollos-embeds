@@ -36,30 +36,6 @@ function ProfileDetails(props) {
     try {
       await updateProfileFields({
         variables: { input: userProfile },
-        update: (
-          cache,
-          {
-            data: {
-              updateProfileFields: { firstName, lastName },
-            },
-          }
-        ) => {
-          const data = cache.readQuery({ query: GET_CURRENT_USER });
-
-          cache.writeQuery({
-            query: GET_CURRENT_USER,
-            data: {
-              currentUser: {
-                ...data.currentUser,
-                profile: {
-                  ...data.currentUser.profile,
-                  firstName,
-                  lastName,
-                },
-              },
-            },
-          });
-        },
       });
       setStatus('SUCCESS');
     } catch (e) {
