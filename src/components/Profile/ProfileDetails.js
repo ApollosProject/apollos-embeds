@@ -3,13 +3,12 @@ import PropTypes from 'prop-types';
 
 import { useForm, useUpdateProfileFields, useCurrentUser } from '../../hooks';
 import { Box, Button, Input } from '../../ui-kit';
-import { GET_CURRENT_USER } from '../../hooks/useCurrentUser';
 
 function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function ProfileDetails(props) {
+function ProfileDetails({ setShowDetails, ...props }) {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const { currentUser } = useCurrentUser();
@@ -37,6 +36,7 @@ function ProfileDetails(props) {
       await updateProfileFields({
         variables: { input: userProfile },
       });
+      setShowDetails(false);
       setStatus('SUCCESS');
     } catch (e) {
       onError(e);
@@ -48,7 +48,7 @@ function ProfileDetails(props) {
 
   return (
     <Box id="profileDetails">
-      <Box mb="l">
+      <Box mb="l" display="flex" flexDirection="column">
         <Box mb="base">
           <Input
             id="firstName"
@@ -62,7 +62,7 @@ function ProfileDetails(props) {
           />
         </Box>
 
-        <Box mb="base">
+        <Box mb="xl">
           <Input
             id="lastName"
             placeholder="Last Name"
