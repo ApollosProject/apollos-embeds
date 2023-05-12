@@ -120,7 +120,7 @@ function HeroListFeature(props = {}) {
               <Button
                 title={props.feature.primaryAction.title}
                 onClick={handlePrimaryActionClick}
-                type="secondary"
+                variant="secondary"
               />
             ) : null}
           </Box>

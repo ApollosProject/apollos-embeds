@@ -44,7 +44,7 @@ function AuthLayout(props = {}) {
       >
         {state.prevStep === authSteps.Identity ? (
           <Button
-            type="link"
+            variant="link"
             title="Back"
             onClick={() => onGoBack()}
             alignSelf="flex-end"

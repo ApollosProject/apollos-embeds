@@ -3,6 +3,7 @@ import { gql, useMutation } from '@apollo/client';
 export const UPDATE_PROFILE_FIELDS = gql`
   mutation updateProfileFields($input: [UpdateProfileInput]!) {
     updateProfileFields(input: $input) {
+      id
       firstName
       lastName
       birthDate

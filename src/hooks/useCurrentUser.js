@@ -15,6 +15,7 @@ export const GET_CURRENT_USER = gql`
       # }
 
       profile {
+        id
         email
         firstName
         lastName
