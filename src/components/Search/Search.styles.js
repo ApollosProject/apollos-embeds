@@ -9,6 +9,14 @@ const showDropdown = ({ dropdown }) => {
   if (dropdown) {
     return css`
       border-radius: ${themeGet('radii.xxl')} ${themeGet('radii.xxl')} 0px 0px;
+      @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+        border-radius: 0px;
+        position: fixed;
+        bottom: 0;
+        top: 0;
+        right: 0;
+        left: 0;
+      }
     `;
   } else {
     return css`
@@ -24,8 +32,8 @@ const Wrapper = withTheme(styled.div`
   display: flex;
   height: 60px;
   justify-content: space-between;
-  width: 520px;
-
+  width: 100%;
+  z-index: 9999;
   ${showDropdown}
 
   ${system}
@@ -90,6 +98,15 @@ const Input = withTheme(styled.input`
   ${system}
 `);
 
+const X = withTheme(styled.div`
+  color: #27272e54;
+  &:hover {
+    color: ${themeGet('colors.base.secondary')};
+    cursor: pointer;
+  }
+  ${system}
+`);
+
 const Styled = {
   Wrapper,
   Profile,
@@ -98,6 +115,7 @@ const Styled = {
   InterfaceWrapper,
   Input,
   TextPrompt,
+  X,
 };
 
 export default Styled;

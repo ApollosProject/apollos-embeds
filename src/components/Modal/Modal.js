@@ -37,11 +37,43 @@ const Modal = (props = {}) => {
       {state.isOpen ? (
         <Styled.Modal>
           <Styled.ModalContainer>
-            <Box width="100%" display="flex" alignItems="center" mb="s">
-              <Search flex="1" width="100%" />
-              <Styled.Icon onClick={handleCloseModal}>
-                <X size={16} weight="bold" />
-              </Styled.Icon>
+            <Box
+              width="100%"
+              display="flex"
+              mb="s"
+              alignItems="center"
+              justifyContent="space-between"
+              flexDirection={{ _: 'column-reverse', sm: 'row' }}
+            >
+              <Box width={{ _: '0', sm: '10%' }}></Box>
+              <Box
+                width={{
+                  _: '260px',
+                  sm: '350px',
+                  md: '520px',
+                  lg: '700px',
+                }}
+                mx="auto"
+                justifyContent="center"
+                alignItems="center"
+              >
+                <Search width="100%" />
+              </Box>
+              <Box
+                width={{ _: '100%', sm: '10%' }}
+                mb={{ _: 'xs', sm: '0' }}
+                ml={{ _: '0', sm: 'xs' }}
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="center"
+              >
+                <Styled.Icon
+                  onClick={handleCloseModal}
+                  ml={{ _: 'auto', sm: '0' }}
+                >
+                  <X size={16} weight="bold" />
+                </Styled.Icon>
+              </Box>
             </Box>
             <Breadcrumbs />
             <Box width="100%">{state.content}</Box>
