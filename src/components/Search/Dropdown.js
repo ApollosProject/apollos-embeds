@@ -4,7 +4,7 @@ import { withTheme } from 'styled-components';
 
 import Styled from './Dropdown.styles';
 
-const Dropdown = ({ theme, text, ...rest }) => {
+const Dropdown = ({ theme, value, ...rest }) => {
   return (
     <Styled.Wrapper>
       <Styled.Dropdown id="dropdown">
@@ -14,7 +14,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          First item
         </Box>
         <Box
           p="s"
@@ -22,7 +22,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -30,7 +30,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -38,7 +38,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -46,7 +46,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -54,7 +54,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -62,7 +62,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -70,7 +70,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -78,7 +78,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -86,7 +86,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -94,7 +94,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -102,7 +102,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -110,7 +110,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -118,7 +118,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
         <Box
           p="s"
@@ -126,7 +126,7 @@ const Dropdown = ({ theme, text, ...rest }) => {
           border="1px solid black"
           width="100%"
         >
-          {text}
+          {value}
         </Box>
       </Styled.Dropdown>
     </Styled.Wrapper>

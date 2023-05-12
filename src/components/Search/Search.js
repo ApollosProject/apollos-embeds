@@ -91,7 +91,6 @@ const Search = (props = {}) => {
   };
 
   const handleX = () => {
-    console.log('X');
     if (isMobile) {
       setShowDropdown(false);
       if (inputValue.trim() === '') {
@@ -109,8 +108,6 @@ const Search = (props = {}) => {
 
     if (value.trim() === '') {
       // Input is empty, do something
-      console.log('empty');
-      console.log(value);
     } else {
       // Input is not empty, do something else
     }
@@ -188,7 +185,7 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showDropdown ? <Dropdown text={inputValue} /> : null}
+      {showDropdown ? <Dropdown value={inputValue} /> : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
