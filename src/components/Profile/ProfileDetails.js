@@ -100,11 +100,11 @@ function ProfileDetails(props) {
         </Box>
 
         <Button
-          title={`Finish${isLoading ? 'ing...' : ''}`}
+          title={isLoading ? 'Saving' : 'Save'}
           type="submit"
-          onClick={handleSubmit}
+          onClick={() => handleSubmit()}
           disabled={
-            !currentUser || !(values.firstName && values.lastName) || isLoading
+            !currentUser || !(values.firstName || values.lastName) || isLoading
           }
         />
       </Box>
