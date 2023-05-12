@@ -1,133 +1,28 @@
 import React from 'react';
 import { systemPropTypes, Box } from '../../ui-kit';
 import { withTheme } from 'styled-components';
+import { SearchProvider } from '../../providers';
 
 import Styled from './Dropdown.styles';
 
-const Dropdown = ({ theme, value, ...rest }) => {
+const Dropdown = ({
+  theme,
+  loading,
+  fetchMore,
+  contentItems,
+  searchQuery,
+  ...rest
+}) => {
   return (
     <Styled.Wrapper>
       <Styled.Dropdown id="dropdown">
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          First item
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
-        <Box
-          p="s"
-          onClick={() => console.log('clicked!')}
-          border="1px solid black"
-          width="100%"
-        >
-          {value}
-        </Box>
+        <SearchProvider
+          Component={SearchList}
+          data={searchQuery === '' ? {} : contentItems}
+          fetchMore={fetchMore}
+          loading={loading}
+          searchTerm={searchQuery}
+        />
       </Styled.Dropdown>
     </Styled.Wrapper>
   );

@@ -5,12 +5,13 @@ import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
-import { useCurrentUser } from '../../hooks';
+import { useCurrentUser, useSearchQuery } from '../../hooks';
 import { Profile } from '..';
 
 import Dropdown from './Dropdown';
 
 const MOBILE_BREAKPOINT = 428;
+const PAGE_SIZE = 21;
 
 const Search = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
@@ -22,6 +23,11 @@ const Search = (props = {}) => {
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
+
+  const [search, { loading, contentItems, fetchMore }] = useSearchQuery({
+    notifyOnNetworkStatusChange: true,
+  });
+  const [state, setState] = useState({ searchQuery: '' });
 
   const textWelcome =
     firstName === '' ? (
@@ -110,6 +116,13 @@ const Search = (props = {}) => {
       // Input is empty, do something
     } else {
       // Input is not empty, do something else
+      setState({ searchQuery: event.nativeEvent.text });
+      search({
+        variables: {
+          query: state.searchQuery,
+          first: PAGE_SIZE,
+        },
+      });
     }
     if (isMobile && dropdown) {
       dropdown.scrollTop = 0;
@@ -185,7 +198,14 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showDropdown ? <Dropdown value={inputValue} /> : null}
+      {showDropdown ? (
+        <Dropdown
+          loading={loading}
+          fetchMore={fetchMore}
+          contentItems={contentItems}
+          searchQuery={inputValue}
+        />
+      ) : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
