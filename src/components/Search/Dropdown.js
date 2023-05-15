@@ -4,6 +4,7 @@ import { withTheme } from 'styled-components';
 import { SearchProvider } from '../../providers';
 
 import Styled from './Dropdown.styles';
+import SearchList from './SearchList';
 
 const Dropdown = ({
   theme,
@@ -11,6 +12,7 @@ const Dropdown = ({
   fetchMore,
   contentItems,
   searchQuery,
+  setShowDropdown,
   ...rest
 }) => {
   return (
@@ -22,6 +24,7 @@ const Dropdown = ({
           fetchMore={fetchMore}
           loading={loading}
           searchTerm={searchQuery}
+          setShowDropdown={setShowDropdown}
         />
       </Styled.Dropdown>
     </Styled.Wrapper>

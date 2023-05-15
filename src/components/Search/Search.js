@@ -6,8 +6,7 @@ import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
 import { useCurrentUser, useSearchQuery } from '../../hooks';
-import { Profile } from '..';
-
+import Profile from '../Profile';
 import Dropdown from './Dropdown';
 
 const MOBILE_BREAKPOINT = 428;
@@ -204,6 +203,7 @@ const Search = (props = {}) => {
           fetchMore={fetchMore}
           contentItems={contentItems}
           searchQuery={inputValue}
+          setShowDropdown={setShowDropdown}
         />
       ) : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
