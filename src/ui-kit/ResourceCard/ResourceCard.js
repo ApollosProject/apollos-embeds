@@ -76,6 +76,7 @@ function ResourceCard({
     <Styled.ResourceCard
       cursor={onClick ? 'pointer' : 'default'}
       onClick={onClick}
+      {...props}
     >
       <Box display="flex" justifyContent="center" alignItems="center">
         {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
