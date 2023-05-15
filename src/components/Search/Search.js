@@ -115,10 +115,9 @@ const Search = (props = {}) => {
       // Input is empty, do something
     } else {
       // Input is not empty, do something else
-      setState({ searchQuery: event.nativeEvent.text });
       search({
         variables: {
-          query: state.searchQuery,
+          query: inputValue,
           first: PAGE_SIZE,
         },
       });
