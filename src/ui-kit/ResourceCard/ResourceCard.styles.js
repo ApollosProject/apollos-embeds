@@ -1,22 +1,22 @@
-import { withTheme } from "styled-components";
-import styled, { css } from "styled-components";
-import { themeGet } from "@styled-system/theme-get";
+import { withTheme } from 'styled-components';
+import styled, { css } from 'styled-components';
+import { themeGet } from '@styled-system/theme-get';
 
-import { system } from "../_lib/system";
+import { system } from '../_lib/system';
 
 const ResourceCard = withTheme(styled.div`
   display: flex;
-  padding: ${themeGet("space.xs")};
+  padding: ${themeGet('space.xs')};
   border-radius: 8px;
-  background: ${themeGet("colors.neutral.gray6")};
+  background: ${themeGet('colors.neutral.gray6')};
   align-items: center;
   width: 100%;
   height: 72px;
-  gap: ${themeGet("space.xs")};
+  gap: ${themeGet('space.xs')};
   ${system};
 `);
 
-const LeadingIcon = withTheme(styled.div`
+const LeadingAsset = withTheme(styled.div`
   height: 48px;
   width: 48px;
   display: flex;
@@ -84,7 +84,7 @@ const Ellipse = withTheme(styled.div`
 
 const Styled = {
   ResourceCard,
-  LeadingIcon,
+  LeadingAsset,
   TailingIcon,
   Wrapper,
   Heading,

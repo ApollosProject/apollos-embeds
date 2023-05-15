@@ -1,28 +1,17 @@
-import React from "react";
+import React from 'react';
 
-import { systemPropTypes } from "../_lib/system";
-import { Box } from "..";
-import Styled from "./ResourceCard.styles";
-import { getURLFromType } from "../../utils";
-import { useNavigate } from "react-router-dom";
+import { systemPropTypes } from '../_lib/system';
+import { Box } from '..';
+import Styled from './ResourceCard.styles';
 
 function ResourceCard({
   title,
   subtitle,
-  leadingIcon,
+  leadingAsset,
   tailingIcon,
-  node,
+  onClick,
   ...props
 }) {
-  // If item has link, redirect to URL
-  const navigate = useNavigate();
-  const handleActionPress = () => {
-    navigate({
-      pathname: "/",
-      search: `?id=${getURLFromType(node)}`,
-    });
-  };
-
   // Default tailing icon
   const Arrow = (
     <svg
@@ -64,33 +53,33 @@ function ResourceCard({
     </svg>
   );
 
-  //If leadingIcon is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
-  const LeadingIcon = leadingIcon?.sources ? (
-    <Styled.LeadingIcon>
+  //If leadingAsset is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
+  const LeadingAsset = leadingAsset?.sources ? (
+    <Styled.LeadingAsset>
       <Box
         width="100%"
         height="100%"
         backgroundSize="cover"
         backgroundPosition="center"
         backgroundImage={`url(${
-          leadingIcon?.sources[0].uri ? leadingIcon.sources[0].uri : null
+          leadingAsset?.sources[0].uri ? leadingAsset.sources[0].uri : null
         })`}
       />
-    </Styled.LeadingIcon>
-  ) : leadingIcon ? (
-    leadingIcon
+    </Styled.LeadingAsset>
+  ) : leadingAsset ? (
+    leadingAsset
   ) : (
     Clip
   );
 
   return (
     <Styled.ResourceCard
-      cursor={node ? "pointer" : "default"}
-      onClick={node && handleActionPress}
+      cursor={onClick ? 'pointer' : 'default'}
+      onClick={onClick}
     >
       <Box display="flex" justifyContent="center" alignItems="center">
         {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
-        {LeadingIcon}
+        {LeadingAsset}
       </Box>
       <Styled.Wrapper>
         {/* Title and Subtitle */}
