@@ -26,7 +26,6 @@ const Search = (props = {}) => {
   const [search, { loading, contentItems, fetchMore }] = useSearchQuery({
     notifyOnNetworkStatusChange: true,
   });
-  const [state, setState] = useState({ searchQuery: '' });
 
   const textWelcome =
     firstName === '' ? (
