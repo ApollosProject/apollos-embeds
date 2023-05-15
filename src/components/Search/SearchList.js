@@ -10,7 +10,8 @@ import {
   useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../../providers/ModalProvider';
-import { Box, H3, ResourceCard } from '../../ui-kit';
+import { Box, ResourceCard } from '../../ui-kit';
+import Styled from './Search.styles';
 
 function SearchList(props = {}) {
   const [state, dispatch] = useModal();
@@ -39,23 +40,28 @@ function SearchList(props = {}) {
     }
   };
 
-  console.log('props.data', props.data);
-
-  return props.data?.edges ? (
+  return (
     <Box mb="l">
-      <H3 mb="xs">Content</H3>
-      <Box as="ul">
-        {props.data?.edges?.map((item, index) => (
-          <ResourceCard
-            key={index}
-            leadingAsset={item?.coverImage}
-            title={item?.title}
-            onClick={() => handleActionPress(item)}
-          />
-        ))}
-      </Box>
+      {props?.data?.edges?.length > 0 ? (
+        <>
+          <Styled.Title mb="xs">Content</Styled.Title>
+          <Box as="ul">
+            {props.data?.edges?.map((item, index) => (
+              <ResourceCard
+                key={index}
+                leadingAsset={item?.coverImage}
+                title={item?.title}
+                onClick={() => handleActionPress(item)}
+                background="none"
+              />
+            ))}
+          </Box>
+        </>
+      ) : (
+        <p>{emptyStateCopy}</p>
+      )}
     </Box>
-  ) : null;
+  );
 }
 
 SearchList.propTypes = {
