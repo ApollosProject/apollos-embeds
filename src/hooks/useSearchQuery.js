@@ -31,8 +31,11 @@ export const SEARCH = gql`
 
 function useSearchQuery(options = {}) {
   const [search, query] = useLazyQuery(SEARCH, {
+    fetchPolicy: 'cache-and-network',
+    errorPolicy: 'all',
     ...options,
   });
+
   return [
     search,
     {
