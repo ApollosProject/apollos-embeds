@@ -2,6 +2,7 @@ import useAuthQuery from './useAuthQuery';
 import useCompleteRegister from './useCompleteRegister';
 import useContentFeed from './useContentFeed';
 import useContentItem from './useContentItem';
+import useCurrentChurch from './useCurrentChurch';
 import useCurrentUser from './useCurrentUser';
 import useFeatureFeed from './useFeatureFeed';
 import useForm from './useForm';
@@ -21,6 +22,7 @@ export {
   useCompleteRegister,
   useContentFeed,
   useContentItem,
+  useCurrentChurch,
   useCurrentUser,
   useFeatureFeed,
   useForm,
