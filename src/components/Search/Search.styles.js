@@ -2,7 +2,8 @@ import { withTheme } from 'styled-components';
 import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
-import { TypeStyles } from '../../ui-kit/Typography';
+import { H4, TypeStyles } from '../../ui-kit/Typography';
+import { utils } from '../../ui-kit';
 import { system } from '../../ui-kit/_lib/system';
 
 const showDropdown = ({ dropdown }) => {
@@ -107,14 +108,20 @@ const X = withTheme(styled.div`
   ${system}
 `);
 
+const Title = withTheme(styled(H4)`
+  font-size: ${utils.rem('16px')};
+  color: ${themeGet('colors.text.secondary')};
+`);
+
 const Styled = {
-  Wrapper,
-  Profile,
-  Interface,
-  SearchIcon,
-  InterfaceWrapper,
   Input,
+  Interface,
+  InterfaceWrapper,
+  Profile,
+  SearchIcon,
   TextPrompt,
+  Title,
+  Wrapper,
   X,
 };
 

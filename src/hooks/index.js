@@ -9,6 +9,7 @@ import useInteractWithNode from './useInteractWithNode';
 import useLivestreamStatus from './useLivestreamStatus';
 import useRequestLogin from './useRequestLogin';
 import useRequestRegister from './useRequestRegister';
+import useSearchQuery from './useSearchQuery';
 import useTabFeed from './useTabFeed';
 import useUpdateProfileFields from './useUpdateProfileFields';
 import useValidateLogin from './useValidateLogin';
@@ -27,6 +28,7 @@ export {
   useLivestreamStatus,
   useRequestLogin,
   useRequestRegister,
+  useSearchQuery,
   useTabFeed,
   useUpdateProfileFields,
   useValidateLogin,
