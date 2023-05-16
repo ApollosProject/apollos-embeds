@@ -46,8 +46,16 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
       <Styled.Profile>
         <Card
           p="xs"
-          borderRadius="xxl"
-          width="520px"
+          borderRadius={{
+            _: '0%',
+            sm: 'xxl',
+          }}
+          width={{
+            _: '100%',
+            sm: '350px',
+            md: '520px',
+          }}
+          height="100%"
           border="1px solid rgba(0, 0, 0, 0.1)"
         >
           <Box display="flex" alignItems="center" justifyContent="end">

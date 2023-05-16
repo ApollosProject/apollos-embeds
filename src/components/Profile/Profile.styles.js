@@ -11,6 +11,14 @@ const Profile = withTheme(styled.div`
   z-index: 9999;
   transition: opacity 0.3s ease;
   position: absolute;
+
+  @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    right: 0;
+    left: 0;
+  }
   ${system};
 `);
 
