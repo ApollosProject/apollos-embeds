@@ -4,6 +4,7 @@ import { withTheme } from 'styled-components';
 import { AuthManager } from '../../components';
 import ProfileDetails from './ProfileDetails';
 import { Link } from 'react-router-dom';
+import Color from 'color';
 
 import {
   Button,
@@ -85,7 +86,11 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
 
             {!state.token ? (
               <Button
-                backgroundColor="rgba(23, 181, 130, 0.15)"
+                backgroundColor={Color(
+                  themeGet('colors.text.action')({ theme })
+                )
+                  .fade(0.85)
+                  .toString()}
                 borderRadius="100px"
                 title="Sign up or Login"
                 size="small"
