@@ -133,8 +133,8 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
           ) : null}
           {/* Mobile App Ad */}
           {!showDetails &&
-          (currentChurch.mobileAppStoreUrl ||
-            currentChurch.mobilePlayStoreUrl) ? (
+          (currentChurch?.mobileAppStoreUrl ||
+            currentChurch?.mobilePlayStoreUrl) ? (
             <>
               <Box
                 alignItems="center"
@@ -160,8 +160,8 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                 </BodyText>
               </Box>
               <Box display="flex" justifyContent="center">
-                {currentChurch.mobileAppStoreUrl ? (
-                  <Link to={currentChurch.mobileAppStoreUrl}>
+                {currentChurch?.mobileAppStoreUrl ? (
+                  <Link to={currentChurch?.mobileAppStoreUrl}>
                     <Button
                       variant="secondary"
                       title="Get it on iOS"
@@ -173,8 +173,8 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     />
                   </Link>
                 ) : null}
-                {currentChurch.mobilePlayStoreUrl ? (
-                  <Link to={currentChurch.mobilePlayStoreUrl}>
+                {currentChurch?.mobilePlayStoreUrl ? (
+                  <Link to={currentChurch?.mobilePlayStoreUrl}>
                     <Button
                       variant="secondary"
                       title="Get it on Android"
