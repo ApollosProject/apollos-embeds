@@ -39,7 +39,7 @@ function FeatureFeedListGrid(props = {}) {
   };
 
   return (
-    <Box pb="l" {...props}>
+    <Box pb="l">
       <Box
         display="grid"
         gridGap="20px"
