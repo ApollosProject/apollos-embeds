@@ -20,7 +20,7 @@ function useCurrentChurch(options = {}) {
   });
 
   return {
-    currentChurch: query.data.currentChurch,
+    currentChurch: query?.data?.currentChurch,
     ...query,
   };
 }
