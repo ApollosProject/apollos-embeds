@@ -3,6 +3,7 @@ import { systemPropTypes, utils } from '../../ui-kit';
 import { withTheme } from 'styled-components';
 import { AuthManager } from '../../components';
 import ProfileDetails from './ProfileDetails';
+import { Link } from 'react-router-dom';
 
 import {
   Button,
@@ -25,12 +26,13 @@ import {
 } from 'phosphor-react';
 import Styled from './Profile.styles';
 
-import { useCurrentUser } from '../../hooks';
+import { useCurrentUser, useCurrentChurch } from '../../hooks';
 import themeGet from '@styled-system/theme-get';
 import { logout, useAuth } from '../../providers/AuthProvider';
 
 const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const { currentUser } = useCurrentUser();
+  const { currentChurch } = useCurrentChurch();
 
   const [state, dispatch] = useAuth();
   const [showAuth, setShowAuth] = useState(false);
@@ -130,7 +132,9 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             <ProfileDetails setShowDetails={setShowDetails} />
           ) : null}
           {/* Mobile App Ad */}
-          {!showDetails ? (
+          {!showDetails &&
+          (currentChurch?.mobileAppStoreUrl ||
+            currentChurch?.mobilePlayStoreUrl) ? (
             <>
               <Box
                 alignItems="center"
@@ -156,25 +160,32 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                 </BodyText>
               </Box>
               <Box display="flex" justifyContent="center">
-                <Button
-                  variant="secondary"
-                  title="Get it on iOS"
-                  size="small"
-                  onClick={() => {}}
-                  color="text.action"
-                  borderRadius="100px"
-                  icon={<AppleLogo weight="fill" size="24" />}
-                  mr="s"
-                />
-                <Button
-                  variant="secondary"
-                  title="Get it on Android"
-                  size="small"
-                  onClick={() => {}}
-                  color="text.action"
-                  borderRadius="100px"
-                  icon={<AndroidLogo weight="fill" size="24" />}
-                />
+                {currentChurch?.mobileAppStoreUrl ? (
+                  <Link to={currentChurch?.mobileAppStoreUrl}>
+                    <Button
+                      variant="secondary"
+                      title="Get it on iOS"
+                      size="small"
+                      color="text.action"
+                      borderRadius="100px"
+                      icon={<AppleLogo weight="fill" size="24" />}
+                      mr="s"
+                    />
+                  </Link>
+                ) : null}
+                {currentChurch?.mobilePlayStoreUrl ? (
+                  <Link to={currentChurch?.mobilePlayStoreUrl}>
+                    <Button
+                      variant="secondary"
+                      title="Get it on Android"
+                      size="small"
+                      type="button"
+                      color="text.action"
+                      borderRadius="100px"
+                      icon={<AndroidLogo weight="fill" size="24" />}
+                    />
+                  </Link>
+                ) : null}
               </Box>
             </>
           ) : null}
