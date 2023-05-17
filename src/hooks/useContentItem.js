@@ -86,6 +86,7 @@ export const GET_CONTENT_ITEM = gql`
                   title
                   summary
                   coverImage {
+                    name
                     sources {
                       uri
                     }
