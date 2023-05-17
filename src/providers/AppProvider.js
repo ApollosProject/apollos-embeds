@@ -14,9 +14,7 @@ function AppProvider(props = {}) {
       <AuthProvider>
         <BreadcrumbProvider>
           <ModalProvider modal={props.modal}>
-            <ThemeProvider customTheme={props.customTheme}>
-              {props.children}
-            </ThemeProvider>
+            <ThemeProvider>{props.children}</ThemeProvider>
           </ModalProvider>
         </BreadcrumbProvider>
       </AuthProvider>
