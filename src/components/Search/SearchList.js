@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
-
+import StyledList from './SearchList.styles';
 import {
   add as addBreadcrumb,
   useBreadcrumbDispatch,
@@ -12,7 +12,7 @@ import {
 import { set as setModal, useModal } from '../../providers/ModalProvider';
 import { Box, ResourceCard } from '../../ui-kit';
 import Styled from './Search.styles';
-
+import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-hooks-web';
 function SearchList(props = {}) {
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -24,42 +24,42 @@ function SearchList(props = {}) {
       : `There are no matches for "${props?.searchTerm}"`;
 
   const handleActionPress = (item) => {
-    if (searchParams.get('id') !== getURLFromType(item.node)) {
+    if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
-          url: `?id=${getURLFromType(item.node)}`,
-          title: item.node?.title,
+          url: `?id=${getURLFromType(item)}`,
+          title: item?.title,
         })
       );
-      setSearchParams(`?id=${getURLFromType(item.node)}`);
+      setSearchParams(`?id=${getURLFromType(item)}`);
       props.setShowDropdown(false);
     }
     if (state.modal) {
-      const url = getURLFromType(item.node);
+      const url = getURLFromType(item);
       dispatch(setModal(url));
     }
   };
 
+  function Hit({ hit }) {
+    return (
+      <ResourceCard
+        leadingAsset={hit?.coverImage}
+        title={hit?.title}
+        onClick={() => handleActionPress(hit)}
+        background="none"
+      />
+    );
+  }
+
   return (
     <Box mb="l">
-      {props?.data?.edges?.length > 0 ? (
-        <>
-          <Styled.Title mb="xs">Content</Styled.Title>
-          <Box as="ul">
-            {props.data?.edges?.map((item, index) => (
-              <ResourceCard
-                key={index}
-                leadingAsset={item?.coverImage}
-                title={item?.title}
-                onClick={() => handleActionPress(item)}
-                background="none"
-              />
-            ))}
-          </Box>
-        </>
-      ) : (
-        <p>{emptyStateCopy}</p>
-      )}
+      <>
+        <Styled.Title mb="xs">Content</Styled.Title>
+        <StyledList.List>
+          <Hits hitComponent={Hit} />
+        </StyledList.List>
+      </>
+      <p>{emptyStateCopy}</p>
     </Box>
   );
 }
