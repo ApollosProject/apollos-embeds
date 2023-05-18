@@ -5,6 +5,7 @@ import { AuthManager } from '../../components';
 import ProfileDetails from './ProfileDetails';
 import { Link } from 'react-router-dom';
 import Color from 'color';
+import ImageUploader from './ImageUploader';
 
 import {
   Button,
@@ -38,11 +39,24 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const [state, dispatch] = useAuth();
   const [showAuth, setShowAuth] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
+  const [imgSrc, setImgSrc] = useState('');
+  const [crop, setCrop] = useState();
 
   const handleLogout = () => {
     setShowAuth(false);
     dispatch(logout());
   };
+
+  function onSelectFile(e) {
+    if (e.target.files && e.target.files.length > 0) {
+      setCrop(undefined); // Makes crop preview update between images.
+      const reader = new FileReader();
+      reader.addEventListener('load', () =>
+        setImgSrc(reader.result?.toString() || '')
+      );
+      reader.readAsDataURL(e.target.files[0]);
+    }
+  }
 
   return (
     <>
@@ -73,6 +87,16 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             flexDirection="column"
             mb="base"
           >
+            {currentUser && (
+              <div className="Crop-Controls">
+                {!imgSrc && (
+                  <input type="file" accept="image/*" onChange={onSelectFile} />
+                )}
+              </div>
+            )}
+            {imgSrc && (
+              <ImageUploader crop={crop} setCrop={setCrop} imgSrc={imgSrc} />
+            )}
             {currentUser?.profile?.photo?.uri ? (
               <Avatar src={currentUser?.profile?.photo?.uri} alt="avatar" />
             ) : (
