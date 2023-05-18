@@ -19,6 +19,7 @@ export const FEED_FEATURES = gql`
               title
               summary
               coverImage {
+                name
                 sources {
                   uri
                 }
@@ -48,6 +49,7 @@ export const FEED_FEATURES = gql`
               title
               summary
               coverImage {
+                name
                 sources {
                   uri
                 }
