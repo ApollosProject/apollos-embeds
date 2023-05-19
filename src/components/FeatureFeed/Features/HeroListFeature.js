@@ -22,10 +22,18 @@ import {
   Search,
 } from '../../../ui-kit';
 
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch } from 'react-instantsearch-hooks-web';
+import Autocomplete from '../../Search/Autocomplete';
+
 function HeroListFeature(props = {}) {
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const searchClient = algoliasearch(
+    'Z0GWPR8XBE',
+    '251ec8d76f6c62ac793c1337b39bda58'
+  );
 
   // Event Handlers
   const handleWatchNowPress = () => {
@@ -60,6 +68,17 @@ function HeroListFeature(props = {}) {
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
+      {/* <InstantSearch
+        searchClient={searchClient}
+        indexName="ContentItem_chase_oaks"
+      >
+        <Autocomplete
+          placeholder="Search products"
+          detachedMediaQuery="none"
+          openOnFocus
+          searchClient={searchClient}
+        />
+      </InstantSearch> */}
 
       {/* <Modal /> */}
       <Box

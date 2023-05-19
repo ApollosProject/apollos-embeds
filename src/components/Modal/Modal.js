@@ -13,7 +13,15 @@ import {
 } from '../../providers/ModalProvider';
 import { X } from 'phosphor-react';
 
+import algoliasearch from 'algoliasearch/lite';
+import { InstantSearch } from 'react-instantsearch-hooks-web';
+import Autocomplete from '../Search/Autocomplete';
+
 const Modal = (props = {}) => {
+  const searchClient = algoliasearch(
+    'Z0GWPR8XBE',
+    '251ec8d76f6c62ac793c1337b39bda58'
+  );
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -57,7 +65,13 @@ const Modal = (props = {}) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <Search width="100%" />
+                <InstantSearch
+                  searchClient={searchClient}
+                  indexName="ContentItem_chase_oaks"
+                >
+                  {/* <Hits hitComponent={Hit} /> */}
+                  <Search width="100%" />
+                </InstantSearch>
               </Box>
               <Box
                 width={{ _: '100%', sm: '10%' }}
