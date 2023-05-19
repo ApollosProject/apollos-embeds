@@ -9,6 +9,10 @@ import { useCurrentUser, useSearchQuery } from '../../hooks';
 import Profile from '../Profile';
 import Dropdown from './Dropdown';
 
+import { useSearchBox, useConnector } from 'react-instantsearch-hooks-web';
+import Autocomplete from './Autocomplete';
+import algoliasearch from 'algoliasearch/lite';
+
 const MOBILE_BREAKPOINT = 428;
 const PAGE_SIZE = 21;
 
@@ -22,6 +26,7 @@ const Search = (props = {}) => {
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
+  const { refine, query, clear } = useSearchBox();
 
   const [search, { loading, contentItems, fetchMore }] = useSearchQuery({
     notifyOnNetworkStatusChange: true,
@@ -102,11 +107,13 @@ const Search = (props = {}) => {
       }
     } else {
       setInputValue('');
+      clear();
     }
   };
 
   const handleInputChange = (event) => {
     const value = event.target.value;
+    refine(event.currentTarget.value);
     setInputValue(value);
     const dropdown = document.querySelector('#dropdown');
 
@@ -131,6 +138,11 @@ const Search = (props = {}) => {
     setShowProfile(!showProfile);
   };
 
+  const searchClient = algoliasearch(
+    'Z0GWPR8XBE',
+    '251ec8d76f6c62ac793c1337b39bda58'
+  );
+
   return (
     <Box
       position="relative"
@@ -140,6 +152,11 @@ const Search = (props = {}) => {
       id="search"
       {...props}
     >
+      <Autocomplete
+        placeholder="Search products"
+        detachedMediaQuery="none"
+        searchClient={searchClient}
+      />
       <Styled.Wrapper dropdown={showDropdown}>
         <Styled.Interface onClick={handleClick}>
           <Styled.InterfaceWrapper>
@@ -153,12 +170,12 @@ const Search = (props = {}) => {
               </Styled.SearchIcon>
             </Box>
             <Box width="100%" height="58px" position="relative">
-              <Styled.Input
-                onFocus={handleInputFocus}
-                onChange={handleInputChange}
+              {/* <Styled.Input
                 value={inputValue}
+                onChange={handleInputChange}
+                onFocus={handleInputFocus}
                 ref={inputRef}
-              />
+              /> */}
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
@@ -194,8 +211,15 @@ const Search = (props = {}) => {
           )}
         </Box>
       </Styled.Wrapper>
+      <Dropdown
+        loading={loading}
+        fetchMore={fetchMore}
+        contentItems={contentItems}
+        searchQuery={inputValue}
+        setShowDropdown={setShowDropdown}
+      />
 
-      {showDropdown ? (
+      {/* {showDropdown ? (
         <Dropdown
           loading={loading}
           fetchMore={fetchMore}
@@ -203,7 +227,9 @@ const Search = (props = {}) => {
           searchQuery={inputValue}
           setShowDropdown={setShowDropdown}
         />
-      ) : null}
+      ) : (
+        <div id="panel" style={{ display: 'none' }}></div>
+      )} */}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
