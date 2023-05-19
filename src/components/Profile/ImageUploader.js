@@ -3,10 +3,10 @@ import React, { useState, useRef } from 'react';
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { canvasPreview } from './canvasPreview';
 import { useDebounceEffect } from './useDebounceEffect';
-import { Button, Box, H4 } from '../../ui-kit';
+import { Button, Box } from '../../ui-kit';
 import { useUploadProfileImage } from '../../hooks';
-import 'react-image-crop/dist/ReactCrop.css';
 
+import Styled from './Profile.styles';
 // This is to demonstate how to make and center a % aspect crop
 // which is a bit trickier so we use some helper functions.
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
@@ -26,6 +26,7 @@ function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
 }
 
 export default function ImageUploader(props) {
+  const [status, setStatus] = useState('IDLE');
   const previewCanvasRef = useRef(null);
   const imgRef = useRef(null);
   const blobUrlRef = useRef('');
@@ -53,6 +54,7 @@ export default function ImageUploader(props) {
       }
 
       try {
+        setStatus('LOADING');
         const size = Math.round(blob.size / 1024); // Size in KB
         const { data } = await uploadProfileImage({
           variables: {
@@ -63,7 +65,7 @@ export default function ImageUploader(props) {
 
         // Access the uploaded photo URI from the response data
         const photoURI = data.uploadProfileImage.photo.uri;
-
+        props.handleCloseImageUploader();
         console.log('Uploaded photo URI:', photoURI);
       } catch (error) {
         console.error('Failed to upload profile image:', error);
@@ -91,11 +93,13 @@ export default function ImageUploader(props) {
     [completedCrop]
   );
 
+  const isLoading = status === 'LOADING';
+
   return (
     <div className="ImageUploader">
-      {!!props.imgSrc && (
-        <>
-          <H4>Crop your new profile picture</H4>
+      {!!props.imgSrc ? (
+        <Box mb="base">
+          <Styled.Title mb="xs">Crop your new profile picture</Styled.Title>
           <ReactCrop
             crop={props.crop}
             onChange={(_, percentCrop) => props.setCrop(percentCrop)}
@@ -109,9 +113,9 @@ export default function ImageUploader(props) {
               onLoad={onImageLoad}
             />
           </ReactCrop>
-        </>
-      )}
-      {!!completedCrop && (
+        </Box>
+      ) : null}
+      {!!completedCrop ? (
         <>
           <Box display="none">
             <canvas
@@ -128,11 +132,11 @@ export default function ImageUploader(props) {
             <Button
               size="small"
               onClick={onSetCropClick}
-              title="Set New Profile Image"
+              title={isLoading ? 'Saving...' : 'Set New Profile Image'}
             />
           </Box>
         </>
-      )}
+      ) : null}
     </div>
   );
 }

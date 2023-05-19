@@ -25,6 +25,7 @@ import {
   User,
   ArrowSquareOut,
   X,
+  Camera,
 } from 'phosphor-react';
 import Styled from './Profile.styles';
 
@@ -41,6 +42,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const [showDetails, setShowDetails] = useState(false);
   const [imgSrc, setImgSrc] = useState('');
   const [crop, setCrop] = useState();
+  const [showImageUploader, setShowImageUploader] = useState(false);
 
   const handleLogout = () => {
     setShowAuth(false);
@@ -50,6 +52,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   function onSelectFile(e) {
     if (e.target.files && e.target.files.length > 0) {
       setCrop(undefined); // Makes crop preview update between images.
+      setShowImageUploader(true);
       const reader = new FileReader();
       reader.addEventListener('load', () =>
         setImgSrc(reader.result?.toString() || '')
@@ -57,6 +60,12 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
       reader.readAsDataURL(e.target.files[0]);
     }
   }
+
+  const handleCloseImageUploader = () => {
+    setShowImageUploader(false);
+    setCrop(undefined);
+    setImgSrc('');
+  };
 
   return (
     <>
@@ -87,46 +96,68 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             flexDirection="column"
             mb="base"
           >
-            {currentUser && (
-              <div className="Crop-Controls">
-                {!imgSrc && (
-                  <input type="file" accept="image/*" onChange={onSelectFile} />
-                )}
-              </div>
-            )}
-            {imgSrc && (
-              <ImageUploader crop={crop} setCrop={setCrop} imgSrc={imgSrc} />
-            )}
-            {currentUser?.profile?.photo?.uri ? (
-              <Avatar src={currentUser?.profile?.photo?.uri} alt="avatar" />
-            ) : (
-              <Box color="text.action">
-                <UserCirclePlus size={84} weight="fill" />
-              </Box>
-            )}
-            {currentUser?.profile.firstName ? (
-              <H4 mt="xxs">Hey {currentUser?.profile?.firstName}</H4>
-            ) : null}
-
-            {!state.token ? (
-              <Button
-                backgroundColor={Color(
-                  themeGet('colors.text.action')({ theme })
-                )
-                  .fade(0.85)
-                  .toString()}
-                borderRadius="100px"
-                title="Sign up or Login"
-                size="small"
-                onClick={() => setShowAuth(true)}
-                variant="secondary"
-                color="text.action"
-                icon={<ArrowRight size={24} />}
+            {imgSrc && showImageUploader ? (
+              <ImageUploader
+                crop={crop}
+                setCrop={setCrop}
+                imgSrc={imgSrc}
+                handleCloseImageUploader={handleCloseImageUploader}
               />
+            ) : null}
+            {!imgSrc ? (
+              <>
+                <Box position="relative">
+                  {currentUser?.profile?.photo?.uri ? (
+                    <Avatar
+                      src={currentUser?.profile?.photo?.uri}
+                      alt="avatar"
+                      width="72px"
+                    />
+                  ) : (
+                    <Box color="text.action">
+                      <UserCirclePlus size={84} weight="fill" />
+                    </Box>
+                  )}
+                  {currentUser && (
+                    <Box>
+                      {!imgSrc && (
+                        <Styled.UploadIcon>
+                          <Camera size={12} weight="fill" />
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={onSelectFile}
+                          />
+                        </Styled.UploadIcon>
+                      )}
+                    </Box>
+                  )}
+                </Box>
+                {currentUser?.profile.firstName ? (
+                  <H4 mt="xxs">Hey {currentUser?.profile?.firstName}</H4>
+                ) : null}
+
+                {!state.token && !imgSrc ? (
+                  <Button
+                    backgroundColor={Color(
+                      themeGet('colors.text.action')({ theme })
+                    )
+                      .fade(0.85)
+                      .toString()}
+                    borderRadius="100px"
+                    title="Sign up or Login"
+                    size="small"
+                    onClick={() => setShowAuth(true)}
+                    variant="secondary"
+                    color="text.action"
+                    icon={<ArrowRight size={24} />}
+                  />
+                ) : null}
+              </>
             ) : null}
           </Box>
           {/* Profile Actions */}
-          {state.token && !showDetails ? (
+          {state.token && !showDetails && !imgSrc ? (
             <>
               <Styled.Title mb="xs">My Profile</Styled.Title>
               <Box>
