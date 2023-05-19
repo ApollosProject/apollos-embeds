@@ -7,8 +7,7 @@ import { Button, Box } from '../../ui-kit';
 import { useUploadProfileImage } from '../../hooks';
 
 import Styled from './Profile.styles';
-// This is to demonstate how to make and center a % aspect crop
-// which is a bit trickier so we use some helper functions.
+
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   return centerCrop(
     makeAspectCrop(
@@ -85,7 +84,6 @@ export default function ImageUploader(props) {
         imgRef.current &&
         previewCanvasRef.current
       ) {
-        // We use canvasPreview as it's much faster than imgPreview.
         canvasPreview(imgRef.current, previewCanvasRef.current, completedCrop);
       }
     },
