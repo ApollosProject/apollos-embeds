@@ -3,14 +3,15 @@ import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 import { H4, utils } from '../../ui-kit';
 import { system } from '../../ui-kit/_lib/system';
+import Color from 'color';
 
 const Profile = withTheme(styled.div`
+  align-items: center;
   display: flex;
   justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  transition: opacity 0.3s ease;
   position: absolute;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
 
   @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
     position: fixed;
@@ -23,19 +24,18 @@ const Profile = withTheme(styled.div`
 `);
 
 const Title = withTheme(styled(H4)`
-  font-size: ${utils.rem('16px')};
   color: ${themeGet('colors.text.secondary')};
+  font-size: ${utils.rem('16px')};
 `);
 
 const CloseIcon = withTheme(styled.div`
+  align-items: center;
+  background: rgba(242, 242, 247, 0.8);
+  border-radius: 50%;
   display: flex;
   justify-content: center;
-  align-items: center;
   line-height: 0;
-  background-color: #ffffff;
-  border-radius: 50%;
   padding: 9px;
-  background: rgba(242, 242, 247, 0.8);
   transition: 0.2s;
 
   &:hover {
@@ -45,10 +45,36 @@ const CloseIcon = withTheme(styled.div`
   ${system};
 `);
 
+const UploadIcon = withTheme(styled.div`
+  align-items: center;
+  background: ${themeGet('colors.text.action')};
+  border-radius: 50%;
+  bottom: 0;
+  color: ${themeGet('colors.base.white')};
+  display: flex;
+  justify-content: center;
+  line-height: 0;
+  padding: 6px;
+  position: absolute;
+  right: 0;
+  transition: 0.2s;
+
+  &:hover {
+    background: ${({ theme }) => Color(theme.colors.text.action).darken(0.1)};
+    cursor: pointer;
+  }
+
+  input[type='file'] {
+    display: none;
+  }
+  ${system};
+`);
+
 const Styled = {
   Profile,
   Title,
   CloseIcon,
+  UploadIcon,
 };
 
 export default Styled;
