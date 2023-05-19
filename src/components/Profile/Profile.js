@@ -188,11 +188,12 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               </Box>
             </>
           ) : null}
-          {showDetails ? (
+          {showDetails && !imgSrc ? (
             <ProfileDetails setShowDetails={setShowDetails} />
           ) : null}
           {/* Mobile App Ad */}
           {!showDetails &&
+          !imgSrc &&
           (currentChurch?.mobileAppStoreUrl ||
             currentChurch?.mobilePlayStoreUrl) ? (
             <>
