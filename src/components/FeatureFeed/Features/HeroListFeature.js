@@ -68,7 +68,7 @@ function HeroListFeature(props = {}) {
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
-      {/* <InstantSearch
+      <InstantSearch
         searchClient={searchClient}
         indexName="ContentItem_chase_oaks"
       >
@@ -78,7 +78,7 @@ function HeroListFeature(props = {}) {
           openOnFocus
           searchClient={searchClient}
         />
-      </InstantSearch> */}
+      </InstantSearch>
 
       {/* <Modal /> */}
       <Box
