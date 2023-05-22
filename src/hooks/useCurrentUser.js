@@ -6,14 +6,6 @@ export const GET_CURRENT_USER = gql`
   query {
     currentUser {
       id
-
-      # // NOTE: Need a graceful way to control whether the rock
-      # // authToken is included in the query
-
-      # rock {
-      #   authToken
-      # }
-
       profile {
         id
         email
