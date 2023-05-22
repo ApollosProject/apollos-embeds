@@ -5,7 +5,6 @@ import { SearchProvider } from '../../providers';
 
 import Styled from './Dropdown.styles';
 import SearchList from './SearchList';
-import { InstantSearch, SearchBox, Hits } from 'react-instantsearch-hooks-web';
 
 const Dropdown = ({
   theme,
@@ -19,7 +18,6 @@ const Dropdown = ({
   return (
     <Styled.Wrapper>
       <Styled.Dropdown id="dropdown">
-        <div id="panel"></div>
         <SearchList />
       </Styled.Dropdown>
     </Styled.Wrapper>

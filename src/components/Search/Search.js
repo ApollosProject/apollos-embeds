@@ -152,11 +152,6 @@ const Search = (props = {}) => {
       id="search"
       {...props}
     >
-      <Autocomplete
-        placeholder="Search products"
-        detachedMediaQuery="none"
-        searchClient={searchClient}
-      />
       <Styled.Wrapper dropdown={showDropdown}>
         <Styled.Interface onClick={handleClick}>
           <Styled.InterfaceWrapper>
@@ -170,11 +165,17 @@ const Search = (props = {}) => {
               </Styled.SearchIcon>
             </Box>
             <Box width="100%" height="58px" position="relative">
-              {/* <Styled.Input
+              <Styled.Input
                 value={inputValue}
                 onChange={handleInputChange}
                 onFocus={handleInputFocus}
                 ref={inputRef}
+              />
+              {/* <Autocomplete
+                placeholder="Search products"
+                detachedMediaQuery="none"
+                searchClient={searchClient}
+                onStateChange={handleInputChange}
               /> */}
               {showTextPrompt ? textPrompt : null}
             </Box>
@@ -211,15 +212,7 @@ const Search = (props = {}) => {
           )}
         </Box>
       </Styled.Wrapper>
-      <Dropdown
-        loading={loading}
-        fetchMore={fetchMore}
-        contentItems={contentItems}
-        searchQuery={inputValue}
-        setShowDropdown={setShowDropdown}
-      />
-
-      {/* {showDropdown ? (
+      {showDropdown ? (
         <Dropdown
           loading={loading}
           fetchMore={fetchMore}
@@ -229,7 +222,7 @@ const Search = (props = {}) => {
         />
       ) : (
         <div id="panel" style={{ display: 'none' }}></div>
-      )} */}
+      )}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
