@@ -61,32 +61,8 @@ export default function ImageUploader(props) {
             file: blob,
             size: size,
           },
-          update: async (
-            cache,
-            {
-              data: {
-                uploadProfileImage: { photo },
-              },
-            }
-          ) => {
-            const data = await cache.readQuery({ query: GET_CURRENT_USER });
-
-            cache.writeQuery({
-              query: GET_CURRENT_USER,
-              data: {
-                currentUser: {
-                  ...data.currentUser,
-                  profile: {
-                    ...data.currentUser.profile,
-                    firstName: 'test',
-                    photo,
-                  },
-                },
-              },
-            });
-          },
         });
-
+        console.log('asdf', data);
         // Access the uploaded photo URI from the response data
         const photoURI = data.uploadProfileImage.photo.uri;
         props.handleCloseImageUploader();
