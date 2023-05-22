@@ -62,7 +62,6 @@ export default function ImageUploader(props) {
             size: size,
           },
         });
-        console.log('asdf', data);
         // Access the uploaded photo URI from the response data
         const photoURI = data.uploadProfileImage.photo.uri;
         props.handleCloseImageUploader();
