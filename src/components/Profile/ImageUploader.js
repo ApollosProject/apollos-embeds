@@ -5,6 +5,7 @@ import { canvasPreview } from './canvasPreview';
 import { useDebounceEffect } from './useDebounceEffect';
 import { Button, Box } from '../../ui-kit';
 import { useUploadProfileImage } from '../../hooks';
+import { GET_CURRENT_USER } from '../../hooks/useCurrentUser';
 
 import Styled from './Profile.styles';
 
@@ -59,6 +60,30 @@ export default function ImageUploader(props) {
           variables: {
             file: blob,
             size: size,
+          },
+          update: async (
+            cache,
+            {
+              data: {
+                uploadProfileImage: { photo },
+              },
+            }
+          ) => {
+            const data = await cache.readQuery({ query: GET_CURRENT_USER });
+
+            cache.writeQuery({
+              query: GET_CURRENT_USER,
+              data: {
+                currentUser: {
+                  ...data.currentUser,
+                  profile: {
+                    ...data.currentUser.profile,
+                    firstName: 'test',
+                    photo,
+                  },
+                },
+              },
+            });
           },
         });
 
