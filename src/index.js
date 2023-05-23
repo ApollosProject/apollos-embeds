@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import './index.css';
+import 'react-image-crop/dist/ReactCrop.css';
 import 'react-multi-carousel/lib/styles.css';
 import App from './App';
 

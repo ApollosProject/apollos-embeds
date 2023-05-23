@@ -13,6 +13,7 @@ import useRequestRegister from './useRequestRegister';
 import useSearchQuery from './useSearchQuery';
 import useTabFeed from './useTabFeed';
 import useUpdateProfileFields from './useUpdateProfileFields';
+import useUploadProfileImage from './useUploadProfileImage';
 import useValidateLogin from './useValidateLogin';
 import useValidateRegister from './useValidateRegister';
 import useVideoMediaProgress from './useVideoMediaProgress';
@@ -33,6 +34,7 @@ export {
   useSearchQuery,
   useTabFeed,
   useUpdateProfileFields,
+  useUploadProfileImage,
   useValidateLogin,
   useValidateRegister,
   useVideoMediaProgress,
