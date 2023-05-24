@@ -9,15 +9,24 @@ import { useCurrentUser, useSearchQuery } from '../../hooks';
 import Profile from '../Profile';
 import Dropdown from './Dropdown';
 
+import Autocomplete from '../Search/Autocomplete';
+import { InstantSearch } from 'react-instantsearch-hooks-web';
+import algoliasearch from 'algoliasearch/lite';
+
 const MOBILE_BREAKPOINT = 428;
 const PAGE_SIZE = 21;
+
+const searchClient = algoliasearch(
+  process.env.REACT_APP_ALGOLIA_APP_ID,
+  process.env.REACT_APP_ALGOLIA_API_KEY
+);
 
 const Search = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef(null);
+  const [autocompleteState, setAutocompleteState] = React.useState({});
   const { currentUser } = useCurrentUser();
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
@@ -66,7 +75,7 @@ const Search = (props = {}) => {
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (showDropdown && !event.target.closest('#search')) {
+      if (autocompleteState.isOpen && !event.target.closest('#search')) {
         if (!isMobile) {
           setShowDropdown(false);
         }
@@ -81,18 +90,13 @@ const Search = (props = {}) => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [showDropdown, inputValue, isMobile]);
+  }, [autocompleteState.isOpen, inputValue, isMobile]);
 
-  const handleClick = () => {
-    if (!showDropdown) {
-      inputRef.current.focus();
+  useEffect(() => {
+    if (autocompleteState.isOpen) {
+      setShowTextPrompt(false);
     }
-  };
-
-  const handleInputFocus = () => {
-    setShowDropdown(true);
-    setShowTextPrompt(false);
-  };
+  }, [autocompleteState.isOpen]);
 
   const handleX = () => {
     if (isMobile) {
@@ -140,8 +144,8 @@ const Search = (props = {}) => {
       id="search"
       {...props}
     >
-      <Styled.Wrapper dropdown={showDropdown}>
-        <Styled.Interface onClick={handleClick}>
+      <Styled.Wrapper dropdown={autocompleteState.isOpen}>
+        <Styled.Interface>
           <Styled.InterfaceWrapper>
             <Box padding="12px">
               <Styled.SearchIcon>
@@ -152,17 +156,21 @@ const Search = (props = {}) => {
                 />
               </Styled.SearchIcon>
             </Box>
-            <Box width="100%" height="58px" position="relative">
-              <Styled.Input
-                onFocus={handleInputFocus}
-                onChange={handleInputChange}
-                value={inputValue}
-                ref={inputRef}
-              />
+            <Box width="100%">
+              <InstantSearch
+                searchClient={searchClient}
+                indexName="ContentItem_chase_oaks"
+              >
+                <Autocomplete
+                  autocompleteState={autocompleteState}
+                  setAutocompleteState={setAutocompleteState}
+                  searchClient={searchClient}
+                />
+              </InstantSearch>
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
-          {showDropdown ? (
+          {autocompleteState.isOpen ? (
             <Styled.X>
               <X size={18} weight="fill" onClick={handleX} />
             </Styled.X>
@@ -195,15 +203,6 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showDropdown ? (
-        <Dropdown
-          loading={loading}
-          fetchMore={fetchMore}
-          contentItems={contentItems}
-          searchQuery={inputValue}
-          setShowDropdown={setShowDropdown}
-        />
-      ) : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );

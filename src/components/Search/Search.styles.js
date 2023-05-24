@@ -38,6 +38,22 @@ const Wrapper = withTheme(styled.div`
   ${showDropdown}
 
   ${system}
+
+  // Algolia autocomplete styles
+  
+  .aa-Panel {
+    width: 100%;
+    left: 0;
+    background: ${themeGet('colors.base.white')};
+    box-shadow: ${themeGet('shadows.medium')};
+  }
+
+  .aa-Form:focus-within {
+    box-shadow: none;
+  }
+  .aa-Form {
+    border: none;
+  }
 `);
 
 const TextPrompt = withTheme(styled.div`
