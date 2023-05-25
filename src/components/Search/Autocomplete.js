@@ -98,14 +98,6 @@ function PastQueryItem({ item, autocomplete, recentSearchesPlugin }) {
         <div className="aa-ItemContentBody">
           <div className="aa-ItemContentTitle">
             <Highlight hit={item} attribute="label" />
-            {item.category && (
-              <span className="aa-ItemContentSubtitle aa-ItemContentSubtitle--inline">
-                <span className="aa-ItemContentSubtitleIcon" /> in{' '}
-                <span className="aa-ItemContentSubtitleCategory">
-                  {item.category}
-                </span>
-              </span>
-            )}
           </div>
         </div>
       </div>
@@ -164,56 +156,52 @@ export default function Autocomplete({
     setQuery(instantSearchUiState.query);
   }, [instantSearchUiState]);
 
-  const plugins = useMemo(() => {
-    const recentSearches = createLocalStorageRecentSearchesPlugin({
-      key: 'instantsearch',
-      limit: 2,
-      transformSource({ source }) {
-        return {
-          ...source,
-          onSelect({ item }) {
-            setInstantSearchUiState({ query: item.label });
-          },
-        };
-      },
-    });
+  const recentSearches = createLocalStorageRecentSearchesPlugin({
+    key: 'instantsearch',
+    limit: 2,
+    transformSource({ source }) {
+      return {
+        ...source,
+        onSelect({ item }) {
+          setInstantSearchUiState({ query: item.label });
+        },
+      };
+    },
+  });
 
-    // This query can probably be removed since InstantSearch does this same things + more
-    const querySuggestions = createQuerySuggestionsPlugin({
-      searchClient,
-      indexName: 'ContentItem_chase_oaks',
-      getSearchParams() {
-        return recentSearches.data.getAlgoliaSearchParams({
-          hitsPerPage: 3,
-        });
-      },
-      transformSource({ source }) {
-        return {
-          ...source,
-          sourceId: 'querySuggestionsPlugin',
-          onSelect({ item }) {
-            setInstantSearchUiState({ query: item.query });
-          },
-          getItems(params) {
-            if (!params.state.query) {
-              return [];
-            }
+  // This query can probably be removed since InstantSearch does this same things + more
+  const querySuggestions = createQuerySuggestionsPlugin({
+    searchClient,
+    indexName: 'ContentItem_chase_oaks',
+    getSearchParams() {
+      return recentSearches.data.getAlgoliaSearchParams({
+        hitsPerPage: 3,
+      });
+    },
+    transformSource({ source }) {
+      return {
+        ...source,
+        sourceId: 'querySuggestionsPlugin',
+        onSelect({ item }) {
+          setInstantSearchUiState({ query: item.query });
+        },
+        getItems(params) {
+          if (!params.state.query) {
+            return [];
+          }
 
-            return source.getItems(params);
-          },
-        };
-      },
-    });
-
-    return [recentSearches, querySuggestions];
-  }, []);
+          return source.getItems(params);
+        },
+      };
+    },
+  });
 
   const autocomplete = React.useMemo(
     () =>
       createAutocomplete({
         panelContainer: '#panel',
         openOnFocus: true,
-        plugins,
+        plugins: [recentSearches, querySuggestions],
         onReset() {
           setInstantSearchUiState({ query: '' });
         },
@@ -326,7 +314,7 @@ export default function Autocomplete({
                             <PastQueryItem
                               item={item}
                               autocomplete={autocomplete}
-                              recentSearchesPlugin={plugins.recentSearches}
+                              recentSearchesPlugin={recentSearches}
                               {...autocomplete.getItemProps({
                                 item,
                                 source,
@@ -366,7 +354,9 @@ export default function Autocomplete({
                   )}
                 </div>
               ) : (
-                <span>****Insert Features here****</span>
+                <span key={`source-${index}`}>
+                  ****Insert Features here****
+                </span>
               );
             })}
         </div>
