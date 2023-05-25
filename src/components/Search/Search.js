@@ -74,25 +74,6 @@ const Search = (props = {}) => {
   }, []);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (autocompleteState.isOpen && !event.target.closest('#search')) {
-        if (!isMobile) {
-          setShowDropdown(false);
-        }
-        if (inputValue.trim() === '') {
-          setShowTextPrompt(true);
-        }
-      }
-    }
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [autocompleteState.isOpen, inputValue, isMobile]);
-
-  useEffect(() => {
     if (autocompleteState.isOpen) {
       setShowTextPrompt(false);
     }
@@ -165,6 +146,7 @@ const Search = (props = {}) => {
                   autocompleteState={autocompleteState}
                   setAutocompleteState={setAutocompleteState}
                   searchClient={searchClient}
+                  setShowTextPrompt={setShowTextPrompt}
                 />
               </InstantSearch>
               {showTextPrompt ? textPrompt : null}

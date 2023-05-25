@@ -137,6 +137,7 @@ export default function Autocomplete({
   autocompleteState,
   setAutocompleteState,
   searchClient,
+  setShowTextPrompt,
 }) {
   const inputRef = React.useRef(null);
 
@@ -218,6 +219,9 @@ export default function Autocomplete({
           return [
             {
               sourceId: 'products',
+              getItemInputValue({ item }) {
+                return item.query;
+              },
               getItems({ query }) {
                 return getAlgoliaResults({
                   searchClient,
@@ -248,6 +252,8 @@ export default function Autocomplete({
     function handleClickOutside(event) {
       if (autocompleteState.isOpen && !event.target.closest('#search')) {
         autocomplete.setIsOpen(false);
+        autocomplete.setQuery('');
+        setShowTextPrompt(true);
       }
     }
 
@@ -256,7 +262,7 @@ export default function Autocomplete({
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [autocompleteState.isOpen, autocomplete]);
+  }, [autocompleteState.isOpen, autocomplete, setShowTextPrompt]);
 
   return (
     <>
