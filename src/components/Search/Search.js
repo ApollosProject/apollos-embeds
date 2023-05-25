@@ -1,25 +1,17 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
-import { useCurrentUser, useSearchQuery } from '../../hooks';
+import { useCurrentUser } from '../../hooks';
 import Profile from '../Profile';
-import Dropdown from './Dropdown';
 
 import Autocomplete from '../Search/Autocomplete';
-import { InstantSearch } from 'react-instantsearch-hooks-web';
-import algoliasearch from 'algoliasearch/lite';
 
 const MOBILE_BREAKPOINT = 428;
 const PAGE_SIZE = 21;
-
-const searchClient = algoliasearch(
-  process.env.REACT_APP_ALGOLIA_APP_ID,
-  process.env.REACT_APP_ALGOLIA_API_KEY
-);
 
 const Search = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
@@ -31,10 +23,6 @@ const Search = (props = {}) => {
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
-
-  const [search, { loading, contentItems, fetchMore }] = useSearchQuery({
-    notifyOnNetworkStatusChange: true,
-  });
 
   const textWelcome =
     firstName === '' ? (
@@ -99,12 +87,6 @@ const Search = (props = {}) => {
       // Input is empty, do something
     } else {
       // Input is not empty, do something else
-      search({
-        variables: {
-          query: inputValue,
-          first: PAGE_SIZE,
-        },
-      });
     }
     if (isMobile && dropdown) {
       dropdown.scrollTop = 0;
@@ -138,17 +120,11 @@ const Search = (props = {}) => {
               </Styled.SearchIcon>
             </Box>
             <Box width="100%">
-              <InstantSearch
-                searchClient={searchClient}
-                indexName="ContentItem_chase_oaks"
-              >
-                <Autocomplete
-                  autocompleteState={autocompleteState}
-                  setAutocompleteState={setAutocompleteState}
-                  searchClient={searchClient}
-                  setShowTextPrompt={setShowTextPrompt}
-                />
-              </InstantSearch>
+              <Autocomplete
+                autocompleteState={autocompleteState}
+                setAutocompleteState={setAutocompleteState}
+                setShowTextPrompt={setShowTextPrompt}
+              />
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>

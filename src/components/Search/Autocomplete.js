@@ -6,7 +6,6 @@ import React, {
   createElement,
   Fragment,
 } from 'react';
-import { useSearchBox } from 'react-instantsearch-hooks';
 import algoliasearch from 'algoliasearch/lite';
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import {
@@ -18,10 +17,14 @@ import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
 
-import { ResourceCard } from '../../ui-kit';
+// import Link from 'next/link';
 import '@algolia/autocomplete-theme-classic';
 
-// import { useSearchParams } from 'react-router-dom';
+import { ResourceCard } from '../../ui-kit';
+
+const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
+const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
+const searchClient = algoliasearch(appId, apiKey);
 
 function Hit({ hit }) {
   return hit?.title;
@@ -43,6 +46,17 @@ function Highlight({ hit, attribute, tagName = 'mark' }) {
     )
   );
 }
+
+// Query Suggesion Index Definition
+const querySuggestionsPlugin = createQuerySuggestionsPlugin({
+  searchClient,
+  indexName: 'ContentItem_chase_oaks',
+});
+
+// Recent Searches Index Definition
+const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+  key: 'navbar',
+});
 
 // Query Suggestion Item Render
 function QuerySuggestionItem({ item, autocomplete }) {
@@ -79,7 +93,7 @@ function QuerySuggestionItem({ item, autocomplete }) {
 }
 
 // Recent Search Item Render
-function PastQueryItem({ item, autocomplete, recentSearchesPlugin }) {
+function PastQueryItem({ item, autocomplete }) {
   function onRemove(id) {
     recentSearchesPlugin.data.removeItem(id);
     autocomplete.refresh();
@@ -136,117 +150,64 @@ function PastQueryItem({ item, autocomplete, recentSearchesPlugin }) {
 export default function Autocomplete({
   autocompleteState,
   setAutocompleteState,
-  searchClient,
   setShowTextPrompt,
 }) {
   const inputRef = React.useRef(null);
 
-  useEffect(() => {
-    if (!inputRef.current) {
-      return undefined;
-    }
-  }, [inputRef]);
-
-  const { query, refine: setQuery } = useSearchBox();
-
-  const [instantSearchUiState, setInstantSearchUiState] = useState({
-    query,
-  });
-
-  useEffect(() => {
-    setQuery(instantSearchUiState.query);
-  }, [instantSearchUiState]);
-
-  const recentSearches = createLocalStorageRecentSearchesPlugin({
-    key: 'instantsearch',
-    limit: 2,
-    transformSource({ source }) {
-      return {
-        ...source,
-        onSelect({ item }) {
-          setInstantSearchUiState({ query: item.label });
-        },
-      };
-    },
-  });
-
-  // This query can probably be removed since InstantSearch does this same things + more
-  const querySuggestions = createQuerySuggestionsPlugin({
-    searchClient,
-    indexName: 'ContentItem_chase_oaks',
-    getSearchParams() {
-      return recentSearches.data.getAlgoliaSearchParams({
-        hitsPerPage: 3,
-      });
-    },
-    transformSource({ source }) {
-      return {
-        ...source,
-        sourceId: 'querySuggestionsPlugin',
-        onSelect({ item }) {
-          setInstantSearchUiState({ query: item.query });
-        },
-        getItems(params) {
-          if (!params.state.query) {
-            return [];
-          }
-
-          return source.getItems(params);
-        },
-      };
-    },
-  });
-
-  const autocomplete = React.useMemo(
-    () =>
-      createAutocomplete({
-        panelContainer: '#panel',
-        openOnFocus: true,
-        plugins: [recentSearches, querySuggestions],
-        onReset() {
-          setInstantSearchUiState({ query: '' });
-        },
-        onSubmit({ state }) {
-          setInstantSearchUiState({ query: state.query });
-        },
-        onStateChange({ prevState, state }) {
-          if (prevState.query !== state.query) {
-            setInstantSearchUiState({ query: state.query });
-          }
-          setAutocompleteState(state);
-        },
-        getSources() {
-          return [
-            {
-              sourceId: 'products',
-              getItemInputValue({ item }) {
-                return item.query;
-              },
-              getItems({ query }) {
-                return getAlgoliaResults({
-                  searchClient,
-                  queries: [
-                    {
-                      indexName: 'ContentItem_chase_oaks',
-                      query,
-                      params: {
-                        hitsPerPage: 5,
-                        highlightPreTag: '<mark>',
-                        highlightPostTag: '</mark>',
-                      },
-                    },
-                  ],
-                });
-              },
-              getItemUrl({ item }) {
-                return item.url;
-              },
+  const autocomplete = React.useMemo(() => {
+    return createAutocomplete({
+      openOnFocus: true,
+      plugins: [querySuggestionsPlugin, recentSearchesPlugin],
+      onStateChange({ state }) {
+        // (2) Synchronize the Autocomplete state with the React state.
+        setAutocompleteState(state);
+      },
+      getSources() {
+        return [
+          // (3) Use an Algolia index source.
+          {
+            sourceId: 'products',
+            getItemInputValue({ item }) {
+              return item.query;
             },
-          ];
-        },
-      }),
-    []
-  );
+            getItems({ query }) {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: 'ContentItem_chase_oaks',
+                    query,
+                    params: {
+                      hitsPerPage: 4,
+                      clickAnalytics: true,
+                      // highlightPreTag: '<mark>',
+                      // highlightPostTag: '</mark>',
+                    },
+                  },
+                ],
+              });
+            },
+            getItemUrl({ item }) {
+              return `/?query=${item.name}`;
+            },
+          },
+        ];
+      },
+    });
+  }, []);
+
+  const autoCompleteLabel = 'autocomplete-1-label';
+  const autoCompleteId = 'autocomplete-1-input';
+
+  // Makes SSR consistent on aria aspects
+  const containerProps = autocomplete.getRootProps({});
+  const inputProps = autocomplete.getInputProps({});
+  const panelProps = autocomplete.getPanelProps({});
+
+  inputProps.id = autoCompleteId;
+  containerProps['aria-labelledby'] = autoCompleteLabel;
+  inputProps['aria-labelledby'] = autoCompleteLabel;
+  panelProps['aria-labelledby'] = autoCompleteLabel;
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -264,109 +225,98 @@ export default function Autocomplete({
     };
   }, [autocompleteState.isOpen, autocomplete, setShowTextPrompt]);
 
+  // ...CUSTOM RENDERER
   return (
-    <>
-      <div className="aa-Autocomplete" {...autocomplete.getRootProps({})}>
-        <form
-          className="aa-Form"
-          {...autocomplete.getFormProps({ inputElement: inputRef.current })}
-        >
-          <div className="aa-InputWrapper">
-            <input
-              className="aa-Input"
-              ref={inputRef}
-              {...autocomplete.getInputProps({})}
-            />
-          </div>
-        </form>
-        <div className="aa-Panel" {...autocomplete.getPanelProps({})}>
-          {autocompleteState.isOpen &&
-            autocompleteState.collections.map((collection, index) => {
-              const { source, items } = collection;
-
-              // Rendering of Query Suggestions
-              if (
-                ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(
-                  collection.source.sourceId
-                )
-              ) {
-                return (
-                  <div key={`source-${index}`} className="aa-Source">
-                    <ul className="aa-List" {...autocomplete.getListProps()}>
-                      {items.map((item, index) => (
-                        <li
-                          key={`${item.objectID ? item.objectID : index}-${
-                            collection.source.sourceId
-                          }`}
-                          className="aa-Item"
-                          {...autocomplete.getItemProps({
-                            item,
-                            source,
-                          })}
-                        >
-                          {collection.source.sourceId ===
-                            'querySuggestionsPlugin' && (
-                            <QuerySuggestionItem
-                              item={item}
-                              autocomplete={autocomplete}
-                              {...autocomplete.getItemProps({
-                                item,
-                                source,
-                              })}
-                            />
-                          )}
-                          {collection.source.sourceId ===
-                            'recentSearchesPlugin' && (
-                            <PastQueryItem
-                              item={item}
-                              autocomplete={autocomplete}
-                              recentSearchesPlugin={recentSearches}
-                              {...autocomplete.getItemProps({
-                                item,
-                                source,
-                              })}
-                            />
-                          )}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                );
-              }
-              //For recent search will be the first array in autocomplete state
-              return instantSearchUiState.query !== '' ? (
+    <div className="aa-Autocomplete" {...containerProps}>
+      <form
+        className="aa-Form"
+        {...autocomplete.getFormProps({ inputElement: inputRef.current })}
+      >
+        <input ref={inputRef} className="aa-Input" {...inputProps} />
+      </form>
+      <div className="aa-Panel" {...autocomplete.getPanelProps({})}>
+        {autocompleteState.isOpen &&
+          autocompleteState.collections.map((collection, index) => {
+            const { source, items } = collection;
+            // Rendering of Query Suggestions
+            if (
+              ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(
+                collection.source.sourceId
+              )
+            ) {
+              return (
                 <div key={`source-${index}`} className="aa-Source">
-                  <span>Content</span>
-                  {items.length > 0 && (
-                    <ul className="aa-List" {...autocomplete.getListProps()}>
-                      {items.map((item) => (
-                        <li
-                          key={item.objectID}
-                          className="aa-Item"
-                          {...autocomplete.getItemProps({
-                            item,
-                            source,
-                          })}
-                        >
-                          <ResourceCard
-                            leadingAsset={item?.coverImage}
-                            title={item?.title}
-                            // onClick={() => handleActionPress(hit)}
-                            background="none"
+                  <ul className="aa-List" {...autocomplete.getListProps()}>
+                    {items.map((item, index) => (
+                      <li
+                        key={`${item.objectID ? item.objectID : index}-${
+                          collection.source.sourceId
+                        }`}
+                        className="aa-Item"
+                        {...autocomplete.getItemProps({
+                          item,
+                          source,
+                        })}
+                      >
+                        {collection.source.sourceId ===
+                          'querySuggestionsPlugin' && (
+                          <QuerySuggestionItem
+                            item={item}
+                            autocomplete={autocomplete}
+                            {...autocomplete.getItemProps({
+                              item,
+                              source,
+                            })}
                           />
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                        )}
+                        {collection.source.sourceId ===
+                          'recentSearchesPlugin' && (
+                          <PastQueryItem
+                            item={item}
+                            autocomplete={autocomplete}
+                            {...autocomplete.getItemProps({
+                              item,
+                              source,
+                            })}
+                          />
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ) : (
-                <span key={`source-${index}`}>
-                  ****Insert Features here****
-                </span>
               );
-            })}
-        </div>
+            }
+            // Rendering of regular items
+            return autocompleteState.query !== '' ? (
+              <div key={`source-${index}`} className="aa-Source">
+                <span>Content</span>
+                {items.length > 0 && (
+                  <ul className="aa-List" {...autocomplete.getListProps()}>
+                    {items.map((item) => (
+                      <li
+                        key={item.objectID}
+                        className="aa-Item"
+                        {...autocomplete.getItemProps({
+                          item,
+                          source,
+                        })}
+                      >
+                        <ResourceCard
+                          leadingAsset={item?.coverImage}
+                          title={item?.title}
+                          // onClick={() => handleActionPress(hit)}
+                          background="none"
+                        />
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ) : (
+              <span key={`source-${index}`}>****Insert Features here****</span>
+            );
+          })}
       </div>
-    </>
+    </div>
   );
 }
