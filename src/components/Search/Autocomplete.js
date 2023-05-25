@@ -7,6 +7,8 @@ import React, {
   Fragment,
 } from 'react';
 import algoliasearch from 'algoliasearch/lite';
+
+import { getURLFromType } from '../../utils';
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import {
   getAlgoliaResults,
@@ -16,8 +18,8 @@ import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query
 // import { createAlgoliaInsightsPlugin } from '@algolia/autocomplete-plugin-algolia-insights';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
+import { useNavigate } from 'react-router-dom';
 
-// import Link from 'next/link';
 import '@algolia/autocomplete-theme-classic';
 
 import { ResourceCard } from '../../ui-kit';
@@ -152,7 +154,17 @@ export default function Autocomplete({
   setAutocompleteState,
   setShowTextPrompt,
 }) {
+  const navigate = useNavigate();
+
   const inputRef = React.useRef(null);
+
+  const handleActionPress = (item) => {
+    console.log('askld;fhjaskl;djfhalk;js', item);
+    navigate({
+      pathname: '/',
+      search: `?id=${getURLFromType(item)}`,
+    });
+  };
 
   const autocomplete = React.useMemo(() => {
     return createAutocomplete({
@@ -304,7 +316,7 @@ export default function Autocomplete({
                         <ResourceCard
                           leadingAsset={item?.coverImage}
                           title={item?.title}
-                          // onClick={() => handleActionPress(hit)}
+                          onClick={() => handleActionPress(item)}
                           background="none"
                         />
                       </li>
