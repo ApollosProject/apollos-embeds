@@ -147,7 +147,6 @@ export default function Autocomplete({
   searchClient,
 }) {
   const inputRef = React.useRef(null);
-  console.log('autocompleteState', autocompleteState);
 
   useEffect(() => {
     if (!inputRef.current) {
@@ -287,12 +286,10 @@ export default function Autocomplete({
           </div>
         </form>
         <div className="aa-Panel" {...autocomplete.getPanelProps({})}>
-          {autocompleteState.isOpen && (
-            <span>****Insert Features here****</span>
-          )}
           {autocompleteState.isOpen &&
             autocompleteState.collections.map((collection, index) => {
               const { source, items } = collection;
+
               // Rendering of Query Suggestions
               if (
                 ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(
@@ -343,7 +340,7 @@ export default function Autocomplete({
                 );
               }
               //For recent search will be the first array in autocomplete state
-              return (
+              return instantSearchUiState.query !== '' ? (
                 <div key={`source-${index}`} className="aa-Source">
                   <span>Content</span>
                   {items.length > 0 && (
@@ -368,6 +365,8 @@ export default function Autocomplete({
                     </ul>
                   )}
                 </div>
+              ) : (
+                <span>****Insert Features here****</span>
               );
             })}
         </div>
