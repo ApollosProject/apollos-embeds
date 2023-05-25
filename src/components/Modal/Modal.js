@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
 import { Box } from '../../ui-kit';
-import { Search } from '../../components';
+import { Searchbar } from '../../components';
 import Breadcrumbs from '../Breadcrumbs';
 import { useSearchParams } from 'react-router-dom';
 import {
@@ -57,7 +57,7 @@ const Modal = (props = {}) => {
                 justifyContent="center"
                 alignItems="center"
               >
-                <Search width="100%" />
+                <Searchbar width="100%" />
               </Box>
               <Box
                 width={{ _: '100%', sm: '10%' }}

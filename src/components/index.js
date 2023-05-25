@@ -8,7 +8,7 @@ import LivestreamSingle from './LivestreamSingle';
 import Logo from './Logo';
 import Modal from './Modal';
 import Profile from './Profile';
-import Search from './Search';
+import Searchbar from './Searchbar';
 import VideoPlayer from './VideoPlayer';
 
 export {
@@ -22,6 +22,6 @@ export {
   Logo,
   Modal,
   Profile,
-  Search,
+  Searchbar,
   VideoPlayer,
 };

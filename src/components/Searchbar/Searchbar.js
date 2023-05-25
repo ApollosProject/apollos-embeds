@@ -8,12 +8,11 @@ import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
 import Profile from '../Profile';
 
-import Autocomplete from '../Search/Autocomplete';
+import Autocomplete from '../Searchbar/Autocomplete';
 
 const MOBILE_BREAKPOINT = 428;
-const PAGE_SIZE = 21;
 
-const Search = (props = {}) => {
+const Searchbar = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
@@ -166,9 +165,9 @@ const Search = (props = {}) => {
   );
 };
 
-Search.propTypes = {
+Searchbar.propTypes = {
   ...systemPropTypes,
   dropdown: PropTypes.bool,
 };
 
-export default Search;
+export default Searchbar;
