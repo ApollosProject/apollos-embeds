@@ -61,7 +61,7 @@ const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
 });
 
 // Query Suggestion Item Render
-function QuerySuggestionItem({ item, autocomplete }) {
+function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
   return (
     <div className="aa-ItemWrapper">
       <div className="aa-ItemContent">
@@ -69,7 +69,10 @@ function QuerySuggestionItem({ item, autocomplete }) {
           <MagnifyingGlass size={32} />
         </div>
         <div className="aa-ItemContentBody">
-          <div className="aa-ItemContentTitle">
+          <div
+            className="aa-ItemContentTitle"
+            onClick={() => handleActionPress(item)}
+          >
             <Hit hit={item} />
           </div>
         </div>
@@ -159,7 +162,6 @@ export default function Autocomplete({
   const inputRef = React.useRef(null);
 
   const handleActionPress = (item) => {
-    console.log('askld;fhjaskl;djfhalk;js', item);
     navigate({
       pathname: '/',
       search: `?id=${getURLFromType(item)}`,
@@ -275,6 +277,7 @@ export default function Autocomplete({
                           <QuerySuggestionItem
                             item={item}
                             autocomplete={autocomplete}
+                            handleActionPress={handleActionPress}
                             {...autocomplete.getItemProps({
                               item,
                               source,
