@@ -6,9 +6,10 @@ import React, {
   createElement,
   Fragment,
 } from 'react';
-import algoliasearch from 'algoliasearch/lite';
+import { useNavigate } from 'react-router-dom';
+import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
 
-import { getURLFromType } from '../../utils';
+import algoliasearch from 'algoliasearch/lite';
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import {
   getAlgoliaResults,
@@ -17,12 +18,11 @@ import {
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 // import { createAlgoliaInsightsPlugin } from '@algolia/autocomplete-plugin-algolia-insights';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
-import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
-import { useNavigate } from 'react-router-dom';
-
 import '@algolia/autocomplete-theme-classic';
 
 import { ResourceCard } from '../../ui-kit';
+import { useSearchState } from '../../providers/SearchProvider';
+import { getURLFromType } from '../../utils';
 
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
 const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
@@ -48,12 +48,6 @@ function Highlight({ hit, attribute, tagName = 'mark' }) {
     )
   );
 }
-
-// Query Suggesion Index Definition
-const querySuggestionsPlugin = createQuerySuggestionsPlugin({
-  searchClient,
-  indexName: 'ContentItem_apollos_demo',
-});
 
 // Recent Searches Index Definition
 const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
@@ -158,7 +152,7 @@ export default function Autocomplete({
   setShowTextPrompt,
 }) {
   const navigate = useNavigate();
-
+  const searchState = useSearchState();
   const inputRef = React.useRef(null);
 
   const handleActionPress = (item) => {
@@ -167,6 +161,12 @@ export default function Autocomplete({
       search: `?id=${getURLFromType(item)}`,
     });
   };
+
+  // Query Suggesion Index Definition
+  const querySuggestionsPlugin = createQuerySuggestionsPlugin({
+    searchClient,
+    indexName: `ContentItem_${searchState.church}`,
+  });
 
   const autocomplete = React.useMemo(() => {
     return createAutocomplete({
@@ -189,7 +189,7 @@ export default function Autocomplete({
                 searchClient,
                 queries: [
                   {
-                    indexName: 'ContentItem_apollos_demo',
+                    indexName: `ContentItem_${searchState.church}`,
                     query,
                     params: {
                       hitsPerPage: 4,

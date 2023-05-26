@@ -7,16 +7,19 @@ import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import BreadcrumbProvider from './BreadcrumbProvider';
 import ModalProvider from './ModalProvider';
+import SearchProvider from './SearchProvider';
 
 function AppProvider(props = {}) {
   return (
     <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
-        <BreadcrumbProvider>
-          <ModalProvider modal={props.modal}>
-            <ThemeProvider>{props.children}</ThemeProvider>
-          </ModalProvider>
-        </BreadcrumbProvider>
+        <SearchProvider church={props.church}>
+          <BreadcrumbProvider>
+            <ModalProvider modal={props.modal}>
+              <ThemeProvider>{props.children}</ThemeProvider>
+            </ModalProvider>
+          </BreadcrumbProvider>
+        </SearchProvider>
       </AuthProvider>
     </ApolloProvider>
   );
