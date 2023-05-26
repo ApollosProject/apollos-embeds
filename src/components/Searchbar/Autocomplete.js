@@ -52,7 +52,7 @@ function Highlight({ hit, attribute, tagName = 'mark' }) {
 // Query Suggesion Index Definition
 const querySuggestionsPlugin = createQuerySuggestionsPlugin({
   searchClient,
-  indexName: 'ContentItem_chase_oaks',
+  indexName: 'ContentItem_apollos_demo',
 });
 
 // Recent Searches Index Definition
@@ -180,7 +180,33 @@ export default function Autocomplete({
         return [
           // (3) Use an Algolia index source.
           {
-            sourceId: 'products',
+            sourceId: 'content',
+            getItemInputValue({ item }) {
+              return item.query;
+            },
+            getItems({ query }) {
+              return getAlgoliaResults({
+                searchClient,
+                queries: [
+                  {
+                    indexName: 'ContentItem_apollos_demo',
+                    query,
+                    params: {
+                      hitsPerPage: 4,
+                      clickAnalytics: true,
+                      // highlightPreTag: '<mark>',
+                      // highlightPostTag: '</mark>',
+                    },
+                  },
+                ],
+              });
+            },
+            getItemUrl({ item }) {
+              return `/?query=${item.name}`;
+            },
+          },
+          {
+            sourceId: 'pages',
             getItemInputValue({ item }) {
               return item.query;
             },
@@ -304,7 +330,10 @@ export default function Autocomplete({
             // Rendering of regular items
             return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
-                <span>Content</span>
+                {collection.source.sourceId === 'content' && (
+                  <span>Content</span>
+                )}
+                {collection.source.sourceId === 'pages' && <span>Pages</span>}
                 {items.length > 0 && (
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item) => (
