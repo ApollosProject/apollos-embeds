@@ -211,6 +211,7 @@ export default function Autocomplete({
                     indexName: `WebPages_Global`,
                     query,
                     params: {
+                      facetFilters: [`church:${searchState.church}`],
                       hitsPerPage: 4,
                       clickAnalytics: true,
                       // highlightPreTag: '<mark>',
