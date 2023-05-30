@@ -1,31 +1,27 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
 import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
-import { useCurrentUser, useSearchQuery } from '../../hooks';
+import { useCurrentUser } from '../../hooks';
 import Profile from '../Profile';
-import Dropdown from './Dropdown';
+
+import Autocomplete from '../Searchbar/Autocomplete';
 
 const MOBILE_BREAKPOINT = 428;
-const PAGE_SIZE = 21;
 
-const Search = (props = {}) => {
+const Searchbar = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [inputValue, setInputValue] = useState('');
-  const inputRef = useRef(null);
+  const [autocompleteState, setAutocompleteState] = React.useState({});
   const { currentUser } = useCurrentUser();
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
-
-  const [search, { loading, contentItems, fetchMore }] = useSearchQuery({
-    notifyOnNetworkStatusChange: true,
-  });
 
   const textWelcome =
     firstName === '' ? (
@@ -65,34 +61,10 @@ const Search = (props = {}) => {
   }, []);
 
   useEffect(() => {
-    function handleClickOutside(event) {
-      if (showDropdown && !event.target.closest('#search')) {
-        if (!isMobile) {
-          setShowDropdown(false);
-        }
-        if (inputValue.trim() === '') {
-          setShowTextPrompt(true);
-        }
-      }
+    if (autocompleteState.isOpen) {
+      setShowTextPrompt(false);
     }
-
-    document.addEventListener('click', handleClickOutside);
-
-    return () => {
-      document.removeEventListener('click', handleClickOutside);
-    };
-  }, [showDropdown, inputValue, isMobile]);
-
-  const handleClick = () => {
-    if (!showDropdown) {
-      inputRef.current.focus();
-    }
-  };
-
-  const handleInputFocus = () => {
-    setShowDropdown(true);
-    setShowTextPrompt(false);
-  };
+  }, [autocompleteState.isOpen]);
 
   const handleX = () => {
     if (isMobile) {
@@ -114,12 +86,6 @@ const Search = (props = {}) => {
       // Input is empty, do something
     } else {
       // Input is not empty, do something else
-      search({
-        variables: {
-          query: inputValue,
-          first: PAGE_SIZE,
-        },
-      });
     }
     if (isMobile && dropdown) {
       dropdown.scrollTop = 0;
@@ -140,8 +106,8 @@ const Search = (props = {}) => {
       id="search"
       {...props}
     >
-      <Styled.Wrapper dropdown={showDropdown}>
-        <Styled.Interface onClick={handleClick}>
+      <Styled.Wrapper dropdown={autocompleteState.isOpen}>
+        <Styled.Interface>
           <Styled.InterfaceWrapper>
             <Box padding="12px">
               <Styled.SearchIcon>
@@ -152,17 +118,16 @@ const Search = (props = {}) => {
                 />
               </Styled.SearchIcon>
             </Box>
-            <Box width="100%" height="58px" position="relative">
-              <Styled.Input
-                onFocus={handleInputFocus}
-                onChange={handleInputChange}
-                value={inputValue}
-                ref={inputRef}
+            <Box width="100%">
+              <Autocomplete
+                autocompleteState={autocompleteState}
+                setAutocompleteState={setAutocompleteState}
+                setShowTextPrompt={setShowTextPrompt}
               />
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
-          {showDropdown ? (
+          {autocompleteState.isOpen ? (
             <Styled.X>
               <X size={18} weight="fill" onClick={handleX} />
             </Styled.X>
@@ -195,23 +160,14 @@ const Search = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showDropdown ? (
-        <Dropdown
-          loading={loading}
-          fetchMore={fetchMore}
-          contentItems={contentItems}
-          searchQuery={inputValue}
-          setShowDropdown={setShowDropdown}
-        />
-      ) : null}
       {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
     </Box>
   );
 };
 
-Search.propTypes = {
+Searchbar.propTypes = {
   ...systemPropTypes,
   dropdown: PropTypes.bool,
 };
 
-export default Search;
+export default Searchbar;

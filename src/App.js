@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import { FeatureFeed, Auth } from './embeds';
+import { FeatureFeed, Search } from './embeds';
 import { AppProvider } from './providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './error-page';
@@ -8,7 +8,7 @@ import ErrorPage from './error-page';
 // Maps a widget name to a Component to render it.
 const WidgetComponentMap = {
   FeatureFeed,
-  // Auth,
+  Search,
 };
 
 Sentry.init({
