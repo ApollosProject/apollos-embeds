@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-  createElement,
-  Fragment,
-} from 'react';
+import React, { useEffect, createElement, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
 
@@ -215,7 +208,7 @@ export default function Autocomplete({
                 searchClient,
                 queries: [
                   {
-                    indexName: 'ContentItem_chase_oaks',
+                    indexName: `WebPages_Global`,
                     query,
                     params: {
                       hitsPerPage: 4,
