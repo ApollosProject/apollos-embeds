@@ -327,6 +327,7 @@ export default function Autocomplete({
                 </div>
               );
             }
+
             // Rendering of regular items
             return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
@@ -356,10 +357,11 @@ export default function Autocomplete({
                   </ul>
                 )}
               </div>
-            ) : (
-              <span key={`source-${index}`}>****Insert Features here****</span>
-            );
+            ) : null;
           })}
+        {autocompleteState.isOpen && autocompleteState.query === '' ? (
+          <span>****Insert Features here****</span>
+        ) : null}
       </div>
     </div>
   );
