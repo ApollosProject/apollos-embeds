@@ -49,7 +49,7 @@ const Modal = (props = {}) => {
               <Box
                 width={{
                   _: '260px',
-                  sm: '350px',
+                  sm: '275px',
                   md: '520px',
                   lg: '700px',
                 }}
