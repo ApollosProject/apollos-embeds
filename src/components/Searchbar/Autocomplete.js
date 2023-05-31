@@ -1,6 +1,11 @@
 import React, { useEffect, createElement, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
+import {
+  ClockCounterClockwise,
+  MagnifyingGlass,
+  CaretDown,
+  X,
+} from 'phosphor-react';
 
 import algoliasearch from 'algoliasearch/lite';
 import { createAutocomplete } from '@algolia/autocomplete-core';
@@ -155,6 +160,26 @@ export default function Autocomplete({
     });
   };
 
+  const clearInput = () => {
+    const value = inputProps.value;
+    recentSearchesPlugin.data.addItem({
+      id: value,
+      label: value,
+      _highLightResult: { label: { value: value } },
+    });
+    autocomplete.setQuery('');
+    autocomplete.refresh();
+  };
+
+  const handlePanelDropdown = () => {
+    const updatedAutocompleteState = { ...autocompleteState };
+    updatedAutocompleteState.isOpen = !updatedAutocompleteState.isOpen;
+    setAutocompleteState(updatedAutocompleteState);
+
+    autocomplete.setIsOpen(!autocompleteState.isOpen);
+    inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
+  };
+
   // Query Suggesion Index Definition
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
@@ -242,7 +267,6 @@ export default function Autocomplete({
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
   panelProps['aria-labelledby'] = autoCompleteLabel;
-
   useEffect(() => {
     function handleClickOutside(event) {
       if (autocompleteState.isOpen && !event.target.closest('#search')) {
@@ -267,6 +291,14 @@ export default function Autocomplete({
         {...autocomplete.getFormProps({ inputElement: inputRef.current })}
       >
         <input ref={inputRef} className="aa-Input" {...inputProps} />
+        {inputProps.value.trim() !== '' ? (
+          <div className="aa-ClearButton" onClick={clearInput}>
+            <X size={18} weight="fill" />
+          </div>
+        ) : null}
+        <div onClick={handlePanelDropdown}>
+          <CaretDown size={14} weight="fill" color="#27272E54" />
+        </div>
       </form>
       <div className="aa-Panel" {...autocomplete.getPanelProps({})}>
         {autocompleteState.isOpen &&
