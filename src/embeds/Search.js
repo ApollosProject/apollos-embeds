@@ -2,13 +2,11 @@ import React from 'react';
 import { Searchbar } from '../components';
 
 import {
-  TabFeedProvider,
   ContentItemProvider,
   FeatureFeedProvider,
   ContentFeedProvider,
 } from '../providers';
 import {
-  Feed,
   ContentSingle,
   FeatureFeedList,
   ContentChannel,
@@ -18,12 +16,10 @@ import {
 } from '../components';
 import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
-import { useCurrentUser } from '../hooks';
-import { useSearchParams, useLocation } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
-  const { currentUser } = useCurrentUser();
   const _id = searchParams.get('id');
 
   const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
@@ -83,7 +79,6 @@ function RenderFeatures(props) {
 
 const Search = (props) => {
   const state = useModalState();
-  const { currentUser } = useCurrentUser();
 
   return (
     <Box>
