@@ -13,7 +13,7 @@ function AppProvider(props = {}) {
   return (
     <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
-        <SearchProvider church={props.church}>
+        <SearchProvider church={props.church} searchFeed={props.searchFeed}>
           <BreadcrumbProvider>
             <ModalProvider modal={props.modal}>
               <ThemeProvider>{props.children}</ThemeProvider>
