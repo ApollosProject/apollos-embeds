@@ -13,6 +13,8 @@ import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import '@algolia/autocomplete-theme-classic';
 
+import { FeatureFeedProvider } from '../../providers';
+import Feed from '../FeatureFeed';
 import { ResourceCard } from '../../ui-kit';
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
@@ -147,7 +149,6 @@ export default function Autocomplete({
   const navigate = useNavigate();
   const searchState = useSearchState();
   const inputRef = React.useRef(null);
-
   const handleActionPress = (item) => {
     navigate({
       pathname: '/',
@@ -354,7 +355,15 @@ export default function Autocomplete({
             ) : null;
           })}
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
-          <span>****Insert Features here****</span>
+          // searchState.searchFeed
+          <FeatureFeedProvider
+            Component={Feed}
+            options={{
+              variables: {
+                itemId: searchState.searchFeed,
+              },
+            }}
+          />
         ) : null}
       </div>
     </div>
