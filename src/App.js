@@ -24,7 +24,12 @@ function App(props) {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <WidgetComponent symbol={props.symbol} church={props.church} />,
+      element: (
+        <WidgetComponent
+          featureFeed={props.featureFeed}
+          church={props.church}
+        />
+      ),
       errorElement: <ErrorPage />,
     },
   ]);
@@ -32,7 +37,11 @@ function App(props) {
   // Widgets require a church slug to get the correct data
   if (WidgetComponent && props.church) {
     return (
-      <AppProvider church={props.church} modal={props.modal}>
+      <AppProvider
+        church={props.church}
+        modal={props.modal}
+        searchFeed={props.searchFeed}
+      >
         <RouterProvider router={router} />
       </AppProvider>
     );
