@@ -48,10 +48,9 @@ const Modal = (props = {}) => {
               <Box width={{ _: '0', sm: '10%' }}></Box>
               <Box
                 width={{
-                  _: '260px',
-                  sm: '275px',
-                  md: '520px',
-                  lg: '700px',
+                  _: '100%',
+                  md: '700px',
+                  lg: '900px',
                 }}
                 mx="auto"
                 justifyContent="center"

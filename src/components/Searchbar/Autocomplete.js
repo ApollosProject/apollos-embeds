@@ -324,7 +324,12 @@ export default function Autocomplete({
           <CaretDown size={14} weight="fill" color="#27272E54" />
         </div>
       </form>
-      <div className="aa-Panel" {...autocomplete.getPanelProps({})}>
+      <Box
+        id="panel"
+        className="aa-Panel"
+        dropdown={autocompleteState.isOpen}
+        {...autocomplete.getPanelProps({})}
+      >
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
@@ -421,7 +426,7 @@ export default function Autocomplete({
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
           <span>****Insert Features here****</span>
         ) : null}
-      </div>
+      </Box>
     </div>
   );
 }
