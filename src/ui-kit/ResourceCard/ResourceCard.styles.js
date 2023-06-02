@@ -47,7 +47,7 @@ const Wrapper = withTheme(styled.div`
 const Heading = withTheme(styled.div`
   display: flex;
   flex-direction: column;
-  width: calc(100% - 55px);
+  width: 100%;
   ${system};
 `);
 
@@ -57,7 +57,7 @@ const Title = withTheme(styled.div`
   font-size: 16px;
   line-height: 24px;
   color: #27272e;
-  max-width: 100%;
+  width: 100%;
   padding-right: 3%;
   ${system};
 `);
@@ -68,16 +68,15 @@ const Subtitle = withTheme(styled.div`
   font-size: 14px;
   line-height: 20px;
   color: rgba(39, 39, 46, 0.6);
-  max-width: 100%;
+  width: 100%;
   padding-right: 3%;
   ${system};
 `);
 
 const Ellipse = withTheme(styled.div`
   display: inline-block;
-  max-width: 100%;
-  white-space: nowrap;
   overflow: hidden;
+  white-space: nowrap;
   text-overflow: ellipsis;
   ${system};
 `);

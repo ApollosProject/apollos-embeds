@@ -26,6 +26,23 @@ const showDropdown = ({ dropdown }) => {
   }
 };
 
+const showPanel = ({ dropdown }) => {
+  if (dropdown) {
+    return css`
+      @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+        height: 100vh;
+      }
+      @media screen and (min-width: ${themeGet('breakpoints.sm')}) {
+        height: 600px;
+      }
+    `;
+  } else {
+    return css`
+      height: 0px;
+    `;
+  }
+};
+
 const Wrapper = withTheme(styled.div`
   align-items: center;
   background: ${themeGet('colors.base.white')};
@@ -46,6 +63,9 @@ const Wrapper = withTheme(styled.div`
     left: 0;
     background: ${themeGet('colors.base.white')};
     box-shadow: ${themeGet('shadows.medium')};
+    transition: 0s;
+    overflow: scroll;
+    ${showPanel}
   }
 
   .aa-Form:focus-within {
@@ -68,6 +88,14 @@ const TextPrompt = withTheme(styled.div`
   transform: translate(0, -50%);
   white-space: nowrap;
   width: 100%;
+
+  @media screen and (max-width: ${themeGet('breakpoints.md')}) {
+    max-width: 50%;
+  }
+
+  @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+    max-width: 47%;
+  }
 
   ${system}
 `);

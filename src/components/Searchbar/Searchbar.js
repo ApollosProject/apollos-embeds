@@ -14,10 +14,16 @@ const MOBILE_BREAKPOINT = 428;
 
 const Searchbar = (props = {}) => {
   const [showProfile, setShowProfile] = useState(false);
-  const [showDropdown, setShowDropdown] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
-  const [inputValue, setInputValue] = useState('');
-  const [autocompleteState, setAutocompleteState] = React.useState({});
+  const [autocompleteState, setAutocompleteState] = React.useState({
+    activeItemId: null,
+    collections: [],
+    completion: null,
+    context: {},
+    isOpen: false,
+    query: '',
+    status: 'idle',
+  });
   const { currentUser } = useCurrentUser();
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
@@ -66,32 +72,6 @@ const Searchbar = (props = {}) => {
     }
   }, [autocompleteState.isOpen]);
 
-  const handleX = () => {
-    if (isMobile) {
-      setShowDropdown(false);
-      if (inputValue.trim() === '') {
-        setShowTextPrompt(true);
-      }
-    } else {
-      setInputValue('');
-    }
-  };
-
-  const handleInputChange = (event) => {
-    const value = event.target.value;
-    setInputValue(value);
-    const dropdown = document.querySelector('#dropdown');
-
-    if (value.trim() === '') {
-      // Input is empty, do something
-    } else {
-      // Input is not empty, do something else
-    }
-    if (isMobile && dropdown) {
-      dropdown.scrollTop = 0;
-    }
-  };
-
   const handleProfile = () => {
     console.log('Opening Profile menu...');
     setShowProfile(!showProfile);
@@ -127,21 +107,8 @@ const Searchbar = (props = {}) => {
               {showTextPrompt ? textPrompt : null}
             </Box>
           </Styled.InterfaceWrapper>
-          {autocompleteState.isOpen ? (
-            <Styled.X>
-              <X size={18} weight="fill" onClick={handleX} />
-            </Styled.X>
-          ) : null}
-          <Box
-            px="xxs"
-            onClick={() => {
-              !isMobile && setShowDropdown(!showDropdown);
-            }}
-          >
-            <CaretDown size={14} weight="fill" color="#27272E54" />
-          </Box>
         </Styled.Interface>
-        <Box padding="12px 12px 12px 0;" onClick={handleProfile}>
+        <Box padding="12px" onClick={handleProfile}>
           {currentUser?.profile?.photo?.uri ? (
             <Avatar
               src={currentUser?.profile?.photo?.uri}

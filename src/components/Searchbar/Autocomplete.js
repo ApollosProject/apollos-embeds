@@ -1,6 +1,12 @@
 import React, { useEffect, createElement, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ClockCounterClockwise, MagnifyingGlass } from 'phosphor-react';
+import {
+  ClockCounterClockwise,
+  MagnifyingGlass,
+  CaretDown,
+  CaretRight,
+  X,
+} from 'phosphor-react';
 
 import algoliasearch from 'algoliasearch/lite';
 import { createAutocomplete } from '@algolia/autocomplete-core';
@@ -13,7 +19,7 @@ import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import '@algolia/autocomplete-theme-classic';
 
-import { ResourceCard } from '../../ui-kit';
+import { ResourceCard, Box } from '../../ui-kit';
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
 
@@ -50,10 +56,10 @@ const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
 // Query Suggestion Item Render
 function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
   return (
-    <div className="aa-ItemWrapper">
+    <Box className="aa-ItemWrapper" px="xs">
       <div className="aa-ItemContent">
         <div className="aa-ItemIcon aa-ItemIcon--noBorder">
-          <MagnifyingGlass size={32} />
+          <MagnifyingGlass size={24} weight="bold" />
         </div>
         <div className="aa-ItemContentBody">
           <div
@@ -75,12 +81,10 @@ function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
             autocomplete.refresh();
           }}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z" />
-          </svg>
+          <CaretRight size={24} weight="bold" />
         </button>
       </div>
-    </div>
+    </Box>
   );
 }
 
@@ -96,10 +100,10 @@ function PastQueryItem({ item, autocomplete }) {
     autocomplete.refresh();
   }
   return (
-    <div className="aa-ItemWrapper">
+    <Box className="aa-ItemWrapper" px="xs">
       <div className="aa-ItemContent">
         <div className="aa-ItemIcon aa-ItemIcon--noBorder">
-          <ClockCounterClockwise size={32} weight="fill" />
+          <ClockCounterClockwise size={24} weight="bold" />
         </div>
         <div className="aa-ItemContentBody">
           <div className="aa-ItemContentTitle">
@@ -130,12 +134,10 @@ function PastQueryItem({ item, autocomplete }) {
             onTapAhead(item);
           }}
         >
-          <svg viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 17v-7.586l8.293 8.293c0.391 0.391 1.024 0.391 1.414 0s0.391-1.024 0-1.414l-8.293-8.293h7.586c0.552 0 1-0.448 1-1s-0.448-1-1-1h-10c-0.552 0-1 0.448-1 1v10c0 0.552 0.448 1 1 1s1-0.448 1-1z" />
-          </svg>
+          <CaretRight size={24} weight="bold" />
         </button>
       </div>
-    </div>
+    </Box>
   );
 }
 
@@ -153,6 +155,26 @@ export default function Autocomplete({
       pathname: '/',
       search: `?id=${getURLFromType(item)}`,
     });
+  };
+
+  const clearInput = () => {
+    const value = inputProps.value;
+    recentSearchesPlugin.data.addItem({
+      id: value,
+      label: value,
+      _highLightResult: { label: { value: value } },
+    });
+    autocomplete.setQuery('');
+    autocomplete.refresh();
+  };
+
+  const handlePanelDropdown = () => {
+    const updatedAutocompleteState = { ...autocompleteState };
+    updatedAutocompleteState.isOpen = !updatedAutocompleteState.isOpen;
+    setAutocompleteState(updatedAutocompleteState);
+
+    autocomplete.setIsOpen(!autocompleteState.isOpen);
+    inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
   };
 
   // Query Suggesion Index Definition
@@ -237,6 +259,9 @@ export default function Autocomplete({
   const containerProps = autocomplete.getRootProps({});
   const inputProps = autocomplete.getInputProps({});
   const panelProps = autocomplete.getPanelProps({});
+  const formProps = autocomplete.getFormProps({
+    inputElement: inputRef.current,
+  });
 
   inputProps.id = autoCompleteId;
   containerProps['aria-labelledby'] = autoCompleteLabel;
@@ -262,13 +287,25 @@ export default function Autocomplete({
   // ...CUSTOM RENDERER
   return (
     <div className="aa-Autocomplete" {...containerProps}>
-      <form
-        className="aa-Form"
-        {...autocomplete.getFormProps({ inputElement: inputRef.current })}
-      >
+      <form className="aa-Form" {...formProps}>
         <input ref={inputRef} className="aa-Input" {...inputProps} />
+        {inputProps.value !== '' ? (
+          <div className="aa-ClearButton" onClick={clearInput}>
+            <X size={18} weight="fill" />
+          </div>
+        ) : null}
+        <div onClick={handlePanelDropdown}>
+          <Box color="base.gray">
+            <CaretDown size={14} weight="fill" />
+          </Box>
+        </div>
       </form>
-      <div className="aa-Panel" {...autocomplete.getPanelProps({})}>
+      <Box
+        id="panel"
+        className="aa-Panel"
+        dropdown={autocompleteState.isOpen}
+        {...autocomplete.getPanelProps({})}
+      >
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
@@ -326,13 +363,27 @@ export default function Autocomplete({
             return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
                 {collection.source.sourceId === 'content' && (
-                  <span>Content</span>
+                  <Box
+                    padding="xs"
+                    fontWeight="600"
+                    color="base.gray"
+                    id="results"
+                  >
+                    Content
+                  </Box>
                 )}
-                {collection.source.sourceId === 'pages' && <span>Pages</span>}
+                {collection.source.sourceId === 'pages' && (
+                  <Box padding="xs" fontWeight="600" color="base.gray">
+                    Pages
+                  </Box>
+                )}
                 {items.length > 0 && (
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item) => (
-                      <li
+                      <Box
+                        as="li"
+                        borderRadius="0"
+                        padding="0"
                         key={item.objectID}
                         className="aa-Item"
                         {...autocomplete.getItemProps({
@@ -346,7 +397,7 @@ export default function Autocomplete({
                           onClick={() => handleActionPress(item)}
                           background="none"
                         />
-                      </li>
+                      </Box>
                     ))}
                   </ul>
                 )}
@@ -356,7 +407,7 @@ export default function Autocomplete({
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
           <span>****Insert Features here****</span>
         ) : null}
-      </div>
+      </Box>
     </div>
   );
 }
