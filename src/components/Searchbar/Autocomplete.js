@@ -295,7 +295,9 @@ export default function Autocomplete({
           </div>
         ) : null}
         <div onClick={handlePanelDropdown}>
-          <CaretDown size={14} weight="fill" color="#27272E54" />
+          <Box color="base.gray">
+            <CaretDown size={14} weight="fill" />
+          </Box>
         </div>
       </form>
       <Box
@@ -364,14 +366,14 @@ export default function Autocomplete({
                   <Box
                     padding="xs"
                     fontWeight="600"
-                    color="#27272E99"
+                    color="base.gray"
                     id="results"
                   >
                     Content
                   </Box>
                 )}
                 {collection.source.sourceId === 'pages' && (
-                  <Box padding="xs" fontWeight="600" color="#27272E99">
+                  <Box padding="xs" fontWeight="600" color="base.gray">
                     Pages
                   </Box>
                 )}
