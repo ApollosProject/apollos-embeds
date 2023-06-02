@@ -86,10 +86,28 @@ function ResourceCard({
         {/* Title and Subtitle */}
         <Styled.Heading>
           <Styled.Title>
-            <Styled.Ellipse>{title}</Styled.Ellipse>
+            <Styled.Ellipse
+              width={{
+                _: '100px',
+                sm: '150px',
+                md: '350px',
+                lg: '500px',
+              }}
+            >
+              {title}
+            </Styled.Ellipse>
           </Styled.Title>
           <Styled.Subtitle>
-            <Styled.Ellipse>{subtitle}</Styled.Ellipse>
+            <Styled.Ellipse
+              width={{
+                _: '100px',
+                sm: '150px',
+                md: '350px',
+                lg: '500px',
+              }}
+            >
+              {subtitle}
+            </Styled.Ellipse>
           </Styled.Subtitle>
         </Styled.Heading>
 
