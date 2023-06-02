@@ -32,6 +32,9 @@ const showPanel = ({ dropdown }) => {
       @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
         height: 100vh;
       }
+      @media screen and (min-width: ${themeGet('breakpoints.sm')}) {
+        height: 600px;
+      }
     `;
   } else {
     return css`
