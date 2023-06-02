@@ -4,6 +4,7 @@ import {
   ClockCounterClockwise,
   MagnifyingGlass,
   CaretDown,
+  CaretRight,
   X,
 } from 'phosphor-react';
 
@@ -80,21 +81,7 @@ function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
             autocomplete.refresh();
           }}
         >
-          <svg
-            width="8"
-            height="17"
-            viewBox="0 0 10 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1.5L8.5 9L1 16.5"
-              stroke="#AFAFB3"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CaretRight size={24} weight="bold" />
         </button>
       </div>
     </Box>
@@ -147,21 +134,7 @@ function PastQueryItem({ item, autocomplete }) {
             onTapAhead(item);
           }}
         >
-          <svg
-            width="8"
-            height="17"
-            viewBox="0 0 10 18"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1 1.5L8.5 9L1 16.5"
-              stroke="#AFAFB3"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
+          <CaretRight size={24} weight="bold" />
         </button>
       </div>
     </Box>
@@ -286,11 +259,15 @@ export default function Autocomplete({
   const containerProps = autocomplete.getRootProps({});
   const inputProps = autocomplete.getInputProps({});
   const panelProps = autocomplete.getPanelProps({});
+  const formProps = autocomplete.getFormProps({
+    inputElement: inputRef.current,
+  });
 
   inputProps.id = autoCompleteId;
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
   panelProps['aria-labelledby'] = autoCompleteLabel;
+
   useEffect(() => {
     function handleClickOutside(event) {
       if (autocompleteState.isOpen && !event.target.closest('#search')) {
@@ -310,12 +287,9 @@ export default function Autocomplete({
   // ...CUSTOM RENDERER
   return (
     <div className="aa-Autocomplete" {...containerProps}>
-      <form
-        className="aa-Form"
-        {...autocomplete.getFormProps({ inputElement: inputRef.current })}
-      >
+      <form className="aa-Form" {...formProps}>
         <input ref={inputRef} className="aa-Input" {...inputProps} />
-        {inputProps.value.trim() !== '' ? (
+        {inputProps.value !== '' ? (
           <div className="aa-ClearButton" onClick={clearInput}>
             <X size={18} weight="fill" />
           </div>
@@ -387,7 +361,12 @@ export default function Autocomplete({
             return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
                 {collection.source.sourceId === 'content' && (
-                  <Box padding="xs" fontWeight="600" color="#27272E99">
+                  <Box
+                    padding="xs"
+                    fontWeight="600"
+                    color="#27272E99"
+                    id="results"
+                  >
                     Content
                   </Box>
                 )}
