@@ -7,6 +7,7 @@ const SearchDispatchContext = createContext();
 // Define the initial state of the search
 const initialState = {
   church: null,
+  searchFeed: null,
 };
 
 // Define the actionTypes that can be performed on the search state
@@ -33,6 +34,7 @@ function SearchProvider(props = {}) {
   const [state, dispatch] = useReducer(reducer, {
     ...initialState, // spread the original initialState object
     church: props.church, // add church to state
+    searchFeed: props.searchFeed, // add search feed id to state
   });
 
   return (
