@@ -379,7 +379,7 @@ export default function Autocomplete({
                     Pages
                   </Box>
                 )}
-                {items.length > 0 && (
+                {items.length > 0 ? (
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item) => (
                       <Box
@@ -402,6 +402,16 @@ export default function Autocomplete({
                       </Box>
                     ))}
                   </ul>
+                ) : (
+                  <Box
+                    padding="xs"
+                    fontWeight="500"
+                    color="base.gray"
+                    textAlign="center"
+                    fontStyle="italic"
+                  >
+                    No results found
+                  </Box>
                 )}
               </div>
             ) : null;
