@@ -25,6 +25,8 @@ import { ResourceCard, Box } from '../../ui-kit';
 
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
+import Styled from './Search.styles';
+
 const MOBILE_BREAKPOINT = 428;
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
 const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
@@ -316,13 +318,15 @@ export default function Autocomplete({
         <input ref={inputRef} className="aa-Input" {...inputProps} />
         {inputProps.value !== '' ? (
           <div className="aa-ClearButton" onClick={clearInput}>
-            <X size={18} weight="fill" />
+            <Styled.IconWrapper>
+              <X size={18} weight="fill" />
+            </Styled.IconWrapper>
           </div>
         ) : null}
         <div onClick={handlePanelDropdown}>
-          <Box color="base.gray">
+          <Styled.IconWrapper>
             <CaretDown size={14} weight="fill" />
-          </Box>
+          </Styled.IconWrapper>
         </div>
       </form>
       <Box
