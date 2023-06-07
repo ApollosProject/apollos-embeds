@@ -25,7 +25,7 @@ import { ResourceCard, Box } from '../../ui-kit';
 
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
-
+const MOBILE_BREAKPOINT = 428;
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
 const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
 const searchClient = algoliasearch(appId, apiKey);
@@ -179,6 +179,7 @@ export default function Autocomplete({
     inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
   };
 
+  // (Desktop Specific Behavior): Hitting enter scrolls dropdown to results
   const scrollToResults = (event) => {
     const resultsElement = document.getElementById('results');
     event.preventDefault();
@@ -197,7 +198,20 @@ export default function Autocomplete({
     return createAutocomplete({
       openOnFocus: true,
       plugins: [querySuggestionsPlugin, recentSearchesPlugin],
-      onStateChange({ state }) {
+      onStateChange({ state, ...props }) {
+        // (Mobile Specific Behavior): New keystroke resets the list view scroll to the top
+        const panelElement =
+          window.innerWidth < MOBILE_BREAKPOINT &&
+          state.query !== props.prevState.query
+            ? document.getElementById('panel-top')
+            : null;
+
+        if (panelElement) {
+          panelElement.scrollIntoView({
+            behavior: 'instant',
+            block: 'start',
+          });
+        }
         // (2) Synchronize the Autocomplete state with the React state.
         setAutocompleteState(state);
       },
@@ -317,6 +331,7 @@ export default function Autocomplete({
         dropdown={autocompleteState.isOpen}
         {...autocomplete.getPanelProps({})}
       >
+        {autocompleteState.isOpen && <div id="panel-top"></div>}
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
