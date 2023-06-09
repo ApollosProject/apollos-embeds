@@ -4,6 +4,7 @@ import {
   HorizontalMediaListFeature,
   VerticalCardListFeature,
   ButtonFeature,
+  VerticalResourceCardListFeature,
 } from './Features';
 
 // Maps a graphql "__typename" to a Component to render it.
@@ -13,6 +14,7 @@ const FeatureFeedComponentMap = {
   HorizontalMediaListFeature,
   VerticalCardListFeature,
   ButtonFeature,
+  VerticalResourceCardListFeature,
 };
 
 export default FeatureFeedComponentMap;
