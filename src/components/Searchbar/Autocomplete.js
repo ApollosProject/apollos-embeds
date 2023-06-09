@@ -19,6 +19,8 @@ import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import '@algolia/autocomplete-theme-classic';
 
+import { ChipList } from '../FeatureFeed/Features';
+
 import { FeatureFeedProvider } from '../../providers';
 import Feed from '../FeatureFeed';
 import { ResourceCard, Box } from '../../ui-kit';
@@ -29,6 +31,8 @@ import { getURLFromType } from '../../utils';
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
 const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
 const searchClient = algoliasearch(appId, apiKey);
+
+const ChipItems = ['Give', 'Service Times', 'Childcare', 'Chip', 'Test'];
 
 function Hit({ hit }) {
   return hit?.title;
@@ -308,6 +312,7 @@ export default function Autocomplete({
         dropdown={autocompleteState.isOpen}
         {...autocomplete.getPanelProps({})}
       >
+        <ChipList items={ChipItems} />
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
