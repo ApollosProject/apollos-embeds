@@ -3,6 +3,7 @@ import { withTheme } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
 import { TypeStyles } from '../../../ui-kit/Typography';
+import { system } from '../../../ui-kit/_lib/system';
 
 const Chip = withTheme(styled.h1`
   display: flex;
@@ -15,6 +16,7 @@ const Chip = withTheme(styled.h1`
   font-weight: 600;
   padding: 6px 10px;
   white-space: nowrap;
+  ${system}
 `);
 
 const List = withTheme(styled.ul`
@@ -35,6 +37,7 @@ const List = withTheme(styled.ul`
   &::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0); /* Adjust the color as needed */
   }
+  ${system}
 `);
 
 const Styled = {
