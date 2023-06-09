@@ -19,7 +19,10 @@ import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import '@algolia/autocomplete-theme-classic';
 
-import { ChipList } from '../FeatureFeed/Features';
+import {
+  ChipListFeature,
+  VerticalResourceCardListFeature,
+} from '../FeatureFeed/Features';
 
 import { FeatureFeedProvider } from '../../providers';
 import Feed from '../FeatureFeed';
@@ -311,11 +314,12 @@ export default function Autocomplete({
         className="aa-Panel"
         dropdown={autocompleteState.isOpen}
         {...autocomplete.getPanelProps({})}
+        borderRadius="0px 0px 15px 15px"
       >
-        <ChipList items={ChipItems} />
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
+            console.log(items);
             // Rendering of Query Suggestions
             if (
               ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(
@@ -413,14 +417,35 @@ export default function Autocomplete({
           })}
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
           // searchState.searchFeed
-          <FeatureFeedProvider
-            Component={Feed}
-            options={{
-              variables: {
-                itemId: searchState.searchFeed,
-              },
-            }}
-          />
+          // <FeatureFeedProvider
+          //   Component={Feed}
+          //   options={{
+          //     variables: {
+          //       itemId: searchState.searchFeed,
+          //     },
+          //   }}
+          // />
+          <Box>
+            <Box>
+              <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+                Quick Links
+              </Box>
+              <ChipListFeature items={ChipItems} />
+            </Box>
+
+            <Box>
+              <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+                Recently Visited
+              </Box>
+              <VerticalResourceCardListFeature />
+            </Box>
+            <Box>
+              <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+                Popular Content
+              </Box>
+              <VerticalResourceCardListFeature />
+            </Box>
+          </Box>
         ) : null}
       </Box>
     </div>
