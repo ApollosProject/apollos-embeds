@@ -4,7 +4,7 @@ import HeroListFeature from './HeroListFeature';
 import HorizontalCardListFeature from './HorizontalCardListFeature';
 import HorizontalMediaListFeature from './HorizontalMediaListFeature';
 import VerticalCardListFeature from './VerticalCardListFeature';
-import VerticalResourceCardListFeature from './VerticalResourceCardListFeature';
+import ActionListFeature from './ActionListFeature';
 
 export {
   ButtonFeature,
@@ -13,5 +13,5 @@ export {
   HorizontalCardListFeature,
   HorizontalMediaListFeature,
   VerticalCardListFeature,
-  VerticalResourceCardListFeature,
+  ActionListFeature,
 };
