@@ -16,6 +16,11 @@ const Chip = withTheme(styled.h1`
   font-weight: 600;
   padding: 6px 10px;
   white-space: nowrap;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(103, 103, 134, 0.2);
+  }
   ${system}
 `);
 
