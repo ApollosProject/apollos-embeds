@@ -347,7 +347,6 @@ export default function Autocomplete({
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
-            console.log(items);
             // Rendering of Query Suggestions
             if (
               ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(
