@@ -15,14 +15,8 @@ import {
   parseAlgoliaHitHighlight,
 } from '@algolia/autocomplete-preset-algolia';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
-// import { createAlgoliaInsightsPlugin } from '@algolia/autocomplete-plugin-algolia-insights';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import '@algolia/autocomplete-theme-classic';
-
-import {
-  ChipListFeature,
-  VerticalResourceCardListFeature,
-} from '../FeatureFeed/Features';
 
 import { FeatureFeedProvider } from '../../providers';
 import Feed from '../FeatureFeed';
@@ -36,8 +30,6 @@ const MOBILE_BREAKPOINT = 428;
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
 const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
 const searchClient = algoliasearch(appId, apiKey);
-
-const ChipItems = ['Give', 'Service Times', 'Childcare', 'Chip', 'Test'];
 
 function Hit({ hit }) {
   return hit?.title;
@@ -454,36 +446,36 @@ export default function Autocomplete({
           })}
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
           // searchState.searchFeed
-          // <FeatureFeedProvider
-          //   Component={Feed}
-          //   options={{
-          //     variables: {
-          //       itemId: searchState.searchFeed,
-          //     },
-          //   }}
-          // />
-          <Box>
-            <Box>
-              <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-                Quick Links
-              </Box>
-              <ChipListFeature items={ChipItems} />
-            </Box>
+          <FeatureFeedProvider
+            Component={Feed}
+            options={{
+              variables: {
+                itemId: searchState.searchFeed,
+              },
+            }}
+          />
+        ) : // <Box>
+        //   <Box>
+        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+        //       Quick Links
+        //     </Box>
+        //     <ChipListFeature items={ChipItems} />
+        //   </Box>
 
-            <Box>
-              <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-                Recently Visited
-              </Box>
-              <VerticalResourceCardListFeature />
-            </Box>
-            <Box>
-              <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-                Popular Content
-              </Box>
-              <VerticalResourceCardListFeature />
-            </Box>
-          </Box>
-        ) : null}
+        //   <Box>
+        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+        //       Recently Visited
+        //     </Box>
+        //     <VerticalResourceCardListFeature />
+        //   </Box>
+        //   <Box>
+        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+        //       Popular Content
+        //     </Box>
+        //     <VerticalResourceCardListFeature />
+        //   </Box>
+        // </Box>
+        null}
       </Box>
     </div>
   );
