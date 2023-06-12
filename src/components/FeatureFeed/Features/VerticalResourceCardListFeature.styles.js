@@ -12,8 +12,17 @@ const List = withTheme(styled.ul`
   ${system}
 `);
 
+const Wrapper = withTheme(styled.div`
+  &:focus,
+  &:hover {
+    background: #efeef7;
+  }
+  ${system}
+`);
+
 const Styled = {
   List,
+  Wrapper,
 };
 
 export default Styled;

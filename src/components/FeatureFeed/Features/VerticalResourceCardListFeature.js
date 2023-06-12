@@ -16,11 +16,13 @@ function VerticalResourceCardListFeature(props = {}) {
     <Styled.List>
       {temp.map((item) => {
         return (
-          <ResourceCard
-            title={item.title}
-            subtitle={item.subtitle}
-            background="none"
-          />
+          <Styled.Wrapper>
+            <ResourceCard
+              title={item.title}
+              subtitle={item.subtitle}
+              background="none"
+            />
+          </Styled.Wrapper>
         );
       })}
     </Styled.List>
