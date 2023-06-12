@@ -30,7 +30,9 @@ import { ResourceCard, Box } from '../../ui-kit';
 
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
+import Styled from './Search.styles';
 
+const MOBILE_BREAKPOINT = 428;
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
 const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
 const searchClient = algoliasearch(appId, apiKey);
@@ -186,6 +188,15 @@ export default function Autocomplete({
     inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
   };
 
+  // (Desktop Specific Behavior): Hitting enter scrolls dropdown to results
+  const scrollToResults = (event) => {
+    const resultsElement = document.getElementById('results');
+    event.preventDefault();
+    if (resultsElement) {
+      resultsElement.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Query Suggesion Index Definition
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
@@ -196,7 +207,20 @@ export default function Autocomplete({
     return createAutocomplete({
       openOnFocus: true,
       plugins: [querySuggestionsPlugin, recentSearchesPlugin],
-      onStateChange({ state }) {
+      onStateChange({ state, ...props }) {
+        // (Mobile Specific Behavior): New keystroke resets the list view scroll to the top
+        const panelElement =
+          window.innerWidth < MOBILE_BREAKPOINT &&
+          state.query !== props.prevState.query
+            ? document.getElementById('panel-top')
+            : null;
+
+        if (panelElement) {
+          panelElement.scrollIntoView({
+            behavior: 'instant',
+            block: 'start',
+          });
+        }
         // (2) Synchronize the Autocomplete state with the React state.
         setAutocompleteState(state);
       },
@@ -273,6 +297,7 @@ export default function Autocomplete({
   });
 
   inputProps.id = autoCompleteId;
+  formProps.onSubmit = scrollToResults;
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
   panelProps['aria-labelledby'] = autoCompleteLabel;
@@ -300,13 +325,15 @@ export default function Autocomplete({
         <input ref={inputRef} className="aa-Input" {...inputProps} />
         {inputProps.value !== '' ? (
           <div className="aa-ClearButton" onClick={clearInput}>
-            <X size={18} weight="fill" />
+            <Styled.IconWrapper>
+              <X size={18} weight="fill" />
+            </Styled.IconWrapper>
           </div>
         ) : null}
         <div onClick={handlePanelDropdown}>
-          <Box color="base.gray">
+          <Styled.IconWrapper>
             <CaretDown size={14} weight="fill" />
-          </Box>
+          </Styled.IconWrapper>
         </div>
       </form>
       <Box
@@ -316,6 +343,7 @@ export default function Autocomplete({
         {...autocomplete.getPanelProps({})}
         borderRadius="0px 0px 15px 15px"
       >
+        {autocompleteState.isOpen && <div id="panel-top"></div>}
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
@@ -388,7 +416,7 @@ export default function Autocomplete({
                     Pages
                   </Box>
                 )}
-                {items.length > 0 && (
+                {items.length > 0 ? (
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item) => (
                       <Box
@@ -411,6 +439,16 @@ export default function Autocomplete({
                       </Box>
                     ))}
                   </ul>
+                ) : (
+                  <Box
+                    padding="xs"
+                    fontWeight="500"
+                    color="base.gray"
+                    textAlign="center"
+                    fontStyle="italic"
+                  >
+                    No results found
+                  </Box>
                 )}
               </div>
             ) : null;
