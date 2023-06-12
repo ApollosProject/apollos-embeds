@@ -1,12 +1,17 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
-
 import { getURLFromType } from '../../../utils';
-import { Box, systemPropTypes, ResourceCard } from '../../../ui-kit';
+import { systemPropTypes, ResourceCard } from '../../../ui-kit';
 import Styled from './VerticalResourceCardListFeature.styles';
-import { ArrowUpRight } from 'phosphor-react';
+import { useNavigate } from 'react-router-dom';
 
 function VerticalResourceCardListFeature(props = {}) {
+  const navigate = useNavigate();
+  const handleActionPress = () => {
+    navigate({
+      pathname: '/',
+      search: `?id=${getURLFromType(props.relatedNode)}`,
+    });
+  };
   const temp = [
     { title: 'Title', subtitle: 'Subtitle' },
     { title: 'Title', subtitle: 'Subtitle' },

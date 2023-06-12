@@ -1,13 +1,21 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+import { systemPropTypes } from '../../../ui-kit';
 import Styled from './ChipListFeature.styles';
 import { ArrowUpRight } from 'phosphor-react';
 
+import { useNavigate } from 'react-router-dom';
+
 function ChipListFeature(props = {}) {
-  //   const temp = ['Give', 'Service Times', 'Childcare', 'Chip', 'Test'];
+  const navigate = useNavigate();
+  const handleActionPress = () => {
+    navigate({
+      pathname: '/',
+      search: `?id=${getURLFromType(props.relatedNode)}`,
+    });
+  };
+
   return (
     <Styled.List>
       {props.items.map((label, index) => {
