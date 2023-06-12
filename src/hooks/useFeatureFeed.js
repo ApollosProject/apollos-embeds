@@ -12,6 +12,15 @@ export const FEED_FEATURES = gql`
           order
           __typename
 
+          ... on ChipListFeature {
+            title
+            subtitle
+          }
+
+          ... on ActionListFeature {
+            title
+          }
+
           ... on HorizontalCardListFeature {
             title
             cards {
