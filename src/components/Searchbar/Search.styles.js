@@ -157,10 +157,20 @@ const Title = withTheme(styled(H4)`
   color: ${themeGet('colors.text.secondary')};
 `);
 
+const IconWrapper = withTheme(styled.div`
+  color: #27272e54;
+  &:hover {
+    color: ${themeGet('colors.base.secondary')};
+    cursor: pointer;
+  }
+  ${system}
+`);
+
 const Styled = {
   Input,
   Interface,
   InterfaceWrapper,
+  IconWrapper,
   Profile,
   SearchIcon,
   TextPrompt,
