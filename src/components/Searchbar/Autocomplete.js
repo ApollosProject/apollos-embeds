@@ -15,7 +15,6 @@ import {
   parseAlgoliaHitHighlight,
 } from '@algolia/autocomplete-preset-algolia';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
-// import { createAlgoliaInsightsPlugin } from '@algolia/autocomplete-plugin-algolia-insights';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import '@algolia/autocomplete-theme-classic';
 
@@ -334,6 +333,7 @@ export default function Autocomplete({
         className="aa-Panel"
         dropdown={autocompleteState.isOpen}
         {...autocomplete.getPanelProps({})}
+        borderRadius="0px 0px 15px 15px"
       >
         {autocompleteState.isOpen && <div id="panel-top"></div>}
         {autocompleteState.isOpen &&
@@ -454,7 +454,28 @@ export default function Autocomplete({
               },
             }}
           />
-        ) : null}
+        ) : // <Box>
+        //   <Box>
+        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+        //       Quick Links
+        //     </Box>
+        //     <ChipListFeature items={ChipItems} />
+        //   </Box>
+
+        //   <Box>
+        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+        //       Recently Visited
+        //     </Box>
+        //     <VerticalResourceCardListFeature />
+        //   </Box>
+        //   <Box>
+        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+        //       Popular Content
+        //     </Box>
+        //     <VerticalResourceCardListFeature />
+        //   </Box>
+        // </Box>
+        null}
       </Box>
     </div>
   );
