@@ -29,11 +29,11 @@ const showDropdown = ({ dropdown }) => {
 const showPanel = ({ dropdown }) => {
   if (dropdown) {
     return css`
-      @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
-        height: 100vh;
-      }
       @media screen and (min-width: ${themeGet('breakpoints.sm')}) {
         height: 600px;
+      }
+      @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+        height: 100vh;
       }
     `;
   } else {
