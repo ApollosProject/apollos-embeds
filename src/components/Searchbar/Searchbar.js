@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
 import Styled from './Search.styles';
-import { User, CaretDown, MagnifyingGlass, X } from 'phosphor-react';
+import { User, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
 import Profile from '../Profile';
 
@@ -73,7 +73,6 @@ const Searchbar = (props = {}) => {
   }, [autocompleteState.isOpen]);
 
   const handleProfile = () => {
-    console.log('Opening Profile menu...');
     setShowProfile(!showProfile);
   };
 

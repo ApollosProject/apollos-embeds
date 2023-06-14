@@ -445,7 +445,6 @@ export default function Autocomplete({
             ) : null;
           })}
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
-          // searchState.searchFeed
           <FeatureFeedProvider
             Component={Feed}
             options={{
@@ -454,28 +453,7 @@ export default function Autocomplete({
               },
             }}
           />
-        ) : // <Box>
-        //   <Box>
-        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        //       Quick Links
-        //     </Box>
-        //     <ChipListFeature items={ChipItems} />
-        //   </Box>
-
-        //   <Box>
-        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        //       Recently Visited
-        //     </Box>
-        //     <VerticalResourceCardListFeature />
-        //   </Box>
-        //   <Box>
-        //     <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        //       Popular Content
-        //     </Box>
-        //     <VerticalResourceCardListFeature />
-        //   </Box>
-        // </Box>
-        null}
+        ) : null}
       </Box>
     </div>
   );
