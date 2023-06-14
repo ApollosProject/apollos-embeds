@@ -101,7 +101,7 @@ const TextPrompt = withTheme(styled.div`
 `);
 
 const Profile = withTheme(styled.div`
-  background: ${(props) => props.theme.colors.text.action};
+  background: ${(props) => props.theme.colors.base.primary};
   border-radius: 50%;
   color: ${(props) => props.theme.colors.base.white};
   line-height: 0;
@@ -111,7 +111,7 @@ const Profile = withTheme(styled.div`
 `);
 
 const SearchIcon = withTheme(styled.div`
-  background: ${(props) => props.theme.colors.text.action};
+  background: ${(props) => props.theme.colors.base.primary};
   padding: 9px;
   border-radius: 50%;
   line-height: 0;
@@ -159,6 +159,7 @@ const Title = withTheme(styled(H4)`
 
 const IconWrapper = withTheme(styled.div`
   color: #27272e54;
+  transition: 0.2s;
   &:hover {
     color: ${themeGet('colors.base.secondary')};
     cursor: pointer;

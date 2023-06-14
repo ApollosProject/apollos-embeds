@@ -114,7 +114,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                       width="72px"
                     />
                   ) : (
-                    <Box color="text.action">
+                    <Box color="base.primary">
                       <UserCirclePlus size={84} weight="fill" />
                     </Box>
                   )}
@@ -140,7 +140,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                 {!state.token && !imgSrc ? (
                   <Button
                     backgroundColor={Color(
-                      themeGet('colors.text.action')({ theme })
+                      themeGet('colors.base.primary')({ theme })
                     )
                       .fade(0.85)
                       .toString()}
@@ -149,7 +149,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     size="small"
                     onClick={() => setShowAuth(true)}
                     variant="secondary"
-                    color="text.action"
+                    color="base.primary"
                     icon={<ArrowRight size={24} />}
                   />
                 ) : null}
@@ -227,7 +227,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                       variant="secondary"
                       title="Get it on iOS"
                       size="small"
-                      color="text.action"
+                      color="base.secondary"
                       borderRadius="100px"
                       icon={<AppleLogo weight="fill" size="24" />}
                       mr="s"
@@ -241,7 +241,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                       title="Get it on Android"
                       size="small"
                       type="button"
-                      color="text.action"
+                      color="base.secondary"
                       borderRadius="100px"
                       icon={<AndroidLogo weight="fill" size="24" />}
                     />

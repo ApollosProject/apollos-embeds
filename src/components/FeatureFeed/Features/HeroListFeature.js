@@ -19,7 +19,6 @@ import {
   H3,
   H4,
   systemPropTypes,
-  Search,
 } from '../../../ui-kit';
 
 function HeroListFeature(props = {}) {
