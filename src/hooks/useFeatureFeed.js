@@ -15,10 +15,39 @@ export const FEED_FEATURES = gql`
           ... on ChipListFeature {
             title
             subtitle
+            chips {
+              title
+              action
+              iconName
+              id
+              relatedNode {
+                ... on Url {
+                  __typename
+                  url
+                }
+              }
+            }
           }
 
           ... on ActionListFeature {
             title
+            subtitle
+            actions {
+              id
+              title
+              subtitle
+              action
+              image {
+                sources {
+                  uri
+                  blurHash
+                }
+              }
+              relatedNode {
+                __typename
+                id
+              }
+            }
           }
 
           ... on HorizontalCardListFeature {
@@ -47,6 +76,20 @@ export const FEED_FEATURES = gql`
                 }
                 ... on Url {
                   url
+                }
+              }
+            }
+            primaryAction {
+              title
+              action
+              relatedNode {
+                id
+                __typename
+                ... on ContentItem {
+                  title
+                  videos {
+                    ...VideoMediaFields
+                  }
                 }
               }
             }
