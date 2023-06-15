@@ -163,11 +163,13 @@ export default function Autocomplete({
 
   const clearInput = () => {
     const value = inputProps.value;
-    recentSearchesPlugin.data.addItem({
-      id: value,
-      label: value,
-      _highLightResult: { label: { value: value } },
-    });
+    if (value) {
+      recentSearchesPlugin.data.addItem({
+        id: value,
+        label: value,
+        _highLightResult: { label: { value: value } },
+      });
+    }
     autocomplete.setQuery('');
     autocomplete.refresh();
   };
