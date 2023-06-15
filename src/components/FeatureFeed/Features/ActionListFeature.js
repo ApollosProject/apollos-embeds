@@ -5,7 +5,6 @@ import Styled from './ActionListFeature.styles';
 import { useNavigate } from 'react-router-dom';
 
 function ActionListFeature(props = {}) {
-  console.log('action', props);
   const navigate = useNavigate();
 
   const handleActionPress = (item) => {
