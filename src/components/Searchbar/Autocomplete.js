@@ -77,11 +77,11 @@ function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
       <div className="aa-ItemActions">
         <button
           className="aa-ItemActionButton"
-          title={`Fill query with "${item.query}"`}
+          title={`Fill query with "${item.title}"`}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            autocomplete.setQuery(item.query);
+            autocomplete.setQuery(item.title);
             autocomplete.refresh();
           }}
         >
@@ -101,6 +101,7 @@ function PastQueryItem({ item, autocomplete }) {
 
   function onTapAhead(item) {
     autocomplete.setQuery(item.label);
+    autocomplete.setIsOpen(true);
     autocomplete.refresh();
   }
   return (
