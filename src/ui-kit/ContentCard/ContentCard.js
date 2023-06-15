@@ -39,7 +39,6 @@ function ContentCard(props = {}) {
       borderRadius="xl"
       overflow="hidden"
       backgroundColor="neutral.gray6"
-      boxShadow="medium"
       height="100%"
       display={props.horizontal ? 'flex' : ''}
       {...props}
