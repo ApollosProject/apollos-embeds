@@ -55,6 +55,14 @@ function Highlight({ hit, attribute, tagName = 'mark' }) {
 // Recent Searches Index Definition
 const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
   key: 'navbar',
+  transformSource({ source }) {
+    return {
+      ...source,
+      onSelect({ setIsOpen }) {
+        setIsOpen(true);
+      },
+    };
+  },
 });
 
 // Query Suggestion Item Render
