@@ -55,6 +55,14 @@ function Highlight({ hit, attribute, tagName = 'mark' }) {
 // Recent Searches Index Definition
 const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
   key: 'navbar',
+  transformSource({ source }) {
+    return {
+      ...source,
+      onSelect({ setIsOpen }) {
+        setIsOpen(true);
+      },
+    };
+  },
 });
 
 // Query Suggestion Item Render
@@ -77,11 +85,11 @@ function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
       <div className="aa-ItemActions">
         <button
           className="aa-ItemActionButton"
-          title={`Fill query with "${item.query}"`}
+          title={`Fill query with "${item.title}"`}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
-            autocomplete.setQuery(item.query);
+            autocomplete.setQuery(item.title);
             autocomplete.refresh();
           }}
         >
@@ -101,6 +109,7 @@ function PastQueryItem({ item, autocomplete }) {
 
   function onTapAhead(item) {
     autocomplete.setQuery(item.label);
+    autocomplete.setIsOpen(true);
     autocomplete.refresh();
   }
   return (
@@ -162,11 +171,13 @@ export default function Autocomplete({
 
   const clearInput = () => {
     const value = inputProps.value;
-    recentSearchesPlugin.data.addItem({
-      id: value,
-      label: value,
-      _highLightResult: { label: { value: value } },
-    });
+    if (value) {
+      recentSearchesPlugin.data.addItem({
+        id: value,
+        label: value,
+        _highLightResult: { label: { value: value } },
+      });
+    }
     autocomplete.setQuery('');
     autocomplete.refresh();
   };
