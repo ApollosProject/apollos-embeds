@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useSearchParams } from 'react-router-dom';
 
 import { Feed } from '..';
 import { Box, Loader } from '../../ui-kit';
@@ -7,6 +8,8 @@ import { Box, Loader } from '../../ui-kit';
 import FeatureFeedListGrid from './FeatureFeedListGrid';
 
 const FeatureFeedList = (props) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
   if (props.loading) {
     return (
       <Box
@@ -23,7 +26,7 @@ const FeatureFeedList = (props) => {
   }
 
   const FeatureListComponent =
-    props.data?.features?.length > 1 ? Feed : FeatureFeedListGrid;
+    searchParams.get('action') === 'viewall' ? FeatureFeedListGrid : Feed;
 
   return <FeatureListComponent {...props} />;
 };

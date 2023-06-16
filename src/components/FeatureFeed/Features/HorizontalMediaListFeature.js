@@ -79,7 +79,9 @@ function HorizontalMediaListFeature(props = {}) {
         })
       );
       setSearchParams(
-        `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+        `?id=${getURLFromType(
+          props?.feature?.primaryAction.relatedNode
+        )}?action=viewall`
       );
     }
   };

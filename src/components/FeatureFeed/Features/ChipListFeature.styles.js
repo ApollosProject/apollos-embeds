@@ -5,7 +5,7 @@ import { themeGet } from '@styled-system/theme-get';
 import { TypeStyles } from '../../../ui-kit/Typography';
 import { system } from '../../../ui-kit/_lib/system';
 
-const Chip = withTheme(styled.h1`
+const Chip = withTheme(styled.a`
   display: flex;
   align-items: center;
   justify-content: center;

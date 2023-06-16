@@ -8,47 +8,40 @@ import { ArrowUpRight } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 
 function ChipListFeature(props = {}) {
-  const items = ['Give', 'Service Times', 'Childcare', 'Chip', 'Test'];
-  const navigate = useNavigate();
-  const handleActionPress = () => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(props.relatedNode)}`,
-    });
-  };
-
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        Quick Links
+        {props.feature.title}
       </Box>
       <Styled.List>
-        {items.map((label, index) => {
-          if (index === 0) {
+        {props.feature?.chips?.map(
+          ({ title, iconName, relatedNode }, index) => {
+            if (index === 0) {
+              return (
+                <Styled.Chip ml="xs" href={relatedNode.url}>
+                  <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
+                  <span>{title}</span>
+                </Styled.Chip>
+              );
+            }
+
+            if (index === props.feature?.chips.length - 1) {
+              return (
+                <Styled.Chip mr="xs" href={relatedNode.url}>
+                  <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
+                  <span>{title}</span>
+                </Styled.Chip>
+              );
+            }
+
             return (
-              <Styled.Chip ml="xs">
+              <Styled.Chip href={relatedNode.url}>
                 <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
-                <span>{label}</span>
+                <span>{title}</span>
               </Styled.Chip>
             );
           }
-
-          if (index === items.length - 1) {
-            return (
-              <Styled.Chip mr="xs">
-                <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
-                <span>{label}</span>
-              </Styled.Chip>
-            );
-          }
-
-          return (
-            <Styled.Chip>
-              <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
-              <span>{label}</span>
-            </Styled.Chip>
-          );
-        })}
+        )}
       </Styled.List>
     </Box>
   );

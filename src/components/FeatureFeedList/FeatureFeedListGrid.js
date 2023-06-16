@@ -49,7 +49,7 @@ function FeatureFeedListGrid(props = {}) {
           lg: 'repeat(3, 1fr)',
         }}
       >
-        {props.data.features[0]?.cards?.map((item, index) => (
+        {props.data?.features[0]?.cards?.map((item, index) => (
           <ContentCard
             key={item.title}
             image={item.coverImage}

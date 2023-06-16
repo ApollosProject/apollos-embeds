@@ -5,31 +5,29 @@ import Styled from './ActionListFeature.styles';
 import { useNavigate } from 'react-router-dom';
 
 function ActionListFeature(props = {}) {
-  console.log('action', props);
   const navigate = useNavigate();
-  const handleActionPress = () => {
+
+  const handleActionPress = (item) => {
     navigate({
       pathname: '/',
-      search: `?id=${getURLFromType(props.relatedNode)}`,
+      search: `?id=${getURLFromType(item.relatedNode)}`,
     });
   };
-  const temp = [
-    { title: 'Title', subtitle: 'Subtitle' },
-    { title: 'Title', subtitle: 'Subtitle' },
-    { title: 'Title', subtitle: 'Subtitle' },
-  ];
+
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        Title
+        {props.feature.title}
       </Box>
       <Styled.List>
-        {temp.map((item) => {
+        {props.feature?.actions?.map((item) => {
           return (
             <Styled.Wrapper>
               <ResourceCard
                 title={item.title}
                 subtitle={item.subtitle}
+                leadingAsset={item?.image}
+                onClick={() => handleActionPress(item)}
                 background="none"
               />
             </Styled.Wrapper>

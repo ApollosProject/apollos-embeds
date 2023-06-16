@@ -79,7 +79,9 @@ function HorizontalCardListFeature(props = {}) {
         })
       );
       setSearchParams(
-        `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`
+        `?id=${getURLFromType(
+          props?.feature?.primaryAction.relatedNode
+        )}?action=viewall`
       );
     }
   };
