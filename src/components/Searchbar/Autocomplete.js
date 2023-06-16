@@ -1,4 +1,11 @@
-import React, { useEffect, createElement, Fragment } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useMemo,
+  createElement,
+  Fragment,
+} from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {
   ClockCounterClockwise,
@@ -25,6 +32,15 @@ import { ResourceCard, Box } from '../../ui-kit';
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
 import Styled from './Search.styles';
+import {
+  add as addBreadcrumb,
+  useBreadcrumbDispatch,
+} from '../../providers/BreadcrumbProvider';
+import {
+  open as openModal,
+  set as setModal,
+  useModal,
+} from '../../providers/ModalProvider';
 
 const MOBILE_BREAKPOINT = 428;
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
@@ -159,15 +175,29 @@ export default function Autocomplete({
   setAutocompleteState,
   setShowTextPrompt,
 }) {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const [state, dispatch] = useModal();
+
+  const handleActionPress = (item) => {
+    if (searchParams.get('id') !== getURLFromType(item)) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item)}`,
+          title: item.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item)}`);
+    }
+    if (state.modal) {
+      const url = getURLFromType(item);
+      dispatch(setModal(url));
+      dispatch(openModal());
+    }
+  };
   const navigate = useNavigate();
   const searchState = useSearchState();
-  const inputRef = React.useRef(null);
-  const handleActionPress = (item) => {
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item)}`,
-    });
-  };
+  const inputRef = useRef(null);
 
   const clearInput = () => {
     const value = inputProps.value;
@@ -206,7 +236,7 @@ export default function Autocomplete({
     indexName: `ContentItem_${searchState.church}`,
   });
 
-  const autocomplete = React.useMemo(() => {
+  const autocomplete = useMemo(() => {
     return createAutocomplete({
       openOnFocus: true,
       plugins: [querySuggestionsPlugin, recentSearchesPlugin],
