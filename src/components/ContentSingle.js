@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import DOMPurify from 'dompurify';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
@@ -95,8 +94,6 @@ function ContentSingle(props = {}) {
         'MMMM do, yyyy'
       )
     : null;
-
-  const sanitizedHTML = DOMPurify.sanitize(htmlContent);
 
   // We'll conditionally place this divider as needed
   const infoDivider = (
@@ -199,7 +196,7 @@ function ContentSingle(props = {}) {
             <>
               <Longform
                 dangerouslySetInnerHTML={{
-                  __html: parseDescriptionLinks(sanitizedHTML),
+                  __html: parseDescriptionLinks(htmlContent),
                 }}
               />
             </>
