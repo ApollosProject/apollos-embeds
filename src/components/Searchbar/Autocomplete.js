@@ -199,6 +199,30 @@ export default function Autocomplete({
   const searchState = useSearchState();
   const inputRef = useRef(null);
 
+  function setAriaSelectedToFalseOnHover(
+    parentClassName,
+    childClassName,
+    hoverElementClassName
+  ) {
+    const parentElement = document.querySelector(parentClassName);
+    const hoverElement = document.querySelector(hoverElementClassName);
+
+    if (autocompleteState.isOpen) {
+      if (!parentElement) {
+        return;
+      }
+      if (!hoverElement) {
+        return;
+      }
+      hoverElement.addEventListener('mouseover', function () {
+        const children = parentElement.querySelectorAll(childClassName);
+        for (let i = 0; i < children.length; i++) {
+          children[i].setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+  }
+
   const clearInput = () => {
     const value = inputProps.value;
     if (value) {
@@ -344,6 +368,8 @@ export default function Autocomplete({
       }
     }
 
+    setAriaSelectedToFalseOnHover('.aa-List', '.aa-Item', '.empty-feed');
+
     document.addEventListener('click', handleClickOutside);
 
     return () => {
@@ -486,14 +512,16 @@ export default function Autocomplete({
             ) : null;
           })}
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
-          <FeatureFeedProvider
-            Component={Feed}
-            options={{
-              variables: {
-                itemId: searchState.searchFeed,
-              },
-            }}
-          />
+          <Box className="empty-feed">
+            <FeatureFeedProvider
+              Component={Feed}
+              options={{
+                variables: {
+                  itemId: searchState.searchFeed,
+                },
+              }}
+            />
+          </Box>
         ) : null}
       </Box>
     </div>
