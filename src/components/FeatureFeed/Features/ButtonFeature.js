@@ -1,10 +1,10 @@
-import React from "react";
-import { withTheme } from "styled-components";
+import React from 'react';
+import { withTheme } from 'styled-components';
 
-import { useNavigate } from "react-router-dom";
-import { getURLFromType } from "../../../utils";
+import { useNavigate } from 'react-router-dom';
+import { getURLFromType } from '../../../utils';
 
-import { Button, systemPropTypes } from "../../../ui-kit";
+import { Button, systemPropTypes } from '../../../ui-kit';
 
 function ButtonFeature(props = {}) {
   const navigate = useNavigate();
@@ -12,16 +12,16 @@ function ButtonFeature(props = {}) {
   // Event Handlers
   const handleActionPress = () => {
     navigate({
-      pathname: "/",
+      pathname: '/',
       search: `?id=${getURLFromType(props.relatedNode)}`,
     });
   };
 
   return (
     <Button
-      title={props.title}
+      title={props.title || props.feature?.action?.title}
       icon={props.icon}
-      cursor={props.relatedNode ? "pointer" : "default"}
+      cursor={props.relatedNode ? 'pointer' : 'default'}
       onClick={props.relatedNode && handleActionPress}
       width="100%"
     />
