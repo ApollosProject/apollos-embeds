@@ -90,10 +90,7 @@ function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
           <MagnifyingGlass size={24} weight="bold" />
         </div>
         <div className="aa-ItemContentBody">
-          <div
-            className="aa-ItemContentTitle"
-            onClick={() => handleActionPress(item)}
-          >
+          <div className="aa-ItemContentTitle">
             <Hit hit={item} />
           </div>
         </div>
@@ -260,6 +257,18 @@ export default function Autocomplete({
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
     indexName: `ContentItem_${searchState.church}`,
+    transformSource({ source }) {
+      return {
+        ...source,
+        onSelect({ setQuery, item, setIsOpen, refresh, event }) {
+          event.preventDefault();
+          event.stopPropagation();
+          setIsOpen(true);
+          setQuery(item.title);
+          refresh();
+        },
+      };
+    },
   });
 
   const autocomplete = useMemo(() => {
