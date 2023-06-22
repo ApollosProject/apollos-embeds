@@ -204,21 +204,23 @@ export default function Autocomplete({
     childClassName,
     hoverElementClassName
   ) {
-    const parentElement = document.querySelector(parentClassName);
+    const parentElements = document.querySelectorAll(parentClassName);
     const hoverElement = document.querySelector(hoverElementClassName);
 
     if (autocompleteState.isOpen) {
-      if (!parentElement) {
+      if (parentElements.length === 0) {
         return;
       }
       if (!hoverElement) {
         return;
       }
       hoverElement.addEventListener('mouseover', function () {
-        const children = parentElement.querySelectorAll(childClassName);
-        for (let i = 0; i < children.length; i++) {
-          children[i].setAttribute('aria-selected', 'false');
-        }
+        parentElements.forEach(function (parentElement) {
+          const children = parentElement.querySelectorAll(childClassName);
+          for (let i = 0; i < children.length; i++) {
+            children[i].setAttribute('aria-selected', 'false');
+          }
+        });
       });
     }
   }
