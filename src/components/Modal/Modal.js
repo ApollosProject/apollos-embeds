@@ -30,6 +30,7 @@ const Modal = (props = {}) => {
 
   function handleCloseModal() {
     dispatch(closeModal());
+    setSearchParams('');
   }
 
   return (
