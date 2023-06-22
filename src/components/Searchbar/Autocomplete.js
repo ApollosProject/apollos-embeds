@@ -378,6 +378,19 @@ export default function Autocomplete({
         setShowTextPrompt(true);
       }
     }
+    function openDropdownMenu() {
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDropdownMenu() {
+      document.body.style.overflow = '';
+    }
+
+    if (autocompleteState.isOpen && window.innerWidth < MOBILE_BREAKPOINT) {
+      openDropdownMenu();
+    } else {
+      closeDropdownMenu();
+    }
 
     setAriaSelectedToFalseOnHover('.aa-List', '.aa-Item', '.empty-feed');
 
