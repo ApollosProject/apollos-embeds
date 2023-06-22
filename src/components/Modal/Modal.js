@@ -11,11 +11,16 @@ import {
   set as setModal,
   useModal,
 } from '../../providers/ModalProvider';
+import {
+  reset as resetBreadcrumb,
+  useBreadcrumbDispatch,
+} from '../../providers/BreadcrumbProvider';
 import { X } from 'phosphor-react';
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
+  const dispatchBreadcrumb = useBreadcrumbDispatch();
 
   useEffect(() => {
     // Watch for changes to the `id` search param
@@ -31,6 +36,7 @@ const Modal = (props = {}) => {
   function handleCloseModal() {
     dispatch(closeModal());
     setSearchParams('');
+    dispatchBreadcrumb(resetBreadcrumb());
   }
 
   return (
