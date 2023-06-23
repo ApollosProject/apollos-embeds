@@ -22,7 +22,7 @@ import {
 } from '../../../providers/ModalProvider';
 
 import Carousel from 'react-multi-carousel';
-
+import { CaretRight } from 'phosphor-react';
 const SHOW_VIEW_ALL_LIMIT = 5;
 
 const responsive = {
@@ -99,9 +99,10 @@ function HorizontalMediaListFeature(props = {}) {
         {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT &&
         props?.feature?.primaryAction ? (
           <Button
-            title="View All >"
+            title="View All"
             variant="link"
             onClick={handlePrimaryActionPress}
+            icon={<CaretRight size={18} weight="bold" />}
           />
         ) : null}
       </Box>
