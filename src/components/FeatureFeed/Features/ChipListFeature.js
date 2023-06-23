@@ -18,7 +18,7 @@ function ChipListFeature(props = {}) {
           ({ title, iconName, relatedNode }, index) => {
             if (index === 0) {
               return (
-                <Styled.Chip ml="xs" href={relatedNode.url}>
+                <Styled.Chip ml="xs" href={relatedNode.url} key={index}>
                   <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
                   <span>{title}</span>
                 </Styled.Chip>
@@ -27,7 +27,7 @@ function ChipListFeature(props = {}) {
 
             if (index === props.feature?.chips.length - 1) {
               return (
-                <Styled.Chip mr="xs" href={relatedNode.url}>
+                <Styled.Chip mr="xs" href={relatedNode.url} key={index}>
                   <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
                   <span>{title}</span>
                 </Styled.Chip>
@@ -35,7 +35,7 @@ function ChipListFeature(props = {}) {
             }
 
             return (
-              <Styled.Chip href={relatedNode.url}>
+              <Styled.Chip href={relatedNode.url} key={index}>
                 <ArrowUpRight size={20} weight="bold" color="#8E8E93" />
                 <span>{title}</span>
               </Styled.Chip>
