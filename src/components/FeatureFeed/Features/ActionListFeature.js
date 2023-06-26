@@ -20,9 +20,9 @@ function ActionListFeature(props = {}) {
         {props.feature.title}
       </Box>
       <Styled.List>
-        {props.feature?.actions?.map((item) => {
+        {props.feature?.actions?.map((item, index) => {
           return (
-            <Styled.Wrapper>
+            <Styled.Wrapper key={index}>
               <ResourceCard
                 title={item.title}
                 subtitle={item.subtitle}

@@ -90,10 +90,7 @@ function QuerySuggestionItem({ item, autocomplete, handleActionPress }) {
           <MagnifyingGlass size={24} weight="bold" />
         </div>
         <div className="aa-ItemContentBody">
-          <div
-            className="aa-ItemContentTitle"
-            onClick={() => handleActionPress(item)}
-          >
+          <div className="aa-ItemContentTitle">
             <Hit hit={item} />
           </div>
         </div>
@@ -199,6 +196,32 @@ export default function Autocomplete({
   const searchState = useSearchState();
   const inputRef = useRef(null);
 
+  function setAriaSelectedToFalseOnHover(
+    parentClassName,
+    childClassName,
+    hoverElementClassName
+  ) {
+    const parentElements = document.querySelectorAll(parentClassName);
+    const hoverElement = document.querySelector(hoverElementClassName);
+
+    if (autocompleteState.isOpen) {
+      if (parentElements.length === 0) {
+        return;
+      }
+      if (!hoverElement) {
+        return;
+      }
+      hoverElement.addEventListener('mouseover', function () {
+        parentElements.forEach(function (parentElement) {
+          const children = parentElement.querySelectorAll(childClassName);
+          for (let i = 0; i < children.length; i++) {
+            children[i].setAttribute('aria-selected', 'false');
+          }
+        });
+      });
+    }
+  }
+
   const clearInput = () => {
     const value = inputProps.value;
     if (value) {
@@ -234,6 +257,18 @@ export default function Autocomplete({
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
     indexName: `ContentItem_${searchState.church}`,
+    transformSource({ source }) {
+      return {
+        ...source,
+        onSelect({ setQuery, item, setIsOpen, refresh, event }) {
+          event.preventDefault();
+          event.stopPropagation();
+          setIsOpen(true);
+          setQuery(item.title);
+          refresh();
+        },
+      };
+    },
   });
 
   const autocomplete = useMemo(() => {
@@ -343,6 +378,21 @@ export default function Autocomplete({
         setShowTextPrompt(true);
       }
     }
+    function openDropdownMenu() {
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeDropdownMenu() {
+      document.body.style.overflow = '';
+    }
+
+    if (autocompleteState.isOpen && window.innerWidth < MOBILE_BREAKPOINT) {
+      openDropdownMenu();
+    } else {
+      closeDropdownMenu();
+    }
+
+    setAriaSelectedToFalseOnHover('.aa-List', '.aa-Item', '.empty-feed');
 
     document.addEventListener('click', handleClickOutside);
 
@@ -486,14 +536,16 @@ export default function Autocomplete({
             ) : null;
           })}
         {autocompleteState.isOpen && autocompleteState.query === '' ? (
-          <FeatureFeedProvider
-            Component={Feed}
-            options={{
-              variables: {
-                itemId: searchState.searchFeed,
-              },
-            }}
-          />
+          <Box className="empty-feed">
+            <FeatureFeedProvider
+              Component={Feed}
+              options={{
+                variables: {
+                  itemId: searchState.searchFeed,
+                },
+              }}
+            />
+          </Box>
         ) : null}
       </Box>
     </div>
