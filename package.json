@@ -1,0 +1,14 @@
+{
+  "name": "apollos-embeds",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "https://github.com/ApollosProject/apollos-embeds.git",
+  "author": "Jordan Wade <jjwade31@gmail.com>",
+  "license": "MIT",
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": []
+  }
+}

@@ -10,6 +10,8 @@
     "@algolia/autocomplete-preset-algolia": "^1.9.2",
     "@algolia/autocomplete-theme-classic": "^1.9.2",
     "@apollo/client": "^3.7.4",
+    "@apollosproject/web-shared": "link:../packages/web-shared",
+    "@babel/preset-react": "^7.22.5",
     "@craco/craco": "^7.0.0",
     "@sentry/react": "^7.40.0",
     "@styled-system/theme-get": "^5.1.2",
@@ -70,6 +72,11 @@
     ]
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@babel/runtime": "^7.22.5",
+    "babel-plugin-module-resolver": "^5.0.0",
+    "babel-plugin-styled-components": "^2.1.4",
     "parcel": "^2.8.3",
     "parcel-bundler": "^1.8.1",
     "parcel-reporter-static-files-copy": "^1.5.0"

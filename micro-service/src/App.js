@@ -1,15 +1,9 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import { FeatureFeed, Search } from '@apollosproject/web-shared/embeds';
+import { FeatureFeed } from '@apollosproject/web-shared/embeds';
 import { AppProvider } from '@apollosproject/web-shared/providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './error-page';
-
-// Maps a widget name to a Component to render it.
-const WidgetComponentMap = {
-  FeatureFeed,
-  Search,
-};
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -19,15 +13,13 @@ Sentry.init({
 });
 
 function App(props) {
-  // Lookup the component responsible for rendering this Widget
-  const WidgetComponent = WidgetComponentMap[props.type];
   const router = createBrowserRouter([
     {
       path: '/',
       element: (
-        <WidgetComponent
-          featureFeed={props.featureFeed}
-          church={props.church}
+        <FeatureFeed
+          featureFeed={'FeatureFeed:5aae43e6-3526-4cd2-8dfe-771d2ce8a333'}
+          church={'cedar_creek'}
         />
       ),
       errorElement: <ErrorPage />,
@@ -35,12 +27,12 @@ function App(props) {
   ]);
 
   // Widgets require a church slug to get the correct data
-  if (WidgetComponent && props.church) {
+  if ('cedar_creek') {
     return (
       <AppProvider
-        church={props.church}
-        modal={props.modal}
-        searchFeed={props.searchFeed}
+        church={'cedar_creek'}
+        modal="true"
+        searchFeed={'FeatureFeed:33b34f30-e57c-4c23-9f28-24d31959a3f4'}
       >
         <RouterProvider router={router} />
       </AppProvider>
@@ -48,9 +40,11 @@ function App(props) {
   }
 
   // eslint-disable-next-line no-console
-  console.log(`⚠️  Widget could not render widget of type "${props.type}"`);
+  console.log(
+    `⚠️  Feature Feed could not render feed of id "FeatureFeed:5aae43e6-3526-4cd2-8dfe-771d2ce8a333"`
+  );
 
-  return null;
+  return <p>Micro Service</p>;
 }
 
 export default App;
