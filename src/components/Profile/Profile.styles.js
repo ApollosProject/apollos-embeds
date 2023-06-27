@@ -70,11 +70,19 @@ const UploadIcon = withTheme(styled.label`
   ${system};
 `);
 
+const AppLinks = withTheme(styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: ${themeGet('space.s')};
+`);
+
 const Styled = {
   Profile,
   Title,
   CloseIcon,
   UploadIcon,
+  AppLinks,
 };
 
 export default Styled;

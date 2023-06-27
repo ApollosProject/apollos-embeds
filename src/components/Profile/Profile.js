@@ -220,12 +220,11 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     'Explore your faith and build daily habits with our online community.'}
                 </BodyText>
               </Box>
-              <Box display="flex" justifyContent="center">
+              <Styled.AppLinks>
                 {currentChurch?.mobileAppStoreUrl ? (
                   <Link to={currentChurch?.mobileAppStoreUrl}>
                     <Button
                       title="Get it on iOS"
-                      mr="s"
                       icon={<AppleLogo weight="fill" size="24" />}
                       variant="secondary"
                       size="small"
@@ -250,7 +249,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     />
                   </Link>
                 ) : null}
-              </Box>
+              </Styled.AppLinks>
             </>
           ) : null}
         </Card>
