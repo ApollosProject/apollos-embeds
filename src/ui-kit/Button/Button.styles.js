@@ -254,11 +254,11 @@ const Content = withTheme(styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  gap: ${themeGet('space.xxs')};
   ${system}
 `);
 
 const Icon = withTheme(styled.div`
-  padding-left: ${themeGet('space.xxs')};
   display: flex;
   justify-content: center;
   align-items: center;

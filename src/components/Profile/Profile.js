@@ -224,26 +224,29 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                 {currentChurch?.mobileAppStoreUrl ? (
                   <Link to={currentChurch?.mobileAppStoreUrl}>
                     <Button
-                      variant="secondary"
                       title="Get it on iOS"
-                      size="small"
-                      color="base.secondary"
-                      borderRadius="100px"
-                      icon={<AppleLogo weight="fill" size="24" />}
                       mr="s"
+                      icon={<AppleLogo weight="fill" size="24" />}
+                      variant="secondary"
+                      size="small"
+                      color="base.white"
+                      backgroundColor="base.black"
+                      borderRadius="100px"
+                      flexDirection="row-reverse"
                     />
                   </Link>
                 ) : null}
                 {currentChurch?.mobilePlayStoreUrl ? (
                   <Link to={currentChurch?.mobilePlayStoreUrl}>
                     <Button
-                      variant="secondary"
                       title="Get it on Android"
-                      size="small"
-                      type="button"
-                      color="base.secondary"
-                      borderRadius="100px"
                       icon={<AndroidLogo weight="fill" size="24" />}
+                      variant="secondary"
+                      size="small"
+                      color="base.white"
+                      backgroundColor="base.black"
+                      borderRadius="100px"
+                      flexDirection="row-reverse"
                     />
                   </Link>
                 ) : null}
