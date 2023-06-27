@@ -64,7 +64,8 @@ const Wrapper = withTheme(styled.div`
     background: ${themeGet('colors.base.white')};
     box-shadow: 0px 60px 48px rgba(0, 0, 0, 0.09);
     transition: 0s;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     ${showPanel}
   }
 
