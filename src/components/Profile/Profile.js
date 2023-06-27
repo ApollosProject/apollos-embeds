@@ -115,14 +115,22 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     />
                   ) : (
                     <Box color="base.primary">
-                      <UserCirclePlus size={84} weight="fill" />
+                      <UserCirclePlus
+                        size={84}
+                        weight="fill"
+                        color={themeGet('colors.base.primary')({ theme })}
+                      />
                     </Box>
                   )}
                   {currentUser && (
                     <Box>
                       {!imgSrc && (
                         <Styled.UploadIcon>
-                          <Camera size={12} weight="fill" />
+                          <Camera
+                            size={12}
+                            weight="fill"
+                            color={themeGet('colors.base.white')({ theme })}
+                          />
                           <input
                             type="file"
                             accept="image/*"

@@ -47,7 +47,7 @@ const CloseIcon = withTheme(styled.div`
 
 const UploadIcon = withTheme(styled.label`
   align-items: center;
-  background: ${themeGet('colors.text.action')};
+  background: ${themeGet('colors.base.black')};
   border-radius: 50%;
   bottom: 0;
   color: ${themeGet('colors.base.white')};
