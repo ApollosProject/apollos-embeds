@@ -535,7 +535,9 @@ export default function Autocomplete({
               </div>
             ) : null;
           })}
-        {autocompleteState.isOpen && autocompleteState.query === '' ? (
+        {autocompleteState.isOpen &&
+        autocompleteState.query === '' &&
+        searchState.searchFeed ? (
           <Box className="empty-feed">
             <FeatureFeedProvider
               Component={Feed}
