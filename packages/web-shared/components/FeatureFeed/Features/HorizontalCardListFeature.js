@@ -20,6 +20,7 @@ import {
   set as setModal,
   useModal,
 } from '../../../providers/ModalProvider';
+import { CaretRight } from 'phosphor-react';
 
 import Carousel from 'react-multi-carousel';
 
@@ -78,11 +79,8 @@ function HorizontalCardListFeature(props = {}) {
           title: props?.feature?.title,
         })
       );
-      setSearchParams(
-        `?id=${getURLFromType(
-          props?.feature?.primaryAction.relatedNode
-        )}?action=viewall`
-      );
+      const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
+      setSearchParams({ id, action: 'viewall' });
     }
   };
 
@@ -99,9 +97,10 @@ function HorizontalCardListFeature(props = {}) {
         {props?.feature?.cards?.length >= SHOW_VIEW_ALL_LIMIT &&
         props?.feature?.primaryAction ? (
           <Button
-            title="View All >"
+            title="View All"
             variant="link"
             onClick={handlePrimaryActionPress}
+            icon={<CaretRight size={18} weight="bold" />}
           />
         ) : null}
       </Box>

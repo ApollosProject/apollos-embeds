@@ -115,14 +115,22 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     />
                   ) : (
                     <Box color="base.primary">
-                      <UserCirclePlus size={84} weight="fill" />
+                      <UserCirclePlus
+                        size={84}
+                        weight="fill"
+                        color={themeGet('colors.base.primary')({ theme })}
+                      />
                     </Box>
                   )}
                   {currentUser && (
                     <Box>
                       {!imgSrc && (
                         <Styled.UploadIcon>
-                          <Camera size={12} weight="fill" />
+                          <Camera
+                            size={12}
+                            weight="fill"
+                            color={themeGet('colors.base.white')({ theme })}
+                          />
                           <input
                             type="file"
                             accept="image/*"
@@ -220,34 +228,36 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     'Explore your faith and build daily habits with our online community.'}
                 </BodyText>
               </Box>
-              <Box display="flex" justifyContent="center">
+              <Styled.AppLinks>
                 {currentChurch?.mobileAppStoreUrl ? (
                   <Link to={currentChurch?.mobileAppStoreUrl}>
                     <Button
-                      variant="secondary"
                       title="Get it on iOS"
-                      size="small"
-                      color="base.secondary"
-                      borderRadius="100px"
                       icon={<AppleLogo weight="fill" size="24" />}
-                      mr="s"
+                      variant="secondary"
+                      size="small"
+                      color="base.white"
+                      backgroundColor="base.black"
+                      borderRadius="100px"
+                      flexDirection="row-reverse"
                     />
                   </Link>
                 ) : null}
                 {currentChurch?.mobilePlayStoreUrl ? (
                   <Link to={currentChurch?.mobilePlayStoreUrl}>
                     <Button
-                      variant="secondary"
                       title="Get it on Android"
-                      size="small"
-                      type="button"
-                      color="base.secondary"
-                      borderRadius="100px"
                       icon={<AndroidLogo weight="fill" size="24" />}
+                      variant="secondary"
+                      size="small"
+                      color="base.white"
+                      backgroundColor="base.black"
+                      borderRadius="100px"
+                      flexDirection="row-reverse"
                     />
                   </Link>
                 ) : null}
-              </Box>
+              </Styled.AppLinks>
             </>
           ) : null}
         </Card>

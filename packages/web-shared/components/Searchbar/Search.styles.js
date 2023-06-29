@@ -51,7 +51,7 @@ const Wrapper = withTheme(styled.div`
   height: 60px;
   justify-content: space-between;
   width: 100%;
-  z-index: 9999;
+  z-index: 100;
   ${showDropdown}
 
   ${system}
@@ -62,9 +62,10 @@ const Wrapper = withTheme(styled.div`
     width: 100%;
     left: 0;
     background: ${themeGet('colors.base.white')};
-    box-shadow: ${themeGet('shadows.medium')};
+    box-shadow: ${themeGet('shadows.mediumBottom')};
     transition: 0s;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
     ${showPanel}
   }
 

@@ -34,7 +34,7 @@ function ContentCard(props = {}) {
   return (
     <Box
       flex={1}
-      m={'0 10px'}
+      m={'0 10px 0 1px'}
       cursor={props.onClick ? 'pointer' : 'default'}
       borderRadius="xl"
       overflow="hidden"

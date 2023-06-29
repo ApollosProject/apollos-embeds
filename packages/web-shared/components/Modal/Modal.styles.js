@@ -15,7 +15,7 @@ const Modal = withTheme(styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 99999;
+  z-index: 9999;
   transition: opacity 0.3s ease;
   ${system};
 `);
@@ -29,6 +29,9 @@ const ModalContainer = withTheme(styled.div`
   background-color: #ffffff;
   overflow-y: scroll;
   padding: 40px;
+  @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+    padding: 16px;
+  }
   ${system};
 `);
 
