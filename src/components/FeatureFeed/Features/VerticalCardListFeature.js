@@ -14,7 +14,7 @@ import {
 } from '../../../providers/ModalProvider';
 
 import VerticalCardList from './VerticalCardListFeature.styles';
-
+import { CaretRight } from 'phosphor-react';
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
@@ -63,9 +63,10 @@ function VerticalCardListFeature(props = {}) {
         </H3>
         {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
           <Button
-            title="View All >"
+            title="View All"
             variant="link"
             onClick={handlePrimaryActionPress}
+            icon={<CaretRight size={18} weight="bold" />}
           />
         ) : null}
       </Box>
