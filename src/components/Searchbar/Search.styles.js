@@ -62,7 +62,7 @@ const Wrapper = withTheme(styled.div`
     width: 100%;
     left: 0;
     background: ${themeGet('colors.base.white')};
-    box-shadow: 0px 60px 48px rgba(0, 0, 0, 0.09);
+    box-shadow: ${themeGet('shadows.mediumBottom')};
     transition: 0s;
     overflow-y: scroll;
     overflow-x: hidden;
