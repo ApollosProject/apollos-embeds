@@ -51,7 +51,7 @@ function FeatureFeedListGrid(props = {}) {
       >
         {props.data?.features[0]?.cards?.map((item, index) => (
           <ContentCard
-            key={item.title}
+            key={index}
             image={item.coverImage}
             title={item.title}
             summary={item.summary}

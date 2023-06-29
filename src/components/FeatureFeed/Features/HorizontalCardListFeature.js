@@ -78,11 +78,8 @@ function HorizontalCardListFeature(props = {}) {
           title: props?.feature?.title,
         })
       );
-      setSearchParams(
-        `?id=${getURLFromType(
-          props?.feature?.primaryAction.relatedNode
-        )}?action=viewall`
-      );
+      const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
+      setSearchParams({ id, action: 'viewall' });
     }
   };
 
