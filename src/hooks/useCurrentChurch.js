@@ -8,6 +8,7 @@ export const GET_CURRENT_CHURCH = gql`
       name
       slug
       theme
+      logo
     }
   }
 `;
