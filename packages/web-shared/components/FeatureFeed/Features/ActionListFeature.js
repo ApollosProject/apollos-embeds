@@ -13,7 +13,6 @@ function ActionListFeature(props = {}) {
       search: `?id=${getURLFromType(item.relatedNode)}`,
     });
   };
-
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">

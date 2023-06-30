@@ -21,7 +21,6 @@ const imageStyles = ({ size, fill, theme }) => {
 
 const Image = withTheme(styled.img`
   resizemode: 'contain';
-
   ${imageStyles};
   ${system};
 `);

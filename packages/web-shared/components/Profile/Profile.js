@@ -219,8 +219,12 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                   borderRadius="xl"
                   mb="s"
                   mt={utils.rem('90px')}
+                  overflow="hidden"
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
                 >
-                  <Logo />
+                  <Logo source={currentChurch?.logo} />
                 </Box>
                 <H4 mb="xxs">{rest.adTitle || 'Stay Connected'}</H4>
                 <BodyText maxWidth="285px" textAlign="center" mb="l">

@@ -27,6 +27,7 @@ import {
 } from '../ui-kit';
 import { useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
+import InteractWhenLoaded from './InteractWhenLoaded';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
@@ -121,6 +122,11 @@ function ContentSingle(props = {}) {
   return (
     <>
       <Box margin="0 auto">
+        <InteractWhenLoaded
+          loading={props.loading}
+          nodeId={props.data.id}
+          action={'VIEW'}
+        />
         <Box mb="base" borderRadius="xl" overflow="hidden">
           {props.data?.videos[0] ? (
             <VideoPlayer
