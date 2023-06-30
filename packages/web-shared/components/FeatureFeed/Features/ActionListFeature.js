@@ -13,6 +13,11 @@ function ActionListFeature(props = {}) {
       search: `?id=${getURLFromType(item.relatedNode)}`,
     });
   };
+
+  if (props?.feature?.actions?.length === 0 || !props?.feature?.actions) {
+    return null;
+  }
+
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">

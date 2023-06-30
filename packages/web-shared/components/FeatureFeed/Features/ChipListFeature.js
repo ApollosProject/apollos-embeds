@@ -8,6 +8,10 @@ import { ArrowUpRight } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 
 function ChipListFeature(props = {}) {
+  if (props?.feature?.chips?.length === 0 || !props?.feature?.chips) {
+    return null;
+  }
+
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">
