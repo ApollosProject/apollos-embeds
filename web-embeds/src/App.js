@@ -1,7 +1,7 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import { FeatureFeed, Search } from './embeds';
-import { AppProvider } from './providers';
+import { FeatureFeed, Search } from '@apollosproject/web-shared/embeds';
+import { AppProvider } from '@apollosproject/web-shared/providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './error-page';
 

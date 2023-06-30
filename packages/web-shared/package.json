@@ -1,0 +1,17 @@
+{
+  "name": "web-shared",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "@babel/preset-react": "^7.22.5"
+  },
+  "peerDependencies": {
+    "@apollo/client": "*",
+    "prop-types": "*",
+    "react": "*",
+    "styled-components": "*",
+    "styled-system": "*"
+  }
+}
