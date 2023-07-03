@@ -54,19 +54,17 @@ function ResourceCard({
   );
 
   //If leadingAsset is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
-  const LeadingAsset = leadingAsset?.sources ? (
+  const LeadingAsset = leadingAsset?.sources?.[0]?.uri ? (
     <Styled.LeadingAsset>
       <Box
         width="100%"
         height="100%"
         backgroundSize="cover"
         backgroundPosition="center"
-        backgroundImage={`url(${
-          leadingAsset?.sources[0].uri ? leadingAsset.sources[0].uri : null
-        })`}
+        backgroundImage={`url(${leadingAsset.sources[0].uri})`}
       />
     </Styled.LeadingAsset>
-  ) : leadingAsset ? (
+  ) : React.isValidElement(leadingAsset) ? (
     leadingAsset
   ) : (
     Clip
