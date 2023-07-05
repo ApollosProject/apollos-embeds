@@ -82,7 +82,15 @@ const Modal = (props = {}) => {
               </Box>
             </Box>
             <Breadcrumbs />
-            <Box width="100%">{state.content}</Box>
+            <Box
+              width={{
+                _: '100%',
+                md: '750px',
+                lg: '1180px',
+              }}
+            >
+              {state.content}
+            </Box>
           </Styled.ModalContainer>
         </Styled.Modal>
       ) : null}
