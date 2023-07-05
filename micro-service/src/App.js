@@ -5,6 +5,8 @@ import { AppProvider } from '@apollosproject/web-shared/providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import { Button, Box, BodyText } from '@apollosproject/web-shared/ui-kit';
+import { Logo } from '@apollosproject/web-shared/components';
+import { useCurrentChurch } from '@apollosproject/web-shared/hooks';
 import Styled from './App.styles';
 
 import ErrorPage from './error-page';
@@ -15,6 +17,11 @@ Sentry.init({
   // We recommend adjusting this value in production.
   tracesSampleRate: 1.0,
 });
+
+function ChurchLogo(props) {
+  const { currentChurch } = useCurrentChurch();
+  return <Logo source={currentChurch?.logo} {...props} />;
+}
 
 function App(props) {
   const subdomain =
@@ -47,6 +54,12 @@ function App(props) {
   if (churchSlug) {
     return (
       <AppProvider church={churchSlug} modal="true">
+        <ChurchLogo
+          display="flex"
+          alignItems="center"
+          justifyContent="center"
+          marginTop="40px"
+        />
         <RouterProvider router={router} />
       </AppProvider>
     );
