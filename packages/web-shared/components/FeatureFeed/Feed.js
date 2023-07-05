@@ -59,16 +59,7 @@ const Feed = (props) => {
 
   if (!renderedFeatures || !renderedFeatures?.length) {
     return (
-      <Box
-        display="flex"
-        flex={1}
-        justifyContent="center"
-        alignContent="center"
-        alignItems="center"
-        height="100%"
-        width="100%"
-        flexGrow={1}
-      >
+      <Box textAlign="center">
         <h4>Sorry, something went wrong.</h4>
         <p>No features found in this feed.</p>
       </Box>
