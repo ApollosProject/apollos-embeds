@@ -4,6 +4,9 @@ import { FeatureFeed } from '@apollosproject/web-shared/embeds';
 import { AppProvider } from '@apollosproject/web-shared/providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
+import { Button, Box, BodyText } from '@apollosproject/web-shared/ui-kit';
+import Styled from './App.styles';
+
 import ErrorPage from './error-page';
 
 Sentry.init({
@@ -29,7 +32,12 @@ function App(props) {
     {
       path: '/',
       element: (
-        <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
+        <Styled.FeedWrapper>
+          <FeatureFeed
+            featureFeed={`${type}:${randomId}`}
+            church={churchSlug}
+          />
+        </Styled.FeedWrapper>
       ),
       errorElement: <ErrorPage />,
     },
@@ -49,7 +57,38 @@ function App(props) {
     `⚠️  Feature Feed could not render feed of id "FeatureFeed:5aae43e6-3526-4cd2-8dfe-771d2ce8a333"`
   );
 
-  return <p>Micro Service</p>;
+  return (
+    <AppProvider>
+      <Styled.Main
+        pt={{ _: 'base', md: 'xl' }}
+        px={{ _: 'base', md: 'xl' }}
+        display="flex"
+        flexDirection={{ _: 'column', md: 'row' }}
+        m={{ _: 's', md: 'l' }}
+        alignItems="center"
+      >
+        <Styled.Content>
+          <Styled.Title mb="base">
+            Discover <br />
+            <span>Apollos Preview</span>
+          </Styled.Title>
+          <BodyText>
+            Ready to experience the dynamic features of an Apollos feed or app?
+            Head over to the Apollos Admin for your exclusive access link.
+          </BodyText>
+          <Button
+            mt="l"
+            justifySelf="center"
+            title="Start ->"
+            onClick={() => {}}
+          />
+        </Styled.Content>
+        <Box>
+          <Box as="img" src={'./apollos-mock-up.png'} />
+        </Box>
+      </Styled.Main>
+    </AppProvider>
+  );
 }
 
 export default App;
