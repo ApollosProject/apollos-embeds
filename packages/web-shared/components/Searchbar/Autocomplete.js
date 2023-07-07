@@ -192,6 +192,9 @@ export default function Autocomplete({
       dispatch(openModal());
     }
   };
+  const handleStaticActionPress = (item) => {
+    window.location.href = item.url;
+  };
   const navigate = useNavigate();
   const searchState = useSearchState();
   const inputRef = useRef(null);
@@ -515,7 +518,12 @@ export default function Autocomplete({
                         <ResourceCard
                           leadingAsset={item?.coverImage}
                           title={item?.title}
-                          onClick={() => handleActionPress(item)}
+                          onClick={() => {
+                            if (collection.source.sourceId === 'pages') {
+                              return handleStaticActionPress(item);
+                            }
+                            return handleActionPress(item);
+                          }}
                           background="none"
                         />
                       </Box>
