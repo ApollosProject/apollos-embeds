@@ -75,10 +75,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/runtime": "^7.22.5",
     "babel-plugin-module-resolver": "^5.0.0",
-    "babel-plugin-styled-components": "^2.1.4",
-    "parcel": "^2.8.3",
-    "parcel-bundler": "^1.8.1",
-    "parcel-reporter-static-files-copy": "^1.5.0"
+    "babel-plugin-styled-components": "^2.1.4"
   },
   "targets": {
     "global": {
