@@ -427,7 +427,6 @@ export default function Autocomplete({
         className="aa-Panel"
         dropdown={autocompleteState.isOpen}
         {...autocomplete.getPanelProps({})}
-        borderRadius="0px 0px 15px 15px"
       >
         {autocompleteState.isOpen && <div id="panel-top"></div>}
         {autocompleteState.isOpen &&

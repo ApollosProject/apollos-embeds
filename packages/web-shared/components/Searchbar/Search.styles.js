@@ -66,6 +66,7 @@ const Wrapper = withTheme(styled.div`
     transition: 0s;
     overflow-y: scroll;
     overflow-x: hidden;
+    border-radius: 0px 0px 15px 15px;
     ${showPanel}
   }
 
