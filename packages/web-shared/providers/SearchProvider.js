@@ -8,6 +8,7 @@ const SearchDispatchContext = createContext();
 const initialState = {
   church: null,
   searchFeed: null,
+  loading: true,
 };
 
 // Define the actionTypes that can be performed on the search state
@@ -24,7 +25,7 @@ const set = (payload) => ({
 const reducer = (state, action) => {
   switch (action.type) {
     case actionTypes.set:
-      return { ...state, church: action.payload };
+      return { ...state, ...action.payload };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

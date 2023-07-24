@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { ThemeProvider as SCThemeProvider, withTheme } from 'styled-components';
 import defaultTheme from '../_config/theme';
 import { useCurrentChurch } from '../../hooks';
+import { useSearch, set } from '../../providers/SearchProvider';
 
 function ThemeProvider(props) {
   const [_colorScheme, setColorScheme] = useState('light');
@@ -25,7 +26,16 @@ function ThemeProvider(props) {
       },
     },
   });
-  const { currentChurch } = useCurrentChurch();
+  const { currentChurch, loading } = useCurrentChurch();
+  const [state, dispatch] = useSearch();
+
+  useEffect(() => {
+    dispatch(
+      set({
+        loading: loading,
+      })
+    );
+  }, [loading]);
 
   useEffect(() => {
     if (currentChurch && currentChurch.theme) {
