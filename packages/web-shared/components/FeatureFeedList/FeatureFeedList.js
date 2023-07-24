@@ -6,21 +6,7 @@ import { Feed } from '..';
 import { Box, Loader } from '../../ui-kit';
 
 import FeatureFeedListGrid from './FeatureFeedListGrid';
-import styled, { keyframes } from 'styled-components';
-
-const fade = keyframes`
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-`;
-
-const FeedBox = styled.div`
-  animation: 0.3s linear ${fade};
-`;
+import Styled from './FeatureFeedList.styles';
 
 const FeatureFeedList = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,9 +30,9 @@ const FeatureFeedList = (props) => {
     searchParams.get('action') === 'viewall' ? FeatureFeedListGrid : Feed;
 
   return (
-    <FeedBox>
+    <Styled.Feed>
       <FeatureListComponent {...props} />
-    </FeedBox>
+    </Styled.Feed>
   );
 };
 
