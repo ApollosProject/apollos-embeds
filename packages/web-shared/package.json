@@ -12,6 +12,7 @@
     "prop-types": "*",
     "react": "*",
     "styled-components": "*",
-    "styled-system": "*"
+    "styled-system": "*",
+    "react-transition-group": "*"
   }
 }
