@@ -23,7 +23,7 @@ function App(props) {
   const WidgetComponent = WidgetComponentMap[props.type];
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: '*',
       element: (
         <WidgetComponent
           featureFeed={props.featureFeed}
