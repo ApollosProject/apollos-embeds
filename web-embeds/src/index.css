@@ -7,6 +7,14 @@
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+.apollos-widget  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .apollos-widget img {
   display: block;
   max-width: 100%;
@@ -16,5 +24,9 @@
   color: inherit;
   text-decoration: none;
   transition: color 0.3s ease-in-out;
+}
+
+.apollos-widget input:focus-visible {
+  outline: none;
 }
 

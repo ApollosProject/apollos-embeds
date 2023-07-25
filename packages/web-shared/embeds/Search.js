@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import { Searchbar } from '../components';
 
 import {
@@ -15,8 +17,10 @@ import {
   Modal,
 } from '../components';
 import { useModalState } from '../providers/ModalProvider';
+import { useSearchState } from '../providers/SearchProvider';
 import { Box } from '../ui-kit';
-import { useSearchParams } from 'react-router-dom';
+
+import Styled from './Search.styles';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
@@ -78,14 +82,22 @@ function RenderFeatures(props) {
 }
 
 const Search = (props) => {
-  const state = useModalState();
+  const modalState = useModalState();
+  const searchState = useSearchState();
 
   return (
     <Box>
-      {state.modal ? (
+      {modalState.modal ? (
         <Box>
           <Modal />
-          <Searchbar width="100%" />
+          <Styled.Search
+            in={!searchState.loading}
+            timeout={300}
+            classNames="fade"
+            unmountOnExit
+          >
+            <Searchbar width="100%" />
+          </Styled.Search>
         </Box>
       ) : (
         <>
