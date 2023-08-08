@@ -404,7 +404,6 @@ export default function Autocomplete({
     };
   }, [autocompleteState.isOpen, autocomplete, setShowTextPrompt]);
 
-  console.log(autocompleteState.collections);
   const searchResults = [];
   const pluginResults = [];
 
@@ -421,8 +420,6 @@ export default function Autocomplete({
 
   const orderedSearchResults = [searchResults[1], searchResults[0]];
 
-  console.log("searchResults", searchResults);
-  console.log("pluginResults", pluginResults);
   // ...CUSTOM RENDERER
   return (
     <div className="aa-Autocomplete" {...containerProps}>
