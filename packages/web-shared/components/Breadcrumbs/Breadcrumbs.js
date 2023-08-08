@@ -22,12 +22,21 @@ function Breadcrumbs(props = {}) {
     setSearchParams(`${url}`);
   }
 
+  const pathname = window.location.pathname;
+  const dynamicRoute = /^\/[a-z0-9-]+$/i;
+
   return (
     <Box display="flex" alignItems="center" mb="xl">
       {state.length > 0 ? (
         <Button
           variant="link"
-          title={`Featured`}
+          title={
+            dynamicRoute.test(pathname)
+              ? `${pathname.slice(1).charAt(0).toUpperCase()}${pathname.slice(
+                  2
+                )}`
+              : 'Home'
+          }
           onClick={() => handleBreadClick({ id: -1, url: '' })}
         />
       ) : null}

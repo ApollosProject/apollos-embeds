@@ -48,7 +48,7 @@ const Searchbar = (props = {}) => {
           width: '150px',
         }}
       >
-        Find what's next
+        What can we help you find?
       </span>
     </Styled.TextPrompt>
   );
