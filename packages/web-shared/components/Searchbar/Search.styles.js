@@ -78,6 +78,9 @@ const Wrapper = withTheme(styled.div`
   .aa-Form {
     border: none;
   }
+  .aa-Item {
+    border-radius: 0;
+  }
 `);
 
 const TextPrompt = withTheme(styled.div`

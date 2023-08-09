@@ -1,4 +1,5 @@
 import React from 'react';
+import { CaretRight } from 'phosphor-react';
 
 import { systemPropTypes } from '../_lib/system';
 import { Box } from '..';
@@ -15,19 +16,21 @@ function ResourceCard({
   // Default tailing icon
   const Arrow = (
     <svg
-      width="10"
-      height="18"
-      viewBox="0 0 10 18"
-      fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      fill="currentColor"
+      viewBox="0 0 256 256"
     >
-      <path
-        d="M1 1.5L8.5 9L1 16.5"
+      <rect width="256" height="256" fill="none"></rect>
+      <polyline
+        points="96 48 176 128 96 208"
+        fill="none"
         stroke="#AFAFB3"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="24"
+      ></polyline>
     </svg>
   );
 
@@ -67,7 +70,7 @@ function ResourceCard({
   ) : React.isValidElement(leadingAsset) ? (
     leadingAsset
   ) : (
-    Clip
+    <Styled.LeadingAsset>{Clip}</Styled.LeadingAsset>
   );
 
   return (
@@ -87,7 +90,7 @@ function ResourceCard({
             <Styled.Ellipse
               width={{
                 _: '100px',
-                sm: '150px',
+                sm: '250px',
                 md: '350px',
                 lg: '500px',
               }}
