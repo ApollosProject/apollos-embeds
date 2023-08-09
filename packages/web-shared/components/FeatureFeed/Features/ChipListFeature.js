@@ -15,7 +15,7 @@ function ChipListFeature(props = {}) {
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        {props.feature.title}
+        {props.feature.title || props.feature.subtitle}
       </Box>
       <Styled.List>
         {props.feature?.chips?.map(
