@@ -59,7 +59,7 @@ function VerticalCardListFeature(props = {}) {
     <Box pb="l" {...props}>
       <Box display="flex">
         <H3 flex="1" mb="xs">
-          {props.feature.title}
+          {props.feature.title || props.feature.subtitle}
         </H3>
         {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
           <Button

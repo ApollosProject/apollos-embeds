@@ -52,6 +52,7 @@ export const FEED_FEATURES = gql`
 
           ... on HorizontalCardListFeature {
             title
+            subtitle
             cards {
               id
               title
@@ -96,6 +97,7 @@ export const FEED_FEATURES = gql`
           }
           ... on VerticalCardListFeature {
             title
+            subtitle
             cards {
               id
               title
