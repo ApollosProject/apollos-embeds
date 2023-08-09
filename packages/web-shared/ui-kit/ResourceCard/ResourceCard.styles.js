@@ -6,19 +6,19 @@ import { system } from '../_lib/system';
 
 const ResourceCard = withTheme(styled.div`
   display: flex;
-  padding: ${themeGet('space.xs')};
+  padding: ${themeGet('space.xxs')} ${themeGet('space.xs')};
+  padding-right: ${themeGet('space.s')};
   border-radius: 8px;
   background: ${themeGet('colors.neutral.gray6')};
   align-items: center;
   width: 100%;
-  height: 72px;
   gap: ${themeGet('space.xs')};
   ${system};
 `);
 
 const LeadingAsset = withTheme(styled.div`
-  height: 48px;
-  width: 48px;
+  height: 32px;
+  width: 32px;
   display: flex;
   justify-content: center;
   align-items: center;
