@@ -1,8 +1,27 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
+import { withTheme } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
+import { themeGet } from "@styled-system/theme-get";
 
-import { system } from '../../ui-kit/_lib/system';
+import { system } from "../../ui-kit/_lib/system";
+
+const slideIn = keyframes`
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+`;
+
+// Define a keyframe animation for sliding out
+const slideOut = keyframes`
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(100%);
+  }
+`;
 
 const Modal = withTheme(styled.div`
   width: 100vw;
@@ -16,7 +35,8 @@ const Modal = withTheme(styled.div`
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: opacity 0.3s ease;
+  animation: ${(props) => (props.show ? slideIn : slideOut)} 0.3s ease-in-out;
+  transform: translateY(${(props) => (props.show ? "0" : "100%")});
   ${system};
 `);
 
@@ -29,7 +49,7 @@ const ModalContainer = withTheme(styled.div`
   background-color: #ffffff;
   overflow-y: scroll;
   padding: 40px;
-  @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+  @media screen and (max-width: ${themeGet("breakpoints.sm")}) {
     padding: 16px;
   }
   ${system};
@@ -49,7 +69,7 @@ const Icon = withTheme(styled.div`
   width: 32px;
 
   &:hover {
-    color: ${themeGet('colors.base.secondary')};
+    color: ${themeGet("colors.base.secondary")};
     cursor: pointer;
   }
   ${system};
