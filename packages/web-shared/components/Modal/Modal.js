@@ -25,7 +25,7 @@ const Modal = (props = {}) => {
   useEffect(() => {
     // Watch for changes to the `id` search param
     if (searchParams.get("id")) {
-      // dispatch(openModal());
+      dispatch(openModal());
       dispatch(setModal(searchParams.get("id")));
     }
     if (searchParams.get("id") === null) {
