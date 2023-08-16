@@ -70,8 +70,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   return (
     <>
       <Styled.Profile>
-        <Card
-          p="xs"
+        <Styled.ProfileCard
           borderRadius={{
             _: '0%',
             sm: 'xxl',
@@ -81,8 +80,6 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             sm: '350px',
             md: '520px',
           }}
-          height="100%"
-          border="1px solid rgba(0, 0, 0, 0.1)"
         >
           <Box display="flex" alignItems="center" justifyContent="end">
             <Styled.CloseIcon onClick={handleCloseProfile}>
@@ -264,7 +261,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               </Styled.AppLinks>
             </>
           ) : null}
-        </Card>
+        </Styled.ProfileCard>
       </Styled.Profile>
       {showAuth && !state.token ? <AuthManager /> : null}
     </>
