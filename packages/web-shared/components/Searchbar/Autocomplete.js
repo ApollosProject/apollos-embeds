@@ -299,7 +299,7 @@ export default function Autocomplete({
         return [
           // (3) Use an Algolia index source.
           {
-            sourceId: "content",
+            sourceId: "pages",
             getItemInputValue({ item }) {
               return item.query;
             },
@@ -308,9 +308,10 @@ export default function Autocomplete({
                 searchClient,
                 queries: [
                   {
-                    indexName: `ContentItem_${searchState.church}`,
+                    indexName: `WebPages_Global`,
                     query,
                     params: {
+                      facetFilters: [`church:${searchState.church}`],
                       hitsPerPage: 4,
                       clickAnalytics: true,
                       // highlightPreTag: '<mark>',
@@ -325,7 +326,7 @@ export default function Autocomplete({
             },
           },
           {
-            sourceId: "pages",
+            sourceId: "content",
             getItemInputValue({ item }) {
               return item.query;
             },
@@ -334,10 +335,9 @@ export default function Autocomplete({
                 searchClient,
                 queries: [
                   {
-                    indexName: `WebPages_Global`,
+                    indexName: `ContentItem_${searchState.church}`,
                     query,
                     params: {
-                      facetFilters: [`church:${searchState.church}`],
                       hitsPerPage: 4,
                       clickAnalytics: true,
                       // highlightPreTag: '<mark>',
@@ -404,22 +404,6 @@ export default function Autocomplete({
     };
   }, [autocompleteState.isOpen, autocomplete, setShowTextPrompt]);
 
-  const searchResults = [];
-  const pluginResults = [];
-
-  // Loop through the array of objects and separate them based on id
-  autocompleteState.collections.forEach((item) => {
-    const { source } = item;
-
-    if (source.sourceId === "pages" || source.sourceId === "content") {
-      searchResults.push(item);
-    } else {
-      pluginResults.push(item);
-    }
-  });
-
-  const orderedSearchResults = [searchResults[1], searchResults[0]];
-
   // ...CUSTOM RENDERER
   return (
     <div className="aa-Autocomplete" {...containerProps}>
@@ -446,7 +430,7 @@ export default function Autocomplete({
       >
         {autocompleteState.isOpen && <div id="panel-top"></div>}
         {autocompleteState.isOpen &&
-          pluginResults.map((collection, index) => {
+          autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
             // Rendering of Query Suggestions
             if (
@@ -497,11 +481,7 @@ export default function Autocomplete({
                 </div>
               );
             }
-          })}
 
-        {autocompleteState.isOpen &&
-          orderedSearchResults.map((collection, index) => {
-            const { source, items } = collection;
             // Rendering of regular items
             return autocompleteState.query !== "" ? (
               <div key={`source-${index}`} className="aa-Source">
