@@ -1,17 +1,17 @@
-import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import React, { useEffect } from "react";
+import PropTypes from "prop-types";
+import format from "date-fns/format";
+import addMinutes from "date-fns/addMinutes";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
-import { getURLFromType, parseDescriptionLinks } from '../utils';
-import FeatureFeed from './FeatureFeed';
-import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
+import { getURLFromType, parseDescriptionLinks } from "../utils";
+import FeatureFeed from "./FeatureFeed";
+import FeatureFeedComponentMap from "./FeatureFeed/FeatureFeedComponentMap";
 import {
   add as addBreadcrumb,
   useBreadcrumbDispatch,
-} from '../providers/BreadcrumbProvider';
-import { set as setModal, useModal } from '../providers/ModalProvider';
+} from "../providers/BreadcrumbProvider";
+import { set as setModal, useModal } from "../providers/ModalProvider";
 
 import {
   Box,
@@ -24,10 +24,10 @@ import {
   MediaItem,
   BodyText,
   ShareButton,
-} from '../ui-kit';
-import { useVideoMediaProgress } from '../hooks';
-import VideoPlayer from './VideoPlayer';
-import InteractWhenLoaded from './InteractWhenLoaded';
+} from "../ui-kit";
+import { useVideoMediaProgress } from "../hooks";
+import VideoPlayer from "./VideoPlayer";
+import InteractWhenLoaded from "./InteractWhenLoaded";
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ function ContentSingle(props = {}) {
   useEffect(() => {
     if (!state.modal && invalidPage) {
       navigate({
-        pathname: '/',
+        pathname: "/",
       });
     }
   }, [invalidPage, navigate]);
@@ -92,7 +92,7 @@ function ContentSingle(props = {}) {
   const formattedPublishDate = props?.data?.publishDate
     ? format(
         addMinutes(publishDate, publishDate.getTimezoneOffset()),
-        'MMMM do, yyyy'
+        "MMMM do, yyyy"
       )
     : null;
 
@@ -104,7 +104,7 @@ function ContentSingle(props = {}) {
   );
 
   const handleActionPress = (item) => {
-    if (searchParams.get('id') !== getURLFromType(item)) {
+    if (searchParams.get("id") !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
@@ -125,7 +125,7 @@ function ContentSingle(props = {}) {
         <InteractWhenLoaded
           loading={props.loading}
           nodeId={props.data.id}
-          action={'VIEW'}
+          action={"VIEW"}
         />
         <Box mb="base" borderRadius="xl" overflow="hidden">
           {props.data?.videos[0] ? (
@@ -148,13 +148,13 @@ function ContentSingle(props = {}) {
           <Box
             display="flex"
             flexDirection={{
-              _: 'column',
-              md: 'row',
+              _: "column",
+              md: "row",
             }}
             justifyContent="space-between"
             alignItems={{
-              _: 'start',
-              md: 'center',
+              _: "start",
+              md: "center",
             }}
             mb="s"
           >
@@ -166,7 +166,7 @@ function ContentSingle(props = {}) {
                 {parentChannel.name ? (
                   <BodyText
                     color="text.secondary"
-                    mb={title && !hasChildContent ? 'xxs' : ''}
+                    mb={title && !hasChildContent ? "xxs" : ""}
                   >
                     {parentChannel.name}
                   </BodyText>
@@ -183,8 +183,8 @@ function ContentSingle(props = {}) {
             </Box>
             <Box
               mt={{
-                _: 'xs',
-                md: '0',
+                _: "xs",
+                md: "0",
               }}
             >
               <ShareButton contentTitle={title} />
@@ -194,8 +194,8 @@ function ContentSingle(props = {}) {
           {/* Children Count */}
           {showEpisodeCount ? (
             <H4 color="text.secondary" mr="l">
-              {childContentItems.length}{' '}
-              {`Episode${childContentItems.length === 1 ? '' : 's'}`}
+              {childContentItems.length}{" "}
+              {`Episode${childContentItems.length === 1 ? "" : "s"}`}
             </H4>
           ) : null}
           {htmlContent ? (
@@ -217,13 +217,13 @@ function ContentSingle(props = {}) {
               display="grid"
               gridGap="30px"
               gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
+                _: "repeat(1, minmax(0, 1fr));",
+                md: "repeat(2, minmax(0, 1fr));",
+                lg: "repeat(3, minmax(0, 1fr));",
               }}
               padding={{
-                _: '30px',
-                md: '0',
+                _: "30px",
+                md: "0",
               }}
             >
               {childContentItems?.map((item, index) => (
@@ -247,13 +247,13 @@ function ContentSingle(props = {}) {
               display="grid"
               gridGap="30px"
               gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
+                _: "repeat(1, minmax(0, 1fr));",
+                md: "repeat(2, minmax(0, 1fr));",
+                lg: "repeat(3, minmax(0, 1fr));",
               }}
               padding={{
-                _: '30px',
-                md: '0',
+                _: "30px",
+                md: "0",
               }}
             >
               {siblingContentItems?.map((item, index) => (
