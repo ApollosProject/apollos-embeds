@@ -49,6 +49,7 @@ const ModalContainer = withTheme(styled.div`
   background-color: #ffffff;
   overflow-y: scroll;
   padding: 40px;
+  box-sizing: border-box;
   @media screen and (max-width: ${themeGet("breakpoints.sm")}) {
     padding: 16px;
   }
