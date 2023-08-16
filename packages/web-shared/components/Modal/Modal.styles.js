@@ -63,6 +63,8 @@ const Icon = withTheme(styled.div`
   border-radius: 50%;
   display: flex;
   height: 32px;
+  min-height: 32px;
+  min-width: 32px;
   justify-content: center;
   line-height: 0;
   padding: 8px;
