@@ -31,11 +31,13 @@ const showPanel = ({ dropdown }) => {
   if (dropdown) {
     return css`
       @media screen and (min-width: ${themeGet('breakpoints.sm')}) {
-        height: 600px;
+        max-height: 600px;
+        padding-bottom: 15px;
       }
       @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
         height: 100vh;
         z-index: 1000;
+        padding-bottom: 15px;
       }
     `;
   } else {
