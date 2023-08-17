@@ -4,43 +4,43 @@ import React, {
   useMemo,
   createElement,
   Fragment,
-} from "react";
-import { useSearchParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+} from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   ClockCounterClockwise,
   MagnifyingGlass,
   CaretDown,
   CaretRight,
   X,
-} from "phosphor-react";
+} from 'phosphor-react';
 
-import algoliasearch from "algoliasearch/lite";
-import { createAutocomplete } from "@algolia/autocomplete-core";
+import algoliasearch from 'algoliasearch/lite';
+import { createAutocomplete } from '@algolia/autocomplete-core';
 import {
   getAlgoliaResults,
   parseAlgoliaHitHighlight,
-} from "@algolia/autocomplete-preset-algolia";
-import { createQuerySuggestionsPlugin } from "@algolia/autocomplete-plugin-query-suggestions";
-import { createLocalStorageRecentSearchesPlugin } from "@algolia/autocomplete-plugin-recent-searches";
-import "@algolia/autocomplete-theme-classic";
+} from '@algolia/autocomplete-preset-algolia';
+import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
+import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
+import '@algolia/autocomplete-theme-classic';
 
-import { FeatureFeedProvider } from "../../providers";
-import Feed from "../FeatureFeed";
-import { ResourceCard, Box } from "../../ui-kit";
+import { FeatureFeedProvider } from '../../providers';
+import Feed from '../FeatureFeed';
+import { ResourceCard, Box } from '../../ui-kit';
 
-import { useSearchState } from "../../providers/SearchProvider";
-import { getURLFromType } from "../../utils";
-import Styled from "./Search.styles";
+import { useSearchState } from '../../providers/SearchProvider';
+import { getURLFromType } from '../../utils';
+import Styled from './Search.styles';
 import {
   add as addBreadcrumb,
   useBreadcrumbDispatch,
-} from "../../providers/BreadcrumbProvider";
+} from '../../providers/BreadcrumbProvider';
 import {
   open as openModal,
   set as setModal,
   useModal,
-} from "../../providers/ModalProvider";
+} from '../../providers/ModalProvider';
 
 const MOBILE_BREAKPOINT = 428;
 const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
@@ -52,7 +52,7 @@ function Hit({ hit }) {
 }
 
 // Highlight text render
-function Highlight({ hit, attribute, tagName = "mark" }) {
+function Highlight({ hit, attribute, tagName = 'mark' }) {
   return createElement(
     Fragment,
     {},
@@ -70,7 +70,7 @@ function Highlight({ hit, attribute, tagName = "mark" }) {
 
 // Recent Searches Index Definition
 const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
-  key: "navbar",
+  key: 'navbar',
   transformSource({ source }) {
     return {
       ...source,
@@ -177,7 +177,7 @@ export default function Autocomplete({
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
-    if (searchParams.get("id") !== getURLFromType(item)) {
+    if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
@@ -214,11 +214,11 @@ export default function Autocomplete({
       if (!hoverElement) {
         return;
       }
-      hoverElement.addEventListener("mouseover", function () {
+      hoverElement.addEventListener('mouseover', function () {
         parentElements.forEach(function (parentElement) {
           const children = parentElement.querySelectorAll(childClassName);
           for (let i = 0; i < children.length; i++) {
-            children[i].setAttribute("aria-selected", "false");
+            children[i].setAttribute('aria-selected', 'false');
           }
         });
       });
@@ -234,7 +234,7 @@ export default function Autocomplete({
         _highLightResult: { label: { value: value } },
       });
     }
-    autocomplete.setQuery("");
+    autocomplete.setQuery('');
     autocomplete.refresh();
   };
 
@@ -244,15 +244,15 @@ export default function Autocomplete({
     setAutocompleteState(updatedAutocompleteState);
 
     autocomplete.setIsOpen(!autocompleteState.isOpen);
-    inputRef.current?.[autocompleteState.isOpen ? "blur" : "focus"]();
+    inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
   };
 
   // (Desktop Specific Behavior): Hitting enter scrolls dropdown to results
   const scrollToResults = (event) => {
-    const resultsElement = document.getElementById("results");
+    const resultsElement = document.getElementById('results');
     event.preventDefault();
     if (resultsElement) {
-      resultsElement.scrollIntoView({ behavior: "smooth" });
+      resultsElement.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -278,28 +278,35 @@ export default function Autocomplete({
     return createAutocomplete({
       openOnFocus: true,
       plugins: [querySuggestionsPlugin, recentSearchesPlugin],
+      shouldPanelOpen({ state }) {
+        return state.query !== '' || state.collections?.length > 0;
+      },
       onStateChange({ state, ...props }) {
         // (Mobile Specific Behavior): New keystroke resets the list view scroll to the top
         const panelElement =
           window.innerWidth < MOBILE_BREAKPOINT &&
           state.query !== props.prevState.query
-            ? document.getElementById("panel-top")
+            ? document.getElementById('panel-top')
             : null;
 
         if (panelElement) {
           panelElement.scrollIntoView({
-            behavior: "instant",
-            block: "start",
+            behavior: 'instant',
+            block: 'start',
           });
         }
         // (2) Synchronize the Autocomplete state with the React state.
         setAutocompleteState(state);
       },
-      getSources() {
+      getSources({ query }) {
+        if (!query) {
+          return [];
+        }
+
         return [
           // (3) Use an Algolia index source.
           {
-            sourceId: "pages",
+            sourceId: 'pages',
             getItemInputValue({ item }) {
               return item.query;
             },
@@ -326,7 +333,7 @@ export default function Autocomplete({
             },
           },
           {
-            sourceId: "content",
+            sourceId: 'content',
             getItemInputValue({ item }) {
               return item.query;
             },
@@ -356,8 +363,8 @@ export default function Autocomplete({
     });
   }, []);
 
-  const autoCompleteLabel = "autocomplete-1-label";
-  const autoCompleteId = "autocomplete-1-input";
+  const autoCompleteLabel = 'autocomplete-1-label';
+  const autoCompleteId = 'autocomplete-1-input';
 
   // Makes SSR consistent on aria aspects
   const containerProps = autocomplete.getRootProps({});
@@ -368,25 +375,29 @@ export default function Autocomplete({
   });
 
   inputProps.id = autoCompleteId;
+  inputProps.onFocus = () => {
+    autocomplete.setIsOpen(true);
+    autocomplete.refresh();
+  };
   formProps.onSubmit = scrollToResults;
-  containerProps["aria-labelledby"] = autoCompleteLabel;
-  inputProps["aria-labelledby"] = autoCompleteLabel;
-  panelProps["aria-labelledby"] = autoCompleteLabel;
+  containerProps['aria-labelledby'] = autoCompleteLabel;
+  inputProps['aria-labelledby'] = autoCompleteLabel;
+  panelProps['aria-labelledby'] = autoCompleteLabel;
 
   useEffect(() => {
     function handleClickOutside(event) {
-      if (autocompleteState.isOpen && !event.target.closest("#search")) {
+      if (autocompleteState.isOpen && !event.target.closest('#search')) {
         autocomplete.setIsOpen(false);
-        autocomplete.setQuery("");
+        autocomplete.setQuery('');
         setShowTextPrompt(true);
       }
     }
     function openDropdownMenu() {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     }
 
     function closeDropdownMenu() {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
 
     if (autocompleteState.isOpen && window.innerWidth < MOBILE_BREAKPOINT) {
@@ -395,12 +406,12 @@ export default function Autocomplete({
       closeDropdownMenu();
     }
 
-    setAriaSelectedToFalseOnHover(".aa-List", ".aa-Item", ".empty-feed");
+    setAriaSelectedToFalseOnHover('.aa-List', '.aa-Item', '.empty-feed');
 
-    document.addEventListener("click", handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
 
     return () => {
-      document.removeEventListener("click", handleClickOutside);
+      document.removeEventListener('click', handleClickOutside);
     };
   }, [autocompleteState.isOpen, autocomplete, setShowTextPrompt]);
 
@@ -409,7 +420,7 @@ export default function Autocomplete({
     <div className="aa-Autocomplete" {...containerProps}>
       <form className="aa-Form" {...formProps}>
         <input ref={inputRef} className="aa-Input" {...inputProps} />
-        {inputProps.value !== "" ? (
+        {inputProps.value !== '' ? (
           <div className="aa-ClearButton" onClick={clearInput}>
             <Styled.IconWrapper>
               <X size={18} weight="fill" />
@@ -434,7 +445,7 @@ export default function Autocomplete({
             const { source, items } = collection;
             // Rendering of Query Suggestions
             if (
-              ["querySuggestionsPlugin", "recentSearchesPlugin"].includes(
+              ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(
                 collection.source.sourceId
               )
             ) {
@@ -453,7 +464,7 @@ export default function Autocomplete({
                         })}
                       >
                         {collection.source.sourceId ===
-                          "querySuggestionsPlugin" && (
+                          'querySuggestionsPlugin' && (
                           <QuerySuggestionItem
                             item={item}
                             autocomplete={autocomplete}
@@ -465,7 +476,7 @@ export default function Autocomplete({
                           />
                         )}
                         {collection.source.sourceId ===
-                          "recentSearchesPlugin" && (
+                          'recentSearchesPlugin' && (
                           <PastQueryItem
                             item={item}
                             autocomplete={autocomplete}
@@ -483,9 +494,9 @@ export default function Autocomplete({
             }
 
             // Rendering of regular items
-            return autocompleteState.query !== "" ? (
+            return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
-                {collection.source.sourceId === "content" && (
+                {collection.source.sourceId === 'content' && (
                   <Box
                     padding="xs"
                     fontWeight="600"
@@ -495,7 +506,7 @@ export default function Autocomplete({
                     Content
                   </Box>
                 )}
-                {collection.source.sourceId === "pages" && (
+                {collection.source.sourceId === 'pages' && (
                   <Box padding="xs" fontWeight="600" color="base.gray">
                     Pages
                   </Box>
@@ -518,7 +529,7 @@ export default function Autocomplete({
                           leadingAsset={item?.coverImage}
                           title={item?.title}
                           onClick={() => {
-                            if (collection.source.sourceId === "pages") {
+                            if (collection.source.sourceId === 'pages') {
                               return handleStaticActionPress(item);
                             }
                             return handleActionPress(item);
@@ -543,7 +554,7 @@ export default function Autocomplete({
             ) : null;
           })}
         {autocompleteState.isOpen &&
-        autocompleteState.query === "" &&
+        autocompleteState.query === '' &&
         searchState.searchFeed ? (
           <Box className="empty-feed">
             <FeatureFeedProvider
