@@ -14,11 +14,6 @@ const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
 
 const initialState = {
-  // This is stored as state, but it should *not* be mutated.
-  // Storing on state simplifies/centralizes views that need
-  // to know if Auth is enabled or not.
-  authEnabled: process.env.REACT_APP_ENABLE_AUTH === 'true',
-
   initialized: false,
   authenticated: false,
   identity: null,
@@ -78,14 +73,8 @@ function reducer(state, action) {
 
 function AuthProvider(props = {}) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {
-    authEnabled,
-    initialized,
-    authenticated,
-    token,
-    refreshToken,
-    anonymousId,
-  } = state;
+  const { initialized, authenticated, token, refreshToken, anonymousId } =
+    state;
 
   // Initialize auth state
   useEffect(() => {
@@ -96,7 +85,7 @@ function AuthProvider(props = {}) {
       );
       const storedAnonymousId = window.localStorage.getItem(ANONYMOUS_ID);
 
-      if (authEnabled && storedToken) {
+      if (storedToken) {
         dispatch(
           update({
             initialized: true,
@@ -114,7 +103,7 @@ function AuthProvider(props = {}) {
     if (!initialized) {
       restoreAuthentication();
     }
-  }, [authEnabled, initialized]);
+  }, [initialized]);
 
   // Respond to changes in auth state (login/logout)
   useEffect(() => {

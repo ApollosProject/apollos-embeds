@@ -47,7 +47,7 @@ function transformVariables(variables) {
 }
 
 function useInteractWithNode(options = {}) {
-  const { authEnabled, authenticated } = useAuthState();
+  const { authenticated } = useAuthState();
   const [_mutation, result] = useMutation(INTERACT_WITH_NODE, options);
 
   /*
@@ -58,7 +58,7 @@ function useInteractWithNode(options = {}) {
   */
   const mutation = useCallback(
     (mutOpts = { variables: {} }) => {
-      if (authEnabled && authenticated) {
+      if (authenticated) {
         return _mutation({
           ...mutOpts,
           variables: transformVariables(mutOpts.variables),
@@ -67,7 +67,7 @@ function useInteractWithNode(options = {}) {
 
       return Promise.resolve();
     },
-    [_mutation, authEnabled, authenticated]
+    [_mutation, authenticated]
   );
 
   return [mutation, result];
