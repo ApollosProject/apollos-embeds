@@ -1,7 +1,7 @@
 import { withTheme } from 'styled-components';
 import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import { H4, utils } from '../../ui-kit';
+import { H4, Card, utils } from '../../ui-kit';
 import { system } from '../../ui-kit/_lib/system';
 import Color from 'color';
 
@@ -26,6 +26,14 @@ const Profile = withTheme(styled.div`
 const Title = withTheme(styled(H4)`
   color: ${themeGet('colors.text.secondary')};
   font-size: ${utils.rem('16px')};
+`);
+
+const ProfileCard = withTheme(styled(Card)`
+  height: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: ${themeGet('space.xs')};
+  box-sizing: border-box;
+  ${system};
 `);
 
 const CloseIcon = withTheme(styled.div`
@@ -83,6 +91,7 @@ const Styled = {
   CloseIcon,
   UploadIcon,
   AppLinks,
+  ProfileCard,
 };
 
 export default Styled;

@@ -49,6 +49,7 @@ const ModalContainer = withTheme(styled.div`
   background-color: #ffffff;
   overflow-y: scroll;
   padding: 40px;
+  box-sizing: border-box;
   @media screen and (max-width: ${themeGet("breakpoints.sm")}) {
     padding: 16px;
   }
@@ -62,6 +63,8 @@ const Icon = withTheme(styled.div`
   border-radius: 50%;
   display: flex;
   height: 32px;
+  min-height: 32px;
+  min-width: 32px;
   justify-content: center;
   line-height: 0;
   padding: 8px;

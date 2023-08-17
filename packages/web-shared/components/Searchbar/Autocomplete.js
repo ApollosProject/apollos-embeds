@@ -278,6 +278,9 @@ export default function Autocomplete({
     return createAutocomplete({
       openOnFocus: true,
       plugins: [querySuggestionsPlugin, recentSearchesPlugin],
+      shouldPanelOpen({ state }) {
+        return state.query !== '' || state.collections?.length > 0;
+      },
       onStateChange({ state, ...props }) {
         // (Mobile Specific Behavior): New keystroke resets the list view scroll to the top
         const panelElement =
@@ -295,7 +298,11 @@ export default function Autocomplete({
         // (2) Synchronize the Autocomplete state with the React state.
         setAutocompleteState(state);
       },
-      getSources() {
+      getSources({ query }) {
+        if (!query) {
+          return [];
+        }
+
         return [
           // (3) Use an Algolia index source.
           {
@@ -368,6 +375,10 @@ export default function Autocomplete({
   });
 
   inputProps.id = autoCompleteId;
+  inputProps.onFocus = () => {
+    autocomplete.setIsOpen(true);
+    autocomplete.refresh();
+  };
   formProps.onSubmit = scrollToResults;
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
