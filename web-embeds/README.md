@@ -27,8 +27,8 @@ _⚠️  React needs to be imported in every file it is used, otherwise the js b
 Copy the following script tags into your Webflow website. In your Dashboard, you should see the tab 'Custom Code'. Scroll to the bottom and paste the following script tags in the Footer Code block:
 html
 ```
-<link href="https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@0.0.7/widget/index.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@0.0.7/widget/index.js" defer></script>
+<link href="https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.js" defer></script>
 ```
 
 <img width="1209" alt="image" src="https://user-images.githubusercontent.com/2528817/231846873-a20da2d3-b571-4036-9bc5-7373a0042f85.png">
