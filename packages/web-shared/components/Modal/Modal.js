@@ -42,9 +42,9 @@ const Modal = (props = {}) => {
   return (
     <Box>
       <Styled.Modal show={state.isOpen}>
-        <Styled.ModalContainer>
-          {state.content ? (
-            <>
+        {state.content ? (
+          <>
+            <Styled.ModalContainer>
               <Box
                 width="100%"
                 display="flex"
@@ -92,9 +92,9 @@ const Modal = (props = {}) => {
               >
                 {state.content}
               </Box>
-            </>
-          ) : null}
-        </Styled.ModalContainer>
+            </Styled.ModalContainer>
+          </>
+        ) : null}
       </Styled.Modal>
     </Box>
   );
