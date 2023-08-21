@@ -13,6 +13,7 @@ const ListItem = withTheme(styled.div`
   width: 100%;
   height: 62px;
   gap: ${themeGet('space.xs')};
+  box-sizing: border-box;
   ${system};
 `);
 
