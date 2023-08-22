@@ -83,9 +83,6 @@ function HorizontalMediaListFeature(props = {}) {
         ? setSearchParams({ id })
         : setSearchParams({ id, action: 'viewall' });
     }
-    // if (state.modal) {
-    //   dispatch(openModal());
-    // }
   };
 
   if (props?.feature?.items?.length === 0 || !props?.feature?.items) {

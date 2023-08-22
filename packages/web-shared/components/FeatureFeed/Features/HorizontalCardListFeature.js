@@ -84,9 +84,6 @@ function HorizontalCardListFeature(props = {}) {
         ? setSearchParams({ id })
         : setSearchParams({ id, action: 'viewall' });
     }
-    // if (state.modal) {
-    //   dispatch(openModal());
-    // }
   };
 
   if (props?.feature?.cards?.length === 0 || !props?.feature?.cards) {
