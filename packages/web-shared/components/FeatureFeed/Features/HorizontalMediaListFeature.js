@@ -1,8 +1,8 @@
-import React from "react";
-import get from "lodash/get";
-import { useSearchParams } from "react-router-dom";
+import React from 'react';
+import get from 'lodash/get';
+import { useSearchParams } from 'react-router-dom';
 
-import { getURLFromType } from "../../../utils";
+import { getURLFromType } from '../../../utils';
 import {
   Box,
   H3,
@@ -10,19 +10,19 @@ import {
   Button,
   MediaItem,
   ButtonGroup,
-} from "../../../ui-kit";
+} from '../../../ui-kit';
 import {
   add as addBreadcrumb,
   useBreadcrumbDispatch,
-} from "../../../providers/BreadcrumbProvider";
+} from '../../../providers/BreadcrumbProvider';
 import {
   open as openModal,
   set as setModal,
   useModal,
-} from "../../../providers/ModalProvider";
+} from '../../../providers/ModalProvider';
 
-import Carousel from "react-multi-carousel";
-import { CaretRight } from "phosphor-react";
+import Carousel from 'react-multi-carousel';
+import { CaretRight } from 'phosphor-react';
 const SHOW_VIEW_ALL_LIMIT = 5;
 
 const responsive = {
@@ -49,7 +49,7 @@ function HorizontalMediaListFeature(props = {}) {
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
-    if (searchParams.get("id") !== getURLFromType(item.relatedNode)) {
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item.relatedNode)}`,
@@ -67,7 +67,7 @@ function HorizontalMediaListFeature(props = {}) {
 
   const handlePrimaryActionPress = () => {
     if (
-      searchParams.get("id") !==
+      searchParams.get('id') !==
       getURLFromType(props?.feature?.primaryAction.relatedNode)
     ) {
       dispatchBreadcrumb(
@@ -79,11 +79,13 @@ function HorizontalMediaListFeature(props = {}) {
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      setSearchParams({ id, action: "viewall" });
+      state.modal
+        ? setSearchParams({ id })
+        : setSearchParams({ id, action: 'viewall' });
     }
-    if (state.modal) {
-      dispatch(openModal());
-    }
+    // if (state.modal) {
+    //   dispatch(openModal());
+    // }
   };
 
   if (props?.feature?.items?.length === 0 || !props?.feature?.items) {
@@ -127,7 +129,7 @@ function HorizontalMediaListFeature(props = {}) {
                 title={item.title}
                 summary={item.summary}
                 onClick={() => handleActionPress(item)}
-                videoMedia={get(item, "relatedNode?.videos[0]", null)}
+                videoMedia={get(item, 'relatedNode?.videos[0]', null)}
               />
             );
           })}
@@ -141,7 +143,7 @@ function HorizontalMediaListFeature(props = {}) {
           px="l"
           textAlign="center"
         >
-          {props.feature.title === "Continue Watching" ? (
+          {props.feature.title === 'Continue Watching' ? (
             <Box fontSize="16px" fontWeight="600" color="base.primary">
               All caught up? Check out our other sections for more content!
             </Box>
