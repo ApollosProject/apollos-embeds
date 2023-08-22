@@ -121,19 +121,14 @@ function ContentSingle(props = {}) {
 
   return (
     <>
-      <Box margin="0 auto">
+      {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
+      <Box margin="0 auto" maxWidth="750px">
         <InteractWhenLoaded
           loading={props.loading}
           nodeId={props.data.id}
           action={'VIEW'}
         />
-        <Box
-          mb="base"
-          borderRadius="xl"
-          overflow="hidden"
-          width={{ _: '100%', lg: '750px' }}
-          margin="0 auto"
-        >
+        <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
           {props.data?.videos[0] ? (
             <VideoPlayer
               userProgress={userProgress}
@@ -147,8 +142,6 @@ function ContentSingle(props = {}) {
               backgroundPosition="center"
               backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
               backgroundRepeat="no-repeat"
-              maxWidth="750px"
-              margin="0 auto"
             />
           )}
         </Box>
