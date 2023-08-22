@@ -111,9 +111,13 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                       width="72px"
                     />
                   ) : (
-                    <Box color="base.primary">
+                    <Box
+                      color="base.primary"
+                      position="relative"
+                      margin="-10px"
+                    >
                       <UserCirclePlus
-                        size={84}
+                        size={90}
                         weight="fill"
                         color={themeGet('colors.base.primary')({ theme })}
                       />
