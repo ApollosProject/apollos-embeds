@@ -131,7 +131,7 @@ function ContentSingle(props = {}) {
           mb="base"
           borderRadius="xl"
           overflow="hidden"
-          width={{ _: '100%', lg: '85%' }}
+          width={{ _: '100%', lg: '750px' }}
           margin="0 auto"
         >
           {props.data?.videos[0] ? (
@@ -141,17 +141,15 @@ function ContentSingle(props = {}) {
               coverImage={coverImage?.sources[0]?.uri}
             />
           ) : (
-            <Box backgroundColor="neutral.gray5" borderRadius="xl">
-              <Box
-                backgroundSize="cover"
-                paddingBottom="56.25%"
-                backgroundPosition="center"
-                backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
-                backgroundRepeat="no-repeat"
-                maxWidth="750px"
-                margin="0 auto"
-              />
-            </Box>
+            <Box
+              backgroundSize="cover"
+              paddingBottom="56.25%"
+              backgroundPosition="center"
+              backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
+              backgroundRepeat="no-repeat"
+              maxWidth="750px"
+              margin="0 auto"
+            />
           )}
         </Box>
 
