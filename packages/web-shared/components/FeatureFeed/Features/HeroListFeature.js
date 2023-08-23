@@ -115,7 +115,7 @@ function HeroListFeature(props = {}) {
               title="Watch now"
               onClick={handleWatchNowPress}
             />
-            {props.feature.primaryAction ? (
+            {props.feature.primaryAction.relatedNode !== null ? (
               <Button
                 title={props.feature.primaryAction.title}
                 onClick={handlePrimaryActionClick}
