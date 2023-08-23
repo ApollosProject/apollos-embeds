@@ -126,6 +126,69 @@ export const FEED_FEATURES = gql`
               }
             }
           }
+          ... on HeroListFeature {
+            id
+            title
+            subtitle
+            heroCard {
+              id
+              title
+              labelText
+              summary
+              coverImage {
+                name
+                sources {
+                  uri
+                }
+              }
+              hasAction
+              action
+              actionIcon
+              relatedNode {
+                id
+                __typename
+
+                ... on ContentItem {
+                  title
+                  originId
+                  originType
+                  videos {
+                    ...VideoMediaFields
+                  }
+                }
+              }
+            }
+            # These can be card-like items, not just buttons
+            actions {
+              id
+              title
+              subtitle
+              action
+              relatedNode {
+                id
+                __typename
+                ... on ContentItem {
+                  title
+                }
+              }
+              image {
+                sources {
+                  uri
+                }
+              }
+            }
+            primaryAction {
+              title
+              action
+              relatedNode {
+                id
+                __typename
+                ... on ContentItem {
+                  title
+                }
+              }
+            }
+          }
         }
       }
     }
