@@ -37,6 +37,8 @@ export const TAB_FEED_FEATURES = gql`
 
               ... on ContentItem {
                 title
+                originId
+                originType
                 videos {
                   ...VideoMediaFields
                 }
