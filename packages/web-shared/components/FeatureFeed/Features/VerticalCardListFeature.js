@@ -51,9 +51,12 @@ function VerticalCardListFeature(props = {}) {
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      setSearchParams({ id, action: 'viewall' });
+      state.modal
+        ? setSearchParams({ id })
+        : setSearchParams({ id, action: 'viewall' });
     }
   };
+
   const cards = props.feature?.cards;
   return (
     <Box pb="l" {...props}>
