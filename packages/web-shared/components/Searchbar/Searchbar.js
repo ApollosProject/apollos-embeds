@@ -40,16 +40,20 @@ const Searchbar = (props = {}) => {
     <Styled.TextPrompt>
       {!isMobile ? textWelcome : null}
 
-      <span
+      <Box
+        as="span"
         style={{
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-          width: '150px',
+        }}
+        width={{
+          _: '125px',
+          sm: '400px',
         }}
       >
         What can we help you find?
-      </span>
+      </Box>
     </Styled.TextPrompt>
   );
 
