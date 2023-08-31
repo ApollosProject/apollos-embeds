@@ -13,6 +13,7 @@ const List = withTheme(styled.ul`
 `);
 
 const Wrapper = withTheme(styled.div`
+  border-radius: 8px;
   &:focus,
   &:hover {
     background: #efeef7;
