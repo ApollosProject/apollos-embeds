@@ -111,12 +111,11 @@ function ResourceCard({
             </Styled.Ellipse>
           </Styled.Subtitle>
         </Styled.Heading>
-
-        {/* Tailing Icon => defaults to arrow if undefined */}
-        <Styled.TailingIcon>
-          {tailingIcon ? tailingIcon : Arrow}
-        </Styled.TailingIcon>
       </Styled.Wrapper>
+      {/* Tailing Icon => defaults to arrow if undefined */}
+      <Styled.TailingIcon>
+        {tailingIcon ? tailingIcon : Arrow}
+      </Styled.TailingIcon>
     </Styled.ResourceCard>
   );
 }

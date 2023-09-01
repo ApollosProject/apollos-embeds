@@ -12,6 +12,7 @@ const ResourceCard = withTheme(styled.div`
   background: ${themeGet('colors.neutral.gray6')};
   align-items: center;
   width: 100%;
+  box-sizing: border-box;
   gap: ${themeGet('space.xs')};
   ${system};
 `);
