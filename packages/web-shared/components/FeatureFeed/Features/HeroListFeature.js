@@ -56,6 +56,7 @@ function HeroListFeature(props = {}) {
     );
   };
 
+  console.log(props?.feature?.primaryAction?.relatedNode);
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
@@ -115,9 +116,9 @@ function HeroListFeature(props = {}) {
               title="Watch now"
               onClick={handleWatchNowPress}
             />
-            {props?.feature?.primaryAction?.relatedNode !== null ? (
+            {props?.feature?.primaryAction?.relatedNode ? (
               <Button
-                title={props.feature.primaryAction.title}
+                title={props?.feature?.primaryAction?.title}
                 onClick={handlePrimaryActionClick}
                 variant="secondary"
               />
