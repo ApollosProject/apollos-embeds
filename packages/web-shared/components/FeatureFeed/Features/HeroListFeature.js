@@ -56,7 +56,6 @@ function HeroListFeature(props = {}) {
     );
   };
 
-  console.log(props?.feature?.primaryAction?.relatedNode);
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
