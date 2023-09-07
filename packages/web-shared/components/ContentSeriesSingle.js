@@ -9,11 +9,21 @@ import {
 } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import { Box, H2, H5, Loader, Longform, H3, MediaItem } from '../ui-kit';
+import {
+  Box,
+  H2,
+  H5,
+  Loader,
+  Longform,
+  H3,
+  MediaItem,
+  ShareButton,
+} from '../ui-kit';
 import { useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import styled from 'styled-components';
+import { themeGet } from '@styled-system/theme-get';
 
 function ContentSeriesSingle(props = {}) {
   const navigate = useNavigate();
@@ -64,14 +74,16 @@ function ContentSeriesSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const showEpisodeCount = hasChildContent && childContentItems.length < 20;
 
-  // Truncates text after the 4th line
+  // Truncates text for long descriptions (can be adjusted by tweaking line-clamp and max-height values)
   const MultilineEllipsis = styled.p`
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    @media screen and (min-width: ${themeGet('breakpoints.md')}) {
+      display: -webkit-box;
+      -webkit-line-clamp: 10;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      max-height: 500px;
+    }
     line-height: 28px;
-    max-height: 120px;
     margin: 0;
   `;
 
@@ -112,6 +124,9 @@ function ContentSeriesSingle(props = {}) {
               _: '100%',
               md: '50%',
             }}
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
           >
             <Box borderRadius="xl" overflow="hidden" width="100%">
               {props.data?.videos[0] ? (
@@ -162,14 +177,17 @@ function ContentSeriesSingle(props = {}) {
               ) : null}
             </Box>
             {htmlContent ? (
-              <MultilineEllipsis>
-                <Longform
-                  dangerouslySetInnerHTML={{
-                    __html: parseDescriptionLinks(htmlContent),
-                  }}
-                />
-              </MultilineEllipsis>
+              <Box mb="xs">
+                <MultilineEllipsis>
+                  <Longform
+                    dangerouslySetInnerHTML={{
+                      __html: parseDescriptionLinks(htmlContent),
+                    }}
+                  />
+                </MultilineEllipsis>
+              </Box>
             ) : null}
+            <ShareButton contentTitle={title} />
           </Box>
         </Box>
         <Box
