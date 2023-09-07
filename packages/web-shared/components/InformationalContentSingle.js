@@ -131,8 +131,9 @@ function InformationalContentSingle(props = {}) {
           mb="base"
         >
           <Box>
-            {title && !hasChildContent ? <H2>{title}</H2> : null}
-            {title && hasChildContent ? <H1>{title}</H1> : null}
+            <Box display="flex" justifyContent="center">
+              {title ? <H2>{title}</H2> : null}
+            </Box>
 
             <Box
               display="flex"
