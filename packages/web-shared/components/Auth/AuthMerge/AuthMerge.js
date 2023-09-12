@@ -63,7 +63,12 @@ function AuthMerge() {
           cache,
           {
             data: {
-              completeRegister: { birthDate, gender, firstName, lastName } = {},
+              completeRegistration: {
+                birthDate,
+                gender,
+                firstName,
+                lastName,
+              } = {},
             } = {},
           }
         ) => {
