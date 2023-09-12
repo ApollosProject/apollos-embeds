@@ -32,10 +32,6 @@ const Input = ({ placeholder, value, handleOnChange, ...props }) => {
     hasValue,
   };
 
-  if (props.error) {
-    textInputRef.current.value = '';
-  }
-
   return (
     <Box {...props}>
       <Box position="relative" display="flex">
