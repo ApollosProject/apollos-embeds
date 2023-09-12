@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import isEmpty from 'lodash/isEmpty';
 
 import { useValidateLogin, useValidateRegister } from '../../hooks';
 // import amplitude from '../../libs/amplitude';
@@ -38,30 +39,24 @@ const AuthConfirm = () => {
   };
 
   const onSuccess = ({ token, user, sharedProfiles }) => {
-    setStatus('SUCCESS');
-    const needsOnboarding =
-      user?.firstName === null ||
-      user?.lastName === null ||
-      user?.gender === null ||
-      user?.birthDate === null;
-
+    const needsOnboarding = isEmpty(user.firstName) || isEmpty(user.lastName);
     if (state.userExists) {
+      // amplitude.trackEvent({
+      //   eventName: 'UserLogin',
+      //   properties: {
+      //     userId: user?.id,
+      //     firstName: user?.firstName,
+      //     lastName: user?.lastName,
+      //     nickName: user?.nickName,
+      //     email: user?.email,
+      //     campusName: user?.campus?.name || null,
+      //   },
+      // });
       if (needsOnboarding) {
         dispatch(updateAuth({ token, step: authSteps.Details }));
       } else {
         dispatch(updateAuth({ token, step: authSteps.Success }));
       }
-      // amplitude.trackEvent({
-      //   eventName: 'UserLogin',
-      //   properties: {
-      //     userId: user?.profile?.id,
-      //     firstName: user?.profile?.firstName,
-      //     lastName: user?.profile?.lastName,
-      //     nickName: user?.profile?.nickName,
-      //     email: user?.profile?.email,
-      //     campusName: user?.profile?.campus?.name || null,
-      //   },
-      // });
     } else {
       if (sharedProfiles.length > 1) {
         dispatch(
