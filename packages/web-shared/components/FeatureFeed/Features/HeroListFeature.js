@@ -117,7 +117,7 @@ function HeroListFeature(props = {}) {
             />
             {props?.feature?.primaryAction?.relatedNode !== null ? (
               <Button
-                title={props.feature.primaryAction.title}
+                title={props.feature?.primaryAction?.title}
                 onClick={handlePrimaryActionClick}
                 variant="secondary"
               />
@@ -128,7 +128,7 @@ function HeroListFeature(props = {}) {
         {props.feature.actions?.length ? (
           <Box>
             {/* List Header */}
-            {props.feature.title || props.feature.subtitle ? (
+            {props.feature?.title || props.feature?.subtitle ? (
               <Box
                 flexDirection="row"
                 justifyContent="space-between"
@@ -137,8 +137,8 @@ function HeroListFeature(props = {}) {
                 px="base"
               >
                 <Box>
-                  <H4 color="text.secondary">{props.feature.subtitle}</H4>
-                  <H3>{props.feature.title}</H3>
+                  <H4 color="text.secondary">{props.feature?.subtitle}</H4>
+                  <H3>{props.feature?.title}</H3>
                 </Box>
               </Box>
             ) : null}
