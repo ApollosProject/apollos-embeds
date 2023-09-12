@@ -59,93 +59,41 @@ function AuthDetails() {
   });
 
   const isLoading = status === 'LOADING';
-  const genderOptions = [
-    { value: 'Male', label: 'Male' },
-    { value: 'Female', label: 'Female' },
-    { value: 'Prefer not to say', label: 'Prefer not to say' },
-  ];
-
-  const isProfileCompleted =
-    user?.profile?.firstName &&
-    user?.profile?.lastName &&
-    user?.profile?.gender &&
-    user?.profile?.birthDate
-      ? true
-      : false;
 
   return (
     <AuthLayout
-      heading={
-        user && isProfileCompleted ? 'Welcome back!' : 'Complete your profile'
-      }
-      subHeading={
-        user && isProfileCompleted
-          ? 'Your login has been verified.'
-          : 'Help us learn a little more about you so we can connect you with the best ministries and events.'
-      }
+      heading="Complete your profile"
+      subHeading="Help us learn a little more about you so we can connect you with the
+    best ministries and events."
     >
       <Box textAlign="left">
-        {!isProfileCompleted ? (
-          <Box mb="base">
-            <Input
-              id="firstName"
-              placeholder="First Name"
-              handleOnChange={(text) => setFieldValue('firstName', text)}
-              required
-              error={error?.identity}
-            />
-          </Box>
-        ) : null}
-        {!isProfileCompleted ? (
-          <Box mb="base">
-            <Input
-              id="lastName"
-              placeholder="Last Name"
-              handleOnChange={(text) => setFieldValue('lastName', text)}
-              required
-              error={error?.identity}
-            />
-          </Box>
-        ) : null}
-        {!isProfileCompleted ? (
-          <Box mb="base">
-            <Select
-              id="gender"
-              placeholder="Gender"
-              options={genderOptions}
-              handleOnChange={(text) => setFieldValue('gender', text)}
-              required
-              error={error?.identity}
-            />
-          </Box>
-        ) : null}
-        {!isProfileCompleted ? (
-          <Box mb="base">
-            <Input
-              id="birthDate"
-              type="date"
-              handleOnChange={(text) => setFieldValue('birthDate', text)}
-              required
-              error={error?.identity}
-            />
-          </Box>
-        ) : null}
+        <Box mb="base">
+          <Input
+            id="firstName"
+            placeholder="First Name"
+            handleOnChange={(text) => setFieldValue('firstName', text)}
+            required
+            error={error?.firstName}
+            editable={!isLoading}
+          />
+        </Box>
+
+        <Box mb="base">
+          <Input
+            id="lastName"
+            placeholder="Last Name"
+            handleOnChange={(text) => setFieldValue('lastName', text)}
+            required
+            error={error?.lastName}
+            editable={!isLoading}
+          />
+        </Box>
       </Box>
       <Button
         status={status}
         title={`Finish${isLoading ? 'ing...' : ''}`}
         onClick={handleSubmit}
-        disabled={
-          !user ||
-          !(
-            isProfileCompleted ||
-            (values.firstName &&
-              values.lastName &&
-              values.gender &&
-              values.birthDate)
-          ) ||
-          isLoading
-        }
+        disabled={!(values.firstName && values.lastName) || isLoading}
       />
     </AuthLayout>
   );
