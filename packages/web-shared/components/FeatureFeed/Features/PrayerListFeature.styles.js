@@ -12,8 +12,8 @@ const Avatar = withTheme(styled.a`
   background: rgba(103, 103, 134, 0.5);
   border-radius: 50%;
   cursor: pointer;
-  width: 60px;
-  height: 60px;
+  min-width: 60px;
+  min-height: 60px;
 
   ${system}
 `);
@@ -35,7 +35,8 @@ const Notification = withTheme(styled.a`
 const List = withTheme(styled.ul`
   display: flex;
   align-items: center;
-  overflow-x: scroll;
+  overflow: scroll;
+  white-space: nowrap;
   width: 100%;
   gap: 8px;
 

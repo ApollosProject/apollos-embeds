@@ -21,6 +21,26 @@ function PrayerListFeature(props = {}) {
         <Styled.Avatar></Styled.Avatar>
         <Styled.Avatar></Styled.Avatar>
         <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
+        <Styled.Avatar></Styled.Avatar>
       </Styled.List>
     </Box>
   );
