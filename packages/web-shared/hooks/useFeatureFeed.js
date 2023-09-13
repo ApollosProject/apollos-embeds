@@ -157,6 +157,28 @@ export const FEED_FEATURES = gql`
               }
             }
           }
+          ... on PrayerListFeature {
+            id
+            title
+            subtitle
+            isCard
+            prayers {
+              __typename
+              id
+              text
+              isPrayed
+              requestor {
+                id
+                nickName
+                firstName
+                lastName
+                photo {
+                  uri
+                  blurHash
+                }
+              }
+            }
+          }
           ... on HeroListFeature {
             id
             title
@@ -232,6 +254,8 @@ function useFeatureFeed(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
+
+  console.log(query);
 
   return {
     features: query?.data?.node || {},
