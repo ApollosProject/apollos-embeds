@@ -48,8 +48,7 @@ function AuthDetails() {
           userProfile,
         })
       );
-      await updateProfileFields({ variables: { input: userProfile } });
-      await completeRegister();
+      await completeRegister({ variables: { profileInput: userProfile } });
 
       dispatch(updateAuth({ step: authSteps.Success }));
     } catch (e) {
