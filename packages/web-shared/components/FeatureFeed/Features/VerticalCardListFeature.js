@@ -80,7 +80,9 @@ function VerticalCardListFeature(props = {}) {
           title={cards[0].title}
           summary={cards[0].summary}
           onClick={() => handleActionPress(cards[0])}
-          videoMedia={cards[0].relatedNode?.videos[0]}
+          videoMedia={
+            cards[0].relatedNode?.videos ? cards[0].relatedNode.videos[0] : null
+          }
           horizontal={true}
         />
       ) : (
