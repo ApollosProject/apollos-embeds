@@ -161,20 +161,21 @@ export const FEED_FEATURES = gql`
             id
             title
             subtitle
+            order
             isCard
             prayers {
               __typename
               id
               text
               isPrayed
+              isAnonymous
               requestor {
-                id
-                nickName
                 firstName
                 lastName
+                gender
+                birthDate
                 photo {
                   uri
-                  blurHash
                 }
               }
             }
