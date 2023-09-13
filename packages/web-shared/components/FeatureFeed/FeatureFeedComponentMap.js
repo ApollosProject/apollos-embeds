@@ -6,6 +6,7 @@ import {
   ButtonFeature,
   ActionListFeature,
   ChipListFeature,
+  PrayerListFeature,
 } from './Features';
 
 // Maps a graphql "__typename" to a Component to render it.
@@ -17,6 +18,7 @@ const FeatureFeedComponentMap = {
   ButtonFeature,
   ActionListFeature,
   ChipListFeature,
+  PrayerListFeature,
 };
 
 export default FeatureFeedComponentMap;
