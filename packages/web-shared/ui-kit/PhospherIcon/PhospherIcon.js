@@ -11,7 +11,6 @@ const pascalCase = (string) => flow(camelCase, upperFirst)(string);
 
 const PhospherIcon = ({ name, weight, size, color }) => {
   const normalizedName = pascalCase(name);
-  console.log(normalizedName);
   const IconToRender = Icon[normalizedName];
 
   return <IconToRender color={color} weight={weight} size={size} />;
