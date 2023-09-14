@@ -4,6 +4,7 @@ import ContentChannel from './ContentChannel';
 import ContentSingle from './ContentSingle';
 import FeatureFeedList from './FeatureFeedList';
 import Feed from './FeatureFeed';
+import InformationalContentSingle from './InformationalContentSingle';
 import LivestreamSingle from './LivestreamSingle';
 import Logo from './Logo';
 import Modal from './Modal';
@@ -18,6 +19,7 @@ export {
   ContentSingle,
   FeatureFeedList,
   Feed,
+  InformationalContentSingle,
   LivestreamSingle,
   Logo,
   Modal,
