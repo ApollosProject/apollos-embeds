@@ -1,20 +1,30 @@
 import React from 'react';
 
 import { getURLFromType } from '../../../utils';
-import { systemPropTypes, Box } from '../../../ui-kit';
+import { systemPropTypes, Box, PhospherIcon } from '../../../ui-kit';
 import Styled from './ActionBarFeature.styles';
-import { ArrowUpRight } from 'phosphor-react';
 
 import { useNavigate } from 'react-router-dom';
 
 function ActionBarFeature(props = {}) {
-  console.log(props);
+  const handleActionPress = (item) => {
+    window.open(item, '_blank');
+  };
+
   return (
-    <Box width="100%" display="flex">
-      {props.feature?.actions?.map((item, index) => (
-        <Box flex="1">hi</Box>
-      ))}
-    </Box>
+    <Styled.ActionBar>
+      {props.feature?.actions?.map((item) => {
+        return (
+          <Styled.ActionBarItem
+            flex="1"
+            onClick={() => handleActionPress(item?.relatedNode?.url)}
+          >
+            <PhospherIcon name={item.icon} size={30} />
+            {item?.title}
+          </Styled.ActionBarItem>
+        );
+      })}
+    </Styled.ActionBar>
   );
 }
 
