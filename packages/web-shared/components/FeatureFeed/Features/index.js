@@ -5,6 +5,7 @@ import HorizontalCardListFeature from './HorizontalCardListFeature';
 import HorizontalMediaListFeature from './HorizontalMediaListFeature';
 import VerticalCardListFeature from './VerticalCardListFeature';
 import ActionListFeature from './ActionListFeature';
+import ActionBarFeature from './ActionBarFeature';
 
 export {
   ButtonFeature,
@@ -14,4 +15,5 @@ export {
   HorizontalMediaListFeature,
   VerticalCardListFeature,
   ActionListFeature,
+  ActionBarFeature,
 };

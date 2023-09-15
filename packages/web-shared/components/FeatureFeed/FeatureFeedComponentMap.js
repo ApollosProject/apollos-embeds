@@ -4,6 +4,7 @@ import {
   HorizontalMediaListFeature,
   VerticalCardListFeature,
   ButtonFeature,
+  ActionBarFeature,
   ActionListFeature,
   ChipListFeature,
 } from './Features';
@@ -15,6 +16,7 @@ const FeatureFeedComponentMap = {
   HorizontalMediaListFeature,
   VerticalCardListFeature,
   ButtonFeature,
+  ActionBarFeature,
   ActionListFeature,
   ChipListFeature,
 };
