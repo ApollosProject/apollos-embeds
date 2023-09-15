@@ -29,6 +29,22 @@ export const FEED_FEATURES = gql`
             }
           }
 
+          ... on ActionBarFeature {
+            title
+            actions {
+              id
+              icon
+              title
+              action
+              relatedNode {
+                ... on Url {
+                  __typename
+                  url
+                }
+              }
+            }
+          }
+
           ... on ActionListFeature {
             title
             subtitle
