@@ -48,7 +48,7 @@ const Searchbar = (props = {}) => {
           textOverflow: 'ellipsis',
         }}
         width={{
-          _: '125px',
+          _: '225px',
           sm: '400px',
         }}
       >
