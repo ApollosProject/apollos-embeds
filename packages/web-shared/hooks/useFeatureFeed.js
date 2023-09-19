@@ -272,8 +272,6 @@ function useFeatureFeed(options = {}) {
     ...options,
   });
 
-  console.log(query);
-
   return {
     features: query?.data?.node || {},
     ...query,
