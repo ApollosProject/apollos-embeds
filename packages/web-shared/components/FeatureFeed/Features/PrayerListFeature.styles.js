@@ -10,11 +10,24 @@ const Avatar = withTheme(styled.a`
   align-items: center;
   justify-content: center;
   background: rgba(103, 103, 134, 0.5);
+  background-repeat: no-repeat;
+  background-size: cover-contain;
   border-radius: 50%;
   cursor: pointer;
+  width: 60px;
+  height: 60px;
   min-width: 60px;
   min-height: 60px;
+  overflow: hidden;
 
+  ${system}
+`);
+
+const Image = withTheme(styled.img`
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
   ${system}
 `);
 
@@ -57,6 +70,7 @@ const List = withTheme(styled.ul`
 const Styled = {
   Avatar,
   List,
+  Image,
   Notification,
 };
 
