@@ -5,10 +5,12 @@ import { themeGet } from '@styled-system/theme-get';
 import { TypeStyles } from '../../../ui-kit/Typography';
 import { system } from '../../../ui-kit/_lib/system';
 
-const Avatar = withTheme(styled.a`
+const Avatar = withTheme(styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: ${(props) => props.backgroundColor};
+  color: ${(props) => props.textColor};
   background: rgba(103, 103, 134, 0.5);
   background-repeat: no-repeat;
   background-size: cover-contain;
