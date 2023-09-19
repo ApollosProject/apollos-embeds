@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import { getURLFromType } from '../../../utils';
 import { systemPropTypes, Box, H3 } from '../../../ui-kit';
 import Styled from './PrayerListFeature.styles';
-import { Plus } from 'phosphor-react';
+import { Plus, X } from 'phosphor-react';
 import { useNavigate } from 'react-router-dom';
 import { backgroundColor, textColor } from 'styled-system';
 
 function PrayerListFeature(props = {}) {
-  console.log(props);
-
   const [modalState, setModalState] = useState({
     isOpen: false,
     requestor: {},
@@ -57,6 +55,9 @@ function PrayerListFeature(props = {}) {
     return (
       <Styled.ModalWrapper isOpen={item.isOpen} onClick={onClose}>
         <Styled.ModalContent onClick={(e) => e.stopPropagation()}>
+          <Styled.ModalIcon onClick={onClose}>
+            <X size={16} weight="bold" />
+          </Styled.ModalIcon>
           <Box width="100%" display="flex" justifyContent="center">
             {item.requestor?.photo !== null ? (
               <Styled.Avatar>

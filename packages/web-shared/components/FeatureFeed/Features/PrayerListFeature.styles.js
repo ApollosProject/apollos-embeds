@@ -86,12 +86,39 @@ const ModalWrapper = withTheme(styled.div`
 const ModalContent = withTheme(styled.div`
   background-color: rgba(28, 28, 30, 1);
   padding: ${themeGet('space.l')};
+  margin: ${themeGet('space.base')};
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   max-width: 500px;
+  min-width: 250px;
   color: white;
   box-shadow: ${themeGet('shadows.medium')};
+  position: relative;
+  box-sizing: border-box;
+`);
+
+const ModalIcon = withTheme(styled.div`
+  align-items: center;
+  background-color: ${themeGet('colors.neutral.gray')};
+  opacity: 1;
+  border-radius: 50%;
+  display: flex;
+  height: 32px;
+  min-height: 32px;
+  min-width: 32px;
+  justify-content: center;
+  line-height: 0;
+  padding: 2px;
+  transition: 0.2s;
+  width: 32px;
+  position: absolute;
+  right: ${themeGet('space.l')};
+  &:hover {
+    cursor: pointer;
+    opacity: 0.8;
+  }
+  ${system};
 `);
 
 const Styled = {
@@ -101,6 +128,7 @@ const Styled = {
   Notification,
   ModalWrapper,
   ModalContent,
+  ModalIcon,
 };
 
 export default Styled;
