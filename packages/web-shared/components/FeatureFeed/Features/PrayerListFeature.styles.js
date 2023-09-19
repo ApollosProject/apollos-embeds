@@ -21,7 +21,6 @@ const Avatar = withTheme(styled.div`
   min-width: 60px;
   min-height: 60px;
   overflow: hidden;
-
   ${system}
 `);
 
@@ -69,11 +68,39 @@ const List = withTheme(styled.ul`
   ${system}
 `);
 
+const ModalWrapper = withTheme(styled.div`
+  display: ${(props) => (props.isOpen ? 'block' : 'none')};
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: ${themeGet('colors.material.ultrathin')};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+`);
+
+// background-color is colors.material.chrome with 100% opacity
+const ModalContent = withTheme(styled.div`
+  background-color: rgba(28, 28, 30, 1);
+  padding: ${themeGet('space.l')};
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  color: white;
+  box-shadow: ${themeGet('shadows.medium')};
+`);
+
 const Styled = {
   Avatar,
   List,
   Image,
   Notification,
+  ModalWrapper,
+  ModalContent,
 };
 
 export default Styled;
