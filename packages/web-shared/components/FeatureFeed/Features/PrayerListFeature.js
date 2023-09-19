@@ -1,31 +1,48 @@
 import React, { useState } from 'react';
-import { getURLFromType } from '../../../utils';
 import { systemPropTypes, Box, H3 } from '../../../ui-kit';
 import Styled from './PrayerListFeature.styles';
 import { Plus, X } from 'phosphor-react';
-import { useNavigate } from 'react-router-dom';
-import { backgroundColor, textColor } from 'styled-system';
 
 function PrayerListFeature(props = {}) {
+  // Generate random background color
+  const randomHSLA = () => `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`;
+
+  //Background colors for requestors with no profile picture
+  const [backgroundColors, setBackgroundColors] = useState(
+    props.feature?.prayers?.map(randomHSLA)
+  );
+
   const [modalState, setModalState] = useState({
     isOpen: false,
     requestor: {},
     prayer: 'N/A',
+    backgroundColor: null,
   });
 
-  const openModal = (requestor, prayer) => {
-    setModalState({ isOpen: true, requestor, prayer });
+  const openModal = (requestor, prayer, backgroundColor) => {
+    setModalState({
+      isOpen: true,
+      requestor,
+      prayer,
+      backgroundColor,
+    });
   };
 
   const closeModal = () => {
-    setModalState({ isOpen: false, requestor: {}, prayer: 'N/A' });
+    setModalState({
+      isOpen: false,
+      requestor: {},
+      prayer: 'N/A',
+      backgroundColor: null,
+    });
   };
 
   // Takes in first and last name and makes them into capitalized initials
-  function combineAndCapitalizeNames(firstName, lastName) {
+  const combineAndCapitalizeNames = (firstName, lastName) => {
     if (firstName === null && lastName === null) {
       return 'NA';
     }
+
     const capitalizedFirstName =
       firstName === null
         ? ''
@@ -40,18 +57,9 @@ function PrayerListFeature(props = {}) {
       capitalizedFirstName.charAt(0) + capitalizedLastName.charAt(0);
 
     return combinedNames;
-  }
-
-  // Generate random background color
-  function randomHSLA() {
-    return `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`;
-  }
+  };
 
   const PrayerItemModal = ({ item, onClose }) => {
-    console.log(item);
-    if (!item.isOpen) return null;
-    const backgroundColor = randomHSLA();
-
     return (
       <Styled.ModalWrapper isOpen={item.isOpen} onClick={onClose}>
         <Styled.ModalContent onClick={(e) => e.stopPropagation()}>
@@ -64,7 +72,7 @@ function PrayerListFeature(props = {}) {
                 <Styled.Image src={item.requestor?.photo?.uri} />
               </Styled.Avatar>
             ) : (
-              <Styled.Avatar backgroundColor={backgroundColor}>
+              <Styled.Avatar backgroundColor={item.backgroundColor}>
                 <H3>
                   {combineAndCapitalizeNames(
                     item.requestor?.firstName,
@@ -99,11 +107,11 @@ function PrayerListFeature(props = {}) {
   );
 
   return (
-    <Box>
+    <Box my="xs">
       <Styled.List>
-        {AddDailyPrayer}
-        {props.feature?.prayers?.map((item) => {
-          const backgroundColor = randomHSLA();
+        {/* {AddDailyPrayer} */}
+        {props.feature?.prayers?.map((item, index) => {
+          const backgroundColor = backgroundColors[index];
           const Avatar =
             item.requestor?.photo !== null ? (
               <Styled.Avatar>
@@ -120,7 +128,11 @@ function PrayerListFeature(props = {}) {
               </Styled.Avatar>
             );
           return (
-            <Box onClick={() => openModal(item?.requestor, item?.text)}>
+            <Box
+              onClick={() =>
+                openModal(item?.requestor, item?.text, backgroundColor)
+              }
+            >
               {Avatar}
             </Box>
           );
