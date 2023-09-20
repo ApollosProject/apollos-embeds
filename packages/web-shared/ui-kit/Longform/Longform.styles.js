@@ -25,7 +25,7 @@ const Longform = styled.div`
 
   > ul,
   > ol {
-    margin-left: ${themeGet('space.base')};
+    margin-left: ${themeGet('space.base')} !important;
 
     > li:not(:last-child) {
       margin-bottom: ${themeGet('space.xs')};
