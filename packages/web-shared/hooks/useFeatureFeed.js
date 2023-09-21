@@ -173,6 +173,29 @@ export const FEED_FEATURES = gql`
               }
             }
           }
+          ... on PrayerListFeature {
+            id
+            title
+            subtitle
+            order
+            isCard
+            prayers {
+              __typename
+              id
+              text
+              isPrayed
+              isAnonymous
+              requestor {
+                firstName
+                lastName
+                gender
+                birthDate
+                photo {
+                  uri
+                }
+              }
+            }
+          }
           ... on HeroListFeature {
             id
             title
