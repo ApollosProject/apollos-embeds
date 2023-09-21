@@ -110,33 +110,35 @@ function PrayerListFeature(props = {}) {
     <Box my="xs">
       <Styled.List>
         {/* {AddDailyPrayer} */}
-        {props.feature?.prayers?.map((item, index) => {
-          const backgroundColor = backgroundColors[index];
-          const Avatar =
-            item.requestor?.photo !== null ? (
-              <Styled.Avatar>
-                <Styled.Image src={item.requestor?.photo?.uri} />
-              </Styled.Avatar>
-            ) : (
-              <Styled.Avatar backgroundColor={backgroundColor}>
-                <H3>
-                  {combineAndCapitalizeNames(
-                    item.requestor?.firstName,
-                    item.requestor?.lastName
-                  )}
-                </H3>
-              </Styled.Avatar>
+        {props.feature?.prayers &&
+          props.feature?.prayers?.map((item, index) => {
+            const backgroundColor = backgroundColors[index];
+            const Avatar =
+              item.requestor?.photo !== null ? (
+                <Styled.Avatar>
+                  <Styled.Image src={item.requestor?.photo?.uri} />
+                </Styled.Avatar>
+              ) : (
+                <Styled.Avatar backgroundColor={backgroundColor}>
+                  <H3>
+                    {combineAndCapitalizeNames(
+                      item.requestor?.firstName,
+                      item.requestor?.lastName
+                    )}
+                  </H3>
+                </Styled.Avatar>
+              );
+            return (
+              <Box
+                onClick={() =>
+                  openModal(item?.requestor, item?.text, backgroundColor)
+                }
+                key={index}
+              >
+                {Avatar}
+              </Box>
             );
-          return (
-            <Box
-              onClick={() =>
-                openModal(item?.requestor, item?.text, backgroundColor)
-              }
-            >
-              {Avatar}
-            </Box>
-          );
-        })}
+          })}
       </Styled.List>
       <PrayerItemModal item={modalState} onClose={closeModal} />
     </Box>
