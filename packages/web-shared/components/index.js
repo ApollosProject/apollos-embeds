@@ -5,6 +5,7 @@ import ContentSingle from './ContentSingle';
 import ContentSeriesSingle from './ContentSeriesSingle';
 import FeatureFeedList from './FeatureFeedList';
 import Feed from './FeatureFeed';
+import InformationalContentSingle from './InformationalContentSingle';
 import LivestreamSingle from './LivestreamSingle';
 import Logo from './Logo';
 import Modal from './Modal';
@@ -20,6 +21,7 @@ export {
   ContentSeriesSingle,
   FeatureFeedList,
   Feed,
+  InformationalContentSingle,
   LivestreamSingle,
   Logo,
   Modal,

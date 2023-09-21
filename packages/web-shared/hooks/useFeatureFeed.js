@@ -29,6 +29,22 @@ export const FEED_FEATURES = gql`
             }
           }
 
+          ... on ActionBarFeature {
+            title
+            actions {
+              id
+              icon
+              title
+              action
+              relatedNode {
+                ... on Url {
+                  __typename
+                  url
+                }
+              }
+            }
+          }
+
           ... on ActionListFeature {
             title
             subtitle
@@ -153,6 +169,29 @@ export const FEED_FEATURES = gql`
                 }
                 ... on Url {
                   url
+                }
+              }
+            }
+          }
+          ... on PrayerListFeature {
+            id
+            title
+            subtitle
+            order
+            isCard
+            prayers {
+              __typename
+              id
+              text
+              isPrayed
+              isAnonymous
+              requestor {
+                firstName
+                lastName
+                gender
+                birthDate
+                photo {
+                  uri
                 }
               }
             }

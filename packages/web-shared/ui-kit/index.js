@@ -18,6 +18,7 @@ import Layout from './Layout';
 import Loader from './Loader';
 import Longform from './Longform';
 import MediaItem, { LiveChip } from './MediaItem';
+import PhospherIcon from './PhospherIcon';
 import ProgressBar from './ProgressBar';
 import ResourceCard from './ResourceCard';
 import Select from './Select';
@@ -56,6 +57,7 @@ export {
   Longform,
   MediaItem,
   LiveChip,
+  PhospherIcon,
   ProgressBar,
   ResourceCard,
   Select,

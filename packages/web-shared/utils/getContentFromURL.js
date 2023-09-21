@@ -9,6 +9,7 @@ import {
   ContentSeriesSingle,
   FeatureFeedList,
   ContentChannel,
+  InformationalContentSingle,
   LivestreamSingle,
 } from '../components';
 import { Box } from '../ui-kit';
@@ -18,7 +19,6 @@ function getContentFromURL(url) {
 
   switch (type) {
     case 'EventContentItem':
-    case 'InformationalContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem': {
@@ -38,6 +38,18 @@ function getContentFromURL(url) {
       return (
         <ContentItemProvider
           Component={ContentSeriesSingle}
+          options={options}
+        />
+      );
+    }
+    case 'InformationalContentItem': {
+      const options = {
+        variables: { id: `${type}:${randomId}` },
+      };
+
+      return (
+        <ContentItemProvider
+          Component={InformationalContentSingle}
           options={options}
         />
       );
