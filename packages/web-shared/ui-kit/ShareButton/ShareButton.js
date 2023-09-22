@@ -57,6 +57,7 @@ const ShareButton = (props = {}) => {
         title="Share"
         icon={<Share weight="bold" size={18} />}
         onClick={() => setMessageVisible(!isMessageVisible)}
+        {...props}
       />
       {isMessageVisible && (
         <Styled.Wrapper id="menu">

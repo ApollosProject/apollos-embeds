@@ -5,6 +5,7 @@ import HorizontalCardListFeature from './HorizontalCardListFeature';
 import HorizontalMediaListFeature from './HorizontalMediaListFeature';
 import VerticalCardListFeature from './VerticalCardListFeature';
 import ActionListFeature from './ActionListFeature';
+import PrayerListFeature from './PrayerListFeature';
 import ActionBarFeature from './ActionBarFeature';
 
 export {
@@ -15,5 +16,6 @@ export {
   HorizontalMediaListFeature,
   VerticalCardListFeature,
   ActionListFeature,
+  PrayerListFeature,
   ActionBarFeature,
 };

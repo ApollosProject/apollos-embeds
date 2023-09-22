@@ -427,11 +427,6 @@ export default function Autocomplete({
             </Styled.IconWrapper>
           </div>
         ) : null}
-        <div onClick={handlePanelDropdown}>
-          <Styled.IconWrapper>
-            <CaretDown size={14} weight="fill" />
-          </Styled.IconWrapper>
-        </div>
       </form>
       <Box
         id="panel"

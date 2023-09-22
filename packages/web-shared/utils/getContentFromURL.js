@@ -6,6 +6,7 @@ import {
 } from '../providers';
 import {
   ContentSingle,
+  ContentSeriesSingle,
   FeatureFeedList,
   ContentChannel,
   InformationalContentSingle,
@@ -20,14 +21,25 @@ function getContentFromURL(url) {
     case 'EventContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
-    case 'UniversalContentItem':
-    case 'ContentSeriesContentItem': {
+    case 'UniversalContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
       return (
         <ContentItemProvider Component={ContentSingle} options={options} />
+      );
+    }
+    case 'ContentSeriesContentItem': {
+      const options = {
+        variables: { id: `${type}:${randomId}` },
+      };
+
+      return (
+        <ContentItemProvider
+          Component={ContentSeriesSingle}
+          options={options}
+        />
       );
     }
     case 'InformationalContentItem': {
