@@ -49,12 +49,13 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        handleCloseProfile;
+        e.stopPropagation();
+        handleCloseProfile();
       }
     };
-    document.addEventListener('click', checkIfClickedOutside);
+    document.addEventListener('mousedown', checkIfClickedOutside);
     return () => {
-      document.removeEventListener('click', checkIfClickedOutside);
+      document.removeEventListener('mousedown', checkIfClickedOutside);
     };
   });
 
