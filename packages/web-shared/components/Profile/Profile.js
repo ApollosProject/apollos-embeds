@@ -49,7 +49,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (ref.current && !ref.current.contains(e.target)) {
-        handleCloseProfile();
+        handleCloseProfile;
       }
     };
     document.addEventListener('click', checkIfClickedOutside);
