@@ -55,6 +55,8 @@ function HeroListFeature(props = {}) {
       `?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`
     );
   };
+  console.log(props);
+  console.log(props.feature.actions);
 
   return (
     <Box mb="base" minWidth="180px" {...props}>
@@ -125,6 +127,7 @@ function HeroListFeature(props = {}) {
           </Box>
         </Box>
         {/* Actions / Cards list */}
+
         {props.feature.actions?.length ? (
           <Box>
             {/* List Header */}
