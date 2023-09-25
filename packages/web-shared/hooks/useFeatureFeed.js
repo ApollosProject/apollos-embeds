@@ -79,8 +79,17 @@ export const FEED_FEATURES = gql`
               }
               relatedNode {
                 id
+                __typename
+                ... on ContentItem {
+                  title
+                  videos {
+                    ...VideoMediaFields
+                  }
+                }
+                ... on Url {
+                  url
+                }
                 ... on Livestream {
-                  __typename
                   title
                   start
                   durationInSeconds

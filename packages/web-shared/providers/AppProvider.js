@@ -15,7 +15,7 @@ function AppProvider(props = {}) {
       <AuthProvider>
         <SearchProvider church={props.church} searchFeed={props.searchFeed}>
           <BreadcrumbProvider>
-            <ModalProvider modal={props.modal}>
+            <ModalProvider>
               <ThemeProvider>{props.children}</ThemeProvider>
             </ModalProvider>
           </BreadcrumbProvider>
