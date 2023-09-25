@@ -107,30 +107,33 @@ function HorizontalMediaListFeature(props = {}) {
       </Box>
 
       {props?.feature?.items?.length >= 1 ? (
-        <Carousel
-          arrows={false}
-          swipeable={true}
-          draggable={false}
-          showDots={false}
-          responsive={responsive}
-          keyBoardControl={true}
-          customButtonGroup={<ButtonGroup />}
-          renderButtonGroupOutside
-        >
-          {props.feature?.items?.map((item, index) => {
-            return (
-              <MediaItem
-                key={item.id}
-                relatedNode={item.relatedNode}
-                image={item.coverImage}
-                title={item.title}
-                summary={item.summary}
-                onClick={() => handleActionPress(item)}
-                videoMedia={get(item, 'relatedNode?.videos[0]', null)}
-              />
-            );
-          })}
-        </Carousel>
+        <Box ml={'-10px'}>
+          <Carousel
+            arrows={false}
+            swipeable={true}
+            draggable={false}
+            showDots={false}
+            responsive={responsive}
+            keyBoardControl={true}
+            customButtonGroup={<ButtonGroup />}
+            renderButtonGroupOutside
+          >
+            {props.feature?.items?.map((item, index) => {
+              return (
+                <MediaItem
+                  m={'0 10px'}
+                  key={item.id}
+                  relatedNode={item.relatedNode}
+                  image={item.coverImage}
+                  title={item.title}
+                  summary={item.summary}
+                  onClick={() => handleActionPress(item)}
+                  videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+                />
+              );
+            })}
+          </Carousel>
+        </Box>
       ) : (
         <Box
           width="100%"
