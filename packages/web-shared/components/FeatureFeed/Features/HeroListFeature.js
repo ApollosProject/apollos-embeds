@@ -19,12 +19,23 @@ import {
   H3,
   H4,
   systemPropTypes,
+  ResourceCard,
 } from '../../../ui-kit';
+import Styled from './HeroListFeature.styles';
+import { useNavigate } from 'react-router-dom';
 
 function HeroListFeature(props = {}) {
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const navigate = useNavigate();
+
+  const handleActionPress = (item) => {
+    navigate({
+      pathname: '/',
+      search: `?id=${getURLFromType(item.relatedNode)}`,
+    });
+  };
 
   // Event Handlers
   const handleWatchNowPress = () => {
@@ -55,13 +66,27 @@ function HeroListFeature(props = {}) {
       `?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`
     );
   };
-  console.log(props);
-  console.log(props.feature.actions);
 
   return (
     <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
-
+      <Box>
+        {/* List Header */}
+        {props.feature.title || props.feature.subtitle ? (
+          <Box
+            flexDirection="row"
+            justifyContent="space-between"
+            alignItems="flex-end"
+            mb="s"
+            px="base"
+          >
+            <Box>
+              <H4 color="text.secondary">{props.feature.subtitle}</H4>
+              <H3>{props.feature.title}</H3>
+            </Box>
+          </Box>
+        ) : null}
+      </Box>
       {/* <Modal /> */}
       <Box
         position="relative"
@@ -126,27 +151,27 @@ function HeroListFeature(props = {}) {
             ) : null}
           </Box>
         </Box>
-        {/* Actions / Cards list */}
-
-        {props.feature.actions?.length ? (
-          <Box>
-            {/* List Header */}
-            {props.feature.title || props.feature.subtitle ? (
-              <Box
-                flexDirection="row"
-                justifyContent="space-between"
-                alignItems="flex-end"
-                mb="s"
-                px="base"
-              >
-                <Box>
-                  <H4 color="text.secondary">{props.feature.subtitle}</H4>
-                  <H3>{props.feature.title}</H3>
-                </Box>
-              </Box>
-            ) : null}
-          </Box>
-        ) : null}
+      </Box>
+      {/* Actions / Cards list */}
+      <Box
+        display="flex"
+        justifyContent="center"
+        flexDirection="column"
+        mt="xs"
+      >
+        {props.feature?.actions?.map((item) => {
+          return (
+            <Styled.Wrapper>
+              <ResourceCard
+                title={item.title}
+                subtitle={item.subtitle}
+                leadingAsset={item?.image}
+                onClick={() => handleActionPress(item)}
+                background="none"
+              />
+            </Styled.Wrapper>
+          );
+        })}
       </Box>
     </Box>
   );
