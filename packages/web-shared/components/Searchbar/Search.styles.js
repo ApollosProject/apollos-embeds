@@ -99,11 +99,11 @@ const TextPrompt = withTheme(styled.div`
   width: 100%;
 
   @media screen and (max-width: ${themeGet('breakpoints.md')}) {
-    max-width: 50%;
+    max-width: 70%;
   }
 
   @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
-    max-width: 47%;
+    max-width: 65%;
   }
 
   ${system}

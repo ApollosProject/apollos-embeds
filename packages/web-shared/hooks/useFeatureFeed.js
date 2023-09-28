@@ -79,8 +79,17 @@ export const FEED_FEATURES = gql`
               }
               relatedNode {
                 id
+                __typename
+                ... on ContentItem {
+                  title
+                  videos {
+                    ...VideoMediaFields
+                  }
+                }
+                ... on Url {
+                  url
+                }
                 ... on Livestream {
-                  __typename
                   title
                   start
                   durationInSeconds
@@ -169,6 +178,29 @@ export const FEED_FEATURES = gql`
                 }
                 ... on Url {
                   url
+                }
+              }
+            }
+          }
+          ... on PrayerListFeature {
+            id
+            title
+            subtitle
+            order
+            isCard
+            prayers {
+              __typename
+              id
+              text
+              isPrayed
+              isAnonymous
+              requestor {
+                firstName
+                lastName
+                gender
+                birthDate
+                photo {
+                  uri
                 }
               }
             }

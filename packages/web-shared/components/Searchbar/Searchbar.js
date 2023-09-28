@@ -48,7 +48,7 @@ const Searchbar = (props = {}) => {
           textOverflow: 'ellipsis',
         }}
         width={{
-          _: '125px',
+          _: '225px',
           sm: '400px',
         }}
       >
@@ -76,8 +76,11 @@ const Searchbar = (props = {}) => {
     }
   }, [autocompleteState.isOpen]);
 
-  const handleProfile = () => {
-    setShowProfile(!showProfile);
+  const handleOpenProfile = () => {
+    setShowProfile(true);
+  };
+  const handleCloseProfile = () => {
+    setShowProfile(false);
   };
 
   return (
@@ -111,7 +114,7 @@ const Searchbar = (props = {}) => {
             </Box>
           </Styled.InterfaceWrapper>
         </Styled.Interface>
-        <Box padding="12px" onClick={handleProfile}>
+        <Box padding="12px" onClick={handleOpenProfile}>
           {currentUser?.profile?.photo?.uri ? (
             <Avatar
               src={currentUser?.profile?.photo?.uri}
@@ -130,7 +133,7 @@ const Searchbar = (props = {}) => {
         </Box>
       </Styled.Wrapper>
 
-      {showProfile ? <Profile handleCloseProfile={handleProfile} /> : null}
+      {showProfile ? <Profile handleCloseProfile={handleCloseProfile} /> : null}
     </Box>
   );
 };

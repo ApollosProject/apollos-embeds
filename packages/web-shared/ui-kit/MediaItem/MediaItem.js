@@ -41,7 +41,6 @@ function MediaItem(props = {}) {
   return (
     <Box
       flex={1}
-      m={'0 10px'}
       cursor={props.onClick ? 'pointer' : 'default'}
       height="100%"
       display={props.horizontal ? 'flex' : ''}

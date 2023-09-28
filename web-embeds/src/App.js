@@ -1,15 +1,9 @@
 import React from 'react';
 import * as Sentry from '@sentry/react';
-import { FeatureFeed, Search } from '@apollosproject/web-shared/embeds';
+import { Main } from '@apollosproject/web-shared/embeds';
 import { AppProvider } from '@apollosproject/web-shared/providers';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './error-page';
-
-// Maps a widget name to a Component to render it.
-const WidgetComponentMap = {
-  FeatureFeed,
-  Search,
-};
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -18,39 +12,30 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-function App(props) {
-  // Lookup the component responsible for rendering this Widget
-  const WidgetComponent = WidgetComponentMap[props.type];
+function App() {
+  const searchElement = document.querySelector('[data-search-feed]');
+  const churchElement = document.querySelector('[data-church]');
+
+  const searchFeed = searchElement
+    ? searchElement.getAttribute('data-search-feed')
+    : null;
+  const church = churchElement
+    ? churchElement.getAttribute('data-church')
+    : null;
+
   const router = createBrowserRouter([
     {
       path: '*',
-      element: (
-        <WidgetComponent
-          featureFeed={props.featureFeed}
-          church={props.church}
-        />
-      ),
+      element: <Main />,
       errorElement: <ErrorPage />,
     },
   ]);
 
-  // Widgets require a church slug to get the correct data
-  if (WidgetComponent && props.church) {
-    return (
-      <AppProvider
-        church={props.church}
-        modal={props.modal}
-        searchFeed={props.searchFeed}
-      >
-        <RouterProvider router={router} />
-      </AppProvider>
-    );
-  }
-
-  // eslint-disable-next-line no-console
-  console.log(`⚠️  Widget could not render widget of type "${props.type}"`);
-
-  return null;
+  return (
+    <AppProvider church={church} searchFeed={searchFeed}>
+      <RouterProvider router={router} />
+    </AppProvider>
+  );
 }
 
 export default App;

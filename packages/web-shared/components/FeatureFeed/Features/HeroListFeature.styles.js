@@ -17,7 +17,16 @@ const Summary = withTheme(styled.h3`
   overflow: hidden;
 `);
 
+const Wrapper = withTheme(styled.div`
+  border-radius: 8px;
+  &:focus,
+  &:hover {
+    background: #efeef7;
+  }
+`);
+
 export default {
   Title,
   Summary,
+  Wrapper,
 };

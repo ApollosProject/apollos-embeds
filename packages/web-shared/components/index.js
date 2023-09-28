@@ -2,6 +2,7 @@ import AuthManager from './Auth';
 import Breadcrumbs from './Breadcrumbs';
 import ContentChannel from './ContentChannel';
 import ContentSingle from './ContentSingle';
+import ContentSeriesSingle from './ContentSeriesSingle';
 import FeatureFeedList from './FeatureFeedList';
 import Feed from './FeatureFeed';
 import InformationalContentSingle from './InformationalContentSingle';
@@ -17,6 +18,7 @@ export {
   Breadcrumbs,
   ContentChannel,
   ContentSingle,
+  ContentSeriesSingle,
   FeatureFeedList,
   Feed,
   InformationalContentSingle,

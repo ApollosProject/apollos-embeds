@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { systemPropTypes, utils } from '../../ui-kit';
 import { withTheme } from 'styled-components';
 import { AuthManager } from '../../components';
@@ -45,6 +45,21 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const [crop, setCrop] = useState();
   const [showImageUploader, setShowImageUploader] = useState(false);
 
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        e.stopPropagation();
+        handleCloseProfile();
+      }
+    };
+    document.addEventListener('mousedown', checkIfClickedOutside);
+    return () => {
+      document.removeEventListener('mousedown', checkIfClickedOutside);
+    };
+  });
+
   const handleLogout = () => {
     setShowAuth(false);
     dispatch(logout());
@@ -70,7 +85,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
 
   return (
     <>
-      <Styled.Profile>
+      <Styled.Profile ref={ref}>
         <Styled.ProfileCard
           borderRadius={{
             _: '0%',
