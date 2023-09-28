@@ -1,8 +1,14 @@
 import { gql, useMutation } from '@apollo/client';
 
 export const COMPLETE_REGISTER = gql`
-  mutation completeRegistration($mergeProfileId: ID) {
-    completeRegistration(mergeProfileId: $mergeProfileId) {
+  mutation completeRegistration(
+    $mergeProfileId: ID
+    $profileInput: [UpdateProfileInput]
+  ) {
+    completeRegistration(
+      mergeProfileId: $mergeProfileId
+      profileInput: $profileInput
+    ) {
       id
       birthDate
       gender

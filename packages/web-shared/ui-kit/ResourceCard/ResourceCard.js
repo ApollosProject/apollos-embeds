@@ -27,9 +27,9 @@ function ResourceCard({
         points="96 48 176 128 96 208"
         fill="none"
         stroke="#AFAFB3"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="24"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="24"
       ></polyline>
     </svg>
   );

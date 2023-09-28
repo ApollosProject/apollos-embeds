@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 
 import { useForm } from '../../../hooks';
 import { update as updateAuth, useAuth } from '../../../providers/AuthProvider';
@@ -23,6 +23,20 @@ function AuthMerge() {
   const [error, setError] = useState(null);
   const [state, dispatch] = useAuth();
   const [mergeProfileId, setMergeProfileId] = useState();
+
+  const config = useMemo(
+    () => ({
+      defaultSelection: {
+        id: 'none',
+        firstName: 'None of these are me',
+      },
+    }),
+    []
+  );
+
+  const allOptions = useMemo(() => {
+    return [...(state.sharedProfiles || []), config.defaultSelection];
+  }, [config.defaultSelection, state.sharedProfiles]);
 
   const [completeRegister] = useCompleteRegister();
 
@@ -55,7 +69,13 @@ function AuthMerge() {
 
   const { values, handleSubmit, setFieldValue } = useForm(async () => {
     setStatus('LOADING');
-
+    if (mergeProfileId === 'none') {
+      dispatch(
+        updateAuth({
+          step: authSteps.Details,
+        })
+      );
+    }
     try {
       await completeRegister({
         variables: { mergeProfileId },
@@ -63,7 +83,12 @@ function AuthMerge() {
           cache,
           {
             data: {
-              completeRegister: { birthDate, gender, firstName, lastName } = {},
+              completeRegistration: {
+                birthDate,
+                gender,
+                firstName,
+                lastName,
+              } = {},
             } = {},
           }
         ) => {
@@ -100,7 +125,7 @@ function AuthMerge() {
           existing profile.
         </SubHeading>
 
-        {state.sharedProfiles.map((item, index) => (
+        {allOptions.map((item, index) => (
           <Box key={item.id} display="flex" alignItems="center" mb="s">
             <Input
               id="merge"

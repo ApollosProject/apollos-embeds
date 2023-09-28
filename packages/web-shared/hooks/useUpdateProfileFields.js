@@ -6,8 +6,6 @@ export const UPDATE_PROFILE_FIELDS = gql`
       id
       firstName
       lastName
-      birthDate
-      gender
     }
   }
 `;

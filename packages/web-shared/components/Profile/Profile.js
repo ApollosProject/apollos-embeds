@@ -32,6 +32,7 @@ import Styled from './Profile.styles';
 import { useCurrentUser, useCurrentChurch } from '../../hooks';
 import themeGet from '@styled-system/theme-get';
 import { logout, useAuth } from '../../providers/AuthProvider';
+import authSteps from '../Auth/authSteps';
 
 const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const { currentUser } = useCurrentUser();
@@ -157,7 +158,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     </Box>
                   )}
                 </Box>
-                {currentUser?.profile.firstName ? (
+                {currentUser?.profile?.firstName ? (
                   <H4 mt="xxs">Hey {currentUser?.profile?.firstName}</H4>
                 ) : null}
 
@@ -175,6 +176,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                     variant="secondary"
                     color="base.primary"
                     icon={<ArrowRight size={24} />}
+                    mt="base"
                   />
                 ) : null}
               </>
@@ -282,7 +284,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
           ) : null}
         </Styled.ProfileCard>
       </Styled.Profile>
-      {showAuth && !state.token ? <AuthManager /> : null}
+      {showAuth && state.step !== authSteps.Success ? <AuthManager /> : null}
     </>
   );
 };

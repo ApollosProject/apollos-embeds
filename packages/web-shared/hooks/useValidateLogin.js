@@ -8,12 +8,26 @@ export const VALIDATE_LOGIN = gql`
     validateLogin(identity: $identity, otp: $otp) {
       person {
         firstName
+        lastName
+        email
+        campus {
+          name
+        }
         birthDate
         gender
         id
       }
       accessToken
       refreshToken
+      sharedProfiles {
+        id
+        firstName
+        lastName
+        birthDate
+        photo {
+          uri
+        }
+      }
     }
   }
 `;

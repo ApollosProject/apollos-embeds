@@ -144,7 +144,7 @@ function HeroListFeature(props = {}) {
             />
             {props?.feature?.primaryAction?.relatedNode ? (
               <Button
-                title={props?.feature?.primaryAction?.title}
+                title={props.feature?.primaryAction?.title}
                 onClick={handlePrimaryActionClick}
                 variant="secondary"
               />
