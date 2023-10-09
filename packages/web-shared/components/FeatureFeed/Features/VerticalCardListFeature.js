@@ -87,9 +87,7 @@ function VerticalCardListFeature(props = {}) {
         />
       ) : (
         <VerticalCardList.VerticalListContainer>
-          {cards.map((item, index) => {
-            if (index >= 6) return <></>;
-            return (
+          {cards.map((item) => 
               <ContentCard
                 key={item.title}
                 image={item.coverImage}
@@ -98,8 +96,8 @@ function VerticalCardListFeature(props = {}) {
                 onClick={() => handleActionPress(item)}
                 videoMedia={item.relatedNode?.videos[0]}
               />
-            );
-          })}
+            )
+          }
         </VerticalCardList.VerticalListContainer>
       )}
     </Box>
