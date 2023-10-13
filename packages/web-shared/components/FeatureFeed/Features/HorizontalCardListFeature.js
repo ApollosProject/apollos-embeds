@@ -88,8 +88,6 @@ function HorizontalCardListFeature(props = {}) {
     return null;
   }
 
-  // Does the primary action have more cards than the feature?
-  // The primary action is normally a link to a feature feed.
 
   return (
     <Box pb="l" {...props}>
