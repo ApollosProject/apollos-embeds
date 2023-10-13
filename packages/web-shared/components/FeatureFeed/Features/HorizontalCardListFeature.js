@@ -24,7 +24,6 @@ import { CaretRight } from 'phosphor-react';
 
 import Carousel from 'react-multi-carousel';
 
-const SHOW_VIEW_ALL_LIMIT = 5;
 
 const responsive = {
   desktop: {
@@ -90,13 +89,17 @@ function HorizontalCardListFeature(props = {}) {
     return null;
   }
 
+  // Does the primary action have more cards than the feature?
+  // The primary action is normally a link to a feature feed.
+  const additionalCards = props?.feature?.primaryAction?.relatedNode?.features?.[0]?.cards?.length > props?.feature?.cards?.length;
+
   return (
     <Box pb="l" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
         <H3 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
         </H3>
-        {props?.feature?.cards?.length >= SHOW_VIEW_ALL_LIMIT &&
+        {additionalCards &&
         props?.feature?.primaryAction ? (
           <Button
             title="View All"

@@ -148,6 +148,17 @@ export const FEED_FEATURES = gql`
                     ...VideoMediaFields
                   }
                 }
+                ... on FeatureFeed {
+                  features {
+                    id
+                    ... on VerticalCardListFeature {
+                      id
+                      cards {
+                        id
+                      }
+                    }
+                  }
+                }                
               }
             }
           }
