@@ -13,7 +13,7 @@ import {
   useModal,
 } from '../../../providers/ModalProvider';
 
-import VerticalCardList from './VerticalCardListFeature.styles';
+import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from 'phosphor-react';
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -86,19 +86,18 @@ function VerticalCardListFeature(props = {}) {
           horizontal={true}
         />
       ) : (
-        <VerticalCardList.VerticalListContainer>
-          {cards.map((item) => 
-              <ContentCard
-                key={item.title}
-                image={item.coverImage}
-                title={item.title}
-                summary={item.summary}
-                onClick={() => handleActionPress(item)}
-                videoMedia={item.relatedNode?.videos[0]}
-              />
-            )
-          }
-        </VerticalCardList.VerticalListContainer>
+        <Styled.Container length={cards.length}>
+          {cards.map((item) => (
+            <ContentCard
+              key={item.title}
+              image={item.coverImage}
+              title={item.title}
+              summary={item.summary}
+              onClick={() => handleActionPress(item)}
+              videoMedia={item.relatedNode?.videos[0]}
+            />
+          ))}
+        </Styled.Container>
       )}
     </Box>
   );
