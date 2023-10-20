@@ -16,9 +16,16 @@ const ShareButton = (props = {}) => {
   useEffect(() => {
     // Define event listener to handle clicks outside of message
     function handleClickOutside(event) {
+      // Check if the event target is the share button itself
+      const isShareButton = event.target.closest('button[title="Share"]');
+
       // Check if message is visible and click is outside of message
-      if (isMessageVisible && !event.target.closest('#menu')) {
-        // If both conditions are true, hide message by updating state
+      if (
+        isMessageVisible &&
+        !event.target.closest('#menu') &&
+        !isShareButton
+      ) {
+        // If all conditions are true, hide message by updating state
         setMessageVisible(false);
       }
     }
@@ -30,7 +37,7 @@ const ShareButton = (props = {}) => {
     return () => {
       document.removeEventListener('click', handleClickOutside);
     };
-  }, [isMessageVisible]);
+  });
 
   const link = window.location.href;
 
