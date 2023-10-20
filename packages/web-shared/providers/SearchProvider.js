@@ -8,7 +8,7 @@ const SearchDispatchContext = createContext();
 const initialState = {
   church: null,
   searchFeed: null,
-  customPrompt: null,
+  customPlaceholder: null,
   loading: true,
 };
 
@@ -37,7 +37,7 @@ function SearchProvider(props = {}) {
     ...initialState, // spread the original initialState object
     church: props.church, // add church to state
     searchFeed: props.searchFeed, // add search feed id to state
-    customPrompt: props.customPrompt, // add search custom prompt to state
+    customPlaceholder: props.customPlaceholder, // add search custom placeholder to state
   });
 
   return (

@@ -16,7 +16,7 @@ function AppProvider(props = {}) {
         <SearchProvider
           church={props.church}
           searchFeed={props.searchFeed}
-          customPrompt={props.customPrompt}
+          customPlaceholder={props.customPlaceholder}
         >
           <BreadcrumbProvider>
             <ModalProvider>

@@ -15,7 +15,7 @@ Sentry.init({
 function App() {
   const searchElement = document.querySelector('[data-search-feed]');
   const churchElement = document.querySelector('[data-church]');
-  const customPromptElement = document.querySelector('[data-custom-prompt]');
+  const placeholderElement = document.querySelector('[data-placeholder]');
 
   const searchFeed = searchElement
     ? searchElement.getAttribute('data-search-feed')
@@ -23,8 +23,8 @@ function App() {
   const church = churchElement
     ? churchElement.getAttribute('data-church')
     : null;
-  const customPrompt = customPromptElement
-    ? customPromptElement.getAttribute('data-custom-prompt')
+  const customPlaceholder = placeholderElement
+    ? placeholderElement.getAttribute('data-placeholder')
     : null;
 
   const router = createBrowserRouter([
@@ -39,7 +39,7 @@ function App() {
     <AppProvider
       church={church}
       searchFeed={searchFeed}
-      customPrompt={customPrompt}
+      customPlaceholder={customPlaceholder}
     >
       <RouterProvider router={router} />
     </AppProvider>

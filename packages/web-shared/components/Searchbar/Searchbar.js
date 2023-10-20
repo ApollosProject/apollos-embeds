@@ -39,7 +39,7 @@ const Searchbar = (props = {}) => {
       <strong>Hey {firstName}!&nbsp; </strong>
     );
 
-  const textPrompt = searchState.customPrompt ? (
+  const textPrompt = searchState.customPlaceholder ? (
     <Styled.TextPrompt>
       <Box
         as="span"
@@ -53,7 +53,7 @@ const Searchbar = (props = {}) => {
           sm: '400px',
         }}
       >
-        {searchState.customPrompt}
+        {searchState.customPlaceholder}
       </Box>
     </Styled.TextPrompt>
   ) : (
