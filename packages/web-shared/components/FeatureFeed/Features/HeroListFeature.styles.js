@@ -9,7 +9,10 @@ const twoCardlayout = ({ length }) => {
   if (length === 2) {
     return css`
       grid-template-columns: repeat(2, 1fr);
-      margin-right: -11px;
+
+      @media screen and (min-width: ${themeGet('breakpoints.md')}) {
+        margin-right: -11px;
+      }
     `;
   } else {
     return null;
