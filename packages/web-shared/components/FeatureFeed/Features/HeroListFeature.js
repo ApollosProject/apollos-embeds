@@ -16,10 +16,11 @@ import {
   BodyText,
   Box,
   Button,
+  H2,
   H3,
   H4,
   systemPropTypes,
-  ResourceCard,
+  ContentCard,
 } from '../../../ui-kit';
 import Styled from './HeroListFeature.styles';
 import { useNavigate } from 'react-router-dom';
@@ -67,8 +68,10 @@ function HeroListFeature(props = {}) {
     );
   };
 
+  const actions = props.feature?.actions;
+
   return (
-    <Box mb="base" minWidth="180px" {...props}>
+    <Box minWidth="180px" {...props}>
       {/* Content */}
       <Box>
         {/* List Header */}
@@ -90,88 +93,84 @@ function HeroListFeature(props = {}) {
       {/* <Modal /> */}
       <Box
         position="relative"
+        display="flex"
         backgroundColor="neutral.gray6"
-        borderRadius="l"
         overflow="hidden"
+        flexDirection={{ _: 'column', md: 'row' }}
+        mb="l"
+        borderRadius="l"
       >
         {/* Image */}
         <Box
-          display="flex"
-          justifyContent="center"
           alignItems="center"
           backgroundColor="white"
-          width="100%"
-          maxHeight="700px"
+          display="flex"
           overflow="hidden"
+          width={{ _: '100%', md: '60%' }}
         >
           <Box
             as="img"
             src={props?.feature?.heroCard?.coverImage?.sources[0]?.uri}
             width="100%"
-            height="100%"
+            height="auto"
           />
         </Box>
         {/* Masthead */}
         <Box
-          padding="base"
-          backgroundColor="neutral.gray6"
-          backdrop-filter="blur(64px)"
+          width={{ _: 'auto', md: '40%' }}
+          padding={{ _: 'base', md: 'none' }}
+          backdropFilter="blur(64px)"
         >
-          <H3>{props?.feature?.heroCard?.title}</H3>
-          <BodyText>{props?.feature?.heroCard?.summary}</BodyText>
-
-          {/* CTAs */}
-          <Box
-            display="flex"
-            alignSelf="flex-start"
-            flexDirection={{
-              _: 'column',
-              md: 'row',
-            }}
-            mt="base"
-          >
-            <Button
-              mr={{
-                _: '0',
-                md: 'base',
-              }}
-              mb={{
-                _: 'base',
-                md: '0',
-              }}
-              title="Watch now"
-              onClick={handleWatchNowPress}
-            />
-            {props?.feature?.primaryAction?.relatedNode ? (
-              <Button
-                title={props.feature?.primaryAction?.title}
-                onClick={handlePrimaryActionClick}
-                variant="secondary"
-              />
-            ) : null}
-          </Box>
+          <Styled.Title mb="xxs">
+            {props?.feature?.heroCard?.title}
+          </Styled.Title>
+          <Styled.Summary color="text.secondary">
+            {props?.feature?.heroCard?.summary}
+          </Styled.Summary>
         </Box>
       </Box>
+      {props?.feature?.primaryAction?.relatedNode ? (
+        <Box display="flex" justifyContent="flex-end">
+          <Button
+            title={props.feature?.primaryAction?.title}
+            onClick={handlePrimaryActionClick}
+            variant="link"
+            alignSelf="flex-end"
+          />
+        </Box>
+      ) : null}
       {/* Actions / Cards list */}
       <Box
         display="flex"
         justifyContent="center"
         flexDirection="column"
         mt="xs"
+        mb={{ _: '0', md: 'l' }}
       >
-        {props.feature?.actions?.map((item) => {
-          return (
-            <Styled.Wrapper>
-              <ResourceCard
-                title={item.title}
-                subtitle={item.subtitle}
-                leadingAsset={item?.image}
-                onClick={() => handleActionPress(item)}
-                background="none"
-              />
-            </Styled.Wrapper>
-          );
-        })}
+        {actions.length === 1 ? (
+          <ContentCard
+            key={actions[0].title}
+            image={actions[0].image}
+            title={actions[0].title}
+            summary={actions[0].subtitle}
+            onClick={() => handleActionPress(actions[0])}
+            horizontal={true}
+          />
+        ) : (
+          <Styled.Container length={actions.length}>
+            {actions.map((item) => (
+              <Styled.Item>
+                <ContentCard
+                  key={item.title}
+                  image={item.image}
+                  title={item.title}
+                  summary={item.subtitle}
+                  onClick={() => handleActionPress(item)}
+                />
+              </Styled.Item>
+            ))}
+          </Styled.Container>
+        )}
       </Box>
     </Box>
   );
