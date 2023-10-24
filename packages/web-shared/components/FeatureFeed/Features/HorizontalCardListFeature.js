@@ -89,7 +89,7 @@ function HorizontalCardListFeature(props = {}) {
   }
 
   return (
-    <Box pb="l" {...props}>
+    <Box pb="xxl" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
         <H3 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
@@ -123,6 +123,7 @@ function HorizontalCardListFeature(props = {}) {
               summary={item.summary}
               onClick={() => handleActionPress(item)}
               videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+              m={'0 10px 0 1px'}
             />
           ))}
         </Carousel>
