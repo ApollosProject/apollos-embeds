@@ -39,7 +39,7 @@ function HeroListFeature(props = {}) {
   };
 
   // Event Handlers
-  const handleWatchNowPress = () => {
+  const handleHeroCardPress = () => {
     if (
       searchParams.get('id') !==
       getURLFromType(props.feature?.heroCard?.relatedNode)
@@ -99,6 +99,8 @@ function HeroListFeature(props = {}) {
         flexDirection={{ _: 'column', md: 'row' }}
         mb="l"
         borderRadius="l"
+        cursor="pointer"
+        onClick={handleHeroCardPress}
       >
         {/* Image */}
         <Box
