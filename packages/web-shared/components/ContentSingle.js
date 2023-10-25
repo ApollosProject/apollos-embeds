@@ -128,23 +128,25 @@ function ContentSingle(props = {}) {
           nodeId={props.data.id}
           action={'VIEW'}
         />
-        <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
-          {props.data?.videos[0] ? (
-            <VideoPlayer
-              userProgress={userProgress}
-              parentNode={props.data}
-              coverImage={coverImage?.sources[0]?.uri}
-            />
-          ) : (
-            <Box
-              backgroundSize="cover"
-              paddingBottom="56.25%"
-              backgroundPosition="center"
-              backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
-              backgroundRepeat="no-repeat"
-            />
-          )}
-        </Box>
+        {coverImage?.sources[0]?.uri || props.data?.videos[0] ? (
+          <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
+            {props.data?.videos[0] ? (
+              <VideoPlayer
+                userProgress={userProgress}
+                parentNode={props.data}
+                coverImage={coverImage?.sources[0]?.uri}
+              />
+            ) : (
+              <Box
+                backgroundSize="cover"
+                paddingBottom="56.25%"
+                backgroundPosition="center"
+                backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
+                backgroundRepeat="no-repeat"
+              />
+            )}
+          </Box>
+        ) : null}
 
         <Box mb="l">
           <Box
