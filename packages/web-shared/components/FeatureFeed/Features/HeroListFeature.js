@@ -81,7 +81,6 @@ function HeroListFeature(props = {}) {
             justifyContent="space-between"
             alignItems="flex-end"
             mb="s"
-            px="base"
           >
             <Box>
               <H4 color="text.secondary">{props.feature.subtitle}</H4>
