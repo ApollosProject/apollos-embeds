@@ -26,20 +26,21 @@ import { CaretRight } from 'phosphor-react';
 const SHOW_VIEW_ALL_LIMIT = 5;
 
 const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+  xl: {
+    breakpoint: { max: 3000, min: 1280 },
+    items: 4,
+  },
+  lg: {
+    breakpoint: { max: 1280, min: 768 },
     items: 3,
-    partialVisibilityGutter: 30,
   },
-  tablet: {
-    breakpoint: { max: 1024, min: 600 },
+  md: {
+    breakpoint: { max: 768, min: 428 },
     items: 2,
-    partialVisibilityGutter: 30,
   },
-  mobile: {
-    breakpoint: { max: 600, min: 0 },
+  sm: {
+    breakpoint: { max: 428, min: 0 },
     items: 1,
-    partialVisibilityGutter: 30,
   },
 };
 

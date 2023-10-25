@@ -25,20 +25,21 @@ import { CaretRight } from 'phosphor-react';
 import Carousel from 'react-multi-carousel';
 
 const responsive = {
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
+  xl: {
+    breakpoint: { max: 3000, min: 1280 },
+    items: 4,
+  },
+  lg: {
+    breakpoint: { max: 1280, min: 800 },
     items: 3,
-    partialVisibilityGutter: 30,
   },
-  tablet: {
-    breakpoint: { max: 1024, min: 600 },
+  md: {
+    breakpoint: { max: 800, min: 428 },
     items: 2,
-    partialVisibilityGutter: 30,
   },
-  mobile: {
-    breakpoint: { max: 600, min: 0 },
+  sm: {
+    breakpoint: { max: 428, min: 0 },
     items: 1,
-    partialVisibilityGutter: 30,
   },
 };
 
@@ -123,7 +124,7 @@ function HorizontalCardListFeature(props = {}) {
               summary={item.summary}
               onClick={() => handleActionPress(item)}
               videoMedia={get(item, 'relatedNode?.videos[0]', null)}
-              m={'0 10px 0 1px'}
+              m={'0 20px 0 1px'}
             />
           ))}
         </Carousel>
