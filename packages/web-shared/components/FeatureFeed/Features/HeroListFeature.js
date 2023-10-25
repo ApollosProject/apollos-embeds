@@ -159,9 +159,8 @@ function HeroListFeature(props = {}) {
         ) : (
           <Styled.Container length={actions.length}>
             {actions.map((item) => (
-              <Styled.Item>
+              <Styled.Item key={item.title}>
                 <ContentCard
-                  key={item.title}
                   image={item.image}
                   title={item.title}
                   summary={item.subtitle}
