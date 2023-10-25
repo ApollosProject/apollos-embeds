@@ -25,12 +25,8 @@ import { CaretRight } from 'phosphor-react';
 import Carousel from 'react-multi-carousel';
 
 const responsive = {
-  xl: {
-    breakpoint: { max: 3000, min: 1280 },
-    items: 4,
-  },
   lg: {
-    breakpoint: { max: 1280, min: 800 },
+    breakpoint: { max: 3000, min: 800 },
     items: 3,
   },
   md: {
