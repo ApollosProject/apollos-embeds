@@ -71,7 +71,7 @@ function HeroListFeature(props = {}) {
   const actions = props.feature?.actions;
 
   return (
-    <Box minWidth="180px" {...props}>
+    <Box mb="base" minWidth="180px" {...props}>
       {/* Content */}
       <Box>
         {/* List Header */}
