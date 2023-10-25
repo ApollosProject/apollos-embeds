@@ -129,7 +129,7 @@ function HeroListFeature(props = {}) {
           </Styled.Summary>
         </Box>
       </Box>
-      {props?.feature?.primaryAction?.relatedNode ? (
+      {props?.feature?.primaryAction?.relatedNode && actions.length !== 0 ? (
         <Box display="flex" justifyContent="flex-end">
           <Button
             title={props.feature?.primaryAction?.title}
