@@ -48,10 +48,6 @@ const Container = styled.div`
     grid-template-columns: repeat(3, 1fr);
     ${twoCardlayout}
   }
-  @media screen and (min-width: ${themeGet('breakpoints.lg')}) {
-    grid-template-columns: repeat(4, 1fr);
-    ${twoCardlayout}
-  }
 `;
 
 const Item = styled.div`
