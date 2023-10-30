@@ -80,7 +80,7 @@ function MediaItem(props = {}) {
       <Box
         marginTop={unit(2)}
         background="material.regular"
-        backdrop-filter="blur(64px)"
+        backdropFilter="blur(64px)"
         width={props.horizontal ? '50%' : ''}
       >
         <H4>

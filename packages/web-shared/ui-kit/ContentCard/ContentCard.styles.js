@@ -40,8 +40,9 @@ export const Summary = withTheme(styled.div`
 
 export const Title = withTheme(styled.div`
   ${TypeStyles.H4}
-  white-space: nowrap;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  text-overflow: ellipsis;
   ${system}
 `);
