@@ -1,33 +1,16 @@
-import * as videoFilters from './filterVideoSources';
-import cleanMarkup from './cleanMarkup';
-import createMarkup from './createMarkup';
-import getContentFromURL from './getContentFromURL';
-import getDurationString from './getDurationString';
-import getPathFromType from './getPathFromType';
-import getPercentWatched from './getPercentWatched';
-import getPropTypesFromObject from './getPropTypesFromObject';
-import getURLFromType from './getURLFromType';
-import getWatchButtonLabel from './getWatchButtonLabel';
-import parseDescriptionLinks from './parseDescriptionLinks';
-import slugify from './slugify';
-import unit from './unit';
-import validateEmail from './validateEmail';
-import validatePhoneNumber from './validatePhoneNumber';
-
-export {
-  cleanMarkup,
-  createMarkup,
-  getContentFromURL,
-  getDurationString,
-  getPathFromType,
-  getPercentWatched,
-  getPropTypesFromObject,
-  getURLFromType,
-  getWatchButtonLabel,
-  parseDescriptionLinks,
-  slugify,
-  unit,
-  validateEmail,
-  validatePhoneNumber,
-  videoFilters,
-};
+export { default as cleanMarkup } from './cleanMarkup';
+export { default as createMarkup } from './createMarkup';
+export * as videoFilters from './filterVideoSources';
+export { default as getContentFromURL } from './getContentFromURL';
+export { default as getDurationString } from './getDurationString';
+export { default as getPathFromType } from './getPathFromType';
+export { default as getPercentWatched } from './getPercentWatched';
+export { default as getPropTypesFromObject } from './getPropTypesFromObject';
+export { default as getURLFromType } from './getURLFromType';
+export { default as getWatchButtonLabel } from './getWatchButtonLabel';
+export { default as parseDescriptionLinks } from './parseDescriptionLinks';
+export { default as parseLink } from './parseLink';
+export { default as slugify } from './slugify';
+export { default as unit } from './unit';
+export { default as validateEmail } from './validateEmail';
+export { default as validatePhoneNumber } from './validatePhoneNumber';
