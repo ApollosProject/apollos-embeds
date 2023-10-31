@@ -8,6 +8,11 @@ const Longform = styled.div`
   ${TypeStyles.BodyText};
   max-width: 700px;
 
+  a {
+    color: ${themeGet('colors.text.action')} !important;
+    text-decoration: none !important;
+  }
+
   h1,
   h2,
   h3,
