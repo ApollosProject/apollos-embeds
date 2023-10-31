@@ -16,24 +16,27 @@ const ButtonGroup = withTheme(styled.div`
 const buttonState = ({ theme, type, disabled }) => {
   return css`
     &:hover {
-      background: ${themeGet('colors.neutral.gray5')};
+      opacity: 0.5;
+      background: ${themeGet('colors.fill.system1')};
     }
     &:disabled {
       opacity: 0.5;
       background: ${type === 'secondary'
         ? 'transparent'
-        : theme.colors.neutral.gray6};
+        : theme.colors.fill.system1};
       border: ${type === 'secondary' ? theme.colors.base.gray : 'transparent'};
       cursor: not-allowed;
     }
     &:hover &:disabled {
-      background: ${themeGet('colors.neutral.gray6')};
+      opacity: 0.5;
+      background: ${themeGet('colors.fill.system1')};
     }
   `;
 };
 
 const Button = withTheme(styled.button`
-  background: ${themeGet('colors.neutral.gray6')};
+  opacity: 0.8;
+  background: ${themeGet('colors.fill.system1')};
   padding: 10px;
   border-radius: 50%;
   border: 0;
