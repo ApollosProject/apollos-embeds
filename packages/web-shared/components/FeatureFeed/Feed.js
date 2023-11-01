@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import isNil from 'lodash/isNil';
+import filter from 'lodash/filter';
+import compact from 'lodash/compact';
 
 import { Box, Loader } from '../../ui-kit';
 
@@ -36,7 +37,7 @@ const Feed = ({ loading, data }) => {
     );
   }
 
-  const renderedFeatures = data.features?.filter(feature => feature.cards !== null).filter(isNil);
+  const renderedFeatures = compact(filter(data.features, feature => !feature?.cards?.length));
 
   if (!renderedFeatures?.length) {
     return (
