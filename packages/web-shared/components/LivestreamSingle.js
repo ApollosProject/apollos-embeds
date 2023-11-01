@@ -22,13 +22,14 @@ import {
   Longform,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress, useLivestreamStatus } from '../hooks';
+import { useVideoMediaProgress, useLivestreamStatus, useParseDescription } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 const MAX_EPISODE_COUNT = 20;
 
 function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
+  const parseDescription = useParseDescription();
 
   const invalidPage = !props.loading && !props.data;
   const { status } = useLivestreamStatus(props?.data);
@@ -36,12 +37,10 @@ function LivestreamSingle(props = {}) {
   // Video details
   const videoMedia = props.data?.stream?.sources?.uri;
 
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: videoMedia?.id },
-      skip: !videoMedia?.id,
-    }
-  );
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
+    variables: { id: videoMedia?.id },
+    skip: !videoMedia?.id,
+  });
 
   useEffect(() => {
     if (invalidPage) {
@@ -67,27 +66,28 @@ function LivestreamSingle(props = {}) {
   }
 
   // Content Details
-  const coverImage = props?.data?.coverImage;
+  const {
+    coverImage,
+    htmlContent,
+    title,
+    childContentItemsConnection,
+    featureFeed,
+    publishDate: _publishDate,
+    stream,
+  } = props.data;
 
-  const htmlContent = props?.data?.htmlContent;
-  const summary = props?.data?.summary;
-  const title = props?.data?.title;
-  const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
-  const validFeatures = props.data?.featureFeed?.features?.filter(
-    (feature) => FeatureFeedComponentMap[feature.__typename]
+  const validFeatures = featureFeed?.features?.filter(
+    feature => FeatureFeedComponentMap[feature.__typename],
   );
   const hasFeatures = validFeatures?.length;
-  const showEpisodeCount =
-    hasChildContent && childContentItems.length < MAX_EPISODE_COUNT;
+  const showEpisodeCount = hasChildContent && childContentItems.length < MAX_EPISODE_COUNT;
 
-  const publishDate = new Date(parseInt(props?.data?.publishDate));
+  const publishDate = new Date(parseInt(_publishDate));
 
-  const formattedPublishDate = props?.data?.publishDate
-    ? format(
-        addMinutes(publishDate, publishDate.getTimezoneOffset()),
-        'MMMM do, yyyy'
-      )
+  const formattedPublishDate = _publishDate
+    ? format(addMinutes(publishDate, publishDate.getTimezoneOffset()), 'MMMM do, yyyy')
     : null;
 
   const sanitizedHTML = DOMPurify.sanitize(htmlContent);
@@ -99,7 +99,7 @@ function LivestreamSingle(props = {}) {
     </BodyText>
   );
 
-  const handleActionPress = (item) => {
+  const handleActionPress = item => {
     navigate({
       pathname: '/',
       search: `?id=${getURLFromType(item.relatedNode)}`,
@@ -110,7 +110,7 @@ function LivestreamSingle(props = {}) {
     <>
       <Box margin="0 auto">
         <Box mb="base">
-          {props.data?.stream.sources[0] ? (
+          {stream.sources[0] ? (
             <VideoPlayer
               userProgress={userProgress}
               parentNode={props.data}
@@ -127,33 +127,21 @@ function LivestreamSingle(props = {}) {
         </Box>
 
         <Box mb="l">
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-            mb="s"
-          >
+          <Box display="flex" justifyContent="space-between" alignItems="center" mb="s">
             <Box>
-              {status ? (
-                <LiveChip display="inline-block" status={status} />
-              ) : null}
+              {status ? <LiveChip display="inline-block" status={status} /> : null}
               {/* Title */}
               {title && !hasChildContent ? <H2>{title}</H2> : null}
               {title && hasChildContent ? <H1>{title}</H1> : null}
               <Box display="flex" flexDirection="row">
-                <BodyText
-                  color="text.secondary"
-                  mb={title && !hasChildContent ? 'xxs' : ''}
-                >
+                <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
                   Livestream
                 </BodyText>
 
                 {/* ( Optional Divider ) */}
                 {formattedPublishDate ? infoDivider : null}
                 {formattedPublishDate ? (
-                  <BodyText color="text.secondary">
-                    {formattedPublishDate}
-                  </BodyText>
+                  <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
                 ) : null}
               </Box>
             </Box>
@@ -165,13 +153,12 @@ function LivestreamSingle(props = {}) {
           {/* Children Count */}
           {showEpisodeCount ? (
             <H4 color="text.secondary" mr="xl">
-              {childContentItems.length}{' '}
-              {`Episode${childContentItems.length === 1 ? '' : 's'}`}
+              {childContentItems.length} {`Episode${childContentItems.length === 1 ? '' : 's'}`}
             </H4>
           ) : null}
           {htmlContent ? (
             <>
-              <Longform dangerouslySetInnerHTML={{ __html: sanitizedHTML }} />
+              <Longform dangerouslySetInnerHTML={{ __html: parseDescription(sanitizedHTML) }} />
             </>
           ) : null}
         </Box>
@@ -179,11 +166,7 @@ function LivestreamSingle(props = {}) {
         {hasChildContent ? (
           <Box mb="l">
             <H3 mb="xs">{props.feature.title || props.feature.subtitle}</H3>
-            <Box
-              display="grid"
-              gridTemplateColumns="repeat(3, 1fr)"
-              gridGap="20px"
-            >
+            <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
               {childContentItems?.map((item, index) => (
                 <MediaItem
                   key={item.node?.title}
@@ -201,7 +184,7 @@ function LivestreamSingle(props = {}) {
         {/* Sub-Feature Feed */}
         {hasFeatures ? (
           <Box my="l">
-            <FeatureFeed data={props.data?.featureFeed} />
+            <FeatureFeed data={featureFeed} />
           </Box>
         ) : null}
       </Box>

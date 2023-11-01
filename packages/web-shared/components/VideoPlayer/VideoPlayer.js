@@ -2,9 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
 
-import { round } from 'lodash';
-
-import { useInteractWithNode, useLivestreamStatus } from '../../hooks';
+import { useInteractWithNode, useLivestreamStatus, useParseDescription } from '../../hooks';
 import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
@@ -23,6 +21,7 @@ const _analyticsData = {
 function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
+  const parseDescription = useParseDescription();
 
   const { status } = useLivestreamStatus(props.parentNode);
   const isLiveStreaming = status === 'isLive';
@@ -35,7 +34,7 @@ function VideoPlayer(props = {}) {
   const [paused, setPaused] = useState(false);
 
   // will find the first HLS video playlist provided
-  const videoMedia = props.parentNode?.videos?.find((video) => {
+  const videoMedia = props.parentNode?.videos?.find(video => {
     const sources = videoFilters.filterVideoSources(video.sources);
 
     return sources.length > 0;
@@ -47,10 +46,7 @@ function VideoPlayer(props = {}) {
   const interactWithVideo = useCallback(
     (action, data) => {
       console.table(data?.progress, previouslyReportedPlayhead.current);
-      if (
-        isLiveStreaming ||
-        data?.progress === previouslyReportedPlayhead.current
-      ) {
+      if (isLiveStreaming || data?.progress === previouslyReportedPlayhead.current) {
         return null;
       }
       previouslyReportedPlayhead.current = data?.progress;
@@ -67,8 +63,7 @@ function VideoPlayer(props = {}) {
             const playhead =
               variables.action === 'COMPLETE'
                 ? 0
-                : variables.data.find(({ field }) => field === 'progress')
-                    ?.value;
+                : variables.data.find(({ field }) => field === 'progress')?.value;
 
             cache.modify({
               id: cache.identify({
@@ -88,7 +83,7 @@ function VideoPlayer(props = {}) {
         });
       }
     },
-    [_interactWithNode, videoMedia, isLiveStreaming]
+    [_interactWithNode, videoMedia, isLiveStreaming],
   );
 
   const catchUpLivestream = () => {
@@ -101,7 +96,7 @@ function VideoPlayer(props = {}) {
   // Event Handlers
   // ------------------------------------------
 
-  const handleVideoLoad = async (evt) => {
+  const handleVideoLoad = async evt => {
     const newDuration = Math.floor(evt.duration, 2);
     setDuration(newDuration);
     _analyticsData.totalLength = newDuration;
@@ -144,7 +139,7 @@ function VideoPlayer(props = {}) {
     }
   };
 
-  const handleVideoPlaybackRateChange = (evt) => {
+  const handleVideoPlaybackRateChange = evt => {
     if (evt.playbackRate === 0) {
       handleVideoPaused();
     } else {
@@ -152,7 +147,7 @@ function VideoPlayer(props = {}) {
     }
   };
 
-  const handleVideoProgress = (evt) => {
+  const handleVideoProgress = evt => {
     const newCurrentTime = Math.floor(evt.playedSeconds);
 
     setCurrentTime(newCurrentTime);
@@ -164,9 +159,7 @@ function VideoPlayer(props = {}) {
     }
 
     // Store the users' progress via an Interaction if enough seconds have elapsed
-    if (
-      Math.abs(currentTime - progressTime) >= PROGRESS_CHECK_INTERVAL_SECONDS
-    ) {
+    if (Math.abs(currentTime - progressTime) >= PROGRESS_CHECK_INTERVAL_SECONDS) {
       setProgressTime(currentTime);
 
       interactWithVideo('VIEW', {
@@ -175,7 +168,7 @@ function VideoPlayer(props = {}) {
     }
   };
 
-  const handleVideoError = (evt) => {
+  const handleVideoError = evt => {
     // eslint-disable-next-line no-console
     console.error('Video Error', evt);
   };
@@ -185,18 +178,15 @@ function VideoPlayer(props = {}) {
     : videoMedia?.sources[0]?.uri;
 
   if (props.parentNode?.videos?.embedHtml) {
-    const sanitizedHTML = DOMPurify.sanitize(
-      props.parentNode?.videos?.embedHtml,
-      {
-        ALLOWED_TAGS: ['iframe'],
-        ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
-      }
-    );
+    const sanitizedHTML = DOMPurify.sanitize(props.parentNode?.videos?.embedHtml, {
+      ALLOWED_TAGS: ['iframe'],
+      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
+    });
 
     return (
       <EmbededPlayer
         {...props}
-        dangerouslySetInnerHTML={{ __html: sanitizedHTML }}
+        dangerouslySetInnerHTML={{ __html: parseDescription(sanitizedHTML) }}
       />
     );
   } else if (source) {
@@ -266,7 +256,7 @@ VideoPlayer.propTypes = {
       sources: PropTypes.arrayOf(
         PropTypes.shape({
           uri: PropTypes.string,
-        })
+        }),
       ),
     }),
   }),
