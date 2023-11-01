@@ -22,14 +22,14 @@ import {
   Longform,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress, useLivestreamStatus, useParseDescription } from '../hooks';
+import { useVideoMediaProgress, useLivestreamStatus, useDescriptionHTML } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 const MAX_EPISODE_COUNT = 20;
 
 function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
-  const parseDescription = useParseDescription();
+  const parseDescriptionHTML = useDescriptionHTML();
 
   const invalidPage = !props.loading && !props.data;
   const { status } = useLivestreamStatus(props?.data);
@@ -89,8 +89,6 @@ function LivestreamSingle(props = {}) {
   const formattedPublishDate = _publishDate
     ? format(addMinutes(publishDate, publishDate.getTimezoneOffset()), 'MMMM do, yyyy')
     : null;
-
-  const sanitizedHTML = DOMPurify.sanitize(htmlContent);
 
   // We'll conditionally place this divider as needed
   const infoDivider = (
@@ -158,7 +156,7 @@ function LivestreamSingle(props = {}) {
           ) : null}
           {htmlContent ? (
             <>
-              <Longform dangerouslySetInnerHTML={{ __html: parseDescription(sanitizedHTML) }} />
+              <Longform dangerouslySetInnerHTML={{ __html: parseDescriptionHTML(htmlContent) }} />
             </>
           ) : null}
         </Box>

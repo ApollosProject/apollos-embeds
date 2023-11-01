@@ -7,7 +7,7 @@ import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/Breadc
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import { Box, H2, H5, Loader, Longform, H3, MediaItem, ShareButton } from '../ui-kit';
-import { useParseDescription, useVideoMediaProgress } from '../hooks';
+import { useDescriptionHTML, useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import styled from 'styled-components';
@@ -18,7 +18,7 @@ function ContentSeriesSingle(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
-  const parseDescription = useParseDescription();
+  const parseDescriptionHTML = useDescriptionHTML();
 
   const invalidPage = !props.loading && !props.data;
 
@@ -162,7 +162,7 @@ function ContentSeriesSingle(props = {}) {
                 <MultilineEllipsis>
                   <Longform
                     dangerouslySetInnerHTML={{
-                      __html: parseDescription(htmlContent),
+                      __html: parseDescriptionHTML(htmlContent),
                     }}
                   />
                 </MultilineEllipsis>

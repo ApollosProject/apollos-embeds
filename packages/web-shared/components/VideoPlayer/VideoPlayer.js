@@ -1,8 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
-import DOMPurify from 'dompurify';
 
-import { useInteractWithNode, useLivestreamStatus, useParseDescription } from '../../hooks';
+import { useInteractWithNode, useLivestreamStatus, useDescriptionHTML } from '../../hooks';
 import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
@@ -21,7 +20,7 @@ const _analyticsData = {
 function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
-  const parseDescription = useParseDescription();
+  const parseDescriptionHTML = useDescriptionHTML();
 
   const { status } = useLivestreamStatus(props.parentNode);
   const isLiveStreaming = status === 'isLive';
@@ -178,15 +177,15 @@ function VideoPlayer(props = {}) {
     : videoMedia?.sources[0]?.uri;
 
   if (props.parentNode?.videos?.embedHtml) {
-    const sanitizedHTML = DOMPurify.sanitize(props.parentNode?.videos?.embedHtml, {
-      ALLOWED_TAGS: ['iframe'],
-      ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
-    });
-
     return (
       <EmbededPlayer
         {...props}
-        dangerouslySetInnerHTML={{ __html: parseDescription(sanitizedHTML) }}
+        dangerouslySetInnerHTML={{
+          __html: parseDescriptionHTML(props.parentNode?.videos?.embedHtml, {
+            ALLOWED_TAGS: ['iframe'],
+            ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
+          }),
+        }}
       />
     );
   } else if (source) {

@@ -11,7 +11,7 @@ import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/Breadc
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import { Box, H1, H2, H4, Loader, Longform, H3, MediaItem, BodyText, ShareButton } from '../ui-kit';
-import { useParseDescription, useVideoMediaProgress } from '../hooks';
+import { useDescriptionHTML, useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 
@@ -20,7 +20,7 @@ function InformationalContentSingle(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
-  const parseDescription = useParseDescription();
+  const parseDescriptionHTML = useDescriptionHTML();
 
   const invalidPage = !props.loading && !props.data;
 
@@ -185,7 +185,7 @@ function InformationalContentSingle(props = {}) {
             <>
               <Longform
                 dangerouslySetInnerHTML={{
-                  __html: parseDescription(htmlContent),
+                  __html: parseDescriptionHTML(htmlContent),
                 }}
               />
             </>
