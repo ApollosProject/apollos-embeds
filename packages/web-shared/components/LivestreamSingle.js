@@ -79,7 +79,7 @@ function LivestreamSingle(props = {}) {
   const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const validFeatures = featureFeed?.features?.filter(
-    feature => FeatureFeedComponentMap[feature.__typename],
+    feature => !!(feature && FeatureFeedComponentMap[feature.__typename]),
   );
   const hasFeatures = validFeatures?.length;
   const showEpisodeCount = hasChildContent && childContentItems.length < MAX_EPISODE_COUNT;

@@ -1,28 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import isNil from 'lodash';
+import isNil from 'lodash/isNil';
 
 import { Box, Loader } from '../../ui-kit';
 
 import FeatureFeedComponentMap from './FeatureFeedComponentMap';
 
-function renderFeature(feature, index) {
-  // Lookup the component responsible for rendering this Feature
-  const FeatureComponent = FeatureFeedComponentMap[feature.__typename];
-
-  if (FeatureComponent) {
-    return <FeatureComponent key={feature.id} feature={feature} />;
-  }
-
-  // eslint-disable-next-line no-console
-  console.log(
-    `⚠️  FeatureFeed could not render feature of type "${feature.__typename}"`
-  );
-
-  return null;
-}
-
-const Feed = (props) => {
+const Feed = ({ loading, data }) => {
   // Clunky, silly workaround for an Apollo query `loading` prop problem.
   // We don't want cache updates or background refetch calls to trigger
   // the loading state when we have data... that unmounts the VideoPlayer.
@@ -30,12 +14,12 @@ const Feed = (props) => {
   const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   useEffect(() => {
-    if (isFirstLoad && !props.loading) {
+    if (isFirstLoad && !loading) {
       setIsFirstLoad(false);
     }
-  }, [props.loading, isFirstLoad]);
+  }, [loading, isFirstLoad]);
 
-  if (isFirstLoad || (props.loading && !props.data)) {
+  if (isFirstLoad || (loading && !data)) {
     return (
       <Box
         display="flex"
@@ -52,12 +36,9 @@ const Feed = (props) => {
     );
   }
 
-  const features = props?.data?.features?.filter(
-    (feature) => feature.cards !== null
-  );
-  const renderedFeatures = features?.map(renderFeature).filter(isNil);
+  const renderedFeatures = data.features?.filter(feature => feature.cards !== null).filter(isNil);
 
-  if (!renderedFeatures || !renderedFeatures?.length) {
+  if (!renderedFeatures?.length) {
     return (
       <Box textAlign="center">
         <h4>Sorry, something went wrong.</h4>
@@ -66,7 +47,19 @@ const Feed = (props) => {
     );
   }
 
-  return renderedFeatures;
+  return renderedFeatures?.map((feature, i) => {
+    const { __typename } = feature;
+    // Lookup the component responsible for rendering this Feature
+    const FeatureComponent = FeatureFeedComponentMap[__typename];
+
+    if (!FeatureComponent) {
+      // eslint-disable-next-line no-console
+      console.log(`⚠️ FeatureFeed could not render feature of type "${__typename}"`);
+      return null;
+    }
+
+    return <FeatureComponent key={`${feature.id}_${i}`} feature={feature} />;
+  });
 };
 
 Feed.propTypes = {
