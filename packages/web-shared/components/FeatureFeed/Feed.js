@@ -6,7 +6,23 @@ import { Box, Loader } from '../../ui-kit';
 
 import FeatureFeedComponentMap from './FeatureFeedComponentMap';
 
-const Feed = props => {
+function renderFeature(feature, index) {
+  // Lookup the component responsible for rendering this Feature
+  const FeatureComponent = FeatureFeedComponentMap[feature.__typename];
+
+  if (FeatureComponent) {
+    return <FeatureComponent key={feature.id} feature={feature} />;
+  }
+
+  // eslint-disable-next-line no-console
+  console.log(
+    `⚠️  FeatureFeed could not render feature of type "${feature.__typename}"`
+  );
+
+  return null;
+}
+
+const Feed = (props) => {
   // Clunky, silly workaround for an Apollo query `loading` prop problem.
   // We don't want cache updates or background refetch calls to trigger
   // the loading state when we have data... that unmounts the VideoPlayer.
@@ -36,11 +52,12 @@ const Feed = props => {
     );
   }
 
-  const renderedFeatures = props.data.features
-    ?.filter(feature => feature.cards !== null)
-    .filter(isNil);
+  const features = props?.data?.features?.filter(
+    (feature) => feature.cards !== null
+  );
+  const renderedFeatures = features?.map(renderFeature).filter(isNil);
 
-  if (!renderedFeatures?.length) {
+  if (!renderedFeatures || !renderedFeatures?.length) {
     return (
       <Box textAlign="center">
         <h4>Sorry, something went wrong.</h4>
@@ -49,19 +66,7 @@ const Feed = props => {
     );
   }
 
-  return renderedFeatures?.map((feature, i) => {
-    const { __typename } = feature;
-    // Lookup the component responsible for rendering this Feature
-    const FeatureComponent = FeatureFeedComponentMap[__typename];
-
-    if (!FeatureComponent) {
-      // eslint-disable-next-line no-console
-      console.log(`⚠️ FeatureFeed could not render feature of type "${__typename}"`);
-      return null;
-    }
-
-    return <FeatureComponent key={`${feature.id}_${i}`} feature={feature} />;
-  });
+  return renderedFeatures;
 };
 
 Feed.propTypes = {
