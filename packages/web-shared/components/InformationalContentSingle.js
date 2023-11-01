@@ -73,7 +73,7 @@ function InformationalContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = featureFeed?.features?.filter(
-    feature => !!(feature && FeatureFeedComponentMap[feature.__typename]),
+    feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
   const showEpisodeCount = hasChildContent && childContentItems.length < 20;
