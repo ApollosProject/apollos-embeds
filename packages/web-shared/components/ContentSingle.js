@@ -58,7 +58,7 @@ function ContentSingle(props = {}) {
   // Content Details
   const coverImage = props?.data?.coverImage;
 
-  const htmlContent = `<a href="https://rock.apollos.app/ContentChannelItem/52">rock link</a>`; //props?.data?.htmlContent;
+  const htmlContent = props?.data?.htmlContent;
   const summary = props?.data?.summary;
   const title = props?.data?.title;
   const parentChannel = props.data?.parentChannel;
