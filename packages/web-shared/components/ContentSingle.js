@@ -56,25 +56,31 @@ function ContentSingle(props = {}) {
   }
 
   // Content Details
-  const coverImage = props?.data?.coverImage;
+  const {
+    id,
+    coverImage,
+    htmlContent,
+    title,
+    parentChannel,
+    childContentItemsConnection,
+    siblingContentItemsConnection,
+    featureFeed,
+    publishDate: _publishDate,
+  } = props?.data;
 
-  const htmlContent = props?.data?.htmlContent;
-  const summary = props?.data?.summary;
-  const title = props?.data?.title;
-  const parentChannel = props.data?.parentChannel;
-  const childContentItems = props.data?.childContentItemsConnection?.edges;
-  const siblingContentItems = props.data?.siblingContentItemsConnection?.edges;
+  const childContentItems = childContentItemsConnection?.edges;
+  const siblingContentItems = siblingContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
-  const validFeatures = props.data?.featureFeed?.features?.filter(
+  const validFeatures = featureFeed?.features?.filter(
     feature => FeatureFeedComponentMap[feature.__typename],
   );
   const hasFeatures = validFeatures?.length;
   const showEpisodeCount = hasChildContent && childContentItems.length < 20;
 
-  const publishDate = new Date(parseInt(props?.data?.publishDate));
+  const publishDate = new Date(parseInt(_publishDate));
 
-  const formattedPublishDate = props?.data?.publishDate
+  const formattedPublishDate = _publishDate
     ? format(addMinutes(publishDate, publishDate.getTimezoneOffset()), 'MMMM do, yyyy')
     : null;
 
@@ -105,10 +111,10 @@ function ContentSingle(props = {}) {
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
       <Box margin="0 auto" maxWidth="750px">
-        <InteractWhenLoaded loading={props.loading} nodeId={props.data.id} action={'VIEW'} />
-        {coverImage?.sources[0]?.uri || props.data?.videos[0] ? (
+        <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
+        {coverImage?.sources[0]?.uri || videoMedia ? (
           <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
-            {props.data?.videos[0] ? (
+            {videoMedia ? (
               <VideoPlayer
                 userProgress={userProgress}
                 parentNode={props.data}
@@ -249,7 +255,7 @@ function ContentSingle(props = {}) {
         {/* Sub-Feature Feed */}
         {hasFeatures ? (
           <Box my="l">
-            <FeatureFeed data={props.data?.featureFeed} />
+            <FeatureFeed data={featureFeed} />
           </Box>
         ) : null}
       </Box>

@@ -54,10 +54,9 @@ function ContentSeriesSingle(props = {}) {
   }
 
   // Content Details
-  const coverImage = props?.data?.coverImage;
-  const htmlContent = props?.data?.htmlContent;
-  const title = props?.data?.title;
-  const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const { coverImage, htmlContent, title, childContentItemsConnection } = props.data;
+
+  const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const showEpisodeCount = hasChildContent && childContentItems.length < 20;
 

@@ -2,6 +2,7 @@ import { isValidUrl } from '../utils';
 import useCurrentUser from './useCurrentUser';
 
 const CHURCH_HOSTS = {
+  // `<a href="https://rock.apollos.app/ContentChannelItem/52">rock link</a>`
   ROCK: 'rock.apollos.app',
 };
 
