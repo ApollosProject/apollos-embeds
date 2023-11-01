@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+
 import filter from 'lodash/filter';
 import compact from 'lodash/compact';
+import isFunction from 'lodash/isFunction';
 
+import { useLink } from '../../hooks';
 import { Box, Loader } from '../../ui-kit';
 
 import FeatureFeedComponentMap from './FeatureFeedComponentMap';
 
 const Feed = ({ loading, data }) => {
+  const transformLink = useLink();
   // Clunky, silly workaround for an Apollo query `loading` prop problem.
   // We don't want cache updates or background refetch calls to trigger
   // the loading state when we have data... that unmounts the VideoPlayer.
@@ -59,7 +63,19 @@ const Feed = ({ loading, data }) => {
       return null;
     }
 
-    return <FeatureComponent key={`${feature.id}_${i}`} feature={feature} />;
+    const handleTransformLink = url => {
+      // just bulletproofing
+      if (!isFunction(transformLink)) return url;
+      return transformLink(url);
+    };
+
+    return (
+      <FeatureComponent
+        key={`${feature.id}_${i}`}
+        feature={feature}
+        transformLink={handleTransformLink}
+      />
+    );
   });
 };
 

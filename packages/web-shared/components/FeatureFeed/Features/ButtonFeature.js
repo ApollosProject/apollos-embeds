@@ -11,7 +11,7 @@ function ButtonFeature(props = {}) {
   // Event Handlers
   const handleActionPress = () => {
     if (props.feature?.action?.relatedNode?.url) {
-      window.open(props.feature?.action?.relatedNode?.url, '_blank');
+      window.open(props.transformLink(props.feature?.action?.relatedNode?.url), '_blank');
     } else {
       navigate({
         pathname: '/',
