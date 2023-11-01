@@ -54,6 +54,7 @@ const Feed = ({ loading, data }) => {
 
   return renderedFeatures?.map((feature, i) => {
     const { __typename } = feature;
+
     // Lookup the component responsible for rendering this Feature
     const FeatureComponent = FeatureFeedComponentMap[__typename];
 
