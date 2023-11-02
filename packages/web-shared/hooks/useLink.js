@@ -23,7 +23,9 @@ const useLink = () => {
       if (protocol !== 'https:') return link;
 
       // `<a href="https://rock.apollos.app/MyAccount">rock link</a>`
-      if (useRockAuth && rockAuthToken && ROCK_APP_HOST_REGEX.test(host)) {
+      const appendRockAuthToken = useRockAuth && rockAuthToken && ROCK_APP_HOST_REGEX.test(host);
+
+      if (appendRockAuthToken) {
         searchParams.append('rckipid', rockAuthToken);
       }
 
