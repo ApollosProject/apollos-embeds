@@ -47,6 +47,7 @@ export const GET_CONTENT_ITEM = gql`
             node {
               id
               title
+              summary
               coverImage {
                 sources {
                   uri
@@ -63,6 +64,7 @@ export const GET_CONTENT_ITEM = gql`
             node {
               id
               title
+              summary
               coverImage {
                 sources {
                   uri
