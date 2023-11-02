@@ -22,14 +22,14 @@ import {
   Longform,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress, useLivestreamStatus, useDescriptionHTML } from '../hooks';
+import { useVideoMediaProgress, useLivestreamStatus, useHTMLContent } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
 const MAX_EPISODE_COUNT = 20;
 
 function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
-  const parseDescriptionHTML = useDescriptionHTML();
+  const parseHTMLContent = useHTMLContent();
 
   const invalidPage = !props.loading && !props.data;
   const { status } = useLivestreamStatus(props?.data);
@@ -156,7 +156,7 @@ function LivestreamSingle(props = {}) {
           ) : null}
           {htmlContent ? (
             <>
-              <Longform dangerouslySetInnerHTML={{ __html: parseDescriptionHTML(htmlContent) }} />
+              <Longform dangerouslySetInnerHTML={{ __html: parseHTMLContent(htmlContent) }} />
             </>
           ) : null}
         </Box>

@@ -2,10 +2,10 @@ import DOMPurify from 'dompurify';
 import { useCallback } from 'react';
 import useLink from './useLink';
 
-const useDescriptionHTML = () => {
+const useHTMLContent = () => {
   const transformLink = useLink();
 
-  const parseDescriptionHTML = useCallback(
+  const parseHTMLContent = useCallback(
     (descriptionHTML, options) => {
       const { useRockAuth, sanitizeOptions } = options || {};
       const sanitizedHTML = DOMPurify.sanitize(descriptionHTML, sanitizeOptions);
@@ -45,7 +45,7 @@ const useDescriptionHTML = () => {
     [transformLink],
   );
 
-  return parseDescriptionHTML;
+  return parseHTMLContent;
 };
 
-export default useDescriptionHTML;
+export default useHTMLContent;

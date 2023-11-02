@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useInteractWithNode, useLivestreamStatus, useDescriptionHTML } from '../../hooks';
+import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../hooks';
 import { Box } from '../../ui-kit';
 
 import { videoFilters } from '../../utils';
@@ -20,7 +20,7 @@ const _analyticsData = {
 function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
-  const parseDescriptionHTML = useDescriptionHTML();
+  const parseHTMLContent = useHTMLContent();
 
   const { status } = useLivestreamStatus(props.parentNode);
   const isLiveStreaming = status === 'isLive';
@@ -181,7 +181,7 @@ function VideoPlayer(props = {}) {
       <EmbededPlayer
         {...props}
         dangerouslySetInnerHTML={{
-          __html: parseDescriptionHTML(props.parentNode?.videos?.embedHtml, {
+          __html: parseHTMLContent(props.parentNode?.videos?.embedHtml, {
             sanitizeOptions: {
               ALLOWED_TAGS: ['iframe'],
               ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
