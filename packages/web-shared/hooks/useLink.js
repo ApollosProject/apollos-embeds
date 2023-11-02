@@ -2,8 +2,8 @@ import { useCallback } from 'react';
 import { isValidUrl } from '../utils';
 import useCurrentUser from './useCurrentUser';
 
-const CHURCH_HOSTS = {
-  // `<a href="https://rock.apollos.app/ContentChannelItem/52">rock link</a>`
+const BLESSED_EXTERNAL_HOSTS = {
+  // `<a href="https://rock.apollos.app/MyAccount">rock link</a>`
   ROCK: 'rock.apollos.app',
 };
 
@@ -27,7 +27,7 @@ const useLink = () => {
 
       // church based URL modifications go here
       switch (host) {
-        case CHURCH_HOSTS.ROCK:
+        case BLESSED_EXTERNAL_HOSTS.ROCK:
           if (useRockAuth && rockAuthToken) searchParams.append('rckipid', rockAuthToken);
           break;
         default:
