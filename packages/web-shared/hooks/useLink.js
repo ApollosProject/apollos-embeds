@@ -2,10 +2,7 @@ import { useCallback } from 'react';
 import { isValidUrl } from '../utils';
 import useCurrentUser from './useCurrentUser';
 
-const BLESSED_EXTERNAL_HOSTS = {
-  // `<a href="https://rock.apollos.app/MyAccount">rock link</a>`
-  ROCK: 'rock.apollos.app',
-};
+const ROCK_APP_HOST_REGEX = /rock\.[a-z]+\.app/i;
 
 const useLink = () => {
   const { currentUser } = useCurrentUser();
@@ -25,13 +22,9 @@ const useLink = () => {
 
       if (protocol !== 'https:') return link;
 
-      // church based URL modifications go here
-      switch (host) {
-        case BLESSED_EXTERNAL_HOSTS.ROCK:
-          if (useRockAuth && rockAuthToken) searchParams.append('rckipid', rockAuthToken);
-          break;
-        default:
-          break;
+      // `<a href="https://rock.apollos.app/MyAccount">rock link</a>`
+      if (useRockAuth && rockAuthToken && ROCK_APP_HOST_REGEX.test(host)) {
+        searchParams.append('rckipid', rockAuthToken);
       }
 
       const formattedUrl = tokenizedUrl.toString();
