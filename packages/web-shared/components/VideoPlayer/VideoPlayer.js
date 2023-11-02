@@ -182,8 +182,10 @@ function VideoPlayer(props = {}) {
         {...props}
         dangerouslySetInnerHTML={{
           __html: parseDescriptionHTML(props.parentNode?.videos?.embedHtml, {
-            ALLOWED_TAGS: ['iframe'],
-            ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
+            sanitizeOptions: {
+              ALLOWED_TAGS: ['iframe'],
+              ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
+            },
           }),
         }}
       />

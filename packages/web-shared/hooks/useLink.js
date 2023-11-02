@@ -7,13 +7,13 @@ const CHURCH_HOSTS = {
   ROCK: 'rock.apollos.app',
 };
 
-const useLink = options => {
-  const { useRockAuth = true } = options || {};
+const useLink = () => {
   const { currentUser } = useCurrentUser();
   const rockAuthToken = currentUser?.rock?.authToken;
 
   const transformLink = useCallback(
-    link => {
+    (link, options) => {
+      const { useRockAuth = true } = options || {};
       // isValidUrl also uses URL under the hood.
       // this should guarantee the destructuring
       // below won't fail.
