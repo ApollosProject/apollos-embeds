@@ -13,13 +13,12 @@ const useDescriptionHTML = () => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(sanitizedHTML, 'text/html');
 
-      const anchorTags = doc.getElementsByTagName('a');
+      const transformAnchorTag = anchorTag => {
+        if (!anchorTag) return;
 
-      for (let i = 0; i < anchorTags.length; i++) {
-        const anchorTag = anchorTags[i];
         const link = anchorTag.getAttribute('href');
 
-        if (!link || !link.startsWith('http')) continue;
+        if (!link || !link.startsWith('http')) return;
 
         const href = transformLink(link, { useRockAuth });
 
@@ -33,6 +32,12 @@ const useDescriptionHTML = () => {
         anchorTag.style.color = '#00A8E1';
         anchorTag.style.fontWeight = '600';
         anchorTag.style.textDecoration = 'underline';
+      };
+
+      const anchorTags = doc.getElementsByTagName('a') || [];
+
+      for (let i = 0; i < anchorTags.length; i++) {
+        transformAnchorTag(anchorTags[i]);
       }
 
       return doc.body.innerHTML;

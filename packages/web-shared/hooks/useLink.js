@@ -38,7 +38,7 @@ const useLink = () => {
 
       return formattedUrl;
     },
-    [useRockAuth, rockAuthToken],
+    [rockAuthToken],
   );
 
   return transformLink;
