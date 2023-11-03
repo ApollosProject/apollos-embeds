@@ -13,6 +13,7 @@
     "react": "*",
     "styled-components": "*",
     "styled-system": "*",
-    "react-transition-group": "*"
+    "react-transition-group": "*",
+    "react-helmet": "*"
   }
 }

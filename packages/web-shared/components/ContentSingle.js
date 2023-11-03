@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
@@ -84,6 +85,7 @@ function ContentSingle(props = {}) {
   const validFeatures = props.data?.featureFeed?.features?.filter(
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
+  console.log('props.data', props.data);
   const hasFeatures = validFeatures?.length;
   const showEpisodeCount = hasChildContent && childContentItems.length < 20;
 
@@ -121,6 +123,33 @@ function ContentSingle(props = {}) {
 
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+        {/* Standard metadata tags */}
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+        <meta name="image" content={coverImage?.sources[0]?.uri} />
+        {/* End standard metadata tags */}
+        {/* Facebook tags */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:url" content={'PLACEHOLDER GET URL'} />
+        <meta property="og:image" content={coverImage?.sources[0]?.uri} />
+        {/* End Facebook tags */}
+        {/* Twitter tags */}
+        <meta
+          name="twitter:card"
+          content={
+            coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'
+          }
+        />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={coverImage?.sources[0]?.uri} />
+        <meta name="twitter:image:alt" content={title} />
+        {/* End Twitter tags */}
+      </Helmet>
+
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
       <Box margin="0 auto" maxWidth="750px">
         <InteractWhenLoaded
