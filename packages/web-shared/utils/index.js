@@ -13,6 +13,7 @@ import slugify from './slugify';
 import unit from './unit';
 import validateEmail from './validateEmail';
 import validatePhoneNumber from './validatePhoneNumber';
+import parseSlugToIdAndType from './parseSlugToIdAndType';
 
 export {
   cleanMarkup,
@@ -30,4 +31,5 @@ export {
   validateEmail,
   validatePhoneNumber,
   videoFilters,
+  parseSlugToIdAndType,
 };

@@ -10,6 +10,7 @@ import { useCurrentChurch } from '@apollosproject/web-shared/hooks';
 import Styled from './App.styles';
 
 import ErrorPage from './error-page';
+import { parseSlugToIdAndType } from '@apollosproject/web-shared/utils';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -28,12 +29,13 @@ function App(props) {
     process.env.NODE_ENV === 'production'
       ? window.location.hostname.split('.').slice(0, -2).join('.')
       : window.location.hostname.split('.').slice(0, -1).join('.');
-  const churchSlug = subdomain.replace(/-/g, '_');
+  const churchSlug = 'apollos_demo';
 
   const searchParams = new URLSearchParams(window.location.search);
   const _root = searchParams.get('root');
 
-  const [type, randomId] = _root?.split(/-(.*)/s) ?? [];
+  const { type, randomId } = parseSlugToIdAndType(_root) ?? {};
+  console.log({ _root, type, randomId })
 
   const router = createBrowserRouter([
     {

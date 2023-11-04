@@ -5,14 +5,15 @@
   "license": "MIT",
   "private": true,
   "dependencies": {
-    "@babel/preset-react": "^7.22.5"
+    "@babel/preset-react": "^7.22.5",
+    "react-helmet": "^6.1.0"
   },
   "peerDependencies": {
     "@apollo/client": "*",
     "prop-types": "*",
     "react": "*",
+    "react-transition-group": "*",
     "styled-components": "*",
-    "styled-system": "*",
-    "react-transition-group": "*"
+    "styled-system": "*"
   }
 }

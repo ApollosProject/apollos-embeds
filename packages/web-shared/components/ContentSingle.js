@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import {Helmet} from "react-helmet";
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
@@ -122,6 +122,10 @@ function ContentSingle(props = {}) {
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
+      <Helmet>
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+      </Helmet>
       <Box margin="0 auto" maxWidth="750px">
         <InteractWhenLoaded
           loading={props.loading}
