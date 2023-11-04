@@ -29,13 +29,12 @@ function App(props) {
     process.env.NODE_ENV === 'production'
       ? window.location.hostname.split('.').slice(0, -2).join('.')
       : window.location.hostname.split('.').slice(0, -1).join('.');
-  const churchSlug = 'apollos_demo';
+  const churchSlug = subdomain.replace(/-/g, '_');
 
   const searchParams = new URLSearchParams(window.location.search);
   const _root = searchParams.get('root');
 
   const { type, randomId } = parseSlugToIdAndType(_root) ?? {};
-  console.log({ _root, type, randomId })
 
   const router = createBrowserRouter([
     {
