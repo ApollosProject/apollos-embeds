@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { User, MagnifyingGlass } from 'phosphor-react';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
-import Styled from './Search.styles';
-import { User, MagnifyingGlass } from 'phosphor-react';
 import { useCurrentUser } from '../../hooks';
-import Profile from '../Profile';
+import { useSearchState } from '../../providers/SearchProvider';
 
+import Profile from '../Profile';
 import Autocomplete from '../Searchbar/Autocomplete';
+
+import Styled from './Search.styles';
 
 const MOBILE_BREAKPOINT = 428;
 
 const Searchbar = (props = {}) => {
+  const searchState = useSearchState();
   const [showProfile, setShowProfile] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [autocompleteState, setAutocompleteState] = React.useState({
@@ -36,7 +39,24 @@ const Searchbar = (props = {}) => {
       <strong>Hey {firstName}!&nbsp; </strong>
     );
 
-  const textPrompt = (
+  const textPrompt = searchState.customPlaceholder ? (
+    <Styled.TextPrompt>
+      <Box
+        as="span"
+        style={{
+          overflow: 'hidden',
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+        }}
+        width={{
+          _: '225px',
+          sm: '400px',
+        }}
+      >
+        {searchState.customPlaceholder}
+      </Box>
+    </Styled.TextPrompt>
+  ) : (
     <Styled.TextPrompt>
       {!isMobile ? textWelcome : null}
 

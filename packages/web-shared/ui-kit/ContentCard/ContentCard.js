@@ -34,7 +34,6 @@ function ContentCard(props = {}) {
   return (
     <Box
       flex={1}
-      m={'0 10px 0 1px'}
       cursor={props.onClick ? 'pointer' : 'default'}
       borderRadius="xl"
       overflow="hidden"
@@ -69,7 +68,7 @@ function ContentCard(props = {}) {
       {/* Masthead */}
       <Box
         padding="base"
-        backdrop-filter="blur(64px)"
+        backdropFilter="blur(64px)"
         width={props.horizontal ? '50%' : ''}
       >
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>

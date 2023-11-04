@@ -15,12 +15,16 @@ Sentry.init({
 function App() {
   const searchElement = document.querySelector('[data-search-feed]');
   const churchElement = document.querySelector('[data-church]');
+  const placeholderElement = document.querySelector('[data-placeholder]');
 
   const searchFeed = searchElement
     ? searchElement.getAttribute('data-search-feed')
     : null;
   const church = churchElement
     ? churchElement.getAttribute('data-church')
+    : null;
+  const customPlaceholder = placeholderElement
+    ? placeholderElement.getAttribute('data-placeholder')
     : null;
 
   const router = createBrowserRouter([
@@ -32,7 +36,11 @@ function App() {
   ]);
 
   return (
-    <AppProvider church={church} searchFeed={searchFeed}>
+    <AppProvider
+      church={church}
+      searchFeed={searchFeed}
+      customPlaceholder={customPlaceholder}
+    >
       <RouterProvider router={router} />
     </AppProvider>
   );

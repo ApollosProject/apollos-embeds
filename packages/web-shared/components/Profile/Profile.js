@@ -48,16 +48,18 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    const checkIfClickedOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
-        e.stopPropagation();
-        handleCloseProfile();
-      }
-    };
-    document.addEventListener('mousedown', checkIfClickedOutside);
-    return () => {
-      document.removeEventListener('mousedown', checkIfClickedOutside);
-    };
+    if (!showAuth) {
+      const checkIfClickedOutside = (e) => {
+        if (ref.current && !ref.current.contains(e.target)) {
+          e.stopPropagation();
+          handleCloseProfile();
+        }
+      };
+      document.addEventListener('mousedown', checkIfClickedOutside);
+      return () => {
+        document.removeEventListener('mousedown', checkIfClickedOutside);
+      };
+    }
   });
 
   const handleLogout = () => {
