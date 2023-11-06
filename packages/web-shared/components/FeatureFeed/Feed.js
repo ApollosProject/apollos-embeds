@@ -41,7 +41,7 @@ const Feed = ({ loading, data }) => {
     );
   }
 
-  const features = data.features?.filter(feature => feature.cards !== null);
+  const features = data.features?.map(feature => (feature.cards === null ? undefined : feature));
   const renderedFeatures = compact(features);
 
   if (!renderedFeatures?.length) {
