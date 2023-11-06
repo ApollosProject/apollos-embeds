@@ -5,7 +5,7 @@ const theme = {
   breakpoints: {
     // Pixel values defining the maximum device width for each breakpoint
     sm: rem('428px'), // Accommodates ~iPhone 12 Max
-    md: rem('768px'),
+    md: rem('800px'),
     lg: rem('1280px'),
     xl: rem('1440px'),
     xxl: rem('2048px'),
