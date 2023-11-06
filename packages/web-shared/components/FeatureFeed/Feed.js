@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import filter from 'lodash/filter';
+import isNil from 'lodash/isNil';
 import compact from 'lodash/compact';
 import isFunction from 'lodash/isFunction';
 
@@ -41,7 +41,8 @@ const Feed = ({ loading, data }) => {
     );
   }
 
-  const renderedFeatures = compact(filter(data.features, feature => !feature?.cards?.length));
+  const features = data.features?.filter(feature => feature.cards !== null);
+  const renderedFeatures = compact(features);
 
   if (!renderedFeatures?.length) {
     return (
