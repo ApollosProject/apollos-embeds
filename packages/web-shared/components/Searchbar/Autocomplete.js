@@ -446,6 +446,17 @@ export default function Autocomplete({
             ) {
               return (
                 <div key={`source-${index}`} className="aa-Source">
+                  {collection.source.sourceId === 'querySuggestionsPlugin' &&
+                    !inputProps.value && (
+                      <Box padding="xs" fontWeight="600" color="base.gray">
+                        Trending Searches
+                      </Box>
+                    )}
+                  {collection.source.sourceId === 'recentSearchesPlugin' && (
+                    <Box padding="xs" fontWeight="600" color="base.gray">
+                      Search History
+                    </Box>
+                  )}
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item, index) => (
                       <li
