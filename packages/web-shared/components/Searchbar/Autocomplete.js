@@ -238,6 +238,20 @@ export default function Autocomplete({
     autocomplete.refresh();
   };
 
+  const handleEnterKeySubmit = (event) => {
+    event.preventDefault();
+    const value = inputProps.value;
+    if (value) {
+      recentSearchesPlugin.data.addItem({
+        id: value,
+        label: value,
+        _highLightResult: { label: { value: value } },
+      });
+      autocomplete.setQuery(value);
+    }
+    autocomplete.refresh();
+  };
+
   const handlePanelDropdown = () => {
     const updatedAutocompleteState = { ...autocompleteState };
     updatedAutocompleteState.isOpen = !updatedAutocompleteState.isOpen;
@@ -370,7 +384,7 @@ export default function Autocomplete({
     autocomplete.setIsOpen(true);
     autocomplete.refresh();
   };
-
+  formProps.onSubmit = handleEnterKeySubmit;
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
   panelProps['aria-labelledby'] = autoCompleteLabel;
