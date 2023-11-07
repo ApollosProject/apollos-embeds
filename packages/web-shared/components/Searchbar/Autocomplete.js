@@ -247,15 +247,6 @@ export default function Autocomplete({
     inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
   };
 
-  // (Desktop Specific Behavior): Hitting enter scrolls dropdown to results
-  const scrollToResults = (event) => {
-    const resultsElement = document.getElementById('results');
-    event.preventDefault();
-    if (resultsElement) {
-      resultsElement.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   // Query Suggesion Index Definition
   const querySuggestionsPlugin = createQuerySuggestionsPlugin({
     searchClient,
@@ -379,7 +370,7 @@ export default function Autocomplete({
     autocomplete.setIsOpen(true);
     autocomplete.refresh();
   };
-  formProps.onSubmit = scrollToResults;
+
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
   panelProps['aria-labelledby'] = autoCompleteLabel;
