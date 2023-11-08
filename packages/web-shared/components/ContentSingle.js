@@ -21,7 +21,7 @@ import {
   Loader,
   Longform,
   H3,
-  MediaItem,
+  ContentCard,
   BodyText,
   ShareButton,
 } from '../ui-kit';
@@ -85,8 +85,6 @@ function ContentSingle(props = {}) {
     (feature) => FeatureFeedComponentMap[feature.__typename]
   );
   const hasFeatures = validFeatures?.length;
-  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
-
   const publishDate = new Date(parseInt(props?.data?.publishDate));
 
   const formattedPublishDate = props?.data?.publishDate
@@ -195,13 +193,6 @@ function ContentSingle(props = {}) {
             </Box>
           </Box>
 
-          {/* Children Count */}
-          {showEpisodeCount ? (
-            <H4 color="text.secondary" mr="l">
-              {childContentItems.length}{' '}
-              {`Episode${childContentItems.length === 1 ? '' : 's'}`}
-            </H4>
-          ) : null}
           {htmlContent ? (
             <>
               <Longform
@@ -230,16 +221,19 @@ function ContentSingle(props = {}) {
                 md: '0',
               }}
             >
-              {childContentItems?.map((item, index) => (
-                <MediaItem
-                  key={item.node?.title}
-                  image={item.node?.coverImage}
-                  title={item.node?.title}
-                  summary={item.node?.summary}
-                  onClick={() => handleActionPress(item.node)}
-                  videoMedia={item.node?.videos[0]}
-                />
-              ))}
+              {childContentItems?.map(
+                (item, index) =>
+                  console.log('item', item) || (
+                    <ContentCard
+                      key={item.node?.title}
+                      image={item.node?.coverImage}
+                      title={item.node?.title}
+                      summary={item.node?.summary}
+                      onClick={() => handleActionPress(item.node)}
+                      videoMedia={item.node?.videos[0]}
+                    />
+                  )
+              )}
             </Box>
           </Box>
         ) : null}
@@ -261,7 +255,7 @@ function ContentSingle(props = {}) {
               }}
             >
               {siblingContentItems?.map((item, index) => (
-                <MediaItem
+                <ContentCard
                   key={item.node?.title}
                   image={item.node?.coverImage}
                   title={item.node?.title}
