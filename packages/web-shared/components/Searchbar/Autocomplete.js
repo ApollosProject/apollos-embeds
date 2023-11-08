@@ -238,6 +238,20 @@ export default function Autocomplete({
     autocomplete.refresh();
   };
 
+  const handleEnterKeySubmit = (event) => {
+    event.preventDefault();
+    const value = inputProps.value;
+    if (value) {
+      recentSearchesPlugin.data.addItem({
+        id: value,
+        label: value,
+        _highLightResult: { label: { value: value } },
+      });
+      autocomplete.setQuery(value);
+    }
+    autocomplete.refresh();
+  };
+
   const handlePanelDropdown = () => {
     const updatedAutocompleteState = { ...autocompleteState };
     updatedAutocompleteState.isOpen = !updatedAutocompleteState.isOpen;
@@ -245,15 +259,6 @@ export default function Autocomplete({
 
     autocomplete.setIsOpen(!autocompleteState.isOpen);
     inputRef.current?.[autocompleteState.isOpen ? 'blur' : 'focus']();
-  };
-
-  // (Desktop Specific Behavior): Hitting enter scrolls dropdown to results
-  const scrollToResults = (event) => {
-    const resultsElement = document.getElementById('results');
-    event.preventDefault();
-    if (resultsElement) {
-      resultsElement.scrollIntoView({ behavior: 'smooth' });
-    }
   };
 
   // Query Suggesion Index Definition
@@ -379,7 +384,7 @@ export default function Autocomplete({
     autocomplete.setIsOpen(true);
     autocomplete.refresh();
   };
-  formProps.onSubmit = scrollToResults;
+  formProps.onSubmit = handleEnterKeySubmit;
   containerProps['aria-labelledby'] = autoCompleteLabel;
   inputProps['aria-labelledby'] = autoCompleteLabel;
   panelProps['aria-labelledby'] = autoCompleteLabel;
@@ -446,6 +451,17 @@ export default function Autocomplete({
             ) {
               return (
                 <div key={`source-${index}`} className="aa-Source">
+                  {collection.source.sourceId === 'querySuggestionsPlugin' &&
+                    !inputProps.value && (
+                      <Box padding="xs" fontWeight="600" color="base.gray">
+                        Trending Searches
+                      </Box>
+                    )}
+                  {collection.source.sourceId === 'recentSearchesPlugin' && (
+                    <Box padding="xs" fontWeight="600" color="base.gray">
+                      Search History
+                    </Box>
+                  )}
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item, index) => (
                       <li
