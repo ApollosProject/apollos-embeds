@@ -2,38 +2,36 @@ import { useCallback } from 'react';
 import { isValidUrl } from '../utils';
 import useCurrentUser from './useCurrentUser';
 
-const ROCK_APP_HOST_REGEX = /rock\.[a-z]+\.app/i;
-
 const useLink = () => {
   const { currentUser } = useCurrentUser();
   const rockAuthToken = currentUser?.rock?.authToken;
 
+  const currentUrl = window.location.href;
+
   const transformLink = useCallback(
     (link, options) => {
       const { useRockAuth = true } = options || {};
-      // isValidUrl also uses URL under the hood.
-      // this should guarantee the destructuring
-      // below won't fail.
-      if (!isValidUrl(link)) return link;
 
+      if (!isValidUrl(link) || !isValidUrl(currentUrl)) return link;
+
+      const tokenizedCurrentUrl = new URL(currentUrl);
       const tokenizedUrl = new URL(link);
 
-      const { host, protocol, searchParams } = tokenizedUrl;
+      if (tokenizedUrl.protocol !== 'https:') return link;
 
-      if (protocol !== 'https:') return link;
-
-      // `<a href="https://rock.apollos.app/MyAccount">rock link</a>`
-      const appendRockAuthToken = useRockAuth && rockAuthToken && ROCK_APP_HOST_REGEX.test(host);
+      // `<a href="https://localhost:3000">rock link</a>`
+      const matchingHosts = tokenizedUrl.host === tokenizedCurrentUrl.host;
+      const appendRockAuthToken = useRockAuth && rockAuthToken && matchingHosts;
 
       if (appendRockAuthToken) {
-        searchParams.append('rckipid', rockAuthToken);
+        tokenizedUrl.searchParams.append('rckipid', rockAuthToken);
       }
 
       const formattedUrl = tokenizedUrl.toString();
 
       return formattedUrl;
     },
-    [rockAuthToken],
+    [rockAuthToken, currentUrl],
   );
 
   return transformLink;
