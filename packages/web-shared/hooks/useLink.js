@@ -1,4 +1,5 @@
 import { useCallback } from 'react';
+import { parse } from 'tldts';
 import { isValidUrl } from '../utils';
 import useCurrentUser from './useCurrentUser';
 
@@ -19,9 +20,11 @@ const useLink = () => {
 
       if (tokenizedUrl.protocol !== 'https:') return link;
 
-      // `<a href="https://localhost:3000">rock link</a>`
-      const matchingHosts = tokenizedUrl.host === tokenizedCurrentUrl.host;
-      const appendRockAuthToken = useRockAuth && rockAuthToken && matchingHosts;
+      const { domainWithoutSuffix: urlTopLevelDomain } = parse(tokenizedUrl.href);
+      const { domainWithoutSuffix: currentUrlTopLevelDomain } = parse(tokenizedCurrentUrl.href);
+      const matchingTopLevelDomain = urlTopLevelDomain === currentUrlTopLevelDomain;
+
+      const appendRockAuthToken = useRockAuth && rockAuthToken && matchingTopLevelDomain;
 
       if (appendRockAuthToken) {
         tokenizedUrl.searchParams.append('rckipid', rockAuthToken);
@@ -31,7 +34,7 @@ const useLink = () => {
 
       return formattedUrl;
     },
-    [rockAuthToken, currentUrl],
+    [rockAuthToken, currentUrl, parse],
   );
 
   return transformLink;

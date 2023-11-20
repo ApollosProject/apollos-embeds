@@ -9570,6 +9570,18 @@ thunky@^1.0.2:
   resolved "https://registry.yarnpkg.com/thunky/-/thunky-1.1.0.tgz#5abaf714a9405db0504732bbccd2cedd9ef9537d"
   integrity sha512-eHY7nBftgThBqOyHGVN+l8gF0BucP09fMo0oO/Lb0w1OF80dJv+lDVpXG60WMQvkcxAkNybKsrEIE3ZtKGmPrA==
 
+tldts-core@^6.0.20:
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/tldts-core/-/tldts-core-6.0.20.tgz#5ec64ad2936a8eab58ecc4133bba167dd5486f36"
+  integrity sha512-DTrPkOIEl9hPT1QDjm1vL8HLyyYvzaaIlDfnacFGNjgNdWoPY4AIYOd15t8c//o6aKqeA5I9BlLNCzvNVxlXxw==
+
+tldts@^6.0.20:
+  version "6.0.20"
+  resolved "https://registry.yarnpkg.com/tldts/-/tldts-6.0.20.tgz#bd29cd48ace61b055e4754066b74b6de90a706ac"
+  integrity sha512-GRCVxg7xMGKY0YB65O5PnmuhWLN+2PKUc0o1t/dkxgzULgL4zrAfVvH5mzsilbiR6lEp8xiuA7VLvZ2CmNgSJw==
+  dependencies:
+    tldts-core "^6.0.20"
+
 tmpl@1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/tmpl/-/tmpl-1.0.5.tgz#8683e0b902bb9c20c4f726e3c0b69f36518c07cc"
