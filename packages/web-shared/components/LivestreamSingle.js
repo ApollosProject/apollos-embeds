@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import DOMPurify from 'dompurify';
 import format from 'date-fns/format';
 import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
@@ -16,7 +15,6 @@ import {
   H1,
   H2,
   H3,
-  H4,
   LiveChip,
   Loader,
   Longform,

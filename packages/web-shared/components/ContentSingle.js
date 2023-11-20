@@ -10,18 +10,7 @@ import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import {
-  Box,
-  H1,
-  H2,
-  H4,
-  Loader,
-  Longform,
-  H3,
-  ContentCard,
-  BodyText,
-  ShareButton,
-} from '../ui-kit';
+import { Box, H1, H2, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
 import { useHTMLContent, useVideoMediaProgress } from '../hooks';
 
 import VideoPlayer from './VideoPlayer';

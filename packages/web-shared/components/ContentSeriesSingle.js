@@ -6,7 +6,7 @@ import { getURLFromType } from '../utils';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import { Box, H2, H5, Loader, Longform, H3, ContentCard, MediaItem, ShareButton } from '../ui-kit';
+import { Box, H2, Loader, Longform, H3, ContentCard, ShareButton } from '../ui-kit';
 
 import { useHTMLContent, useVideoMediaProgress } from '../hooks';
 
