@@ -76,7 +76,6 @@ function InformationalContentSingle(props = {}) {
     feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
-  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
 
   const publishDate = new Date(parseInt(_publishDate));
 
@@ -174,13 +173,6 @@ function InformationalContentSingle(props = {}) {
               <ShareButton contentTitle={title} />
             </Box>
           </Box>
-
-          {/* Children Count */}
-          {showEpisodeCount ? (
-            <H4 color="text.secondary" mr="l">
-              {childContentItems.length} {`Episode${childContentItems.length === 1 ? '' : 's'}`}
-            </H4>
-          ) : null}
           {htmlContent ? (
             <>
               <Longform

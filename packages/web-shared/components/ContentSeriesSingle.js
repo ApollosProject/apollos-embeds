@@ -6,8 +6,10 @@ import { getURLFromType } from '../utils';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import { Box, H2, H5, Loader, Longform, H3, MediaItem, ShareButton } from '../ui-kit';
+import { Box, H2, H5, Loader, Longform, H3, ContentCard, MediaItem, ShareButton } from '../ui-kit';
+
 import { useHTMLContent, useVideoMediaProgress } from '../hooks';
+
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import styled from 'styled-components';
@@ -58,7 +60,6 @@ function ContentSeriesSingle(props = {}) {
 
   const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
-  const showEpisodeCount = hasChildContent && childContentItems.length < 20;
 
   // Truncates text for long descriptions (can be adjusted by tweaking line-clamp and max-height values)
   const MultilineEllipsis = styled.p`
@@ -149,14 +150,7 @@ function ContentSeriesSingle(props = {}) {
               md: '0',
             }}
           >
-            <Box mb="xs">
-              {title ? <H2>{title}</H2> : null}
-              {showEpisodeCount ? (
-                <H5 color="text.secondary" mr="l">
-                  {childContentItems.length} {`Episode${childContentItems.length === 1 ? '' : 's'}`}
-                </H5>
-              ) : null}
-            </Box>
+            <Box mb="xs">{title ? <H2>{title}</H2> : null}</Box>
             {htmlContent ? (
               <Box mb="xs">
                 <MultilineEllipsis>
@@ -175,33 +169,38 @@ function ContentSeriesSingle(props = {}) {
 
         {/* Display content for series */}
         {hasChildContent ? (
-          <Box mb="l">
-            <H3 mb="xs">{props.feature?.title}</H3>
-            <Box
-              display="grid"
-              gridGap="30px"
-              gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
-              }}
-              padding={{
-                _: '30px',
-                md: '0',
-              }}
-            >
-              {childContentItems?.map(item => (
-                <MediaItem
-                  key={item.node?.title}
-                  image={item.node?.coverImage}
-                  title={item.node?.title}
-                  summary={item.node?.summary}
-                  onClick={() => handleActionPress(item.node)}
-                  videoMedia={item.node?.videos[0]}
-                />
-              ))}
+          <>
+            <H3 flex="1" mr="xs">
+              In This Series
+            </H3>
+            <Box mb="l">
+              <H3 mb="xs">{props.feature?.title}</H3>
+              <Box
+                display="grid"
+                gridGap="30px"
+                gridTemplateColumns={{
+                  _: 'repeat(1, minmax(0, 1fr));',
+                  md: 'repeat(2, minmax(0, 1fr));',
+                  lg: 'repeat(3, minmax(0, 1fr));',
+                }}
+                padding={{
+                  _: '30px',
+                  md: '0',
+                }}
+              >
+                {childContentItems?.map(item => (
+                  <ContentCard
+                    key={item.node?.title}
+                    image={item.node?.coverImage}
+                    title={item.node?.title}
+                    summary={item.node?.summary}
+                    onClick={() => handleActionPress(item.node)}
+                    videoMedia={item.node?.videos[0]}
+                  />
+                ))}
+              </Box>
             </Box>
-          </Box>
+          </>
         ) : null}
       </Box>
     </>

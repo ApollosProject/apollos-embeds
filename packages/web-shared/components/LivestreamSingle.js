@@ -25,8 +25,6 @@ import {
 import { useVideoMediaProgress, useLivestreamStatus, useHTMLContent } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 
-const MAX_EPISODE_COUNT = 20;
-
 function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
   const parseHTMLContent = useHTMLContent();
@@ -82,7 +80,6 @@ function LivestreamSingle(props = {}) {
     feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
-  const showEpisodeCount = hasChildContent && childContentItems.length < MAX_EPISODE_COUNT;
 
   const publishDate = new Date(parseInt(_publishDate));
 
@@ -147,13 +144,6 @@ function LivestreamSingle(props = {}) {
               <ShareButton contentTitle={title} />
             </Box>
           </Box>
-
-          {/* Children Count */}
-          {showEpisodeCount ? (
-            <H4 color="text.secondary" mr="xl">
-              {childContentItems.length} {`Episode${childContentItems.length === 1 ? '' : 's'}`}
-            </H4>
-          ) : null}
           {htmlContent ? (
             <>
               <Longform dangerouslySetInnerHTML={{ __html: parseHTMLContent(htmlContent) }} />
