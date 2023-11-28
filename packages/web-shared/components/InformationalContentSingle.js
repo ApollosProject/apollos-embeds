@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getURLFromType, parseDescriptionLinks } from '../utils';
@@ -86,15 +84,6 @@ function InformationalContentSingle(props = {}) {
   );
   const hasFeatures = validFeatures?.length;
 
-  const publishDate = new Date(parseInt(props?.data?.publishDate));
-
-  const formattedPublishDate = props?.data?.publishDate
-    ? format(
-        addMinutes(publishDate, publishDate.getTimezoneOffset()),
-        'MMMM do, yyyy'
-      )
-    : null;
-
   // We'll conditionally place this divider as needed
   const infoDivider = (
     <BodyText color="text.tertiary" mx="xs">
@@ -147,14 +136,6 @@ function InformationalContentSingle(props = {}) {
                   mb={title && !hasChildContent ? 'xxs' : ''}
                 >
                   {parentChannel.name}
-                </BodyText>
-              ) : null}
-
-              {/* ( Optional Divider ) */}
-              {formattedPublishDate ? infoDivider : null}
-              {formattedPublishDate ? (
-                <BodyText color="text.secondary">
-                  {formattedPublishDate}
                 </BodyText>
               ) : null}
             </Box>
@@ -300,7 +281,6 @@ InformationalContentSingle.propTypes = {
       id: PropTypes.string,
       name: PropTypes.string,
     }),
-    publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(PropTypes.shape({ embedHtml: PropTypes.string })),
