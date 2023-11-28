@@ -507,21 +507,6 @@ export default function Autocomplete({
             // Rendering of regular items
             return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
-                {collection.source.sourceId === 'content' && (
-                  <Box
-                    padding="xs"
-                    fontWeight="600"
-                    color="base.gray"
-                    id="results"
-                  >
-                    Content
-                  </Box>
-                )}
-                {collection.source.sourceId === 'pages' && (
-                  <Box padding="xs" fontWeight="600" color="base.gray">
-                    Pages
-                  </Box>
-                )}
                 {items.length > 0 ? (
                   <ul className="aa-List" {...autocomplete.getListProps()}>
                     {items.map((item) => (
