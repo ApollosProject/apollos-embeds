@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import DOMPurify from 'dompurify';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
 
 import { getURLFromType } from '../utils';
@@ -77,15 +75,6 @@ function LivestreamSingle(props = {}) {
   );
   const hasFeatures = validFeatures?.length;
 
-  const publishDate = new Date(parseInt(props?.data?.publishDate));
-
-  const formattedPublishDate = props?.data?.publishDate
-    ? format(
-        addMinutes(publishDate, publishDate.getTimezoneOffset()),
-        'MMMM do, yyyy'
-      )
-    : null;
-
   const sanitizedHTML = DOMPurify.sanitize(htmlContent);
 
   // We'll conditionally place this divider as needed
@@ -143,14 +132,6 @@ function LivestreamSingle(props = {}) {
                 >
                   Livestream
                 </BodyText>
-
-                {/* ( Optional Divider ) */}
-                {formattedPublishDate ? infoDivider : null}
-                {formattedPublishDate ? (
-                  <BodyText color="text.secondary">
-                    {formattedPublishDate}
-                  </BodyText>
-                ) : null}
               </Box>
             </Box>
             <Box>
@@ -206,7 +187,6 @@ LivestreamSingle.propTypes = {
     featureFeed: PropTypes.shape({}),
     htmlContent: PropTypes.string,
     id: PropTypes.string,
-    publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(PropTypes.shape({ embedHtml: PropTypes.string })),
