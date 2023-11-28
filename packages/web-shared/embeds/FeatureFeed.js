@@ -24,17 +24,27 @@ function RenderFeatures(props) {
 
   switch (type) {
     case 'EventContentItem':
-    case 'InformationalContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
-    case 'UniversalContentItem':
-    case 'ContentSeriesContentItem': {
+    case 'UniversalContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
       return (
         <ContentItemProvider Component={ContentSingle} options={options} />
+      );
+    }
+    case 'ContentSeriesContentItem': {
+      const options = {
+        variables: { id: `${type}:${randomId}` },
+      };
+
+      return (
+        <ContentItemProvider
+          Component={ContentSeriesSingle}
+          options={options}
+        />
       );
     }
     case 'Livestream': {

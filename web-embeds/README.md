@@ -11,7 +11,9 @@ Follow the steps below to deploy your apollos-embeds:
 3. Copy and paste the `build/static/js/main.XXX.js` and `build/static/css/main.XXX.css` files into the widget folder and rename them to `index.js` and `index.css`
 4. Commit and push the new JS and CSS build files to GitHub.
 5. Then, run `npm publish`. Note that you need to be a member of the apollosproject organization to publish.
-6. Finally, go to  `https://www.jsdelivr.com/tools/purge` and paste in `https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.js` and `https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.css` to purge the cache on jsdelivr. Otherwise, it could take up to seven days to see our changes in client sites.
+6. Finally, go to  https://www.jsdelivr.com/tools/purge and paste in the following to purge the cache on jsdelivr. Otherwise, it could take up to seven days to see our changes in client sites.
+
+```https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.js, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.css, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds``` 
 
 The JS file used to embed these widgets is hosted on GitHub and picked up by [jsdelivr.com](https://www.jsdelivr.com/) automatically, as long as the repository is public.
 
