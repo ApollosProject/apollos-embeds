@@ -253,7 +253,7 @@ function ContentSingle(props = {}) {
                 (item, index) =>
                   console.log('item', item) || (
                     <ContentCard
-                      key={item.node?.title}
+                      key={item.node?.title + index}
                       image={item.node?.coverImage}
                       title={item.node?.title}
                       summary={item.node?.summary}
@@ -284,7 +284,7 @@ function ContentSingle(props = {}) {
             >
               {siblingContentItems?.map((item, index) => (
                 <ContentCard
-                  key={item.node?.title}
+                  key={item.node?.title + index}
                   image={item.node?.coverImage}
                   title={item.node?.title}
                   summary={item.node?.summary}
