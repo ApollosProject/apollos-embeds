@@ -205,37 +205,42 @@ function ContentSingle(props = {}) {
         </Box>
         {/* Display content for series */}
         {hasChildContent ? (
-          <Box mb="l">
-            <H3 mb="xs">{props.feature?.title}</H3>
+          <>
+            <H3 flex="1" mr="xs">
+              In This Series
+            </H3>
+            <Box mb="l">
+              <H3 mb="xs">{props.feature?.title}</H3>
 
-            <Box
-              display="grid"
-              gridGap="30px"
-              gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
-              }}
-              padding={{
-                _: '30px',
-                md: '0',
-              }}
-            >
-              {childContentItems?.map(
-                (item, index) =>
-                  console.log('item', item) || (
-                    <ContentCard
-                      key={item.node?.title}
-                      image={item.node?.coverImage}
-                      title={item.node?.title}
-                      summary={item.node?.summary}
-                      onClick={() => handleActionPress(item.node)}
-                      videoMedia={item.node?.videos[0]}
-                    />
-                  )
-              )}
+              <Box
+                display="grid"
+                gridGap="30px"
+                gridTemplateColumns={{
+                  _: 'repeat(1, minmax(0, 1fr));',
+                  md: 'repeat(2, minmax(0, 1fr));',
+                  lg: 'repeat(3, minmax(0, 1fr));',
+                }}
+                padding={{
+                  _: '30px',
+                  md: '0',
+                }}
+              >
+                {childContentItems?.map(
+                  (item, index) =>
+                    console.log('item', item) || (
+                      <ContentCard
+                        key={item.node?.title}
+                        image={item.node?.coverImage}
+                        title={item.node?.title}
+                        summary={item.node?.summary}
+                        onClick={() => handleActionPress(item.node)}
+                        videoMedia={item.node?.videos[0]}
+                      />
+                    )
+                )}
+              </Box>
             </Box>
-          </Box>
+          </>
         ) : null}
         {/* Display content for sermons */}
         {hasSiblingContent ? (
