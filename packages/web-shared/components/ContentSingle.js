@@ -84,7 +84,7 @@ function ContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features?.filter(
-    (feature) => FeatureFeedComponentMap[feature.__typename]
+    (feature) => FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
   const publishDate = new Date(parseInt(props?.data?.publishDate));
