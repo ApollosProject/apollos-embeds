@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
@@ -15,7 +15,6 @@ import {
   Box,
   H1,
   H2,
-  H4,
   Loader,
   Longform,
   H3,
@@ -29,8 +28,6 @@ import InteractWhenLoaded from './InteractWhenLoaded';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const currentUrl = window.location.origin + location.pathname;
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
@@ -108,7 +105,6 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
-
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
@@ -122,7 +118,7 @@ function ContentSingle(props = {}) {
         {/* Facebook tags */}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={summary} />
-        <meta property="og:url" content={currentUrl} />
+        <meta property="og:url" content={getURLFromType(props.data)} />
         <meta property="og:image" content={coverImage?.sources[0]?.uri} />
         {/* End Facebook tags */}
         {/* Twitter tags */}
