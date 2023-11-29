@@ -253,7 +253,6 @@ VideoPlayer.propTypes = {
   dangerouslySetInnerHTML: PropTypes.string,
   parentNode: PropTypes.shape({
     id: PropTypes.string,
-    publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(VideoMedia),
