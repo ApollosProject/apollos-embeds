@@ -10,6 +10,7 @@ import { useCurrentChurch } from '@apollosproject/web-shared/hooks';
 import Styled from './App.styles';
 
 import ErrorPage from './error-page';
+import { parseSlugToIdAndType } from '@apollosproject/web-shared/utils';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -33,7 +34,7 @@ function App(props) {
   const searchParams = new URLSearchParams(window.location.search);
   const _root = searchParams.get('root');
 
-  const [type, randomId] = _root?.split(/-(.*)/s) ?? [];
+  const { type, randomId } = parseSlugToIdAndType(_root) ?? {};
 
   const router = createBrowserRouter([
     {

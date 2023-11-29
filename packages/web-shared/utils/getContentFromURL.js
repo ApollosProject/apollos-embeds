@@ -12,10 +12,11 @@ import {
   InformationalContentSingle,
   LivestreamSingle,
 } from '../components';
+import parseSlugToIdAndType from './parseSlugToIdAndType';
 import { Box } from '../ui-kit';
 
 function getContentFromURL(url) {
-  const [type, randomId] = url?.split(/-(.*)/s) ?? [];
+  const { type, randomId } = parseSlugToIdAndType(url);
 
   switch (type) {
     case 'EventContentItem':

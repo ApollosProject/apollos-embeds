@@ -17,6 +17,11 @@ function getURLFromType(node) {
     case 'FeatureFeed':
     case 'Livestream':
     case 'ContentSeriesContentItem': {
+      // We use the title to create a slug, if possible.
+      // This helps SEO
+      if (node.title) {
+        return `${slugify(node.title)}-${btoa(`${type}-${randomId}`)}`;
+      }
       return `${type}-${randomId}`;
     }
     case 'Url': {

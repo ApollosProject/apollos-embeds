@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import { Helmet } from 'react-helmet';
 import { getURLFromType, parseDescriptionLinks } from '../utils';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
@@ -15,7 +15,6 @@ import {
   Box,
   H1,
   H2,
-  H4,
   Loader,
   Longform,
   H3,
@@ -80,7 +79,7 @@ function ContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = props.data?.featureFeed?.features?.filter(
-    (feature) => FeatureFeedComponentMap[feature.__typename]
+    (feature) => FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
 
@@ -106,10 +105,35 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
-
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
+      <Helmet>
+        <title>{title}</title>
+        {/* Standard metadata tags */}
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+        <meta name="image" content={coverImage?.sources[0]?.uri} />
+        {/* End standard metadata tags */}
+        {/* Facebook tags */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:image" content={coverImage?.sources[0]?.uri} />
+        {/* End Facebook tags */}
+        {/* Twitter tags */}
+        <meta
+          name="twitter:card"
+          content={
+            coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'
+          }
+        />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={coverImage?.sources[0]?.uri} />
+        <meta name="twitter:image:alt" content={title} />
+        {/* End Twitter tags */}
+      </Helmet>
       <Box margin="0 auto" maxWidth="750px">
         <InteractWhenLoaded
           loading={props.loading}
@@ -207,7 +231,7 @@ function ContentSingle(props = {}) {
                 (item, index) =>
                   console.log('item', item) || (
                     <ContentCard
-                      key={item.node?.title}
+                      key={item.node?.title + index}
                       image={item.node?.coverImage}
                       title={item.node?.title}
                       summary={item.node?.summary}
@@ -238,7 +262,7 @@ function ContentSingle(props = {}) {
             >
               {siblingContentItems?.map((item, index) => (
                 <ContentCard
-                  key={item.node?.title}
+                  key={item.node?.title + index}
                   image={item.node?.coverImage}
                   title={item.node?.title}
                   summary={item.node?.summary}
