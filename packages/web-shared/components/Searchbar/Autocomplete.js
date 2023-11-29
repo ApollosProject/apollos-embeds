@@ -177,7 +177,7 @@ export default function Autocomplete({
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
 
-  const [isPagesAndContentEmpty, setIsPagesAndContentEmpty] = useState(false);
+  const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
@@ -433,9 +433,7 @@ export default function Autocomplete({
         (collection) => collection.source.sourceId === 'content'
       )?.items || [];
 
-    setIsPagesAndContentEmpty(
-      pagesItems.length === 0 && contentItems.length === 0
-    );
+    setIsResultsEmpty(pagesItems.length === 0 && contentItems.length === 0);
   }, [autocompleteState.collections]);
 
   // ...CUSTOM RENDERER
@@ -458,7 +456,7 @@ export default function Autocomplete({
         {...autocomplete.getPanelProps({})}
       >
         {autocompleteState.isOpen && <div id="panel-top"></div>}
-        {isPagesAndContentEmpty &&
+        {isResultsEmpty &&
           autocompleteState.collections.some((collection) =>
             ['pages', 'content'].includes(collection.source.sourceId)
           ) && (
