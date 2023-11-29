@@ -118,7 +118,7 @@ function ContentSingle(props = {}) {
         {/* Facebook tags */}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={summary} />
-        <meta property="og:url" content={getURLFromType(props.data)} />
+        <meta property="og:url" content={window.location.href} />
         <meta property="og:image" content={coverImage?.sources[0]?.uri} />
         {/* End Facebook tags */}
         {/* Twitter tags */}
