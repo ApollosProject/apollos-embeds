@@ -1,5 +1,6 @@
 import React, {
   useEffect,
+  useState,
   useRef,
   useMemo,
   createElement,
@@ -175,6 +176,8 @@ export default function Autocomplete({
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+
+  const [isPagesAndContentEmpty, setIsPagesAndContentEmpty] = useState(false);
 
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
@@ -420,6 +423,21 @@ export default function Autocomplete({
     };
   }, [autocompleteState.isOpen, autocomplete, setShowTextPrompt]);
 
+  useEffect(() => {
+    const pagesItems =
+      autocompleteState.collections.find(
+        (collection) => collection.source.sourceId === 'pages'
+      )?.items || [];
+    const contentItems =
+      autocompleteState.collections.find(
+        (collection) => collection.source.sourceId === 'content'
+      )?.items || [];
+
+    setIsPagesAndContentEmpty(
+      pagesItems.length === 0 && contentItems.length === 0
+    );
+  }, [autocompleteState.collections]);
+
   // ...CUSTOM RENDERER
   return (
     <div className="aa-Autocomplete" {...containerProps}>
@@ -440,6 +458,20 @@ export default function Autocomplete({
         {...autocomplete.getPanelProps({})}
       >
         {autocompleteState.isOpen && <div id="panel-top"></div>}
+        {isPagesAndContentEmpty &&
+          autocompleteState.collections.some((collection) =>
+            ['pages', 'content'].includes(collection.source.sourceId)
+          ) && (
+            <Box
+              padding="xs"
+              fontWeight="500"
+              color="base.gray"
+              textAlign="center"
+              fontStyle="italic"
+            >
+              No results found
+            </Box>
+          )}
         {autocompleteState.isOpen &&
           autocompleteState.collections.map((collection, index) => {
             const { source, items } = collection;
@@ -505,47 +537,36 @@ export default function Autocomplete({
             }
 
             // Rendering of regular items
+
             return autocompleteState.query !== '' ? (
               <div key={`source-${index}`} className="aa-Source">
-                {items.length > 0 ? (
-                  <ul className="aa-List" {...autocomplete.getListProps()}>
-                    {items.map((item) => (
-                      <Box
-                        as="li"
-                        borderRadius="0"
-                        padding="0"
-                        key={item.objectID}
-                        className="aa-Item"
-                        {...autocomplete.getItemProps({
-                          item,
-                          source,
-                        })}
-                      >
-                        <ResourceCard
-                          leadingAsset={item?.coverImage}
-                          title={item?.title}
-                          onClick={() => {
-                            if (collection.source.sourceId === 'pages') {
-                              return handleStaticActionPress(item);
-                            }
-                            return handleActionPress(item);
-                          }}
-                          background="none"
-                        />
-                      </Box>
-                    ))}
-                  </ul>
-                ) : (
-                  <Box
-                    padding="xs"
-                    fontWeight="500"
-                    color="base.gray"
-                    textAlign="center"
-                    fontStyle="italic"
-                  >
-                    No results found
-                  </Box>
-                )}
+                <ul className="aa-List" {...autocomplete.getListProps()}>
+                  {items.map((item) => (
+                    <Box
+                      as="li"
+                      borderRadius="0"
+                      padding="0"
+                      key={item.objectID}
+                      className="aa-Item"
+                      {...autocomplete.getItemProps({
+                        item,
+                        source,
+                      })}
+                    >
+                      <ResourceCard
+                        leadingAsset={item?.coverImage}
+                        title={item?.title}
+                        onClick={() => {
+                          if (collection.source.sourceId === 'pages') {
+                            return handleStaticActionPress(item);
+                          }
+                          return handleActionPress(item);
+                        }}
+                        background="none"
+                      />
+                    </Box>
+                  ))}
+                </ul>
               </div>
             ) : null;
           })}
