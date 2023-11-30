@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../utils';
@@ -65,7 +63,6 @@ function InformationalContentSingle(props = {}) {
     childContentItemsConnection,
     siblingContentItemsConnection,
     featureFeed,
-    publishDate: _publishDate,
   } = props?.data;
 
   const childContentItems = childContentItemsConnection?.edges;
@@ -76,12 +73,6 @@ function InformationalContentSingle(props = {}) {
     feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
-
-  const publishDate = new Date(parseInt(_publishDate));
-
-  const formattedPublishDate = _publishDate
-    ? format(addMinutes(publishDate, publishDate.getTimezoneOffset()), 'MMMM do, yyyy')
-    : null;
 
   // We'll conditionally place this divider as needed
   const infoDivider = (
@@ -122,12 +113,6 @@ function InformationalContentSingle(props = {}) {
                 <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
                   {parentChannel.name}
                 </BodyText>
-              ) : null}
-
-              {/* ( Optional Divider ) */}
-              {formattedPublishDate ? infoDivider : null}
-              {formattedPublishDate ? (
-                <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
               ) : null}
             </Box>
           </Box>
@@ -267,7 +252,6 @@ InformationalContentSingle.propTypes = {
       id: PropTypes.string,
       name: PropTypes.string,
     }),
-    publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(PropTypes.shape({ embedHtml: PropTypes.string })),

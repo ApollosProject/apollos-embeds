@@ -13,3 +13,4 @@ export { default as slugify } from './slugify';
 export { default as unit } from './unit';
 export { default as validateEmail } from './validateEmail';
 export { default as validatePhoneNumber } from './validatePhoneNumber';
+export { default as parseSlugToIdAndType } from './parseSlugToIdAndType';

@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { getURLFromType } from '../utils';
+
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
@@ -66,7 +66,6 @@ function ContentSingle(props = {}) {
     childContentItemsConnection,
     siblingContentItemsConnection,
     featureFeed,
-    publishDate: _publishDate,
   } = props?.data;
 
   const childContentItems = childContentItemsConnection?.edges;
@@ -77,19 +76,6 @@ function ContentSingle(props = {}) {
     feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
-
-  const publishDate = new Date(parseInt(_publishDate));
-
-  const formattedPublishDate = _publishDate
-    ? format(addMinutes(publishDate, publishDate.getTimezoneOffset()), 'MMMM do, yyyy')
-    : null;
-
-  // We'll conditionally place this divider as needed
-  const infoDivider = (
-    <BodyText color="text.tertiary" mx="xs">
-      |
-    </BodyText>
-  );
 
   const handleActionPress = item => {
     if (searchParams.get('id') !== getURLFromType(item)) {
@@ -106,10 +92,33 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
-
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
+      <Helmet>
+        <title>{title}</title>
+        {/* Standard metadata tags */}
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+        <meta name="image" content={coverImage?.sources[0]?.uri} />
+        {/* End standard metadata tags */}
+        {/* Facebook tags */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:image" content={coverImage?.sources[0]?.uri} />
+        {/* End Facebook tags */}
+        {/* Twitter tags */}
+        <meta
+          name="twitter:card"
+          content={coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'}
+        />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={coverImage?.sources[0]?.uri} />
+        <meta name="twitter:image:alt" content={title} />
+        {/* End Twitter tags */}
+      </Helmet>
       <Box margin="0 auto" maxWidth="750px">
         <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
         {coverImage?.sources[0]?.uri || videoMedia ? (
@@ -156,12 +165,6 @@ function ContentSingle(props = {}) {
                     {parentChannel.name}
                   </BodyText>
                 ) : null}
-
-                {/* ( Optional Divider ) */}
-                {formattedPublishDate ? infoDivider : null}
-                {formattedPublishDate ? (
-                  <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
-                ) : null}
               </Box>
             </Box>
             <Box
@@ -205,7 +208,7 @@ function ContentSingle(props = {}) {
                 (item, index) =>
                   console.log('item', item) || (
                     <ContentCard
-                      key={item.node?.title}
+                      key={item.node?.title + index}
                       image={item.node?.coverImage}
                       title={item.node?.title}
                       summary={item.node?.summary}
@@ -236,7 +239,7 @@ function ContentSingle(props = {}) {
             >
               {siblingContentItems?.map((item, index) => (
                 <ContentCard
-                  key={item.node?.title}
+                  key={item.node?.title + index}
                   image={item.node?.coverImage}
                   title={item.node?.title}
                   summary={item.node?.summary}
@@ -271,7 +274,6 @@ ContentSingle.propTypes = {
       id: PropTypes.string,
       name: PropTypes.string,
     }),
-    publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(PropTypes.shape({ embedHtml: PropTypes.string })),

@@ -15,12 +15,12 @@ import {
 import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
 import { useSearchParams } from 'react-router-dom';
+import { parseSlugToIdAndType } from '../utils';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
   const _id = searchParams.get('id');
-
-  const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
+  const {type, randomId} = parseSlugToIdAndType(_id) ?? {};
 
   switch (type) {
     case 'EventContentItem':

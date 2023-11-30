@@ -1,7 +1,5 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import format from 'date-fns/format';
-import addMinutes from 'date-fns/addMinutes';
 import { useNavigate } from 'react-router-dom';
 
 import { getURLFromType } from '../utils';
@@ -33,7 +31,7 @@ function LivestreamSingle(props = {}) {
   // Video details
   const videoMedia = props.data?.stream?.sources?.uri;
 
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
+  const { userProgress } = useVideoMediaProgress({
     variables: { id: videoMedia?.id },
     skip: !videoMedia?.id,
   });
@@ -78,12 +76,6 @@ function LivestreamSingle(props = {}) {
     feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
-
-  const publishDate = new Date(parseInt(_publishDate));
-
-  const formattedPublishDate = _publishDate
-    ? format(addMinutes(publishDate, publishDate.getTimezoneOffset()), 'MMMM do, yyyy')
-    : null;
 
   // We'll conditionally place this divider as needed
   const infoDivider = (
@@ -130,12 +122,6 @@ function LivestreamSingle(props = {}) {
                 <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
                   Livestream
                 </BodyText>
-
-                {/* ( Optional Divider ) */}
-                {formattedPublishDate ? infoDivider : null}
-                {formattedPublishDate ? (
-                  <BodyText color="text.secondary">{formattedPublishDate}</BodyText>
-                ) : null}
               </Box>
             </Box>
             <Box>
@@ -186,7 +172,6 @@ LivestreamSingle.propTypes = {
     featureFeed: PropTypes.shape({}),
     htmlContent: PropTypes.string,
     id: PropTypes.string,
-    publishDate: PropTypes.string,
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(PropTypes.shape({ embedHtml: PropTypes.string })),

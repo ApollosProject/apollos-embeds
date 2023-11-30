@@ -25,7 +25,6 @@ export const GET_CONTENT_ITEM = gql`
         }
       }
       ... on ContentItem {
-        publishDate
         title
         originId
         htmlContent
