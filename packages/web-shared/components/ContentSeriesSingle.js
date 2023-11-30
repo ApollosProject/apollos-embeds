@@ -2,24 +2,14 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { getURLFromType, parseDescriptionLinks } from '../utils';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../providers/BreadcrumbProvider';
+import { getURLFromType } from '../utils';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import {
-  Box,
-  H2,
-  H5,
-  Loader,
-  Longform,
-  H3,
-  ContentCard,
-  ShareButton,
-} from '../ui-kit';
-import { useVideoMediaProgress } from '../hooks';
+import { Box, H2, Loader, Longform, H3, ContentCard, ShareButton } from '../ui-kit';
+
+import { useHTMLContent, useVideoMediaProgress } from '../hooks';
+
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import styled from 'styled-components';
@@ -30,18 +20,17 @@ function ContentSeriesSingle(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const parseHTMLContent = useHTMLContent();
 
   const invalidPage = !props.loading && !props.data;
 
   // Video details
   const videoMedia = props.data?.videos[0];
 
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: videoMedia?.id },
-      skip: !videoMedia?.id,
-    }
-  );
+  const { userProgress } = useVideoMediaProgress({
+    variables: { id: videoMedia?.id },
+    skip: !videoMedia?.id,
+  });
 
   useEffect(() => {
     if (!state.modal && invalidPage) {
@@ -67,10 +56,9 @@ function ContentSeriesSingle(props = {}) {
   }
 
   // Content Details
-  const coverImage = props?.data?.coverImage;
-  const htmlContent = props?.data?.htmlContent;
-  const title = props?.data?.title;
-  const childContentItems = props.data?.childContentItemsConnection?.edges;
+  const { coverImage, htmlContent, title, childContentItemsConnection } = props.data;
+
+  const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
 
   // Truncates text for long descriptions (can be adjusted by tweaking line-clamp and max-height values)
@@ -86,13 +74,13 @@ function ContentSeriesSingle(props = {}) {
     margin: 0;
   `;
 
-  const handleActionPress = (item) => {
+  const handleActionPress = item => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
-        })
+        }),
       );
       setSearchParams(`?id=${getURLFromType(item)}`);
     }
@@ -105,11 +93,7 @@ function ContentSeriesSingle(props = {}) {
   return (
     <>
       <Box margin="0 auto">
-        <InteractWhenLoaded
-          loading={props.loading}
-          nodeId={props.data.id}
-          action={'VIEW'}
-        />
+        <InteractWhenLoaded loading={props.loading} nodeId={props.data.id} action={'VIEW'} />
         <Box
           display="flex"
           width="100%"
@@ -172,7 +156,7 @@ function ContentSeriesSingle(props = {}) {
                 <MultilineEllipsis>
                   <Longform
                     dangerouslySetInnerHTML={{
-                      __html: parseDescriptionLinks(htmlContent),
+                      __html: parseHTMLContent(htmlContent),
                     }}
                   />
                 </MultilineEllipsis>
@@ -181,12 +165,7 @@ function ContentSeriesSingle(props = {}) {
             <ShareButton contentTitle={title} />
           </Box>
         </Box>
-        <Box
-          width="100%"
-          borderTop="1px solid"
-          borderColor="neutral.gray5"
-          my="base"
-        ></Box>
+        <Box width="100%" borderTop="1px solid" borderColor="neutral.gray5" my="base"></Box>
 
         {/* Display content for series */}
         {hasChildContent ? (
@@ -209,7 +188,7 @@ function ContentSeriesSingle(props = {}) {
                   md: '0',
                 }}
               >
-                {childContentItems?.map((item) => (
+                {childContentItems?.map(item => (
                   <ContentCard
                     key={item.node?.title}
                     image={item.node?.coverImage}

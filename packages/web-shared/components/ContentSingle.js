@@ -2,27 +2,17 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import { getURLFromType, parseDescriptionLinks } from '../utils';
+
+import { getURLFromType } from '../utils';
+
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../providers/BreadcrumbProvider';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import {
-  Box,
-  H1,
-  H2,
-  Loader,
-  Longform,
-  H3,
-  ContentCard,
-  BodyText,
-  ShareButton,
-} from '../ui-kit';
-import { useVideoMediaProgress } from '../hooks';
+import { Box, H1, H2, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
+import { useHTMLContent, useVideoMediaProgress } from '../hooks';
+
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 
@@ -31,6 +21,7 @@ function ContentSingle(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const parseHTMLContent = useHTMLContent();
 
   const invalidPage = !props.loading && !props.data;
 
@@ -38,12 +29,10 @@ function ContentSingle(props = {}) {
   // Video details
   const videoMedia = props.data?.videos[0];
 
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: videoMedia?.id },
-      skip: !videoMedia?.id,
-    }
-  );
+  const { userProgress } = useVideoMediaProgress({
+    variables: { id: videoMedia?.id },
+    skip: !videoMedia?.id,
+  });
 
   useEffect(() => {
     if (!state.modal && invalidPage) {
@@ -69,35 +58,34 @@ function ContentSingle(props = {}) {
   }
 
   // Content Details
-  const coverImage = props?.data?.coverImage;
+  const {
+    id,
+    coverImage,
+    htmlContent,
+    title,
+    summary,
+    parentChannel,
+    childContentItemsConnection,
+    siblingContentItemsConnection,
+    featureFeed,
+  } = props?.data;
 
-  const htmlContent = props?.data?.htmlContent;
-  const summary = props?.data?.summary;
-  const title = props?.data?.title;
-  const parentChannel = props.data?.parentChannel;
-  const childContentItems = props.data?.childContentItemsConnection?.edges;
-  const siblingContentItems = props.data?.siblingContentItemsConnection?.edges;
+  const childContentItems = childContentItemsConnection?.edges;
+  const siblingContentItems = siblingContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
-  const validFeatures = props.data?.featureFeed?.features?.filter(
-    (feature) => FeatureFeedComponentMap[feature?.__typename]
+  const validFeatures = featureFeed?.features?.filter(
+    feature => !!FeatureFeedComponentMap[feature?.__typename],
   );
   const hasFeatures = validFeatures?.length;
 
-  // We'll conditionally place this divider as needed
-  const infoDivider = (
-    <BodyText color="text.tertiary" mx="xs">
-      |
-    </BodyText>
-  );
-
-  const handleActionPress = (item) => {
+  const handleActionPress = item => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
-        })
+        }),
       );
       setSearchParams(`?id=${getURLFromType(item)}`);
     }
@@ -125,9 +113,7 @@ function ContentSingle(props = {}) {
         {/* Twitter tags */}
         <meta
           name="twitter:card"
-          content={
-            coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'
-          }
+          content={coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'}
         />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={summary} />
@@ -136,14 +122,10 @@ function ContentSingle(props = {}) {
         {/* End Twitter tags */}
       </Helmet>
       <Box margin="0 auto" maxWidth="750px">
-        <InteractWhenLoaded
-          loading={props.loading}
-          nodeId={props.data.id}
-          action={'VIEW'}
-        />
-        {coverImage?.sources[0]?.uri || props.data?.videos[0] ? (
+        <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
+        {coverImage?.sources[0]?.uri || videoMedia ? (
           <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
-            {props.data?.videos[0] ? (
+            {videoMedia ? (
               <VideoPlayer
                 userProgress={userProgress}
                 parentNode={props.data}
@@ -181,10 +163,7 @@ function ContentSingle(props = {}) {
               {title && hasChildContent ? <H1>{title}</H1> : null}
               <Box display="flex" flexDirection="row">
                 {parentChannel.name ? (
-                  <BodyText
-                    color="text.secondary"
-                    mb={title && !hasChildContent ? 'xxs' : ''}
-                  >
+                  <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
                     {parentChannel.name}
                   </BodyText>
                 ) : null}
@@ -199,12 +178,11 @@ function ContentSingle(props = {}) {
               <ShareButton contentTitle={title} />
             </Box>
           </Box>
-
           {htmlContent ? (
             <>
               <Longform
                 dangerouslySetInnerHTML={{
-                  __html: parseDescriptionLinks(htmlContent),
+                  __html: parseHTMLContent(htmlContent),
                 }}
               />
             </>
@@ -228,40 +206,7 @@ function ContentSingle(props = {}) {
                 md: '0',
               }}
             >
-              {childContentItems?.map(
-                (item, index) =>
-                  console.log('item', item) || (
-                    <ContentCard
-                      key={item.node?.title + index}
-                      image={item.node?.coverImage}
-                      title={item.node?.title}
-                      summary={item.node?.summary}
-                      onClick={() => handleActionPress(item.node)}
-                      videoMedia={item.node?.videos[0]}
-                    />
-                  )
-              )}
-            </Box>
-          </Box>
-        ) : null}
-        {/* Display content for sermons */}
-        {hasSiblingContent ? (
-          <Box mb="l">
-            <H3 mb="xs">{props.feature?.title}</H3>
-            <Box
-              display="grid"
-              gridGap="30px"
-              gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
-              }}
-              padding={{
-                _: '30px',
-                md: '0',
-              }}
-            >
-              {siblingContentItems?.map((item, index) => (
+              {childContentItems?.map((item, index) => (
                 <ContentCard
                   key={item.node?.title + index}
                   image={item.node?.coverImage}
@@ -274,11 +219,46 @@ function ContentSingle(props = {}) {
             </Box>
           </Box>
         ) : null}
+        {/* Display content for sermons */}
+        {hasSiblingContent ? (
+          <>
+            <H3 flex="1" mr="xs">
+              In This Series
+            </H3>
+            <Box mb="l">
+              <H3 mb="xs">{props.feature?.title}</H3>
+              <Box
+                display="grid"
+                gridGap="30px"
+                gridTemplateColumns={{
+                  _: 'repeat(1, minmax(0, 1fr));',
+                  md: 'repeat(2, minmax(0, 1fr));',
+                  lg: 'repeat(3, minmax(0, 1fr));',
+                }}
+                padding={{
+                  _: '30px',
+                  md: '0',
+                }}
+              >
+                {siblingContentItems?.map((item, index) => (
+                  <ContentCard
+                    key={item.node?.title + index}
+                    image={item.node?.coverImage}
+                    title={item.node?.title}
+                    summary={item.node?.summary}
+                    onClick={() => handleActionPress(item.node)}
+                    videoMedia={item.node?.videos[0]}
+                  />
+                ))}
+              </Box>
+            </Box>
+          </>
+        ) : null}
 
         {/* Sub-Feature Feed */}
         {hasFeatures ? (
           <Box my="l">
-            <FeatureFeed data={props.data?.featureFeed} />
+            <FeatureFeed data={featureFeed} />
           </Box>
         ) : null}
       </Box>
