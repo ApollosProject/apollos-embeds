@@ -205,40 +205,7 @@ function ContentSingle(props = {}) {
                 md: '0',
               }}
             >
-              {childContentItems?.map(
-                (item, index) =>
-                  console.log('item', item) || (
-                    <ContentCard
-                      key={item.node?.title + index}
-                      image={item.node?.coverImage}
-                      title={item.node?.title}
-                      summary={item.node?.summary}
-                      onClick={() => handleActionPress(item.node)}
-                      videoMedia={item.node?.videos[0]}
-                    />
-                  ),
-              )}
-            </Box>
-          </Box>
-        ) : null}
-        {/* Display content for sermons */}
-        {hasSiblingContent ? (
-          <Box mb="l">
-            <H3 mb="xs">{props.feature?.title}</H3>
-            <Box
-              display="grid"
-              gridGap="30px"
-              gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
-              }}
-              padding={{
-                _: '30px',
-                md: '0',
-              }}
-            >
-              {siblingContentItems?.map((item, index) => (
+              {childContentItems?.map((item, index) => (
                 <ContentCard
                   key={item.node?.title + index}
                   image={item.node?.coverImage}
@@ -250,6 +217,41 @@ function ContentSingle(props = {}) {
               ))}
             </Box>
           </Box>
+        ) : null}
+        {/* Display content for sermons */}
+        {hasSiblingContent ? (
+          <>
+            <H3 flex="1" mr="xs">
+              In This Series
+            </H3>
+            <Box mb="l">
+              <H3 mb="xs">{props.feature?.title}</H3>
+              <Box
+                display="grid"
+                gridGap="30px"
+                gridTemplateColumns={{
+                  _: 'repeat(1, minmax(0, 1fr));',
+                  md: 'repeat(2, minmax(0, 1fr));',
+                  lg: 'repeat(3, minmax(0, 1fr));',
+                }}
+                padding={{
+                  _: '30px',
+                  md: '0',
+                }}
+              >
+                {siblingContentItems?.map((item, index) => (
+                  <ContentCard
+                    key={item.node?.title + index}
+                    image={item.node?.coverImage}
+                    title={item.node?.title}
+                    summary={item.node?.summary}
+                    onClick={() => handleActionPress(item.node)}
+                    videoMedia={item.node?.videos[0]}
+                  />
+                ))}
+              </Box>
+            </Box>
+          </>
         ) : null}
 
         {/* Sub-Feature Feed */}
