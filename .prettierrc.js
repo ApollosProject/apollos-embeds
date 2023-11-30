@@ -5,6 +5,6 @@ module.exports = {
   singleQuote: true,
   trailingComma: 'all', // custom for Apollos, RN defaults to 'all'
   tabWidth: 2,
-  proseWrap: 'never',
+  proseWrap: 'preserve',
   printWidth: 100,
 };
