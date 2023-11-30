@@ -28,7 +28,7 @@ function ContentSingle(props = {}) {
   // Video details
   const videoMedia = props.data?.videos[0];
 
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
+  const { userProgress } = useVideoMediaProgress({
     variables: { id: videoMedia?.id },
     skip: !videoMedia?.id,
   });
