@@ -29,8 +29,6 @@ const useHTMLContent = () => {
         anchorTag.setAttribute('rel', 'noopener noreferrer');
 
         // apply styles
-        anchorTag.style.color = '#00A8E1';
-        anchorTag.style.fontWeight = '600';
         anchorTag.style.textDecoration = 'underline';
       };
 

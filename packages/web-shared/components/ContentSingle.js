@@ -62,6 +62,7 @@ function ContentSingle(props = {}) {
     coverImage,
     htmlContent,
     title,
+    summary,
     parentChannel,
     childContentItemsConnection,
     siblingContentItemsConnection,
