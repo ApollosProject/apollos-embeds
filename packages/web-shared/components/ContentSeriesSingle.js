@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-
+import { Helmet } from 'react-helmet';
 import { getURLFromType } from '../utils';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
@@ -56,7 +56,7 @@ function ContentSeriesSingle(props = {}) {
   }
 
   // Content Details
-  const { coverImage, htmlContent, title, childContentItemsConnection } = props.data;
+  const { coverImage, htmlContent, title, childContentItemsConnection, summary } = props.data;
 
   const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
@@ -74,13 +74,13 @@ function ContentSeriesSingle(props = {}) {
     margin: 0;
   `;
 
-  const handleActionPress = item => {
+  const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
-        }),
+        })
       );
       setSearchParams(`?id=${getURLFromType(item)}`);
     }
@@ -92,6 +92,30 @@ function ContentSeriesSingle(props = {}) {
 
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+        {/* Standard metadata tags */}
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+        <meta name="image" content={coverImage?.sources[0]?.uri} />
+        {/* End standard metadata tags */}
+        {/* Facebook tags */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:image" content={coverImage?.sources[0]?.uri} />
+        {/* End Facebook tags */}
+        {/* Twitter tags */}
+        <meta
+          name="twitter:card"
+          content={coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'}
+        />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={coverImage?.sources[0]?.uri} />
+        <meta name="twitter:image:alt" content={title} />
+        {/* End Twitter tags */}
+      </Helmet>
       <Box margin="0 auto">
         <InteractWhenLoaded loading={props.loading} nodeId={props.data.id} action={'VIEW'} />
         <Box
@@ -188,7 +212,7 @@ function ContentSeriesSingle(props = {}) {
                   md: '0',
                 }}
               >
-                {childContentItems?.map(item => (
+                {childContentItems?.map((item) => (
                   <ContentCard
                     key={item.node?.title}
                     image={item.node?.coverImage}
