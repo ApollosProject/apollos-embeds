@@ -12,6 +12,7 @@ import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import { Box, H1, H2, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
 import { useHTMLContent, useVideoMediaProgress } from '../hooks';
+import { Title } from './ContentSingle.styles';
 
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
@@ -74,17 +75,17 @@ function ContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = featureFeed?.features?.filter(
-    feature => !!FeatureFeedComponentMap[feature?.__typename],
+    (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
 
-  const handleActionPress = item => {
+  const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
-        }),
+        })
       );
       setSearchParams(`?id=${getURLFromType(item)}`);
     }
@@ -158,8 +159,8 @@ function ContentSingle(props = {}) {
           >
             <Box>
               {/* Title */}
-              {title && !hasChildContent ? <H2>{title}</H2> : null}
-              {title && hasChildContent ? <H1>{title}</H1> : null}
+              {title && !hasChildContent ? <Title>{title}</Title> : null}
+              {title && hasChildContent ? <Title>{title}</Title> : null}
               <Box display="flex" flexDirection="row">
                 {parentChannel.name ? (
                   <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
@@ -174,7 +175,7 @@ function ContentSingle(props = {}) {
                 md: '0',
               }}
             >
-              <ShareButton contentTitle={title} />
+              <ShareButton ml={{ md: 'xs' }} contentTitle={title} />
             </Box>
           </Box>
           {htmlContent ? (
