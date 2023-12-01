@@ -2,26 +2,10 @@ import React from 'react';
 import { withTheme } from 'styled-components';
 import { useSearchParams } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
-import {
-  open as openModal,
-  set as setModal,
-  useModal,
-} from '../../../providers/ModalProvider';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../../providers/BreadcrumbProvider';
+import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 
-import {
-  BodyText,
-  Box,
-  Button,
-  H2,
-  H3,
-  H4,
-  systemPropTypes,
-  ContentCard,
-} from '../../../ui-kit';
+import { BodyText, Box, Button, H2, H3, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
 import Styled from './HeroListFeature.styles';
 import { useNavigate } from 'react-router-dom';
 
@@ -32,6 +16,15 @@ function HeroListFeature(props = {}) {
   const navigate = useNavigate();
 
   const handleActionPress = (item) => {
+    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
+      dispatchBreadcrumb(
+        addBreadcrumb({
+          url: `?id=${getURLFromType(item.relatedNode)}`,
+          title: item.relatedNode?.title,
+        })
+      );
+      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    }
     navigate({
       pathname: '/',
       search: `?id=${getURLFromType(item.relatedNode)}`,
@@ -40,19 +33,14 @@ function HeroListFeature(props = {}) {
 
   // Event Handlers
   const handleHeroCardPress = () => {
-    if (
-      searchParams.get('id') !==
-      getURLFromType(props.feature?.heroCard?.relatedNode)
-    ) {
+    if (searchParams.get('id') !== getURLFromType(props.feature?.heroCard?.relatedNode)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
           title: props.feature?.heroCard?.relatedNode?.title,
         })
       );
-      setSearchParams(
-        `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`
-      );
+      setSearchParams(`?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`);
     }
 
     if (state.modal) {
@@ -63,9 +51,7 @@ function HeroListFeature(props = {}) {
   };
 
   const handlePrimaryActionClick = () => {
-    setSearchParams(
-      `?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`
-    );
+    setSearchParams(`?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`);
   };
 
   const actions = props.feature?.actions;
@@ -76,12 +62,7 @@ function HeroListFeature(props = {}) {
       <Box>
         {/* List Header */}
         {props.feature.title || props.feature.subtitle ? (
-          <Box
-            flexDirection="row"
-            justifyContent="space-between"
-            alignItems="flex-end"
-            mb="s"
-          >
+          <Box flexDirection="row" justifyContent="space-between" alignItems="flex-end" mb="s">
             <Box>
               <H4 color="text.secondary">{props.feature.subtitle}</H4>
               <H3>{props.feature.title}</H3>
@@ -122,9 +103,7 @@ function HeroListFeature(props = {}) {
           padding={{ _: 'base', md: 'none' }}
           backdropFilter="blur(64px)"
         >
-          <Styled.Title mb="xxs">
-            {props?.feature?.heroCard?.title}
-          </Styled.Title>
+          <Styled.Title mb="xxs">{props?.feature?.heroCard?.title}</Styled.Title>
           <Styled.Summary color="text.secondary">
             {props?.feature?.heroCard?.summary}
           </Styled.Summary>
