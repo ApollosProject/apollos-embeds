@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../hooks';
 import { Box } from '../../ui-kit';
-
-import { videoFilters } from '../../utils';
 import { EmbededPlayer, VideoPlayer as Player } from './VideoPlayer.styles';
 
 const PROGRESS_CHECK_INTERVAL_SECONDS = 10;
@@ -33,10 +31,8 @@ function VideoPlayer(props = {}) {
   const [paused, setPaused] = useState(false);
 
   // will find the first HLS video playlist provided
-  const videoMedia = props.parentNode?.videos?.find(video => {
-    const sources = videoFilters.filterVideoSources(video.sources);
-
-    return sources.length > 0;
+  const videoMedia = props.parentNode?.videos?.find((video) => {
+    return video.sources.length > 0;
   });
 
   const userProgress = props.userProgress || { playhead: 0, complete: false };
@@ -82,7 +78,7 @@ function VideoPlayer(props = {}) {
         });
       }
     },
-    [_interactWithNode, videoMedia, isLiveStreaming],
+    [_interactWithNode, videoMedia, isLiveStreaming]
   );
 
   const catchUpLivestream = () => {
@@ -95,7 +91,7 @@ function VideoPlayer(props = {}) {
   // Event Handlers
   // ------------------------------------------
 
-  const handleVideoLoad = async evt => {
+  const handleVideoLoad = async (evt) => {
     const newDuration = Math.floor(evt.duration, 2);
     setDuration(newDuration);
     _analyticsData.totalLength = newDuration;
@@ -138,7 +134,7 @@ function VideoPlayer(props = {}) {
     }
   };
 
-  const handleVideoPlaybackRateChange = evt => {
+  const handleVideoPlaybackRateChange = (evt) => {
     if (evt.playbackRate === 0) {
       handleVideoPaused();
     } else {
@@ -146,7 +142,7 @@ function VideoPlayer(props = {}) {
     }
   };
 
-  const handleVideoProgress = evt => {
+  const handleVideoProgress = (evt) => {
     const newCurrentTime = Math.floor(evt.playedSeconds);
 
     setCurrentTime(newCurrentTime);
@@ -167,7 +163,7 @@ function VideoPlayer(props = {}) {
     }
   };
 
-  const handleVideoError = evt => {
+  const handleVideoError = (evt) => {
     // eslint-disable-next-line no-console
     console.error('Video Error', evt);
   };
@@ -256,7 +252,7 @@ VideoPlayer.propTypes = {
       sources: PropTypes.arrayOf(
         PropTypes.shape({
           uri: PropTypes.string,
-        }),
+        })
       ),
     }),
   }),
