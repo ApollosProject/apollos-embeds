@@ -1,6 +1,5 @@
 export { default as cleanMarkup } from './cleanMarkup';
 export { default as createMarkup } from './createMarkup';
-export * as videoFilters from './filterVideoSources';
 export { default as getContentFromURL } from './getContentFromURL';
 export { default as getDurationString } from './getDurationString';
 export { default as getPathFromType } from './getPathFromType';
