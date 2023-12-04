@@ -108,8 +108,6 @@ function HeroListFeature(props = {}) {
         >
           <Styled.Title>{props?.feature?.heroCard?.title}</Styled.Title>
           <Styled.Summary color="text.secondary">
-            {props?.feature?.heroCard?.summary} {props?.feature?.heroCard?.summary}{' '}
-            {props?.feature?.heroCard?.summary} {props?.feature?.heroCard?.summary}{' '}
             {props?.feature?.heroCard?.summary}
           </Styled.Summary>
         </Box>
