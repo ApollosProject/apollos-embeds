@@ -37,7 +37,7 @@ const H3 = () => css`
   ${shared}
 
   font-size: ${utils.rem('24px')};
-  line-height: ${utils.rem('28px')};
+  line-height: ${utils.rem('30px')};
   font-weight: 700;
 `;
 
