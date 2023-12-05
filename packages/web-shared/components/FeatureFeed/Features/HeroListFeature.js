@@ -102,8 +102,11 @@ function HeroListFeature(props = {}) {
           width={{ _: 'auto', md: '40%' }}
           padding={{ _: 'base', md: 'none' }}
           backdropFilter="blur(64px)"
+          display="flex"
+          flexDirection="column"
+          paddingTop={{ md: 'xl', lg: 'xxxl' }}
         >
-          <Styled.Title mb="xxs">{props?.feature?.heroCard?.title}</Styled.Title>
+          <Styled.Title>{props?.feature?.heroCard?.title}</Styled.Title>
           <Styled.Summary color="text.secondary">
             {props?.feature?.heroCard?.summary}
           </Styled.Summary>
