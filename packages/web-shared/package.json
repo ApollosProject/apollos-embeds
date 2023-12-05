@@ -15,6 +15,7 @@
     "react": "*",
     "react-transition-group": "*",
     "styled-components": "*",
-    "styled-system": "*"
+    "styled-system": "*",
+    "tldts": "*"
   }
 }
