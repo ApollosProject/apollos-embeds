@@ -1,9 +1,14 @@
-import React, { createContext, useContext, useEffect, useReducer } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
 
 const AnalyticsContext = createContext();
 
-function AnalyticsProvider(props = {}) {
-  return <AnalyticsContext.Provider value={{}}>{props.children}</AnalyticsContext.Provider>;
+function AnalyticsProvider({ init, track, children }) {
+  useEffect(() => {
+    // init;
+    // track('Button Clicked', { buttonColor: 'primary' });
+  }, [init]);
+
+  return <AnalyticsContext.Provider value={{}}>{children}</AnalyticsContext.Provider>;
 }
 
 export const useAnalytics = () => useContext(AnalyticsContext);

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { ApolloProvider } from '@apollo/client';
 
 import client from '../client';
-import * as analyticsClient from '../analytics/amplitude';
+import { init, track } from '../analytics/amplitude';
 import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import AnalyticsProvider from './AnalyticsProvider';
@@ -15,7 +15,7 @@ function AppProvider(props = {}) {
   return (
     <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
-        <AnalyticsProvider analyticsClient={analyticsClient.init} church={props.church}>
+        <AnalyticsProvider init={init} track={track} church={props.church}>
           <SearchProvider
             church={props.church}
             searchFeed={props.searchFeed}
