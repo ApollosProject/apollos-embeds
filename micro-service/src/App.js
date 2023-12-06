@@ -22,7 +22,7 @@ Sentry.init({
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
   const favicon = document.getElementById('favicon');
-  if (currentChurch.logo) {
+  if (currentChurch?.logo) {
     favicon.href = currentChurch.logo;
   }
   return <Logo source={currentChurch?.logo} {...props} />;
