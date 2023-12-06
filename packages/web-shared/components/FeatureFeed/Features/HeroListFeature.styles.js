@@ -17,17 +17,28 @@ const twoCardlayout = ({ length }) => {
 
 const Title = withTheme(styled.div`
   ${TypeStyles.H3}
+  margin-bottom: ${themeGet('space.xxs')};
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+
+  @media screen and (min-width: ${themeGet('breakpoints.md')}) {
+    ${TypeStyles.H3}
+    margin-bottom: ${themeGet('space.xxs')};
+  }
+  @media screen and (min-width: ${themeGet('breakpoints.lg')}) {
+    ${TypeStyles.H2}
+    margin-bottom: ${themeGet('space.xxs')};
+  }
+
   ${system}
 `);
 
 const Summary = withTheme(styled.div`
   ${TypeStyles.SmallBodyText}
   display: -webkit-box;
-  -webkit-line-clamp: 8;
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
   ${system}
