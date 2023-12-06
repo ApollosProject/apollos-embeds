@@ -12,6 +12,12 @@ import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
 
 function AppProvider(props = {}) {
+  const analyticsClients = useMemo(
+    () => [{ track: amplitude.trackEvent, identify: amplitude.init }],
+    []
+  );
+  const church = Config.APOLLOS_CHURCH_SLUG || 'apollos_demo';
+
   return (
     <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
