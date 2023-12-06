@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider } from '@apollo/client';
 
 import client from '../client';
-import { init, track } from '../analytics/amplitude';
+import amplitude from '../analytics/amplitude';
 import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import AnalyticsProvider from './AnalyticsProvider';
@@ -16,12 +16,13 @@ function AppProvider(props = {}) {
     () => [{ track: amplitude.trackEvent, identify: amplitude.init }],
     []
   );
-  const church = Config.APOLLOS_CHURCH_SLUG || 'apollos_demo';
+
+  const church = props.church || 'apollos_demo';
 
   return (
     <ApolloProvider client={client(props.church)} {...props}>
       <AuthProvider>
-        <AnalyticsProvider init={init} track={track} church={props.church}>
+        <AnalyticsProvider clients={analyticsClients} church={church}>
           <SearchProvider
             church={props.church}
             searchFeed={props.searchFeed}
