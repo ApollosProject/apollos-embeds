@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import amplitude from '../analytics/amplitude';
 
 import { getURLFromType } from '../utils';
 
@@ -23,7 +24,13 @@ function ContentSingle(props = {}) {
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();
-
+  console.log(props);
+  amplitude.trackEvent('TEST WEB EMBED CONTENT SINGLE', {
+    itemId: props.data?.id,
+    parentId: props.data?.parentChannel?.id,
+    parentName: props.data?.parentChannel?.name,
+    title: props.data?.title,
+  });
   const invalidPage = !props.loading && !props.data;
 
   // Video details
