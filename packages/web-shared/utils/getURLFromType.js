@@ -8,6 +8,7 @@ function getURLFromType(node) {
   const [type, randomId] = node?.id?.split(':');
 
   switch (type) {
+    case 'Event':
     case 'EventContentItem':
     case 'InformationalContentItem':
     case 'MediaContentItem':

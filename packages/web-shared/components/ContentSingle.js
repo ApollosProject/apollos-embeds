@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet';
 
 import { getURLFromType } from '../utils';
 
+import moment from 'moment';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
@@ -27,7 +28,7 @@ function ContentSingle(props = {}) {
   const invalidPage = !props.loading && !props.data;
 
   // Video details
-  const videoMedia = props.data?.videos[0];
+  const videoMedia = props.data?.videos?.[0];
 
   const { userProgress } = useVideoMediaProgress({
     variables: { id: videoMedia?.id },
@@ -78,7 +79,12 @@ function ContentSingle(props = {}) {
     (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
-
+  const formattedStartDate = props?.data?.start
+      ? moment(props.data.start).format('ddd, MMMM Do, YYYY')
+      : null;
+  const formattedStartToEnd = props?.data?.start && props?.data?.end
+      ? `${moment(props?.data?.start).format('LT')} — ${moment(props?.data?.end).format('LT')}`
+      : null;
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
@@ -94,6 +100,12 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
+  const infoDivider = (
+      <BodyText color="text.tertiary" mx="xs">
+        |
+      </BodyText>
+  );
+
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
@@ -129,14 +141,14 @@ function ContentSingle(props = {}) {
               <VideoPlayer
                 userProgress={userProgress}
                 parentNode={props.data}
-                coverImage={coverImage?.sources[0]?.uri}
+                coverImage={coverImage?.sources?.[0]?.uri}
               />
             ) : (
               <Box
                 backgroundSize="cover"
                 paddingBottom="56.25%"
                 backgroundPosition="center"
-                backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
+                backgroundImage={`url(${coverImage?.sources?.[0]?.uri})`}
                 backgroundRepeat="no-repeat"
               />
             )}
@@ -162,10 +174,22 @@ function ContentSingle(props = {}) {
               {title && !hasChildContent ? <Title>{title}</Title> : null}
               {title && hasChildContent ? <Title>{title}</Title> : null}
               <Box display="flex" flexDirection="row">
-                {parentChannel.name ? (
+                {parentChannel?.name || props?.data?.location ? (
                   <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
-                    {parentChannel.name}
+                    {parentChannel?.name || props?.data?.location}
                   </BodyText>
+                ) : null}
+                {formattedStartDate  ? infoDivider : null}
+                {formattedStartDate ? (
+                    <BodyText color="text.secondary">
+                      {formattedStartDate}
+                    </BodyText>
+                ) : null}
+                {formattedStartToEnd  ? infoDivider : null}
+                {formattedStartToEnd ? (
+                    <BodyText color="text.secondary">
+                      {formattedStartToEnd}
+                    </BodyText>
                 ) : null}
               </Box>
             </Box>
@@ -213,7 +237,7 @@ function ContentSingle(props = {}) {
                   title={item.node?.title}
                   summary={item.node?.summary}
                   onClick={() => handleActionPress(item.node)}
-                  videoMedia={item.node?.videos[0]}
+                  videoMedia={item.node?.videos?.[0]}
                 />
               ))}
             </Box>
