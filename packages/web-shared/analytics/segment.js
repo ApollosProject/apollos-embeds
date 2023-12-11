@@ -1,9 +1,11 @@
 import { createClient } from '@segment/analytics-react';
+import { useCurrentChurch } from '../hooks';
 
-const APOLLOS_SEGMENT_KEY = '9RgICGP9Xb507Wb3jmDLTvfhMbtlaXpr';
-const CLIENT_SEGMENT_KEY = process.env.REACT_APP_SEGMENT_KEY;
+const APOLLOS_SEGMENT_KEY = 'rwkfWr0HpIW4eSUZqI30BmcMAdwsVrW0';
 
 const clientFactory = (writeKey, clientManaged = false) => {
+  const { currentChurch } = useCurrentChurch();
+  const segmentKey = currentChurch?.segmentKey;
   if (!writeKey) {
     return null;
   }
@@ -56,9 +58,8 @@ const clientFactory = (writeKey, clientManaged = false) => {
   };
 };
 
-const clients = [
-  clientFactory(APOLLOS_SEGMENT_KEY),
-  clientFactory(CLIENT_SEGMENT_KEY, true),
-].filter(Boolean);
+const clients = [clientFactory(APOLLOS_SEGMENT_KEY), clientFactory(segmentKey, true)].filter(
+  Boolean
+);
 
 export default clients;
