@@ -39,6 +39,11 @@ const Modal = (props = {}) => {
     dispatchBreadcrumb(resetBreadcrumb());
   }
 
+  useEffect(() => {
+    const body = document.querySelector('body');
+    body.style.overflow = state.isOpen ? 'hidden' : 'auto';
+  }, [state.isOpen])
+
   return (
     <Box>
       <Styled.Modal show={state.isOpen}>
