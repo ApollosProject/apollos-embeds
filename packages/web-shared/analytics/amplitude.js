@@ -1,12 +1,15 @@
 import amplitudeJS from 'amplitude-js';
+import { useCurrentChurch } from '../hooks';
 
 export const trackEvent = (eventName, properties = null) => {
   amplitudeJS.getInstance().logEvent(eventName, properties);
 };
 
-export const init = (currentUser) => {
+export const init = async (currentUser) => {
+  const { currentChurch } = useCurrentChurch();
   const ampInstance = amplitudeJS.getInstance();
-  ampInstance.init(process.env.REACT_APP_AMPLITUDE_KEY);
+  const amplitudeKey = currentChurch?.amplitudeKey;
+  ampInstance.init(amplitudeKey);
 
   if (currentUser) {
     const userProperties = {
