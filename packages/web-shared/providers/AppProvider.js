@@ -4,6 +4,7 @@ import { ApolloProvider } from '@apollo/client';
 
 import client from '../client';
 import amplitude from '../analytics/amplitude';
+import segmentClients from '../analytics/segment';
 import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import AnalyticsProvider from './AnalyticsProvider';
@@ -13,7 +14,7 @@ import SearchProvider from './SearchProvider';
 
 function AppProvider(props = {}) {
   const analyticsClients = useMemo(
-    () => [{ track: amplitude.trackEvent, identify: amplitude.init }],
+    () => [{ track: amplitude.trackEvent, identify: amplitude.init }, ...segmentClients],
     []
   );
 
