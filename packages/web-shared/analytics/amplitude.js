@@ -5,7 +5,7 @@ export const trackEvent = (eventName, properties = null) => {
   amplitudeJS.getInstance().logEvent(eventName, properties);
 };
 
-export const init = async (currentUser) => {
+export const init = (currentUser) => {
   const { currentChurch } = useCurrentChurch();
   const ampInstance = amplitudeJS.getInstance();
   const amplitudeKey = currentChurch?.webAmplitudeKey;
