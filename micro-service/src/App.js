@@ -21,6 +21,10 @@ Sentry.init({
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
+  const favicon = document.getElementById('favicon');
+  if (currentChurch?.logo) {
+    favicon.href = currentChurch.logo;
+  }
   return <Logo source={currentChurch?.logo} {...props} />;
 }
 
@@ -30,7 +34,6 @@ function App(props) {
       ? window.location.hostname.split('.').slice(0, -2).join('.')
       : window.location.hostname.split('.').slice(0, -1).join('.');
   const churchSlug = subdomain.replace(/-/g, '_');
-
   const searchParams = new URLSearchParams(window.location.search);
   const _root = searchParams.get('root');
 
@@ -41,10 +44,7 @@ function App(props) {
       path: '/',
       element: (
         <Styled.FeedWrapper>
-          <FeatureFeed
-            featureFeed={`${type}:${randomId}`}
-            church={churchSlug}
-          />
+          <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
         </Styled.FeedWrapper>
       ),
       errorElement: <ErrorPage />,
@@ -55,12 +55,7 @@ function App(props) {
   if (churchSlug) {
     return (
       <AppProvider church={churchSlug} modal="true">
-        <ChurchLogo
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          marginTop="40px"
-        />
+        <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
         <RouterProvider router={router} />
       </AppProvider>
     );
@@ -87,15 +82,10 @@ function App(props) {
             <span>Apollos Preview</span>
           </Styled.Title>
           <BodyText>
-            Ready to experience the dynamic features of an Apollos feed or app?
-            Head over to the Apollos Admin for your exclusive access link.
+            Ready to experience the dynamic features of an Apollos feed or app? Head over to the
+            Apollos Admin for your exclusive access link.
           </BodyText>
-          <Button
-            mt="l"
-            justifySelf="center"
-            title="Start ->"
-            onClick={() => {}}
-          />
+          <Button mt="l" justifySelf="center" title="Start ->" onClick={() => {}} />
         </Styled.Content>
         <Box>
           <Box as="img" src={'./apollos-mock-up.png'} />
