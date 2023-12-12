@@ -8,7 +8,7 @@ export const trackEvent = (eventName, properties = null) => {
 export const init = async (currentUser) => {
   const { currentChurch } = useCurrentChurch();
   const ampInstance = amplitudeJS.getInstance();
-  const amplitudeKey = currentChurch?.amplitudeKey;
+  const amplitudeKey = currentChurch?.webAmplitudeKey;
   ampInstance.init(amplitudeKey);
 
   if (currentUser) {

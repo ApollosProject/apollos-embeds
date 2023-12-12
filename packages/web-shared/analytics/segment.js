@@ -5,12 +5,14 @@ const APOLLOS_SEGMENT_KEY = 'rwkfWr0HpIW4eSUZqI30BmcMAdwsVrW0';
 
 const clientFactory = (writeKey, clientManaged = false) => {
   const { currentChurch } = useCurrentChurch();
-  const segmentKey = currentChurch?.segmentKey;
-  if (!writeKey) {
+  const clientKey = writeKey ? writeKey : currentChurch?.webSegmentKey;
+
+  if (!clientKey) {
     return null;
   }
+
   const client = createClient({
-    writeKey,
+    clientKey,
     trackAppLifecycleEvents: true,
   });
   return {
@@ -58,8 +60,6 @@ const clientFactory = (writeKey, clientManaged = false) => {
   };
 };
 
-const clients = [clientFactory(APOLLOS_SEGMENT_KEY), clientFactory(segmentKey, true)].filter(
-  Boolean
-);
+const clients = [clientFactory(APOLLOS_SEGMENT_KEY), clientFactory(null, true)].filter(Boolean);
 
 export default clients;
