@@ -21,6 +21,10 @@ function VerticalCardListFeature(props = {}) {
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
+    if (item.action === 'OPEN_URL'){
+      return window.open(getURLFromType(item.relatedNode), '_blank');
+    }
+
     if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
       dispatchBreadcrumb(
         addBreadcrumb({
