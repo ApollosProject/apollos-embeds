@@ -1,22 +1,8 @@
-// import React, { createContext, useContext, useEffect, useMemo, useReducer } from 'react';
-
-// const AnalyticsContext = createContext();
-
-// function AnalyticsProvider({ init, track, children }) {
-//   useEffect(() => {
-//     // init;
-//     // track('Button Clicked', { buttonColor: 'primary' });
-//   }, [init]);
-
-//   return <AnalyticsContext.Provider value={{}}>{children}</AnalyticsContext.Provider>;
-// }
-
-// export const useAnalytics = () => useContext(AnalyticsContext);
-
-// export default AnalyticsProvider;
-
 import React, { createContext, useContext, useMemo, useEffect, useRef } from 'react';
 import { gql, useQuery } from '@apollo/client';
+import { useCurrentChurch } from '../hooks';
+import amplitude from '../analytics/amplitude';
+import clientFactory from '../analytics/segment';
 
 const Context = createContext(null);
 
@@ -68,7 +54,23 @@ export const GET_ANALYTICS_USER = gql`
  * Each client should have the functions (or subset of) defined above.
  * @param {church} church The church slug to pass to the analytics client's group function.
  */
-export const AnalyticsProvider = ({ clients = defaultClients, children, church }) => {
+export const AnalyticsProvider = ({ children, church }) => {
+  // const APOLLOS_SEGMENT_KEY = 'rwkfWr0HpIW4eSUZqI30BmcMAdwsVrW0';
+  const { currentChurch } = useCurrentChurch();
+
+  const segmentClients = [
+    clientFactory(process.env.REACT_APP_APOLLOS_SEGMENT_KEY),
+    clientFactory(currentChurch?.segmentKey, true),
+  ].filter(Boolean);
+
+  const analyticsClients = useMemo(
+    () => [{ track: amplitude.trackEvent, identify: amplitude.init }, ...segmentClients],
+    []
+  );
+
+  const clients = analyticsClients ? analyticsClients : defaultClients;
+
+  amplitude.init();
   const client = useMemo(() => {
     return {
       screen: (...args) =>
