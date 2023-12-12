@@ -1,18 +1,11 @@
-import { createClient } from '@segment/analytics-react';
-import { useCurrentChurch } from '../hooks';
-
-const APOLLOS_SEGMENT_KEY = 'rwkfWr0HpIW4eSUZqI30BmcMAdwsVrW0';
-
+import { AnalyticsBrowser } from '@segment/analytic-next';
 const clientFactory = (writeKey, clientManaged = false) => {
-  const { currentChurch } = useCurrentChurch();
-  const clientKey = writeKey ? writeKey : currentChurch?.webSegmentKey;
-
-  if (!clientKey) {
+  if (!writeKey) {
     return null;
   }
 
-  const client = createClient({
-    clientKey,
+  const client = AnalyticsBrowser.load({
+    writeKey,
     trackAppLifecycleEvents: true,
   });
   return {
@@ -60,6 +53,4 @@ const clientFactory = (writeKey, clientManaged = false) => {
   };
 };
 
-const clients = [clientFactory(APOLLOS_SEGMENT_KEY), clientFactory(null, true)].filter(Boolean);
-
-export default clients;
+export default clientFactory;
