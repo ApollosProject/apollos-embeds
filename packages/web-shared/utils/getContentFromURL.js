@@ -15,7 +15,6 @@ function getContentFromURL(url) {
   const { type, randomId } = parseSlugToIdAndType(url);
 
   switch (type) {
-    // case 'EventContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem': {

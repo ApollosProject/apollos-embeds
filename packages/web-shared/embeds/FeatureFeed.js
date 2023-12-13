@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ContentItemProvider,
-  FeatureFeedProvider,
-  ContentFeedProvider,
-} from '../providers';
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
   ContentSingle,
   FeatureFeedList,
@@ -20,10 +16,9 @@ import { parseSlugToIdAndType } from '../utils';
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
   const _id = searchParams.get('id');
-  const {type, randomId} = parseSlugToIdAndType(_id) ?? {};
+  const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
   switch (type) {
-    case 'EventContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem': {
@@ -31,38 +26,27 @@ function RenderFeatures(props) {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={ContentSingle} options={options} />
-      );
+      return <ContentItemProvider Component={ContentSingle} options={options} />;
     }
     case 'ContentSeriesContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider
-          Component={ContentSeriesSingle}
-          options={options}
-        />
-      );
+      return <ContentItemProvider Component={ContentSeriesSingle} options={options} />;
     }
     case 'Livestream': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={LivestreamSingle} options={options} />
-      );
+      return <ContentItemProvider Component={LivestreamSingle} options={options} />;
     }
     case 'ContentChannel': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
-      return (
-        <ContentFeedProvider Component={ContentChannel} options={options} />
-      );
+      return <ContentFeedProvider Component={ContentChannel} options={options} />;
     }
     case 'Url': {
       return <h1>External Url</h1>;
@@ -71,9 +55,7 @@ function RenderFeatures(props) {
       const options = {
         variables: { itemId: `${type}:${randomId}` },
       };
-      return (
-        <FeatureFeedProvider Component={FeatureFeedList} options={options} />
-      );
+      return <FeatureFeedProvider Component={FeatureFeedList} options={options} />;
     }
     default: {
       return (
