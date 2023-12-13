@@ -6,11 +6,12 @@
   "private": true,
   "dependencies": {
     "@babel/preset-react": "^7.22.5",
-    "react-helmet": "^6.1.0",
-    "@amplitude/analytics-browser": "^2.3.5"
+    "react-helmet": "^6.1.0"
   },
   "peerDependencies": {
     "@apollo/client": "*",
+    "@segment/analytics-next": "*",
+    "amplitude-js": "*",
     "prop-types": "*",
     "react": "*",
     "react-transition-group": "*",
