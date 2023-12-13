@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useMemo, useEffect, useRef } from 'react';
 import { gql, useQuery } from '@apollo/client';
-import { useCurrentChurch } from '../hooks';
+import { useCurrentChurch, useCurrentUser } from '../hooks';
 import amplitude from '../analytics/amplitude';
 import clientFactory from '../analytics/segment';
 
@@ -55,12 +55,12 @@ export const GET_ANALYTICS_USER = gql`
  * @param {church} church The church slug to pass to the analytics client's group function.
  */
 export const AnalyticsProvider = ({ children, church }) => {
-  // const APOLLOS_SEGMENT_KEY = 'rwkfWr0HpIW4eSUZqI30BmcMAdwsVrW0';
   const { currentChurch } = useCurrentChurch();
+  const { currentUser } = useCurrentUser();
 
   const segmentClients = [
     clientFactory(process.env.REACT_APP_APOLLOS_SEGMENT_KEY),
-    clientFactory(currentChurch?.segmentKey, true),
+    clientFactory(currentChurch?.webSegmentKey, true),
   ].filter(Boolean);
 
   const analyticsClients = useMemo(
@@ -70,7 +70,8 @@ export const AnalyticsProvider = ({ children, church }) => {
 
   const clients = analyticsClients ? analyticsClients : defaultClients;
 
-  amplitude.init();
+  amplitude.init(currentChurch?.webAmplitudeKey, currentUser);
+
   const client = useMemo(() => {
     return {
       screen: (...args) =>
