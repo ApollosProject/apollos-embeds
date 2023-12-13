@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { useCurrentChurch } from '../../hooks';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
 import { Box } from '../../ui-kit';
@@ -16,6 +17,12 @@ import {
   useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
 import { X } from 'phosphor-react';
+import Logo from '../Logo';
+
+function ChurchLogo(props) {
+  const { currentChurch } = useCurrentChurch();
+  return <Logo source={currentChurch?.logo} theme={currentChurch?.theme} padding={10} {...props} />;
+}
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
@@ -42,7 +49,7 @@ const Modal = (props = {}) => {
   useEffect(() => {
     const body = document.querySelector('body');
     body.style.overflow = state.isOpen ? 'hidden' : 'auto';
-  }, [state.isOpen])
+  }, [state.isOpen]);
 
   return (
     <Box>
@@ -50,6 +57,34 @@ const Modal = (props = {}) => {
         {state.content ? (
           <>
             <Styled.ModalContainer>
+              <Box
+                width="100%"
+                display="flex"
+                mb="s"
+                alignItems="flex-start"
+                justifyContent="space-between"
+                flexDirection={{ _: 'column-reverse', sm: 'row' }}
+              >
+                <Box width={{ _: '0', sm: '10%' }}></Box>
+                <ChurchLogo
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  margin="40px"
+                />
+                <Box
+                  width={{ _: '100%', sm: '10%' }}
+                  mb={{ _: 'xs', sm: '0' }}
+                  ml={{ _: '0', sm: 'xs' }}
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                >
+                  <Styled.Icon onClick={handleCloseModal} ml={{ _: 'auto', sm: '0' }}>
+                    <X size={16} weight="bold" />
+                  </Styled.Icon>
+                </Box>
+              </Box>
               <Box
                 width="100%"
                 display="flex"
@@ -71,21 +106,7 @@ const Modal = (props = {}) => {
                 >
                   <Searchbar width="100%" />
                 </Box>
-                <Box
-                  width={{ _: '100%', sm: '10%' }}
-                  mb={{ _: 'xs', sm: '0' }}
-                  ml={{ _: '0', sm: 'xs' }}
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                >
-                  <Styled.Icon
-                    onClick={handleCloseModal}
-                    ml={{ _: 'auto', sm: '0' }}
-                  >
-                    <X size={16} weight="bold" />
-                  </Styled.Icon>
-                </Box>
+                <Box width={{ _: '0', sm: '10%' }}></Box>
               </Box>
               <Breadcrumbs />
               <Box
