@@ -1,27 +1,25 @@
 import amplitudeJS from 'amplitude-js';
-import { useCurrentChurch } from '../hooks';
 
-export const trackEvent = (eventName, properties = null) => {
+export const trackEvent = ({ eventName, properties = null }) => {
   amplitudeJS.getInstance().logEvent(eventName, properties);
 };
 
 export const init = (amplitudeKey, currentUser = false) => {
   const ampInstance = amplitudeJS.getInstance();
-  ampInstance.init(amplitudeKey);
+  if (amplitudeKey) {
+    ampInstance.init(amplitudeKey);
+    if (currentUser) {
+      const userProperties = {
+        email: currentUser?.profile?.email,
+        firstName: currentUser?.profile?.firstName,
+        lastName: currentUser?.profile?.lastName,
+        userId: currentUser?.profile?.id,
+      };
 
-  if (currentUser) {
-    const userProperties = {
-      campusName: currentUser?.profile?.campus?.name,
-      email: currentUser?.profile?.email,
-      firstName: currentUser?.profile?.firstName,
-      lastName: currentUser?.profile?.lastName,
-      nickName: currentUser?.profile?.nickName,
-      userId: currentUser?.profile?.id,
-    };
+      amplitudeJS.getInstance().setUserId(currentUser?.profile?.id);
 
-    amplitudeJS.getInstance().setUserId(currentUser?.profile?.id);
-
-    amplitudeJS.getInstance().setUserProperties(userProperties);
+      amplitudeJS.getInstance().setUserProperties(userProperties);
+    }
   }
 
   return null;
