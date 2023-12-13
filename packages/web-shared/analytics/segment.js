@@ -1,4 +1,4 @@
-import { AnalyticsBrowser } from '@segment/analytic-next';
+import { AnalyticsBrowser } from '@segment/analytics-next';
 const clientFactory = (writeKey, clientManaged = false) => {
   if (!writeKey) {
     return null;
