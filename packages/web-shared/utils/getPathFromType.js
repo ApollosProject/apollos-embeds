@@ -6,8 +6,6 @@ function getPathFromType(node) {
   const [type, randomId] = node?.id?.split(':');
 
   switch (type) {
-    case 'EventContentItem':
-    case 'InformationalContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem':
@@ -27,9 +25,7 @@ function getPathFromType(node) {
       return node.url;
     }
     default: {
-      console.warn(
-        `Routing for node type ${type} not set up. Please add it to getPathFromType.js`
-      );
+      console.warn(`Routing for node type ${type} not set up. Please add it to getPathFromType.js`);
       return '/';
     }
   }
