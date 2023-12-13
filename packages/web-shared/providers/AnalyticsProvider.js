@@ -4,7 +4,7 @@ import { useCurrentChurch } from '../hooks';
 import amplitude from '../analytics/amplitude';
 import clientFactory from '../analytics/segment';
 
-const Context = createContext(null);
+const Context = createContext();
 
 const defaultClients = [];
 
