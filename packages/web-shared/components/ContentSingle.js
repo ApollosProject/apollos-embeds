@@ -24,13 +24,23 @@ function ContentSingle(props = {}) {
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();
-  console.log(props);
-  amplitude.trackEvent('TEST WEB EMBED CONTENT SINGLE', {
-    itemId: props.data?.id,
-    parentId: props.data?.parentChannel?.id,
-    parentName: props.data?.parentChannel?.name,
-    title: props.data?.title,
-  });
+
+  useEffect(() => {
+    const searchParam = window.location.search;
+    // Get the search parameter from the URL to determine if item is content single
+    if (searchParam && !searchParam.includes('FeatureFeed')) {
+      amplitude.trackEvent({
+        eventName: 'ContentSingle',
+        properties: {
+          itemId: props.data?.id,
+          parentId: props.data?.parentChannel?.id,
+          parentName: props.data?.parentChannel?.name,
+          title: props.data?.title,
+        },
+      });
+    }
+  }, [window.location.search]);
+
   const invalidPage = !props.loading && !props.data;
 
   // temp
