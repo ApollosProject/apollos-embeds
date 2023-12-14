@@ -61,14 +61,17 @@ function HorizontalCardListFeature(props = {}) {
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      amplitude.trackEvent({
-        eventName: 'FeatureFeed',
-        properties: {
-          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-          featureId: props.feature?.id,
-          title: props.feature?.title,
-        },
-      });
+      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+        amplitude.trackEvent({
+          eventName: 'FeatureFeed',
+          properties: {
+            featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+            featureId: props.feature?.id,
+            title: props.feature?.title,
+          },
+        });
+      }
+
       state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
