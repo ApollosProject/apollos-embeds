@@ -21,7 +21,7 @@ import {
 } from '../ui-kit';
 import { useVideoMediaProgress, useLivestreamStatus, useHTMLContent } from '../hooks';
 import VideoPlayer from './VideoPlayer';
-
+import TrackEventWhenLoaded from './TrackEventWhenLoaded';
 function LivestreamSingle(props = {}) {
   const navigate = useNavigate();
   const parseHTMLContent = useHTMLContent();
@@ -120,6 +120,16 @@ function LivestreamSingle(props = {}) {
         {/* End Twitter tags */}
       </Helmet>
       <Box margin="0 auto">
+        <TrackEventWhenLoaded
+          loading={props.loading}
+          eventName={'View Livestream'}
+          properties={{
+            itemId: props.data?.id,
+            parentId: props.data?.parentChannel?.id,
+            parentName: props.data?.parentChannel?.name,
+            title: props.data?.title,
+          }}
+        />
         <Box mb="base">
           {stream.sources[0] ? (
             <VideoPlayer

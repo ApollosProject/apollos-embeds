@@ -12,6 +12,7 @@ import { useHTMLContent, useVideoMediaProgress } from '../hooks';
 
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
+import TrackEventWhenLoaded from './TrackEventWhenLoaded';
 import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 
@@ -118,6 +119,16 @@ function ContentSeriesSingle(props = {}) {
       </Helmet>
       <Box margin="0 auto">
         <InteractWhenLoaded loading={props.loading} nodeId={props.data.id} action={'VIEW'} />
+        <TrackEventWhenLoaded
+          loading={props.loading}
+          eventName={'View Content'}
+          properties={{
+            itemId: props.data?.id,
+            parentId: props.data?.parentChannel?.id,
+            parentName: props.data?.parentChannel?.name,
+            title: props.data?.title,
+          }}
+        />
         <Box
           display="flex"
           width="100%"
