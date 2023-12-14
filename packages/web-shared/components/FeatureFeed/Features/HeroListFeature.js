@@ -4,8 +4,8 @@ import { useSearchParams } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
-
-import { BodyText, Box, Button, H2, H3, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
+import amplitude from '../../../analytics/amplitude';
+import { Box, Button, H3, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
 import Styled from './HeroListFeature.styles';
 import { useNavigate } from 'react-router-dom';
 
@@ -16,7 +16,7 @@ function HeroListFeature(props = {}) {
   const navigate = useNavigate();
 
   const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL'){
+    if (item.action === 'OPEN_URL') {
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -55,6 +55,16 @@ function HeroListFeature(props = {}) {
   };
 
   const handlePrimaryActionClick = () => {
+    if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+      amplitude.trackEvent({
+        eventName: 'FeatureFeed',
+        properties: {
+          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+          featureId: props.feature?.id,
+          title: props.feature?.title,
+        },
+      });
+    }
     setSearchParams(`?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`);
   };
 
