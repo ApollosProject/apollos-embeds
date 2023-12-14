@@ -1,6 +1,6 @@
 import amplitudeJS from 'amplitude-js';
 
-export const trackEvent = ({ eventName, properties = null }) => {
+export const trackEvent = (eventName, properties = null) => {
   amplitudeJS.getInstance().logEvent(eventName, properties);
 };
 
