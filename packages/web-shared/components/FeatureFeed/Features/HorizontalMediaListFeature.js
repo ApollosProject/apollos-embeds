@@ -32,14 +32,6 @@ function HorizontalMediaListFeature(props = {}) {
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
-    console.log('item', item);
-    amplitude.trackEvent({
-      eventName: 'Web Embed ContentSingle',
-      properties: {
-        itemId: item?.id,
-        title: item?.id,
-      },
-    });
     if (item.action === 'OPEN_URL') {
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
