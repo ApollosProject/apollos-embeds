@@ -42,14 +42,11 @@ const AuthConfirm = () => {
   const onSuccess = ({ token, user, sharedProfiles }) => {
     const needsOnboarding = isEmpty(user.firstName) || isEmpty(user.lastName);
     if (state.userExists) {
-      amplitude.trackEvent({
-        eventName: 'UserLogin',
-        properties: {
-          userId: user?.id,
-          firstName: user?.firstName,
-          lastName: user?.lastName,
-          email: user?.email,
-        },
+      amplitude.trackEvent('UserLogin', {
+        userId: user?.id,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
       });
       if (needsOnboarding) {
         dispatch(updateAuth({ token, step: authSteps.Details }));

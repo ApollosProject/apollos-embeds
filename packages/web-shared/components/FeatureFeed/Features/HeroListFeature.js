@@ -56,13 +56,10 @@ function HeroListFeature(props = {}) {
 
   const handlePrimaryActionClick = () => {
     if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
-      amplitude.trackEvent({
-        eventName: 'FeatureFeed',
-        properties: {
-          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-          featureId: props.feature?.id,
-          title: props.feature?.title,
-        },
+      amplitude.trackEvent('FeatureFeed', {
+        featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+        featureId: props.feature?.id,
+        title: props.feature?.title,
       });
     }
     setSearchParams(`?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`);
