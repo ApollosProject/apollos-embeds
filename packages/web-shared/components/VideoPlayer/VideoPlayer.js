@@ -5,6 +5,7 @@ import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../
 import { Box } from '../../ui-kit';
 import { EmbededPlayer, VideoPlayer as Player } from './VideoPlayer.styles';
 import amplitude from '../../analytics/amplitude';
+import { useAnalytics } from '../../providers/AnalyticsProvider';
 import { get } from 'lodash';
 
 const PROGRESS_CHECK_INTERVAL_SECONDS = 10;
@@ -20,6 +21,7 @@ function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
   const parseHTMLContent = useHTMLContent();
+  const analytics = useAnalytics();
 
   const { status } = useLivestreamStatus(props.parentNode);
   const sessionId = useRef(new Date().getTime());
@@ -115,7 +117,7 @@ function VideoPlayer(props = {}) {
         ..._analyticsData,
         ...properties,
       };
-      amplitude.trackEvent({ eventName, properties: combinedProperties });
+      analytics.track(eventName, combinedProperties);
     },
     [props, amplitude, isLiveStreaming]
   );
