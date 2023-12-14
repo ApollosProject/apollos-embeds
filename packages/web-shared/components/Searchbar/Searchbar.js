@@ -33,11 +33,7 @@ const Searchbar = (props = {}) => {
   const [isMobile, setIsMobile] = useState(false);
 
   const textWelcome =
-    firstName === '' ? (
-      <strong>Hey!&nbsp;</strong>
-    ) : (
-      <strong>Hey {firstName}!&nbsp; </strong>
-    );
+    firstName === '' ? <strong>Hey!&nbsp;</strong> : <strong>Hey {firstName}!&nbsp; </strong>;
 
   const textPrompt = searchState.customPlaceholder ? (
     <Styled.TextPrompt>
@@ -117,11 +113,7 @@ const Searchbar = (props = {}) => {
           <Styled.InterfaceWrapper>
             <Box padding="12px">
               <Styled.SearchIcon>
-                <MagnifyingGlass
-                  size={18}
-                  weight="bold"
-                  color={userExist ? 'white' : null}
-                />
+                <MagnifyingGlass size={18} weight="bold" color={userExist ? 'white' : null} />
               </Styled.SearchIcon>
             </Box>
             <Box width="100%">
@@ -136,18 +128,10 @@ const Searchbar = (props = {}) => {
         </Styled.Interface>
         <Box padding="12px" onClick={handleOpenProfile}>
           {currentUser?.profile?.photo?.uri ? (
-            <Avatar
-              src={currentUser?.profile?.photo?.uri}
-              width="38px"
-              alt="avatar"
-            />
+            <Avatar src={currentUser?.profile?.photo?.uri} width="38px" alt="avatar" />
           ) : (
             <Styled.Profile>
-              <User
-                size={18}
-                weight="bold"
-                color={userExist ? 'white' : null}
-              />
+              <User size={18} weight="bold" color={userExist ? 'white' : null} />
             </Styled.Profile>
           )}
         </Box>
