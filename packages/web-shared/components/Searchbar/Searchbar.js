@@ -18,6 +18,7 @@ const Searchbar = (props = {}) => {
   const searchState = useSearchState();
   const [showProfile, setShowProfile] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
+  const [autocompleteInstance, setAutocompleteInstance] = useState(null);
   const [autocompleteState, setAutocompleteState] = useState({
     activeItemId: null,
     collections: [],
@@ -31,13 +32,6 @@ const Searchbar = (props = {}) => {
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
-
-  const [autocompleteInstance, setAutocompleteInstance] = useState(null);
-
-  const handleGetAutocompleteInstance = (instance) => {
-    // Access the autocomplete instance here or store it in state
-    setAutocompleteInstance(instance);
-  };
 
   const textWelcome =
     firstName === '' ? <strong>Hey!&nbsp;</strong> : <strong>Hey {firstName}!&nbsp; </strong>;
@@ -104,6 +98,10 @@ const Searchbar = (props = {}) => {
   };
   const handleCloseProfile = () => {
     setShowProfile(false);
+  };
+
+  const handleGetAutocompleteInstance = (instance) => {
+    setAutocompleteInstance(instance);
   };
 
   const handleClick = () => {
