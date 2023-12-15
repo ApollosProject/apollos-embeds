@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { User, MagnifyingGlass } from 'phosphor-react';
+import { User, MagnifyingGlass, ArrowLeft } from 'phosphor-react';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
@@ -18,7 +18,7 @@ const Searchbar = (props = {}) => {
   const searchState = useSearchState();
   const [showProfile, setShowProfile] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
-  const [autocompleteState, setAutocompleteState] = React.useState({
+  const [autocompleteState, setAutocompleteState] = useState({
     activeItemId: null,
     collections: [],
     completion: null,
@@ -31,6 +31,13 @@ const Searchbar = (props = {}) => {
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
+
+  const [autocompleteInstance, setAutocompleteInstance] = useState(null);
+
+  const handleGetAutocompleteInstance = (instance) => {
+    // Access the autocomplete instance here or store it in state
+    setAutocompleteInstance(instance);
+  };
 
   const textWelcome =
     firstName === '' ? <strong>Hey!&nbsp;</strong> : <strong>Hey {firstName}!&nbsp; </strong>;
@@ -99,6 +106,14 @@ const Searchbar = (props = {}) => {
     setShowProfile(false);
   };
 
+  const handleClick = () => {
+    if (isMobile && autocompleteState.isOpen) {
+      autocompleteInstance.setIsOpen(false);
+      autocompleteInstance.setQuery('');
+      setShowTextPrompt(true);
+    }
+  };
+
   return (
     <Box
       position="relative"
@@ -111,9 +126,13 @@ const Searchbar = (props = {}) => {
       <Styled.Wrapper dropdown={autocompleteState.isOpen}>
         <Styled.Interface>
           <Styled.InterfaceWrapper>
-            <Box padding="12px">
+            <Box padding="12px" onClick={handleClick}>
               <Styled.SearchIcon>
-                <MagnifyingGlass size={18} weight="bold" color={userExist ? 'white' : null} />
+                {isMobile && autocompleteState.isOpen ? (
+                  <ArrowLeft size={18} weight="bold" color={userExist ? 'white' : null} />
+                ) : (
+                  <MagnifyingGlass size={18} weight="bold" color={userExist ? 'white' : null} />
+                )}
               </Styled.SearchIcon>
             </Box>
             <Box width="100%">
@@ -121,6 +140,7 @@ const Searchbar = (props = {}) => {
                 autocompleteState={autocompleteState}
                 setAutocompleteState={setAutocompleteState}
                 setShowTextPrompt={setShowTextPrompt}
+                getAutocompleteInstance={handleGetAutocompleteInstance}
               />
               {showTextPrompt ? textPrompt : null}
             </Box>
