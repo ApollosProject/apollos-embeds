@@ -15,15 +15,8 @@ function Logo({ fill, size, padding, theme, source, ...rest }) {
   }
 
   return (
-    <Box {...rest}>
-      <Styled.Image
-        src={source || './icon.png'}
-        alt="Logo"
-        size={size}
-        fill={fill}
-        padding={padding}
-        backgroundColor={themeData?.colors?.primary ?? ''}
-      />
+    <Box backgroundColor={themeData?.colors?.primary ?? ''} {...rest}>
+      <Styled.Image src={source || './icon.png'} alt="Logo" size={size} fill={fill} />
     </Box>
   );
 }

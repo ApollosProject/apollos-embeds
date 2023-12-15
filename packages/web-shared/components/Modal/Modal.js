@@ -68,9 +68,12 @@ const Modal = (props = {}) => {
                 <Box width={{ _: '0', sm: '10%' }}></Box>
                 <ChurchLogo
                   display="flex"
-                  alignItems="center"
+                  alignSelf="center"
                   justifyContent="center"
-                  margin="40px"
+                  margin="20px"
+                  p="s"
+                  size="60px"
+                  borderRadius="xl"
                 />
                 <Box
                   width={{ _: '100%', sm: '10%' }}
