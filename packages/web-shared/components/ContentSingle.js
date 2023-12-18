@@ -27,6 +27,7 @@ function ContentSingle(props = {}) {
 
   const invalidPage = !props.loading && !props.data;
 
+  // temp
   // Video details
   const videoMedia = props.data?.videos?.[0];
 

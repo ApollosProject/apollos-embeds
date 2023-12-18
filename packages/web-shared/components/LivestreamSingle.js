@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet';
 
 import { getURLFromType } from '../utils';
 import FeatureFeed from './FeatureFeed';
@@ -68,12 +69,13 @@ function LivestreamSingle(props = {}) {
     featureFeed,
     publishDate: _publishDate,
     stream,
+    summary,
   } = props.data;
 
   const childContentItems = childContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const validFeatures = featureFeed?.features?.filter(
-    feature => !!FeatureFeedComponentMap[feature?.__typename],
+    (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
 
@@ -84,7 +86,7 @@ function LivestreamSingle(props = {}) {
     </BodyText>
   );
 
-  const handleActionPress = item => {
+  const handleActionPress = (item) => {
     navigate({
       pathname: '/',
       search: `?id=${getURLFromType(item.relatedNode)}`,
@@ -93,6 +95,30 @@ function LivestreamSingle(props = {}) {
 
   return (
     <>
+      <Helmet>
+        <title>{title}</title>
+        {/* Standard metadata tags */}
+        <title>{title}</title>
+        <meta name="description" content={summary} />
+        <meta name="image" content={coverImage?.sources[0]?.uri} />
+        {/* End standard metadata tags */}
+        {/* Facebook tags */}
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={summary} />
+        <meta property="og:url" content={window.location.href} />
+        <meta property="og:image" content={coverImage?.sources[0]?.uri} />
+        {/* End Facebook tags */}
+        {/* Twitter tags */}
+        <meta
+          name="twitter:card"
+          content={coverImage?.sources[0]?.uri ? 'summary_large_image' : 'summary'}
+        />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={summary} />
+        <meta name="twitter:image" content={coverImage?.sources[0]?.uri} />
+        <meta name="twitter:image:alt" content={title} />
+        {/* End Twitter tags */}
+      </Helmet>
       <Box margin="0 auto">
         <Box mb="base">
           {stream.sources[0] ? (
