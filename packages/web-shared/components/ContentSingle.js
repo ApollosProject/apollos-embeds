@@ -5,7 +5,7 @@ import { Helmet } from 'react-helmet';
 
 import { getURLFromType } from '../utils';
 
-import moment from 'moment';
+import { format, parseISO } from 'date-fns';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
@@ -81,10 +81,10 @@ function ContentSingle(props = {}) {
   );
   const hasFeatures = validFeatures?.length;
   const formattedStartDate = props?.data?.start
-      ? moment(props.data.start).format('ddd, MMMM Do, YYYY')
+      ? format(parseISO(props.data.start), 'eee, MMMM do, yyyy')
       : null;
   const formattedStartToEnd = props?.data?.start && props?.data?.end
-      ? `${moment(props?.data?.start).format('LT')} — ${moment(props?.data?.end).format('LT')}`
+      ? `${format(parseISO(props.data.start), 'hh:mm a')} — ${format(parseISO(props.data.end), 'hh:mm a')}`
       : null;
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
