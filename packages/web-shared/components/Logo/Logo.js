@@ -6,15 +6,17 @@ import Styled from './Logo.styles';
 
 import { Box, systemPropTypes } from '../../ui-kit';
 
-function Logo({ fill, size, theme, source, ...rest }) {
+function Logo({ fill, size, padding, theme, source, ...rest }) {
+  let themeData = '';
+  try {
+    themeData = JSON.parse(theme);
+  } catch (error) {
+    console.error('Error parsing JSON');
+  }
+
   return (
-    <Box {...rest}>
-      <Styled.Image
-        src={source || './icon.png'}
-        alt="Logo"
-        size={size}
-        fill={fill}
-      />
+    <Box backgroundColor={themeData?.colors?.primary ?? ''} {...rest}>
+      <Styled.Image src={source || './icon.png'} alt="Logo" size={size} fill={fill} />
     </Box>
   );
 }

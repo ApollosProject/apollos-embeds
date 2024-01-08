@@ -1,14 +1,22 @@
 import { gql, useQuery } from '@apollo/client';
-import { VIDEO_MEDIA_FIELDS } from '../fragments';
+import { VIDEO_MEDIA_FIELDS, CONTENT_NODE_FRAGMENT, CONTENT_SINGLE_FRAGMENT, EVENT_FRAGMENT } from '../fragments';
 
 export const GET_CONTENT_ITEM = gql`
   ${VIDEO_MEDIA_FIELDS}
-
+  ${CONTENT_NODE_FRAGMENT}
+  ${CONTENT_SINGLE_FRAGMENT}
+  ${EVENT_FRAGMENT}
+  
   query getContentItem($id: ID!) {
     node(id: $id) {
       id
       __typename
-
+      
+      ...ContentNodeFragment
+      ...ContentSingleFragment
+      ... on Event {
+        ...eventFragment
+      }
       ... on MediaContentItem {
         originId
       }
