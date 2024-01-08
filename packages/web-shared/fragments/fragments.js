@@ -18,4 +18,48 @@ const VIDEO_MEDIA_FIELDS = gql`
   }
 `;
 
-export { VIDEO_MEDIA_FIELDS };
+const CONTENT_NODE_FRAGMENT = gql`
+  fragment ContentNodeFragment on ContentNode {
+    title
+    htmlContent
+    coverImage {
+      sources {
+        uri
+        blurHash
+      }
+    }
+  }
+`;
+
+const CONTENT_SINGLE_FRAGMENT = gql`
+  fragment ContentSingleFragment on ContentItem {
+    title
+    htmlContent
+    coverImage {
+      sources {
+        uri
+        blurHash
+      }
+    }
+  }
+`;
+
+const EVENT_FRAGMENT = gql`
+  fragment eventFragment on Event {
+    id
+    title
+    location
+    start
+    end
+    htmlContent
+    coverImage {
+      id
+      sources {
+        uri
+        blurHash
+      }
+    }
+  }
+`;
+
+export { VIDEO_MEDIA_FIELDS, CONTENT_NODE_FRAGMENT, CONTENT_SINGLE_FRAGMENT, EVENT_FRAGMENT };

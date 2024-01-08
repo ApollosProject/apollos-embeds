@@ -21,6 +21,7 @@ function RenderFeatures(props) {
   switch (type) {
     case 'MediaContentItem':
     case 'WeekendContentItem':
+    case 'Event':
     case 'UniversalContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
