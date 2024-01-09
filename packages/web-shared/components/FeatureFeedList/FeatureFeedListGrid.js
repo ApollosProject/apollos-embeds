@@ -5,16 +5,9 @@ import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../providers/BreadcrumbProvider';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../providers/BreadcrumbProvider';
 
-import {
-  open as openModal,
-  set as setModal,
-  useModal,
-} from '../../providers/ModalProvider';
+import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 
 function FeatureFeedListGrid(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -42,7 +35,7 @@ function FeatureFeedListGrid(props = {}) {
     <Box pb="l">
       <Box
         display="grid"
-        gridGap="20px"
+        gridGap="70px 20px"
         gridTemplateColumns={{
           _: 'repeat(1, 1fr)',
           md: 'repeat(2, 1fr)',

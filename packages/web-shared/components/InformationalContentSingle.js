@@ -70,7 +70,7 @@ function InformationalContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = featureFeed?.features?.filter(
-    feature => !!FeatureFeedComponentMap[feature?.__typename],
+    (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
 
@@ -81,13 +81,13 @@ function InformationalContentSingle(props = {}) {
     </BodyText>
   );
 
-  const handleActionPress = item => {
+  const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
-        }),
+        })
       );
       setSearchParams(`?id=${getURLFromType(item)}`);
     }
@@ -175,7 +175,7 @@ function InformationalContentSingle(props = {}) {
 
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="100px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
@@ -205,7 +205,7 @@ function InformationalContentSingle(props = {}) {
             <H3 mb="xs">{props.feature?.title}</H3>
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="100px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
