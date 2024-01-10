@@ -3,23 +3,9 @@ import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import {
-  ContentCard,
-  Box,
-  H3,
-  systemPropTypes,
-  Button,
-  ButtonGroup,
-} from '../../../ui-kit';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../../providers/BreadcrumbProvider';
-import {
-  open as openModal,
-  set as setModal,
-  useModal,
-} from '../../../providers/ModalProvider';
+import { ContentCard, Box, H3, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
+import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { CaretRight } from 'phosphor-react';
 
 import Carousel from 'react-multi-carousel';
@@ -45,7 +31,7 @@ function HorizontalCardListFeature(props = {}) {
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL'){
+    if (item.action === 'OPEN_URL') {
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -66,22 +52,15 @@ function HorizontalCardListFeature(props = {}) {
   };
 
   const handlePrimaryActionPress = () => {
-    if (
-      searchParams.get('id') !==
-      getURLFromType(props?.feature?.primaryAction.relatedNode)
-    ) {
+    if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
       dispatchBreadcrumb(
         addBreadcrumb({
-          url: `?id=${getURLFromType(
-            props?.feature?.primaryAction.relatedNode
-          )}`,
+          url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
           title: props?.feature?.title,
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      state.modal
-        ? setSearchParams({ id })
-        : setSearchParams({ id, action: 'viewall' });
+      state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
 
@@ -90,7 +69,7 @@ function HorizontalCardListFeature(props = {}) {
   }
 
   return (
-    <Box pb="xxl" {...props}>
+    <Box pb="xxl" mb="l" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
         <H3 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
@@ -129,14 +108,7 @@ function HorizontalCardListFeature(props = {}) {
           ))}
         </Carousel>
       ) : (
-        <Box
-          width="100%"
-          display="flex"
-          justifyContent="center"
-          pt="l"
-          px="l"
-          textAlign="center"
-        >
+        <Box width="100%" display="flex" justifyContent="center" pt="l" px="l" textAlign="center">
           {props.feature.title === 'Continue Watching' ? (
             <Box fontSize="16px" fontWeight="600" color="base.primary">
               All caught up? Check out our other sections for more content!
