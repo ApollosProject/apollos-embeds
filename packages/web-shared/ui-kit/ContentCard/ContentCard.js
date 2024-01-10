@@ -2,29 +2,16 @@ import React from 'react';
 import { withTheme } from 'styled-components';
 import { Check } from 'phosphor-react';
 
-import {
-  SmallBodyText,
-  Box,
-  H4,
-  systemPropTypes,
-  ProgressBar,
-} from '../../ui-kit';
+import { SmallBodyText, Box, H4, systemPropTypes, ProgressBar } from '../../ui-kit';
 import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
-import {
-  BottomSlot,
-  CompleteIndicator,
-  Title,
-  Summary,
-} from './ContentCard.styles';
+import { BottomSlot, CompleteIndicator, Title, Summary } from './ContentCard.styles';
 
 function ContentCard(props = {}) {
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: props.videoMedia?.id },
-      skip: !props.videoMedia?.id,
-    }
-  );
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
+    variables: { id: props.videoMedia?.id },
+    skip: !props.videoMedia?.id,
+  });
 
   const percentWatched = getPercentWatched({
     duration: props.videoMedia?.duration,
@@ -48,6 +35,7 @@ function ContentCard(props = {}) {
           backgroundSize="cover"
           paddingBottom="56.25%"
           backgroundPosition="center"
+          backgroundRepeat="no-repeat"
           backgroundColor="material.regular"
           backgroundImage={`url(${
             props.image?.sources[0].uri ? props.image.sources[0].uri : null
@@ -66,11 +54,7 @@ function ContentCard(props = {}) {
         </BottomSlot>
       </Box>
       {/* Masthead */}
-      <Box
-        padding="base"
-        backdropFilter="blur(64px)"
-        width={props.horizontal ? '50%' : ''}
-      >
+      <Box padding="base" backdropFilter="blur(64px)" width={props.horizontal ? '50%' : ''}>
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
         <Title>{props.title}</Title>
         <Summary color="text.secondary">{props.summary} </Summary>
