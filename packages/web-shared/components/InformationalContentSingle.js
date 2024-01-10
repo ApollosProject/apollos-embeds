@@ -13,6 +13,7 @@ import { useHTMLContent, useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 
+// InformationalContentItem has been removed since it is unsupported. This file is unused
 function InformationalContentSingle(props = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -70,7 +71,7 @@ function InformationalContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const validFeatures = featureFeed?.features?.filter(
-    feature => !!FeatureFeedComponentMap[feature?.__typename],
+    (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
 
@@ -81,13 +82,13 @@ function InformationalContentSingle(props = {}) {
     </BodyText>
   );
 
-  const handleActionPress = item => {
+  const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item)}`,
           title: item.title,
-        }),
+        })
       );
       setSearchParams(`?id=${getURLFromType(item)}`);
     }
