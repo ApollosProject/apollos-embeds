@@ -9,8 +9,6 @@ function getURLFromType(node) {
 
   switch (type) {
     case 'Event':
-    case 'EventContentItem':
-    case 'InformationalContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem':
@@ -29,9 +27,7 @@ function getURLFromType(node) {
       return node.url;
     }
     default: {
-      console.warn(
-        `Routing for node type ${type} not set up. Please add it to getURLFromType.js`
-      );
+      console.warn(`Routing for node type ${type} not set up. Please add it to getURLFromType.js`);
       return '/';
     }
   }

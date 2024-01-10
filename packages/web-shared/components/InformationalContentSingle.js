@@ -13,6 +13,7 @@ import { useHTMLContent, useVideoMediaProgress } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 
+// InformationalContentItem has been removed since it is unsupported. This file is unused
 function InformationalContentSingle(props = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();

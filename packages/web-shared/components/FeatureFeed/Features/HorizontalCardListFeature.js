@@ -83,8 +83,47 @@ function HorizontalCardListFeature(props = {}) {
           />
         ) : null}
       </Box>
-
-      {props?.feature?.cards?.length >= 1 ? (
+      {props?.feature?.primaryAction && props?.feature?.cards?.length <= 2 ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          flexDirection="column"
+          mt="xs"
+          mb={{ _: '0', md: 'l' }}
+        >
+          {props?.feature?.cards?.length === 1 ? (
+            <ContentCard
+              key={props?.feature?.cards[0].title}
+              image={props?.feature?.cards[0].coverImage}
+              title={props?.feature?.cards[0].title}
+              summary={props?.feature?.cards[0].subtitle}
+              videoMedia={get(props?.feature?.cards[0], 'relatedNode?.videos[0]', null)}
+              onClick={() => handleActionPress(props?.feature?.cards[0])}
+              horizontal={true}
+            />
+          ) : (
+            <Box
+              display="grid"
+              gridGap="20px"
+              gridTemplateColumns={{
+                _: 'repeat(1, 1fr)',
+                md: 'repeat(2, 1fr)',
+              }}
+            >
+              {props?.feature?.cards?.map((item) => (
+                <ContentCard
+                  key={item.title}
+                  image={item.coverImage}
+                  title={item.title}
+                  summary={item.summary}
+                  onClick={() => handleActionPress(item)}
+                  videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+                />
+              ))}
+            </Box>
+          )}
+        </Box>
+      ) : props?.feature?.cards?.length >= 1 ? (
         <Carousel
           arrows={false}
           swipeable={true}
