@@ -53,12 +53,14 @@ function HorizontalCardListFeature(props = {}) {
 
   const handlePrimaryActionPress = () => {
     if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-          title: props?.feature?.title,
-        })
-      );
+      if (props?.feature?.title) {
+        dispatchBreadcrumb(
+          addBreadcrumb({
+            url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+            title: props?.feature?.title,
+          })
+        );
+      }
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
       state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
