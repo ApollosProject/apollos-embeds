@@ -176,7 +176,7 @@ function InformationalContentSingle(props = {}) {
 
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="100px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
@@ -206,7 +206,7 @@ function InformationalContentSingle(props = {}) {
             <H3 mb="xs">{props.feature?.title}</H3>
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="100px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
