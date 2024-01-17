@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
+import { ContentCard, Box, H2, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { CaretRight } from 'phosphor-react';
@@ -71,9 +71,9 @@ function HorizontalCardListFeature(props = {}) {
   return (
     <Box pb="xxl" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
-        <H3 flex="1" mr="xs">
+        <H2 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
+        </H2>
         {props?.feature?.primaryAction ? (
           <Button
             title="View All"

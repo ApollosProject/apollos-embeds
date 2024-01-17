@@ -13,7 +13,6 @@ import {
   MediaItem,
   H1,
   H2,
-  H3,
   LiveChip,
   Loader,
   Longform,
@@ -163,7 +162,7 @@ function LivestreamSingle(props = {}) {
 
         {hasChildContent ? (
           <Box mb="l">
-            <H3 mb="xs">{props.feature.title || props.feature.subtitle}</H3>
+            <H2 mb="xs">{props.feature.title || props.feature.subtitle}</H2>
             <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
               {childContentItems?.map((item, index) => (
                 <MediaItem

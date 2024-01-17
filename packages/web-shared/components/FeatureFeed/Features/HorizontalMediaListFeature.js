@@ -3,23 +3,9 @@ import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import {
-  Box,
-  H3,
-  systemPropTypes,
-  Button,
-  MediaItem,
-  ButtonGroup,
-} from '../../../ui-kit';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../../providers/BreadcrumbProvider';
-import {
-  open as openModal,
-  set as setModal,
-  useModal,
-} from '../../../providers/ModalProvider';
+import { Box, H2, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
+import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 
 import Carousel from 'react-multi-carousel';
 import { CaretRight } from 'phosphor-react';
@@ -46,7 +32,7 @@ function HorizontalMediaListFeature(props = {}) {
   const [state, dispatch] = useModal();
 
   const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL'){
+    if (item.action === 'OPEN_URL') {
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -67,22 +53,15 @@ function HorizontalMediaListFeature(props = {}) {
   };
 
   const handlePrimaryActionPress = () => {
-    if (
-      searchParams.get('id') !==
-      getURLFromType(props?.feature?.primaryAction.relatedNode)
-    ) {
+    if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
       dispatchBreadcrumb(
         addBreadcrumb({
-          url: `?id=${getURLFromType(
-            props?.feature?.primaryAction.relatedNode
-          )}`,
+          url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
           title: props?.feature?.title,
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      state.modal
-        ? setSearchParams({ id })
-        : setSearchParams({ id, action: 'viewall' });
+      state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
 
@@ -93,11 +72,10 @@ function HorizontalMediaListFeature(props = {}) {
   return (
     <Box pb="xl" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
-        <H3 flex="1" mr="xs">
+        <H2 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
-        {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT &&
-        props?.feature?.primaryAction ? (
+        </H2>
+        {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT && props?.feature?.primaryAction ? (
           <Button
             title="View All"
             variant="link"
@@ -136,14 +114,7 @@ function HorizontalMediaListFeature(props = {}) {
           </Carousel>
         </Box>
       ) : (
-        <Box
-          width="100%"
-          display="flex"
-          justifyContent="center"
-          pt="l"
-          px="l"
-          textAlign="center"
-        >
+        <Box width="100%" display="flex" justifyContent="center" pt="l" px="l" textAlign="center">
           {props.feature.title === 'Continue Watching' ? (
             <Box fontSize="16px" fontWeight="600" color="base.primary">
               All caught up? Check out our other sections for more content!
