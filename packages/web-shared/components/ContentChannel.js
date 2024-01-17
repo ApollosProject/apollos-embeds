@@ -28,14 +28,8 @@ function ContentChannel(props = {}) {
   };
 
   return (
-    <Box
-      pb="l"
-      display="flex"
-      flexDirection="column"
-      alignItems="center"
-      {...props}
-    >
-      <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
+    <Box pb="l" display="flex" flexDirection="column" alignItems="center" {...props}>
+      <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="70px 20px">
         {props.data?.edges?.map((item, index) => {
           return (
             <ContentCard
@@ -50,12 +44,7 @@ function ContentChannel(props = {}) {
         })}
       </Box>
       {hasMorePages ? (
-        <Button
-          mt="l"
-          justifySelf="center"
-          title="Load More"
-          onClick={handleLoadMore}
-        />
+        <Button mt="l" justifySelf="center" title="Load More" onClick={handleLoadMore} />
       ) : null}
     </Box>
   );

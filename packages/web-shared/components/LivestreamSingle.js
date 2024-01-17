@@ -163,7 +163,7 @@ function LivestreamSingle(props = {}) {
         {hasChildContent ? (
           <Box mb="l">
             <H2 mb="xs">{props.feature.title || props.feature.subtitle}</H2>
-            <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="20px">
+            <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="70px 20px">
               {childContentItems?.map((item, index) => (
                 <MediaItem
                   key={item.node?.title}

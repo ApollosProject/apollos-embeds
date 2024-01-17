@@ -53,12 +53,14 @@ function HorizontalCardListFeature(props = {}) {
 
   const handlePrimaryActionPress = () => {
     if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-          title: props?.feature?.title,
-        })
-      );
+      if (props?.feature?.title) {
+        dispatchBreadcrumb(
+          addBreadcrumb({
+            url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
+            title: props?.feature?.title,
+          })
+        );
+      }
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
       state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
@@ -69,7 +71,7 @@ function HorizontalCardListFeature(props = {}) {
   }
 
   return (
-    <Box pb="xxl" {...props}>
+    <Box pb="xxl" mb="l" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
         <H2 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}

@@ -81,10 +81,14 @@ function ContentSingle(props = {}) {
   );
   const hasFeatures = validFeatures?.length;
   const formattedStartDate = props?.data?.start
-      ? format(parseISO(props.data.start), 'eee, MMMM do, yyyy')
-      : null;
-  const formattedStartToEnd = props?.data?.start && props?.data?.end
-      ? `${format(parseISO(props.data.start), 'hh:mm a')} — ${format(parseISO(props.data.end), 'hh:mm a')}`
+    ? format(parseISO(props.data.start), 'eee, MMMM do, yyyy')
+    : null;
+  const formattedStartToEnd =
+    props?.data?.start && props?.data?.end
+      ? `${format(parseISO(props.data.start), 'hh:mm a')} — ${format(
+          parseISO(props.data.end),
+          'hh:mm a'
+        )}`
       : null;
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
@@ -102,9 +106,9 @@ function ContentSingle(props = {}) {
     }
   };
   const infoDivider = (
-      <BodyText color="text.tertiary" mx="xs">
-        |
-      </BodyText>
+    <BodyText color="text.tertiary" mx="xs">
+      |
+    </BodyText>
   );
 
   return (
@@ -180,17 +184,13 @@ function ContentSingle(props = {}) {
                     {parentChannel?.name || props?.data?.location}
                   </BodyText>
                 ) : null}
-                {formattedStartDate  ? infoDivider : null}
+                {formattedStartDate ? infoDivider : null}
                 {formattedStartDate ? (
-                    <BodyText color="text.secondary">
-                      {formattedStartDate}
-                    </BodyText>
+                  <BodyText color="text.secondary">{formattedStartDate}</BodyText>
                 ) : null}
-                {formattedStartToEnd  ? infoDivider : null}
+                {formattedStartToEnd ? infoDivider : null}
                 {formattedStartToEnd ? (
-                    <BodyText color="text.secondary">
-                      {formattedStartToEnd}
-                    </BodyText>
+                  <BodyText color="text.secondary">{formattedStartToEnd}</BodyText>
                 ) : null}
               </Box>
             </Box>
@@ -220,7 +220,7 @@ function ContentSingle(props = {}) {
 
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="100px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
@@ -253,7 +253,7 @@ function ContentSingle(props = {}) {
               <H3 mb="xs">{props.feature?.title}</H3>
               <Box
                 display="grid"
-                gridGap="30px"
+                gridGap="100px 30px"
                 gridTemplateColumns={{
                   _: 'repeat(1, minmax(0, 1fr));',
                   md: 'repeat(2, minmax(0, 1fr));',
