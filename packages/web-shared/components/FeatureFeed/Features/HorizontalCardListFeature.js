@@ -71,7 +71,7 @@ function HorizontalCardListFeature(props = {}) {
   }
 
   return (
-    <Box pb="xxl" {...props}>
+    <Box pb="xxl" mb="l" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
         <H3 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}

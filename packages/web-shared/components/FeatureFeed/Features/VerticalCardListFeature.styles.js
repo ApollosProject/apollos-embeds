@@ -18,7 +18,7 @@ const Container = styled.div`
   grid-template-rows: auto;
   grid-auto-rows: 1fr;
   grid-auto-columns: 1fr;
-  grid-gap: 20px;
+  grid-gap: 70px 20px;
   ${twoCardlayout}
 
   @media screen and (max-width: ${themeGet('breakpoints.lg')}) {
