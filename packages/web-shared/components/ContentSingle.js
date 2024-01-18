@@ -6,6 +6,7 @@ import amplitude from '../analytics/amplitude';
 
 import { getURLFromType } from '../utils';
 
+import { format, parseISO } from 'date-fns';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
@@ -30,7 +31,7 @@ function ContentSingle(props = {}) {
   const invalidPage = !props.loading && !props.data;
 
   // Video details
-  const videoMedia = props.data?.videos[0];
+  const videoMedia = props.data?.videos?.[0];
 
   const { userProgress } = useVideoMediaProgress({
     variables: { id: videoMedia?.id },
@@ -81,7 +82,16 @@ function ContentSingle(props = {}) {
     (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
-
+  const formattedStartDate = props?.data?.start
+    ? format(parseISO(props.data.start), 'eee, MMMM do, yyyy')
+    : null;
+  const formattedStartToEnd =
+    props?.data?.start && props?.data?.end
+      ? `${format(parseISO(props.data.start), 'hh:mm a')} — ${format(
+          parseISO(props.data.end),
+          'hh:mm a'
+        )}`
+      : null;
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
@@ -97,6 +107,12 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
+  const infoDivider = (
+    <BodyText color="text.tertiary" mx="xs">
+      |
+    </BodyText>
+  );
+
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
@@ -142,14 +158,14 @@ function ContentSingle(props = {}) {
               <VideoPlayer
                 userProgress={userProgress}
                 parentNode={props.data}
-                coverImage={coverImage?.sources[0]?.uri}
+                coverImage={coverImage?.sources?.[0]?.uri}
               />
             ) : (
               <Box
                 backgroundSize="cover"
                 paddingBottom="56.25%"
                 backgroundPosition="center"
-                backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
+                backgroundImage={`url(${coverImage?.sources?.[0]?.uri})`}
                 backgroundRepeat="no-repeat"
               />
             )}
@@ -175,10 +191,18 @@ function ContentSingle(props = {}) {
               {title && !hasChildContent ? <Title>{title}</Title> : null}
               {title && hasChildContent ? <Title>{title}</Title> : null}
               <Box display="flex" flexDirection="row">
-                {parentChannel.name ? (
+                {parentChannel?.name || props?.data?.location ? (
                   <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
-                    {parentChannel.name}
+                    {parentChannel?.name || props?.data?.location}
                   </BodyText>
+                ) : null}
+                {formattedStartDate ? infoDivider : null}
+                {formattedStartDate ? (
+                  <BodyText color="text.secondary">{formattedStartDate}</BodyText>
+                ) : null}
+                {formattedStartToEnd ? infoDivider : null}
+                {formattedStartToEnd ? (
+                  <BodyText color="text.secondary">{formattedStartToEnd}</BodyText>
                 ) : null}
               </Box>
             </Box>
@@ -208,11 +232,10 @@ function ContentSingle(props = {}) {
 
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="100px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
               }}
               padding={{
                 _: '30px',
@@ -226,7 +249,7 @@ function ContentSingle(props = {}) {
                   title={item.node?.title}
                   summary={item.node?.summary}
                   onClick={() => handleActionPress(item.node)}
-                  videoMedia={item.node?.videos[0]}
+                  videoMedia={item.node?.videos?.[0]}
                 />
               ))}
             </Box>
@@ -242,11 +265,10 @@ function ContentSingle(props = {}) {
               <H3 mb="xs">{props.feature?.title}</H3>
               <Box
                 display="grid"
-                gridGap="30px"
+                gridGap="100px 30px"
                 gridTemplateColumns={{
                   _: 'repeat(1, minmax(0, 1fr));',
                   md: 'repeat(2, minmax(0, 1fr));',
-                  lg: 'repeat(3, minmax(0, 1fr));',
                 }}
                 padding={{
                   _: '30px',
