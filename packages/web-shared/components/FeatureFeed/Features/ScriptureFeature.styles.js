@@ -17,25 +17,29 @@ const expandedStyles = ({ isExpanded }) => {
 
 const Scripture = withTheme(styled.div`
   display: flex;
+  flex-direction: column;
+  margin-bottom: 16px;
+  background-color: #67678614;
+  padding-right: 16px;
+  padding-left: 16px;
+  border-radius: 8px;
+  position: relative;
+  ${expandedStyles}
+
   ${system}
 `);
 
 const ScriptureItem = withTheme(styled.div`
-  margin-bottom: 16px;
-  position: relative;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  background-color: #67678614;
-  padding-right: 16px;
-  padding-left: 16px;
-  padding-top: 24px;
-  border-radius: 8px;
-  ${expandedStyles}
+
   ${system}
 `);
 
 const ScriptureItemHeader = withTheme(styled.div`
+  padding-top: 24px;
+
   display: flex;
   flex-direction: column;
   gap: 8px;
