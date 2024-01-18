@@ -7,6 +7,7 @@ import {
   LivestreamSingle,
   Breadcrumbs,
   Modal,
+  ContentSeriesSingle,
 } from '../components';
 import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
