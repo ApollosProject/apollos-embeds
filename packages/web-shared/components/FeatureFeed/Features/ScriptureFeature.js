@@ -9,7 +9,6 @@ import { ArrowsOutSimple } from 'phosphor-react';
 function ScriptureFeature(props = {}) {
   const [isExpanded, setIsExpanded] = useState(false);
   const scriptures = props?.feature?.scriptures;
-  //   console.log(scriptures);
 
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -17,7 +16,6 @@ function ScriptureFeature(props = {}) {
 
   const ScriptureItem = ({ scripture }) => {
     const text = scripture.text;
-    console.log(text);
     return (
       <Styled.ScriptureItem>
         <Styled.ScriptureItemHeader>
