@@ -23,7 +23,6 @@ const H1 = () => css`
   line-height: ${utils.rem('72px')};
   font-weight: 800;
 
-  // Adjusted line-heights for smaller screens
   @media screen and (max-width: ${themeGet('breakpoints.lg')}) {
     font-size: ${utils.rem('48px')};
     line-height: ${utils.rem('72px')};
@@ -45,7 +44,6 @@ const H2 = () => css`
   line-height: ${utils.rem('66px')};
   font-weight: 700;
 
-  // Adjusted line-heights for smaller screens
   @media screen and (max-width: ${themeGet('breakpoints.lg')}) {
     font-size: ${utils.rem('44px')};
     line-height: ${utils.rem('66px')};
@@ -67,7 +65,6 @@ const H3 = () => css`
   line-height: ${utils.rem('36px')};
   font-weight: 700;
 
-  // Adjusted line-heights for smaller screens
   @media screen and (max-width: ${themeGet('breakpoints.lg')}) {
     font-size: ${utils.rem('22px')};
     line-height: ${utils.rem('33px')};
@@ -89,7 +86,6 @@ const H4 = () => css`
   line-height: ${utils.rem('30px')};
   font-weight: 600;
 
-  // Adjusted line-heights for smaller screens
   @media screen and (max-width: ${themeGet('breakpoints.lg')}) {
     font-size: ${utils.rem('18px')};
     line-height: ${utils.rem('27px')};
@@ -110,10 +106,15 @@ const H5 = () => css`
   font-size: ${utils.rem('16px')};
   line-height: ${utils.rem('24px')};
   font-weight: 500;
+`;
 
-  // Adjusted line-heights for smaller screens
-  @media screen and (
+const H6 = () => css`
+  ${shared}
 
+  font-size: ${utils.rem('14px')};
+  line-height: ${utils.rem('21px')};
+  font-weight: 600;
+`;
 
 // :: Body Text
 const BodyText = () => css`
