@@ -14,13 +14,34 @@ function ScriptureFeature(props = {}) {
     setIsExpanded(!isExpanded);
   };
 
+  function parseBibleReference(reference) {
+    const regex = /^([\w\s]+)\s(\d+):(\d+)-?(\d+)?$/;
+    const match = reference.match(regex);
+
+    if (!match) {
+      return null; // Invalid format
+    }
+
+    const [_, book, chapter, startVerse, endVerse] = match;
+    const title = `${book} ${chapter}`;
+    const verses = `Verses ${startVerse}${endVerse ? `-${endVerse}` : ''}`;
+
+    const result = {
+      title,
+      verses,
+    };
+
+    return result;
+  }
+
   const ScriptureItem = ({ scripture }) => {
     const text = scripture.text;
+    const reference = parseBibleReference(scripture.reference);
     return (
       <Styled.ScriptureItem>
         <Styled.ScriptureItemHeader>
-          <Styled.ScriptureItemTitle>Acts 20</Styled.ScriptureItemTitle>
-          <Styled.ScriptureItemVerses>Verses 1-24</Styled.ScriptureItemVerses>
+          <Styled.ScriptureItemTitle>{reference.title}</Styled.ScriptureItemTitle>
+          <Styled.ScriptureItemVerses>{reference.verses}</Styled.ScriptureItemVerses>
         </Styled.ScriptureItemHeader>
 
         <Styled.ScriptureItemText>{text}</Styled.ScriptureItemText>
