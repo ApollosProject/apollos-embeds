@@ -1,19 +1,43 @@
-import styled, { css } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
 import { withTheme } from 'styled-components';
 import { system } from '../../../ui-kit/_lib/system';
 
-const expandedStyles = ({ isExpanded }) => {
-  if (isExpanded) {
-    return css`
-      padding-bottom: 16px;
-    `;
-  } else {
-    return css`
-      max-height: 365px;
-      overflow: hidden;
-    `;
+const expandAnimation = keyframes`
+  from {
+    max-height: 365px;
+    overflow: hidden;
   }
-};
+  to {
+    max-height: 3000px;
+    overflow: hidden;
+  }
+`;
+
+const collapseAnimation = keyframes`
+  from {
+    max-height: 3000px;
+    overflow: hidden;
+  }
+  to {
+    max-height: 365px;
+    overflow: hidden;
+  }
+`;
+
+const expandedStyles = ({ isExpanded }) => css`
+  overflow: hidden;
+  transition: max-height 1s ease;
+  ${isExpanded
+    ? css`
+        max-height: 3000px;
+        overflow: scroll;
+        animation: ${expandAnimation} 1s ease;
+      `
+    : css`
+        max-height: 365px;
+        animation: ${collapseAnimation} 1s ease;
+      `}
+`;
 
 const Scripture = withTheme(styled.div`
   display: flex;
@@ -61,6 +85,7 @@ const ScriptureItemText = withTheme(styled.div`
   font-family: 'New York Small';
   font-size: 18px;
   line-height: 200%;
+  padding-bottom: 16px;
 `);
 const ScriptureItemExpandButton = withTheme(styled.div`
   display: flex;
