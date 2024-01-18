@@ -5,11 +5,12 @@ import { Searchbar } from '../components';
 
 import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
+  Breadcrumbs,
+  ContentChannel,
+  ContentSeriesSingle,
   ContentSingle,
   FeatureFeedList,
-  ContentChannel,
   LivestreamSingle,
-  Breadcrumbs,
   Modal,
 } from '../components';
 import { useModalState } from '../providers/ModalProvider';
