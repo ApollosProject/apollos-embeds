@@ -1,9 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { getURLFromType } from '../../../utils';
 import { systemPropTypes, Box } from '../../../ui-kit';
 import PropTypes from 'prop-types';
 import Styled from './ScriptureFeature.styles';
-import { useNavigate } from 'react-router-dom';
 import { ArrowsInSimple, ArrowsOutSimple } from 'phosphor-react';
 
 function ScriptureFeature(props = {}) {
@@ -43,7 +41,7 @@ function ScriptureFeature(props = {}) {
   }
 
   const ScriptureItem = ({ scripture }) => {
-    const text = scripture.text;
+    const html = scripture.html;
     const reference = parseBibleReference(scripture.reference);
     return (
       <Styled.ScriptureItem>
@@ -52,7 +50,7 @@ function ScriptureFeature(props = {}) {
           <Styled.ScriptureItemVerses>{reference.verses}</Styled.ScriptureItemVerses>
         </Styled.ScriptureItemHeader>
 
-        <Styled.ScriptureItemText>{text}</Styled.ScriptureItemText>
+        <Styled.ScriptureItemText dangerouslySetInnerHTML={{ __html: html }} />
       </Styled.ScriptureItem>
     );
   };

@@ -51,10 +51,10 @@ const ScriptureItem = withTheme(styled.div`
 
 const ScriptureItemHeader = withTheme(styled.div`
   padding-top: 24px;
-
   display: flex;
   flex-direction: column;
   gap: 8px;
+
   ${system}
 `);
 
@@ -74,7 +74,34 @@ const ScriptureItemText = withTheme(styled.div`
   font-size: 18px;
   line-height: 200%;
   padding-bottom: 16px;
+
+  .p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-size: 18px;
+    line-height: 2;
+  }
+
+  .v {
+    font-weight: bold;
+    margin-right: 4px;
+    color: ${themeGet('colors.text.tertiary')};
+    font-size: 65%;
+  }
+
+  .q1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 20px;
+  }
+
+  .q2 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 40px;
+  }
 `);
+
 const ScriptureItemExpandButton = withTheme(styled.div`
   display: flex;
   justify-content: center;
