@@ -9,6 +9,7 @@ import { Box, Button, Input } from '../../ui-kit';
 import AuthLayout from './AuthLayout';
 
 import authSteps from './authSteps';
+import { useAnalytics } from '../../providers/AnalyticsProvider';
 
 const AuthConfirm = () => {
   const [status, setStatus] = useState('IDLE');
@@ -19,6 +20,8 @@ const AuthConfirm = () => {
   const [otpCode, setOTPCode] = useState('');
   const [isPinReady, setIsPinReady] = useState(false);
   const codeLength = 6;
+
+  const analytics = useAnalytics();
 
   useEffect(() => {
     setIsPinReady(otpCode.length === codeLength);
@@ -41,17 +44,13 @@ const AuthConfirm = () => {
   const onSuccess = ({ token, user, sharedProfiles }) => {
     const needsOnboarding = isEmpty(user.firstName) || isEmpty(user.lastName);
     if (state.userExists) {
-      // amplitude.trackEvent({
-      //   eventName: 'UserLogin',
-      //   properties: {
-      //     userId: user?.id,
-      //     firstName: user?.firstName,
-      //     lastName: user?.lastName,
-      //     nickName: user?.nickName,
-      //     email: user?.email,
-      //     campusName: user?.campus?.name || null,
-      //   },
-      // });
+      analytics.track('UserLogin', {
+        userId: user?.id,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
+        email: user?.email,
+        phone: user?.phone,
+      });
       if (needsOnboarding) {
         dispatch(updateAuth({ token, step: authSteps.Details }));
       } else {
@@ -59,6 +58,12 @@ const AuthConfirm = () => {
       }
     } else {
       if (sharedProfiles.length > 1) {
+        analytics.track('ExistingUserRegister', {
+          userId: user?.id,
+          email: user?.email,
+          phone: user?.phone,
+          numberOfSharedProfiles: sharedProfiles.length,
+        });        
         dispatch(
           updateAuth({
             token,
@@ -68,6 +73,11 @@ const AuthConfirm = () => {
           })
         );
       } else {
+        analytics.track('NewUserRegister', {
+          userId: user?.id,
+          email: user?.email,
+          phone: user?.phone,
+        });   
         if (needsOnboarding) {
           dispatch(
             updateAuth({
@@ -78,9 +88,7 @@ const AuthConfirm = () => {
             })
           );
         } else {
-          dispatch(
-            updateAuth({ token, step: authSteps.Success, userExists: true })
-          );
+          dispatch(updateAuth({ token, step: authSteps.Success, userExists: true }));
         }
       }
     }
@@ -92,10 +100,7 @@ const AuthConfirm = () => {
       if (state.userExists) {
         await validateLogin({
           variables: { identity: state.identity, otp: otpCode },
-          update: (
-            cache,
-            { data: { validateLogin: { accessToken, person } = {} } = {} }
-          ) => {
+          update: (cache, { data: { validateLogin: { accessToken, person } = {} } = {} }) => {
             onSuccess({ token: accessToken, user: person });
           },
           onError,
@@ -105,11 +110,7 @@ const AuthConfirm = () => {
           variables: { identity: state.identity, otp: otpCode },
           update: (
             cache,
-            {
-              data: {
-                validateRegister: { accessToken, person, sharedProfiles } = {},
-              } = {},
-            }
+            { data: { validateRegister: { accessToken, person, sharedProfiles } = {} } = {} }
           ) => {
             onSuccess({
               token: accessToken,
@@ -130,9 +131,7 @@ const AuthConfirm = () => {
   return (
     <AuthLayout
       heading="We sent you a code..."
-      subHeading={`Verify the code we sent to your ${
-        state.type === 'email' ? 'email' : 'phone'
-      }.`}
+      subHeading={`Verify the code we sent to your ${state.type === 'email' ? 'email' : 'phone'}.`}
     >
       <Box mb="base">
         <Input

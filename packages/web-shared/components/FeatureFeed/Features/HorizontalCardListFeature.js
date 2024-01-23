@@ -3,10 +3,11 @@ import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
+import { ContentCard, Box, H2, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { CaretRight } from 'phosphor-react';
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
 
 import Carousel from 'react-multi-carousel';
 
@@ -29,9 +30,13 @@ function HorizontalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
     if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });            
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -62,6 +67,14 @@ function HorizontalCardListFeature(props = {}) {
         );
       }
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
+      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+        analytics.track('OpenFeatureFeed', {
+          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+          fromFeatureId: props.feature?.id,
+          title: props.feature?.title,
+        });
+      }
+
       state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
@@ -71,11 +84,11 @@ function HorizontalCardListFeature(props = {}) {
   }
 
   return (
-    <Box pb="xxl" mb="l" {...props}>
+    <Box pb="xxl" mb="l" className="apollos-widget-feature" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
-        <H3 flex="1" mr="xs">
+        <H2 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
+        </H2>
         {props?.feature?.primaryAction ? (
           <Button
             title="View All"

@@ -3,10 +3,10 @@ import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { Box, H3, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
+import { Box, H2, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
 import Carousel from 'react-multi-carousel';
 import { CaretRight } from 'phosphor-react';
 const SHOW_VIEW_ALL_LIMIT = 5;
@@ -30,9 +30,13 @@ function HorizontalMediaListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
     if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });      
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -61,6 +65,15 @@ function HorizontalMediaListFeature(props = {}) {
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
+
+      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+        analytics.track('OpenFeatureFeed', {
+          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+          fromFeatureId: props.feature?.id,
+          title: props.feature?.title,
+        });
+      }
+
       state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
@@ -72,9 +85,9 @@ function HorizontalMediaListFeature(props = {}) {
   return (
     <Box pb="xl" mb="l" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
-        <H3 flex="1" mr="xs">
+        <H2 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
+        </H2>
         {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT && props?.feature?.primaryAction ? (
           <Button
             title="View All"

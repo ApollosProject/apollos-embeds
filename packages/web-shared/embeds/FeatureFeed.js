@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
   ContentSingle,
@@ -13,6 +13,7 @@ import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
 import { useSearchParams } from 'react-router-dom';
 import { parseSlugToIdAndType } from '../utils';
+import { useAnalytics } from '../providers/AnalyticsProvider';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
@@ -79,6 +80,15 @@ function RenderFeatures(props) {
 
 const FeatureFeed = (props) => {
   const state = useModalState();
+
+  const analytics = useAnalytics();
+
+  useEffect(() => {
+    console.log(props)
+    analytics.track('ViewFeatureFeed', {
+      featureFeedId: props.featureFeed,
+    })
+  }, []);
 
   return (
     <Box>

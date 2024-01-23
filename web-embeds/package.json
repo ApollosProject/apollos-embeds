@@ -1,7 +1,7 @@
 {
   "name": "@apollosproject/apollos-embeds",
   "description": "Apollos React embed widgets",
-  "version": "0.1.19",
+  "version": "0.1.22",
   "license": "MIT",
   "dependencies": {
     "@algolia/autocomplete-js": "^1.9.2",
@@ -13,12 +13,14 @@
     "@apollosproject/web-shared": "link:../packages/web-shared",
     "@babel/preset-react": "^7.22.5",
     "@craco/craco": "^7.0.0",
+    "@segment/analytics-next": "^1.62.0",
     "@sentry/react": "^7.40.0",
     "@styled-system/theme-get": "^5.1.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "algoliasearch": "^4.17.0",
+    "amplitude-js": "^8.21.9",
     "apollo-upload-client": "^17.0.0",
     "apollo3-cache-persist": "^0.14.1",
     "autoprefixer": "^9.8.6",
@@ -52,7 +54,8 @@
     "eject": "react-scripts eject",
     "dev": "craco start",
     "build": "node scripts/build.js",
-    "test": "craco test"
+    "test": "craco test",
+    "bump": "npm version patch && yarn build && git add . && git commit -m 'version bump' && git push && git push --tags && npm publish"
   },
   "eslintConfig": {
     "extends": [

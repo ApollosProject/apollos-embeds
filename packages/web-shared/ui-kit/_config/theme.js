@@ -11,9 +11,6 @@ const theme = {
     xxl: rem('2048px'),
   },
   colors,
-  fonts: {
-    heading: 'Inter',
-  },
   radii: {
     xs: rem('2px'),
     s: rem('4px'),
