@@ -6,7 +6,9 @@ import { system, systemPropTypes } from '../_lib/system';
 
 import TypeStyles from './_typeStyles';
 
-const H3 = withTheme(styled.h3`
+const H3 = withTheme(styled.h3.attrs({
+  className: 'heading-style-h3',
+})`
   ${TypeStyles.H3}
   ${system}
 `);

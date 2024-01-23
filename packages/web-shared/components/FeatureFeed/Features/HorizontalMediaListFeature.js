@@ -3,7 +3,7 @@ import get from 'lodash/get';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { Box, H3, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
+import { Box, H2, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { useAnalytics } from '../../../providers/AnalyticsProvider';
@@ -85,9 +85,9 @@ function HorizontalMediaListFeature(props = {}) {
   return (
     <Box pb="xl" mb="l" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
-        <H3 flex="1" mr="xs">
+        <H2 flex="1" mr="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
+        </H2>
         {props?.feature?.items?.length >= SHOW_VIEW_ALL_LIMIT && props?.feature?.primaryAction ? (
           <Button
             title="View All"

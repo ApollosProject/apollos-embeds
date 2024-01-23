@@ -2,10 +2,10 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
+
+import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-import amplitude from '../../../analytics/amplitude';
 import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from 'phosphor-react';
 import { useAnalytics } from '../../../providers/AnalyticsProvider';
@@ -66,9 +66,9 @@ function VerticalCardListFeature(props = {}) {
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
-        <H3 flex="1" mb="xs">
+        <H2 flex="1" mb="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
+        </H2>
         {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
           <Button
             title="View All"

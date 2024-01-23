@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
-import { Box, Button, H3, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
+import { Box, Button, H2, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
 import Styled from './HeroListFeature.styles';
 import { useNavigate } from 'react-router-dom';
 import { useAnalytics } from '../../../providers/AnalyticsProvider';
@@ -80,7 +80,7 @@ function HeroListFeature(props = {}) {
           <Box flexDirection="row" justifyContent="space-between" alignItems="flex-end" mb="s">
             <Box>
               <H4 color="text.secondary">{props.feature.subtitle}</H4>
-              <H3>{props.feature.title}</H3>
+              <H2>{props.feature.title}</H2>
             </Box>
           </Box>
         ) : null}
