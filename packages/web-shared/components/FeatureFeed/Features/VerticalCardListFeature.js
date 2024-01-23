@@ -8,13 +8,19 @@ import { open as openModal, set as setModal, useModal } from '../../../providers
 import amplitude from '../../../analytics/amplitude';
 import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from 'phosphor-react';
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
+
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
     if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });            
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -45,9 +51,9 @@ function VerticalCardListFeature(props = {}) {
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
 
       if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
-        amplitude.trackEvent('FeatureFeed', {
+        analytics.track('OpenFeatureFeed', {
           featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-          featureId: props.feature?.id,
+          fromFeatureId: props.feature?.id,
           title: props.feature?.title,
         });
       }

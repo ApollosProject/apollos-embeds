@@ -105,7 +105,7 @@ function VideoPlayer(props = {}) {
         parentOriginId: get(props, 'parentNode.originId'),
         originId: get(props, 'parentNode.videos[0].originId'),
         originSource: get(props, 'parentNode.videos[0].originType'),
-        videoPlayer: 'Apollos OTT',
+        videoPlayer: 'Apollos Web',
         sound: 1,
         fullScreen: true,
         livestream: false,

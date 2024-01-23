@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
-import amplitude from '../analytics/amplitude';
 
 import { getURLFromType } from '../utils';
 

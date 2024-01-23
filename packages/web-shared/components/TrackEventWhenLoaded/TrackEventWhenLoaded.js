@@ -1,12 +1,13 @@
 import { useEffect } from 'react';
 
-import amplitude from '../../analytics/amplitude';
+import { useAnalytics } from '../../providers/AnalyticsProvider';
 
 const TrackEventWhenLoaded = ({ loading, eventName, properties }) => {
+  const analytics = useAnalytics();
   useEffect(() => {
     if (!loading) {
       // NOTE: This component usually gets rendered twice, which can potentially cause events to be tracked twice.
-      amplitude.trackEvent(eventName, properties);
+      analytics.track(eventName, properties);
     }
   }, [loading]);
 

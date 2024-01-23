@@ -6,8 +6,6 @@ import clientFactory from '../analytics/segment';
 
 const Context = createContext();
 
-const defaultClients = [];
-
 export const GET_ANALYTICS_USER = gql`
   query GetAnalyticsUser {
     currentUser {
@@ -53,7 +51,7 @@ export const GET_ANALYTICS_USER = gql`
  * @param {Array} clients An array of analytics clients to track events to.
  * Each client should have the functions (or subset of) defined above.
  * @param {church} church The church slug to pass to the analytics client's group function.
- */
+ */ 
 export const AnalyticsProvider = ({ children, church }) => {
   const { currentChurch } = useCurrentChurch();
   const { currentUser } = useCurrentUser();
@@ -63,54 +61,82 @@ export const AnalyticsProvider = ({ children, church }) => {
     clientFactory(currentChurch?.webSegmentKey, true),
   ].filter(Boolean);
 
-  const analyticsClients = useMemo(
+  const clients = useMemo(
     () => [{ track: amplitude.trackEvent, identify: amplitude.init }, ...segmentClients],
     []
   );
 
-  const clients = analyticsClients ? analyticsClients : defaultClients;
-
   amplitude.init(currentChurch?.webAmplitudeKey, currentUser);
-
-  const client = useMemo(() => {
-    return {
-      screen: (...args) =>
-        Promise.all(
-          clients?.map((c) => {
-            // backwards compatibility: if no screen method is provided, use track
-            // This is mainly used to support Legacy Amplitude + CoreAnalytics
-            // which does not provide a "screen" method.
-            if (!c?.screen && c.track) {
-              return c.track(...args);
-            }
-            return c?.screen && c.screen(...args);
-          })
-        ),
-      track: (eventName, properties, ...args) => {
-        // backwards compatibility, older method syntax was to pass an object
-        if (typeof eventName === 'object') {
-          properties = eventName.properties;
-          eventName = eventName.eventName;
-        }
-
-        return Promise.all(
-          clients?.map((c) => c?.track && c.track(eventName, properties, ...args))
-        );
-      },
-      identify: (...args) => Promise.all(clients?.map((c) => c?.identify && c.identify(...args))),
-      flush: (...args) => Promise.all(clients?.map((c) => c?.flush && c.flush(...args))),
-      group: (...args) => Promise.all(clients?.map((c) => c?.group && c.group(...args))),
-      alias: (...args) => Promise.all(clients?.map((c) => c?.alias && c.alias(...args))),
-      reset: (...args) => Promise.all(clients?.map((c) => c?.reset && c.reset(...args))),
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, clients);
 
   // Auto track user
   const { data } = useQuery(GET_ANALYTICS_USER, {
     returnPartialData: true,
     errorPolicy: 'ignore',
-  });
+  });  
+
+  const client = useMemo(() => {
+    // add some standard properties to all events
+    const addProperties = (properties) => {
+      const newProps = { ...properties };
+      if (data?.currentUser?.originId) {
+        newProps.userOriginId = data?.currentUser?.originId;
+        newProps.userOriginType = data?.currentUser?.originType;
+      }
+
+      if (church?.slug) {
+        newProps.church = church?.slug;
+      }
+      return newProps;
+    };       
+    return {   
+      screen: (screenName, properties, ...args) =>
+      Promise.all(
+        clients?.map((c) => {
+          // backwards compatibility: if no screen method is provided, use track
+          // This is mainly used to support Legacy Amplitude + CoreAnalytics
+          // which does not provide a "screen" method.
+          const apollosProperties = addProperties(properties);
+          if (!c?.screen && c.track) {
+            return c.track(screenName, apollosProperties, ...args);
+          }
+          return (
+            c?.screen && c.screen(screenName, apollosProperties, ...args)
+          );
+        })
+      ),
+    track: (eventName, properties, ...args) => {
+      // backwards compatibility, older method syntax was to pass an object
+      if (typeof eventName === 'object') {
+        properties = eventName.properties;
+        eventName = eventName.eventName;
+      }
+
+      const apollosProperties = addProperties(properties);
+
+      return Promise.all(
+        clients?.map(
+          (c) => c?.track && c.track(eventName, apollosProperties, ...args)
+        )
+      );
+    },
+    identify: (...args) =>
+      Promise.all(clients?.map((c) => c?.identify && c.identify(...args))),
+    flush: (...args) =>
+      Promise.all(clients?.map((c) => c?.flush && c.flush(...args))),
+    group: (...args) =>
+      Promise.all(clients?.map((c) => c?.group && c.group(...args))),
+    alias: (...args) =>
+      Promise.all(clients?.map((c) => c?.alias && c.alias(...args))),
+    reset: (...args) =>
+      Promise.all(clients?.map((c) => c?.reset && c.reset(...args))),
+  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    clients,
+    data?.currentUser?.originId,
+    data?.currentUser?.originType,
+    church?.slug,    
+  ]);
   useEffect(() => {
     if (!data?.currentUser?.profile?.id) {
       return;

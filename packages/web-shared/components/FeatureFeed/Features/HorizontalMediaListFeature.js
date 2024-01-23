@@ -6,7 +6,7 @@ import { getURLFromType } from '../../../utils';
 import { Box, H3, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-import amplitude from '../../../analytics/amplitude';
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
 import Carousel from 'react-multi-carousel';
 import { CaretRight } from 'phosphor-react';
 const SHOW_VIEW_ALL_LIMIT = 5;
@@ -30,9 +30,13 @@ function HorizontalMediaListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
     if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });      
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -63,9 +67,9 @@ function HorizontalMediaListFeature(props = {}) {
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
 
       if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
-        amplitude.trackEvent('FeatureFeed', {
+        analytics.track('OpenFeatureFeed', {
           featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-          featureId: props.feature?.id,
+          fromFeatureId: props.feature?.id,
           title: props.feature?.title,
         });
       }
