@@ -21,8 +21,8 @@ import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../providers/Bre
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 
 const MOBILE_BREAKPOINT = 428;
-const appId = process.env.REACT_APP_ALGOLIA_APP_ID;
-const apiKey = process.env.REACT_APP_ALGOLIA_API_KEY;
+const appId = "Z0GWPR8XBE";
+const apiKey = "251ec8d76f6c62ac793c1337b39bda58";
 const searchClient = algoliasearch(appId, apiKey);
 
 function Hit({ hit }) {
