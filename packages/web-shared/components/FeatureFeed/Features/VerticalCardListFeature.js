@@ -2,19 +2,25 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
+
 import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-
 import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from 'phosphor-react';
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
+
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
     if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });            
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -43,6 +49,15 @@ function VerticalCardListFeature(props = {}) {
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
+
+      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+        analytics.track('OpenFeatureFeed', {
+          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+          fromFeatureId: props.feature?.id,
+          title: props.feature?.title,
+        });
+      }
+
       state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
