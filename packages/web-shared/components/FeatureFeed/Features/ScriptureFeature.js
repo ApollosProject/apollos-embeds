@@ -4,7 +4,7 @@ import { systemPropTypes, Box } from '../../../ui-kit';
 import PropTypes from 'prop-types';
 import Styled from './ScriptureFeature.styles';
 import { useNavigate } from 'react-router-dom';
-import { ArrowsOutSimple } from 'phosphor-react';
+import { ArrowsInSimple, ArrowsOutSimple } from 'phosphor-react';
 
 function ScriptureFeature(props = {}) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -67,7 +67,7 @@ function ScriptureFeature(props = {}) {
         <ScriptureItem scripture={scripture} />
       ))}
       <Styled.ScriptureItemExpandButton onClick={handleExpand}>
-        <ArrowsOutSimple size={16} />
+        {isExpanded ? <ArrowsInSimple size={20} /> : <ArrowsOutSimple size={20} />}
       </Styled.ScriptureItemExpandButton>
     </Styled.Scripture>
   );
