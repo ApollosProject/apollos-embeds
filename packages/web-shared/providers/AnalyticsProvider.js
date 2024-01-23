@@ -57,7 +57,7 @@ export const AnalyticsProvider = ({ children, church }) => {
   const { currentUser } = useCurrentUser();
 
   const segmentClients = [
-    clientFactory(process.env.REACT_APP_APOLLOS_SEGMENT_KEY),
+    clientFactory('YxKgDjmwjTQrTdm6mO34kArQIYFmfnAY', true),
     clientFactory(currentChurch?.webSegmentKey, true),
   ].filter(Boolean);
 
