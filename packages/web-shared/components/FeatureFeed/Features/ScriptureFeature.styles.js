@@ -4,39 +4,26 @@ import { system } from '../../../ui-kit/_lib/system';
 
 const expandAnimation = keyframes`
   from {
-    max-height: 365px;
-    overflow: hidden;
+    max-height: var(--collapsed-max-height, 100px);
   }
   to {
-    max-height: 3000px;
-    overflow: hidden;
+    max-height: var(--expanded-max-height, 1000px);
   }
 `;
 
 const collapseAnimation = keyframes`
   from {
-    max-height: 3000px;
-    overflow: hidden;
+    max-height: var(--expanded-max-height, 1000px);
   }
   to {
-    max-height: 365px;
-    overflow: hidden;
+    max-height: var(--collapsed-max-height, 100px);
   }
 `;
 
 const expandedStyles = ({ isExpanded }) => css`
   overflow: hidden;
+  max-height: ${isExpanded ? 'var(--expanded-max-height)' : '100px'};
   transition: max-height 1s ease;
-  ${isExpanded
-    ? css`
-        max-height: 3000px;
-        overflow: scroll;
-        animation: ${expandAnimation} 1s ease;
-      `
-    : css`
-        max-height: 365px;
-        animation: ${collapseAnimation} 1s ease;
-      `}
 `;
 
 const Scripture = withTheme(styled.div`
