@@ -32,7 +32,7 @@ function ScriptureFeature(props = {}) {
 
     const [_, book, chapter, startVerse, endVerse] = match;
     const title = `${book} ${chapter}`;
-    const verses = `Verses ${startVerse}${endVerse ? `-${endVerse}` : ''}`;
+    const verses = `${endVerse ? `Verses ${startVerse}-${endVerse}` : `Verse ${startVerse}`}`;
 
     const result = {
       title,
