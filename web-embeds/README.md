@@ -6,13 +6,21 @@ Apollo React Embeds are pre-built components that can be easily added to third-p
 
 Follow the steps below to deploy your apollos-embeds:
 
+## Automated
+
+1. Run `npm bump`
+2. Go to https://www.jsdelivr.com/tools/purge and paste in the following to purge the cache on jsdelivr. Otherwise, it could take up to seven days to see our changes in client sites.
+
+`https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.js, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.css, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds`
+
+
+## Manual
+
 1. Update the package version in the `package.json` file.
 2. Run `yarn build` to build the new version of the widget.
 3. Commit and push the new JS and CSS build files to GitHub.
 4. Then, run `npm publish`. Note that you need to be a member of the apollosproject organization to publish.
-5. Finally, go to https://www.jsdelivr.com/tools/purge and paste in the following to purge the cache on jsdelivr. Otherwise, it could take up to seven days to see our changes in client sites.
-
-`https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.js, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.css, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds`
+5. See instructions above to purge cache.
 
 The JS file used to embed these widgets is hosted on GitHub and picked up by [jsdelivr.com](https://www.jsdelivr.com/) automatically, as long as the repository is public.
 
