@@ -24,7 +24,7 @@ const collapseAnimation = keyframes`
 const expandedStyles = ({ isExpanded }) => css`
   overflow: hidden;
   max-height: ${isExpanded ? 'var(--expanded-max-height)' : '100px'};
-  transition: max-height 1s ease;
+  transition: max-height 0.3s ease;
 `;
 
 const Scripture = withTheme(styled.div`
