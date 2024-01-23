@@ -10,6 +10,8 @@
   },
   "peerDependencies": {
     "@apollo/client": "*",
+    "@segment/analytics-next": "*",
+    "amplitude-js": "*",
     "prop-types": "*",
     "react": "*",
     "react-transition-group": "*",

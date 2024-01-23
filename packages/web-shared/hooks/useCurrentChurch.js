@@ -5,6 +5,8 @@ export const GET_CURRENT_CHURCH = gql`
     currentChurch {
       mobileAppStoreUrl
       mobilePlayStoreUrl
+      webAmplitudeKey
+      webSegmentKey
       name
       slug
       theme

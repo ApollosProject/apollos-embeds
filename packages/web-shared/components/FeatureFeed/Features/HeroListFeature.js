@@ -4,19 +4,23 @@ import { useSearchParams } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
-
-import { BodyText, Box, Button, H2, H3, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
+import { Box, Button, H3, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
 import Styled from './HeroListFeature.styles';
 import { useNavigate } from 'react-router-dom';
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
 
 function HeroListFeature(props = {}) {
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const navigate = useNavigate();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
     if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });      
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -55,6 +59,13 @@ function HeroListFeature(props = {}) {
   };
 
   const handlePrimaryActionClick = () => {
+    if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+      analytics.track('OpenFeatureFeed', {
+        featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+        fromFeatureId: props.feature?.id,
+        title: props.feature?.title,
+      });
+    }
     setSearchParams(`?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`);
   };
 

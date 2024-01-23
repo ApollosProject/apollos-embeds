@@ -16,7 +16,9 @@ import { useHTMLContent, useVideoMediaProgress } from '../hooks';
 import { Title } from './ContentSingle.styles';
 
 import VideoPlayer from './VideoPlayer';
+
 import InteractWhenLoaded from './InteractWhenLoaded';
+import TrackEventWhenLoaded from './TrackEventWhenLoaded';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
@@ -27,7 +29,6 @@ function ContentSingle(props = {}) {
 
   const invalidPage = !props.loading && !props.data;
 
-  // temp
   // Video details
   const videoMedia = props.data?.videos?.[0];
 
@@ -140,6 +141,16 @@ function ContentSingle(props = {}) {
       </Helmet>
       <Box margin="0 auto" maxWidth="750px">
         <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
+        <TrackEventWhenLoaded
+          loading={props.loading}
+          eventName={'View Content'}
+          properties={{
+            itemId: props.data?.id,
+            parentId: props.data?.parentChannel?.id,
+            parentName: props.data?.parentChannel?.name,
+            title: props.data?.title,
+          }}
+        />
         {coverImage?.sources[0]?.uri || videoMedia ? (
           <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
             {videoMedia ? (
