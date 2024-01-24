@@ -21,8 +21,12 @@ import Wordmark from '../Wordmark';
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
-  return <Wordmark source={currentChurch?.wordmarkLightUrl} padding={10} {...props} />;
-  return null;
+
+  const { origin } = window.location;
+
+  return (
+    <Wordmark source={currentChurch?.wordmarkLightUrl} padding={10} {...props} href={origin} />
+  );
 }
 
 const Modal = (props = {}) => {
