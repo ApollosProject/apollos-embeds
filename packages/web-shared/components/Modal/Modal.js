@@ -82,20 +82,20 @@ const Modal = (props = {}) => {
                 />
               </Box>
               <Box
-                width={{ _: '100%', sm: '10%' }}
-                mb={{ _: 'xs', sm: '0' }}
-                ml={{ _: '0', sm: 'xs' }}
-                display="flex"
-                justifyContent="flex-end"
-                alignItems="center"
-                position="absolute"
-                top="xs"
-                right="xs"
-              >
-                <Styled.Icon onClick={handleCloseModal} ml={{ _: 'auto', sm: '0' }}>
-                  <X size={16} weight="bold" />
-                </Styled.Icon>
-              </Box>
+                  width={{ _: '100%', sm: '10%' }}
+                  mb={{ _: 'xs', sm: '0' }}
+                  ml={{ _: '0', sm: 'xs' }}
+                  display="flex"
+                  justifyContent="flex-end"
+                  alignItems="center"
+                  position="absolute"
+                  top="xs"
+                  right="xs"
+                >
+                  <Styled.Icon onClick={handleCloseModal} ml={{ _: 'auto', sm: '0' }}>
+                    <X size={16} weight="bold" />
+                  </Styled.Icon>
+                </Box>              
               <Box
                 width="100%"
                 display="flex"
