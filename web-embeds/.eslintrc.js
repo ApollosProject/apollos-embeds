@@ -1,15 +1,5 @@
 module.exports = {
-  extends: [
-    "@remix-run/eslint-config",
-    "@remix-run/eslint-config/node",
-    "@remix-run/eslint-config/jest-testing-library",
-    "plugin:prettier/recommended",
-  ],
-  settings: {
-    jest: {
-      version: 28,
-    },
-  },
+  extends: ["react-app", "plugin:prettier/recommended"],
   plugins: ["simple-import-sort", "import"],
   rules: {
     "simple-import-sort/imports": "error",
@@ -33,22 +23,24 @@ module.exports = {
         ],
         pathGroups: [
           {
-            pattern: "@remix-run/**",
+            pattern: "react",
             group: "external",
-          },
-          {
-            pattern: "~/**",
-            group: "internal",
-          },
-          {
-            pattern: "../**",
-            group: "parent",
             position: "before",
+          },
+          {
+            pattern: "**",
+            group: "external",
+            position: "after",
           },
           {
             pattern: "./**",
             group: "sibling",
             position: "after",
+          },
+          {
+            pattern: "../**",
+            group: "parent",
+            position: "before",
           },
         ],
         pathGroupsExcludedImportTypes: ["builtin"],
