@@ -1,7 +1,6 @@
 const execSync = require("child_process").execSync;
-const path = require("path");
-
 const fs = require("fs-extra");
+const path = require("path");
 
 function moveFile(source, destination) {
   fs.move(source, destination, { overwrite: true }, (err) => {

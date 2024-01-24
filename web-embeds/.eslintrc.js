@@ -9,39 +9,23 @@ module.exports = {
       "error",
       {
         groups: [
-          "builtin",
-          "external",
+          ["external", "builtin"],
           "internal",
-          "unknown",
-          "parent",
-          "sibling",
+          ["sibling", "parent"],
           "index",
-          "object",
-          "type",
         ],
         pathGroups: [
           {
-            pattern: "react",
+            pattern: "@(react|react-native)",
             group: "external",
             position: "before",
           },
           {
-            pattern: "**",
-            group: "external",
-            position: "after",
-          },
-          {
-            pattern: "./**",
-            group: "sibling",
-            position: "after",
-          },
-          {
-            pattern: "../**",
-            group: "parent",
-            position: "before",
+            pattern: "@src/**",
+            group: "internal",
           },
         ],
-        pathGroupsExcludedImportTypes: ["builtin"],
+        pathGroupsExcludedImportTypes: ["internal", "react"],
         "newlines-between": "always",
         alphabetize: {
           order: "asc",
