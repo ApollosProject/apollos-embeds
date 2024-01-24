@@ -13,7 +13,6 @@ Follow the steps below to deploy your apollos-embeds:
 
 `https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.js, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds@latest/widget/index.css, https://cdn.jsdelivr.net/npm/@apollosproject/apollos-embeds`
 
-
 ## Manual
 
 1. Update the package version in the `package.json` file.

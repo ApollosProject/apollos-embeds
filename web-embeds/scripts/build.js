@@ -1,6 +1,8 @@
-const fs = require('fs-extra');
-const path = require('path');
-const execSync = require('child_process').execSync;
+const path = require("path");
+
+const fs = require("fs-extra");
+
+const execSync = require("child_process").execSync;
 
 function moveFile(source, destination) {
   fs.move(source, destination, { overwrite: true }, (err) => {
@@ -11,15 +13,15 @@ function moveFile(source, destination) {
 
 function main() {
   // Run the CRA build script
-  execSync('craco build', { stdio: 'inherit' });
+  execSync("craco build", { stdio: "inherit" });
 
   // Define source and destination paths
-  const buildDir = path.join(__dirname, '..', 'build', 'static');
-  const widgetDir = path.join(__dirname, '..', 'widget');
-  const jsSource = path.join(buildDir, 'js', 'index.js');
-  const cssSource = path.join(buildDir, 'css', 'index.css');
-  const jsDestination = path.join(widgetDir, 'index.js');
-  const cssDestination = path.join(widgetDir, 'index.css');
+  const buildDir = path.join(__dirname, "..", "build", "static");
+  const widgetDir = path.join(__dirname, "..", "widget");
+  const jsSource = path.join(buildDir, "js", "index.js");
+  const cssSource = path.join(buildDir, "css", "index.css");
+  const jsDestination = path.join(widgetDir, "index.js");
+  const cssDestination = path.join(widgetDir, "index.css");
 
   // Ensure widget directory exists
   fs.ensureDirSync(widgetDir);

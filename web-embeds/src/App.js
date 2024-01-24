@@ -1,35 +1,37 @@
-import React from 'react';
-import * as Sentry from '@sentry/react';
-import { Main } from '@apollosproject/web-shared/embeds';
-import { AppProvider } from '@apollosproject/web-shared/providers';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import ErrorPage from './error-page';
+import React from "react";
+import { Main } from "@apollosproject/web-shared/embeds";
+import { AppProvider } from "@apollosproject/web-shared/providers";
+import * as Sentry from "@sentry/react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+
+import ErrorPage from "./error-page";
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
+
   // Set tracesSampleRate to 1.0 to capture 100% of transactions for performance monitoring.
   // We recommend adjusting this value in production.
   tracesSampleRate: 1.0,
 });
 
 function App() {
-  const searchElement = document.querySelector('[data-search-feed]');
-  const churchElement = document.querySelector('[data-church]');
-  const placeholderElement = document.querySelector('[data-placeholder]');
+  const searchElement = document.querySelector("[data-search-feed]");
+  const churchElement = document.querySelector("[data-church]");
+  const placeholderElement = document.querySelector("[data-placeholder]");
 
   const searchFeed = searchElement
-    ? searchElement.getAttribute('data-search-feed')
+    ? searchElement.getAttribute("data-search-feed")
     : null;
   const church = churchElement
-    ? churchElement.getAttribute('data-church')
+    ? churchElement.getAttribute("data-church")
     : null;
   const customPlaceholder = placeholderElement
-    ? placeholderElement.getAttribute('data-placeholder')
+    ? placeholderElement.getAttribute("data-placeholder")
     : null;
 
   const router = createBrowserRouter([
     {
-      path: '*',
+      path: "*",
       element: <Main />,
       errorElement: <ErrorPage />,
     },
