@@ -53,6 +53,7 @@ const ModalContainer = withTheme(styled.div`
   @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
     padding: 16px;
   }
+  position: relative;
   ${system};
 `);
 
