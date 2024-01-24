@@ -1,4 +1,5 @@
 import React from "react";
+
 import { Main } from "@apollosproject/web-shared/embeds";
 import { AppProvider } from "@apollosproject/web-shared/providers";
 import * as Sentry from "@sentry/react";
