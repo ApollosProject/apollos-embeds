@@ -1,6 +1,12 @@
-name: Lint Check
+name: Lint Web Embeds
 
-on: [push, pull_request]
+on:
+  push:
+    paths:
+      - 'web-embeds/**'
+  pull_request:
+    paths:
+      - 'web-embeds/**'
 
 jobs:
   lint:
@@ -8,13 +14,14 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js
+
+      - name: Set up Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '14'
+          node-version: '14' # Specify your Node.js version
 
       - name: Install Dependencies
-        run: yarn install
+        run: cd web-embeds && yarn install
 
       - name: Run Lint
-        run: yarn lint
+        run: cd web-embeds && yarn lint
