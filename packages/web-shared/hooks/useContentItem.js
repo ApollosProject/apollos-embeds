@@ -133,6 +133,9 @@ export const GET_CONTENT_ITEM = gql`
                   }
                 }
               }
+              ... on HtmlFeature {
+                content
+              }
               ... on ScriptureFeature {
                 scriptures {
                   id

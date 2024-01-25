@@ -109,6 +109,12 @@ export const ButtonFeature = PropTypes.shape({
   action: FeatureAction,
 });
 
+export const HtmlFeature = PropTypes.shape({
+  ...FeaturePropTypes,
+  ...NodePropTypes,
+  content: PropTypes.string,
+});
+
 // type HeroListFeature implements Feature, Node
 export const HeroListFeature = PropTypes.shape({
   ...FeaturePropTypes,
