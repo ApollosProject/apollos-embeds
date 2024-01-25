@@ -1,7 +1,7 @@
 {
   "name": "@apollosproject/apollos-embeds",
   "description": "Apollos React embed widgets",
-  "version": "0.1.25",
+  "version": "0.1.26",
   "license": "MIT",
   "eslintIgnore": [
     "/node_modules",
