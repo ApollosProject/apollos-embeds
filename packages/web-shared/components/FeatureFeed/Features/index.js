@@ -5,6 +5,7 @@ import ChipListFeature from './ChipListFeature';
 import HeroListFeature from './HeroListFeature';
 import HorizontalCardListFeature from './HorizontalCardListFeature';
 import HorizontalMediaListFeature from './HorizontalMediaListFeature';
+import HtmlFeature from './HtmlFeature';
 import PrayerListFeature from './PrayerListFeature';
 import ScriptureFeature from './ScriptureFeature';
 import VerticalCardListFeature from './VerticalCardListFeature';
@@ -17,6 +18,7 @@ export {
   HeroListFeature,
   HorizontalCardListFeature,
   HorizontalMediaListFeature,
+  HtmlFeature,
   PrayerListFeature,
   ScriptureFeature,
   VerticalCardListFeature,
