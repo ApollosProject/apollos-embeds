@@ -12,23 +12,12 @@ function darken(c, by) {
   return Color(c).darken(by).toString();
 }
 
-const buttonState = ({
-  theme,
-  variant,
-  disabled,
-  focused,
-  hovered,
-  pressed,
-}) => {
+const buttonState = ({ theme, variant, disabled, focused, hovered, pressed }) => {
   if (disabled) {
     return css`
       opacity: 0.5;
-      background: ${variant === 'secondary'
-        ? 'transparent'
-        : theme.colors.base.gray};
-      border: ${variant === 'secondary'
-        ? theme.colors.base.gray
-        : 'transparent'};
+      background: ${variant === 'secondary' ? 'transparent' : theme.colors.base.gray};
+      border: ${variant === 'secondary' ? theme.colors.base.gray : 'transparent'};
       cursor: not-allowed;
     `;
   }
@@ -36,9 +25,7 @@ const buttonState = ({
   if (pressed) {
     return css`
       background: ${theme.colors.base.gray};
-      border: ${variant === 'secondary'
-        ? theme.colors.fill.system
-        : 'transparent'};
+      border: ${variant === 'secondary' ? theme.colors.fill.system : 'transparent'};
       transform: scale(0.98);
     `;
   }
@@ -159,13 +146,7 @@ const buttonColorState = ({ theme, disabled, focused, hovered }) => {
   return null;
 };
 
-const buttonColorStateLink = ({
-  theme,
-  disabled,
-  focused,
-  hovered,
-  variant,
-}) => {
+const buttonColorStateLink = ({ theme, disabled, focused, hovered, variant }) => {
   if (disabled && variant === 'link') {
     return css`
       color: ${theme.colors.text.secondary};
@@ -208,6 +189,8 @@ const Button = withTheme(styled.button`
   border-radius: ${themeGet('radii.xl')};
   cursor: pointer;
   align-items: center;
+  margin-top: 16px;
+  margin-bottom: 16px;
   ${buttonTypeProp}
   ${webTransition}
   ${buttonState}
