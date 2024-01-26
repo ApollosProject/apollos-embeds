@@ -157,8 +157,8 @@ const Searchbar = (props = {}) => {
           </Box>
         </Box>
         <SearchResults autocompleteState={autocompleteState} autocomplete={autocompleteInstance} />
-        {showProfile ? <Profile handleCloseProfile={handleCloseProfile} /> : null}
       </Styled.Wrapper>
+      {showProfile ? <Profile handleCloseProfile={handleCloseProfile} /> : null}
     </Box>
   );
 };
