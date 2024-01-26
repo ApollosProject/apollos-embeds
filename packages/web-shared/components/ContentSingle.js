@@ -11,9 +11,9 @@ import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import { Box, H1, H2, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
+import { Box, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
 import { useHTMLContent, useVideoMediaProgress } from '../hooks';
-import { Title } from './ContentSingle.styles';
+import { Title, ParentTitle, ParentSummary } from './ContentSingle.styles';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -71,12 +71,14 @@ function ContentSingle(props = {}) {
     childContentItemsConnection,
     siblingContentItemsConnection,
     featureFeed,
+    parentItem,
   } = props?.data;
 
   const childContentItems = childContentItemsConnection?.edges;
   const siblingContentItems = siblingContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
+  const hasParent = !!parentItem;
   const validFeatures = featureFeed?.features?.filter(
     (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
@@ -255,6 +257,54 @@ function ContentSingle(props = {}) {
           </Box>
         ) : null}
         {/* Display content for sermons */}
+        {hasParent ? (
+          <>
+            <H3 flex="1" mr="xs" mb="xs">
+              This Series
+            </H3>
+            <Box flex="1" mb="l" minWidth="180px" {...props}>
+              <Box
+                position="relative"
+                display="flex"
+                backgroundColor="neutral.gray6"
+                overflow="hidden"
+                flexDirection={{ _: 'column', md: 'row' }}
+                mb="l"
+                borderRadius="l"
+                cursor="pointer"
+                onClick={() => handleActionPress(parentItem)}
+              >
+                {/* Image */}
+                <Box
+                  alignItems="center"
+                  backgroundColor="white"
+                  display="flex"
+                  overflow="hidden"
+                  width={{ _: '100%', md: '60%' }}
+                >
+                  <Box
+                    as="img"
+                    src={parentItem?.coverImage?.sources[0]?.uri}
+                    width="100%"
+                    height="100%"
+                  />
+                </Box>
+                {/* Masthead */}
+                <Box
+                  width={{ _: 'auto', md: '40%' }}
+                  padding={{ _: 'base', md: 'none' }}
+                  backdropFilter="blur(64px)"
+                  display="flex"
+                  flexDirection="column"
+                  paddingTop={{ md: 'xl' }}
+                >
+                  <ParentTitle>{parentItem?.title}</ParentTitle>
+                  <ParentSummary color="text.secondary">{parentItem?.summary}</ParentSummary>
+                </Box>
+              </Box>
+            </Box>
+          </>
+        ) : null}
         {hasSiblingContent ? (
           <>
             <H3 flex="1" mr="xs">
