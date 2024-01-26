@@ -12,6 +12,20 @@ export const GET_CONTENT_ITEM = gql`
   ${CONTENT_SINGLE_FRAGMENT}
   ${EVENT_FRAGMENT}
 
+  fragment SubCardFragment on ContentItem {
+    id
+    title
+    summary
+    coverImage {
+      sources {
+        uri
+      }
+    }
+    videos {
+      ...VideoMediaFields
+    }
+  }
+
   query getContentItem($id: ID!) {
     node(id: $id) {
       id
@@ -54,37 +68,20 @@ export const GET_CONTENT_ITEM = gql`
         videos {
           ...VideoMediaFields
         }
+        parentItem {
+          ...SubCardFragment
+        }
         childContentItemsConnection {
           edges {
             node {
-              id
-              title
-              summary
-              coverImage {
-                sources {
-                  uri
-                }
-              }
-              videos {
-                ...VideoMediaFields
-              }
+              ...SubCardFragment
             }
           }
         }
         siblingContentItemsConnection {
           edges {
             node {
-              id
-              title
-              summary
-              coverImage {
-                sources {
-                  uri
-                }
-              }
-              videos {
-                ...VideoMediaFields
-              }
+              ...SubCardFragment
             }
           }
         }
