@@ -40,8 +40,8 @@ const H1 = () => css`
 const H2 = () => css`
   ${shared}
 
-  font-size: ${utils.rem('44px')};
-  line-height: ${utils.rem('66px')};
+  font-size: ${utils.rem('48px')};
+  line-height: ${utils.rem('56px')};
   font-weight: 700;
 
   @media screen and (max-width: ${themeGet('breakpoints.lg')}) {
@@ -61,7 +61,7 @@ const H2 = () => css`
 const H3 = () => css`
   ${shared}
 
-  font-size: ${utils.rem('24px')};
+  font-size: ${utils.rem('30px')};
   line-height: ${utils.rem('36px')};
   font-weight: 700;
 
@@ -133,6 +133,14 @@ const SmallBodyText = () => css`
   font-weight: 400;
 `;
 
+const LargeBodyText = () => css`
+  ${shared}
+
+  font-size: ${utils.rem('19px')};
+  line-height: ${utils.rem('28px')};
+  font-weight: 400;
+`;
+
 // :: System Text
 const LargeSystemText = () => css`
   ${shared}
@@ -169,6 +177,7 @@ export default {
   H6,
   LargeSystemText,
   SmallBodyText,
+  LargeBodyText,
   SmallSystemText,
   SystemText,
 };
