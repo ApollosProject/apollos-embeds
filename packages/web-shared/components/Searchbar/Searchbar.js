@@ -9,6 +9,7 @@ import { useSearchState } from '../../providers/SearchProvider';
 
 import Profile from '../Profile';
 import Autocomplete from '../Searchbar/Autocomplete';
+import SearchResults from '../Searchbar/SearchResults';
 
 import Styled from './Search.styles';
 
@@ -122,39 +123,41 @@ const Searchbar = (props = {}) => {
       {...props}
     >
       <Styled.Wrapper dropdown={autocompleteState.isOpen}>
-        <Styled.Interface>
-          <Styled.InterfaceWrapper>
-            <Box padding="12px" onClick={handleClick}>
-              <Styled.SearchIcon>
-                {isMobile && autocompleteState.isOpen ? (
-                  <ArrowLeft size={18} weight="bold" color={userExist ? 'white' : null} />
-                ) : (
-                  <MagnifyingGlass size={18} weight="bold" color={userExist ? 'white' : null} />
-                )}
-              </Styled.SearchIcon>
-            </Box>
-            <Box width="100%">
-              <Autocomplete
-                autocompleteState={autocompleteState}
-                setAutocompleteState={setAutocompleteState}
-                setShowTextPrompt={setShowTextPrompt}
-                getAutocompleteInstance={handleGetAutocompleteInstance}
-              />
-              {showTextPrompt ? textPrompt : null}
-            </Box>
-          </Styled.InterfaceWrapper>
-        </Styled.Interface>
-        <Box padding="12px" onClick={handleOpenProfile}>
-          {currentUser?.profile?.photo?.uri ? (
-            <Avatar src={currentUser?.profile?.photo?.uri} width="38px" alt="avatar" />
-          ) : (
-            <Styled.Profile>
-              <User size={18} weight="bold" color={userExist ? 'white' : null} />
-            </Styled.Profile>
-          )}
+        <Box display="flex" flexDirection="row" h="60px" w="100%">
+          <Styled.Interface>
+            <Styled.InterfaceWrapper>
+              <Box padding="12px" onClick={handleClick}>
+                <Styled.SearchIcon>
+                  {isMobile && autocompleteState.isOpen ? (
+                    <ArrowLeft size={18} weight="bold" color={userExist ? 'white' : null} />
+                  ) : (
+                    <MagnifyingGlass size={18} weight="bold" color={userExist ? 'white' : null} />
+                  )}
+                </Styled.SearchIcon>
+              </Box>
+              <Box width="100%">
+                <Autocomplete
+                  autocompleteState={autocompleteState}
+                  setAutocompleteState={setAutocompleteState}
+                  setShowTextPrompt={setShowTextPrompt}
+                  getAutocompleteInstance={handleGetAutocompleteInstance}
+                />
+                {showTextPrompt ? textPrompt : null}
+              </Box>
+            </Styled.InterfaceWrapper>
+          </Styled.Interface>
+          <Box padding="12px" onClick={handleOpenProfile}>
+            {currentUser?.profile?.photo?.uri ? (
+              <Avatar src={currentUser?.profile?.photo?.uri} width="38px" alt="avatar" />
+            ) : (
+              <Styled.Profile>
+                <User size={18} weight="bold" color={userExist ? 'white' : null} />
+              </Styled.Profile>
+            )}
+          </Box>
         </Box>
+        <SearchResults autocompleteState={autocompleteState} autocomplete={autocompleteInstance} />
       </Styled.Wrapper>
-
       {showProfile ? <Profile handleCloseProfile={handleCloseProfile} /> : null}
     </Box>
   );

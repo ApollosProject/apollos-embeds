@@ -48,12 +48,9 @@ const showPanel = ({ dropdown }) => {
 };
 
 const Wrapper = withTheme(styled.div`
-  align-items: center;
   background: ${themeGet('colors.base.white')};
   box-shadow: ${themeGet('shadows.medium')};
-  display: flex;
   height: 60px;
-  justify-content: space-between;
   width: 100%;
   z-index: 100;
   ${showDropdown}
@@ -72,6 +69,9 @@ const Wrapper = withTheme(styled.div`
     overflow-x: hidden;
     border-radius: 0px 0px 15px 15px;
     ${showPanel}
+    position: relative;
+    display: inline-block;
+    margin: 0px;
   }
 
   .aa-Form:focus-within {
@@ -91,12 +91,12 @@ const TextPrompt = withTheme(styled.div`
   display: flex;
   overflow: hidden;
   pointer-events: none;
-  position: absolute;
   text-overflow: ellipsis;
   top: 50%;
   transform: translate(0, -50%);
   white-space: nowrap;
   width: 100%;
+  position: absolute;
 
   @media screen and (max-width: ${themeGet('breakpoints.md')}) {
     max-width: 70%;
