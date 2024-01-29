@@ -1,7 +1,7 @@
 {
   "name": "@apollosproject/apollos-embeds",
   "description": "Apollos React embed widgets",
-  "version": "0.1.27",
+  "version": "0.1.28",
   "license": "MIT",
   "eslintIgnore": [
     "/node_modules",
@@ -60,9 +60,10 @@
     "dev": "craco start",
     "build": "node scripts/build.js",
     "test": "craco test",
-    "bump": "npm version patch && yarn build && git add . && git commit -m 'version bump' && git push && git push --tags && npm publish",
+    "bump": "npm version patch && yarn build && git add . && git commit -m 'version bump' && git push && git push --tags && npm publish && npm run flush-cdn",
     "format": "prettier --write .",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint ."
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+    "flush-cdn": "./flush-cdn-cache.sh"
   },
   "eslintConfig": {
     "extends": [
