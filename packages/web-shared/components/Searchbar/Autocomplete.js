@@ -159,7 +159,11 @@ export default function Autocomplete({
               });
             },
             getItemUrl({ item }) {
-              return `/?query=${item.name}`;
+              if (item?.name) {
+                return `/?query=${item.name}`;
+              } else {
+                return item.url;
+              }
             },
           },
           {
