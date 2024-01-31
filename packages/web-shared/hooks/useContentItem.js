@@ -88,62 +88,6 @@ export const GET_CONTENT_ITEM = gql`
         ... on FeaturesNode {
           featureFeed {
             id
-            features {
-              id
-              ... on HorizontalCardListFeature {
-                title
-                cards {
-                  id
-                  title
-                  summary
-                  coverImage {
-                    name
-                    sources {
-                      uri
-                    }
-                  }
-                  hasAction
-                  action
-                  actionIcon
-                  relatedNode {
-                    id
-                    __typename
-                    ... on ContentItem {
-                      title
-                    }
-                    ... on Url {
-                      url
-                    }
-                  }
-                }
-              }
-              ... on ButtonFeature {
-                action {
-                  title
-                  action
-                  relatedNode {
-                    id
-                    __typename
-                    ... on Url {
-                      url
-                    }
-                  }
-                }
-              }
-              ... on HtmlFeature {
-                content
-              }
-              ... on ScriptureFeature {
-                scriptures {
-                  id
-                  html
-                  reference
-                  copyright
-                  version
-                  text
-                }
-              }
-            }
           }
         }
       }
