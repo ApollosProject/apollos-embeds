@@ -10,11 +10,11 @@ const ResourceCard = withTheme(styled.div`
   padding-right: ${themeGet('space.s')};
   border-radius: 8px;
   background: ${themeGet('colors.neutral.gray6')};
-  align-items: space-around;
   width: 100%;
   box-sizing: border-box;
   gap: ${themeGet('space.xs')};
   ${system};
+  align-items: center;
 `);
 
 const LeadingAsset = withTheme(styled.div`

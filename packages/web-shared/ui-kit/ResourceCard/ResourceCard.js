@@ -70,22 +70,10 @@ function ResourceCard({ title, subtitle, leadingAsset, tailingIcon, onClick, ...
         {/* Title and Subtitle */}
         <Styled.Heading>
           <Styled.Title>
-            <Styled.Ellipse
-              width={{
-                _: '90%',
-              }}
-            >
-              {title}
-            </Styled.Ellipse>
+            <Styled.Ellipse width={'90%'}>{title}</Styled.Ellipse>
           </Styled.Title>
           <Styled.Subtitle>
-            <Styled.Ellipse
-              width={{
-                _: '90%',
-              }}
-            >
-              {subtitle}
-            </Styled.Ellipse>
+            <Styled.Ellipse width={'90%'}>{subtitle}</Styled.Ellipse>
           </Styled.Subtitle>
         </Styled.Heading>
       </Styled.Wrapper>
