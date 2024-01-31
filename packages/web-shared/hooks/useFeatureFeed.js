@@ -268,6 +268,32 @@ export const FEED_FEATURES = gql`
               }
             }
           }
+          ... on ButtonFeature {
+            action {
+              title
+              action
+              relatedNode {
+                id
+                __typename
+                ... on Url {
+                  url
+                }
+              }
+            }
+          }
+          ... on HtmlFeature {
+            content
+          }
+          ... on ScriptureFeature {
+            scriptures {
+              id
+              html
+              reference
+              copyright
+              version
+              text
+            }
+          }
         }
       }
     }

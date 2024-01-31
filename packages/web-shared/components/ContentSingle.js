@@ -12,7 +12,7 @@ import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/Breadc
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import { Box, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
-import { useHTMLContent, useVideoMediaProgress } from '../hooks';
+import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
 import { Title, ParentTitle, ParentSummary } from './ContentSingle.styles';
 
 import VideoPlayer from './VideoPlayer';
@@ -26,6 +26,17 @@ function ContentSingle(props = {}) {
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();
+
+  const feedId = props?.data?.featureFeed?.id;
+  const {
+    feedLoading,
+    feedError,
+    data: feedData,
+  } = useFeatureFeed({
+    variables: {
+      itemId: feedId,
+    },
+  });
 
   const invalidPage = !props.loading && !props.data;
 
@@ -70,7 +81,6 @@ function ContentSingle(props = {}) {
     parentChannel,
     childContentItemsConnection,
     siblingContentItemsConnection,
-    featureFeed,
     parentItem,
   } = props?.data;
 
@@ -79,7 +89,9 @@ function ContentSingle(props = {}) {
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
   const hasParent = !!parentItem;
-  const validFeatures = featureFeed?.features?.filter(
+
+  const feed = feedData?.node;
+  const validFeatures = feed?.features?.filter(
     (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
@@ -342,7 +354,7 @@ function ContentSingle(props = {}) {
         {/* Sub-Feature Feed */}
         {hasFeatures ? (
           <Box my="l">
-            <FeatureFeed data={featureFeed} />
+            <FeatureFeed data={feed} />
           </Box>
         ) : null}
       </Box>
