@@ -73,8 +73,7 @@ const Modal = (props = {}) => {
               <Box
                 width="100%"
                 display="flex"
-                mb="s"
-                mt="s"
+                mb="base"
                 alignItems="center"
                 justifyContent="center"
                 flexDirection={{ _: 'column-reverse', sm: 'row' }}
@@ -107,7 +106,7 @@ const Modal = (props = {}) => {
               <Box
                 width="100%"
                 display="flex"
-                mb="s"
+                mb="base"
                 alignItems="center"
                 justifyContent="space-between"
                 flexDirection={{ _: 'column-reverse', sm: 'row' }}
@@ -117,7 +116,7 @@ const Modal = (props = {}) => {
                   width={{
                     _: '100%',
                     md: '700px',
-                    lg: '900px',
+                    lg: '750px',
                   }}
                   mx="auto"
                   justifyContent="center"
