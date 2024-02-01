@@ -6,7 +6,6 @@ import ContentItemProvider from './ContentItemProvider';
 import FeatureFeedProvider from './FeatureFeedProvider';
 import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
-import TabFeedProvider from './TabFeedProvider';
 
 export {
   AppProvider,
@@ -17,5 +16,4 @@ export {
   FeatureFeedProvider,
   ModalProvider,
   SearchProvider,
-  TabFeedProvider,
 };

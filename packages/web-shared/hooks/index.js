@@ -13,7 +13,6 @@ export { default as useLivestreamStatus } from './useLivestreamStatus';
 export { default as useRequestLogin } from './useRequestLogin';
 export { default as useRequestRegister } from './useRequestRegister';
 export { default as useSearchQuery } from './useSearchQuery';
-export { default as useTabFeed } from './useTabFeed';
 export { default as useUpdateProfileFields } from './useUpdateProfileFields';
 export { default as useUploadProfileImage } from './useUploadProfileImage';
 export { default as useValidateLogin } from './useValidateLogin';

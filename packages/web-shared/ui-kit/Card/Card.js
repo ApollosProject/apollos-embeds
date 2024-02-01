@@ -1,13 +1,7 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
 
-import {
-  BodyText,
-  SmallBodyText,
-  Box,
-  H4,
-  systemPropTypes,
-} from '../../ui-kit';
+import { Box, systemPropTypes } from '../../ui-kit';
 
 function ContentCard(props = {}) {
   return (
