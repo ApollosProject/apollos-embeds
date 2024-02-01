@@ -21,16 +21,37 @@ function ScriptureFeature(props = {}) {
   };
 
   function parseBibleReference(reference) {
-    const regex = /^([\w\s]+)\s(\d+):(\d+)-?(\d+)?$/;
+    // This regex handles cases like 'Genesis 1-3' and 'Genesis 1:1-3:24'
+    const regex = /^([\w\s]+)\s(\d+)(?::(\d+))?(?:-(\d+)(?::(\d+))?)?$/;
     const match = reference.match(regex);
 
     if (!match) {
       return null; // Invalid format
     }
 
-    const [_, book, chapter, startVerse, endVerse] = match;
-    const title = `${book} ${chapter}`;
-    const verses = `${endVerse ? `Verses ${startVerse}-${endVerse}` : `Verse ${startVerse}`}`;
+    const [_, book, startChapter, startVerse, endChapter, endVerse] = match;
+    let title, verses;
+
+    if (endChapter || endVerse) {
+      // Case for a range
+      if (endChapter && !endVerse) {
+        // Range of chapters, e.g., 'Genesis 1-3'
+        title = `${book} ${startChapter}-${endChapter}`;
+        verses = `Chapters ${startChapter}-${endChapter}`;
+      } else if (startChapter !== endChapter) {
+        // Range of chapters and verses, e.g., 'Genesis 1:1-3:24'
+        title = `${book} ${startChapter}:${startVerse}-${endChapter}:${endVerse}`;
+        verses = `Verses ${startChapter}:${startVerse}-${endChapter}:${endVerse}`;
+      } else {
+        // Range within a single chapter, e.g., 'Genesis 1:1-24'
+        title = `${book} ${startChapter}:${startVerse}-${endVerse}`;
+        verses = `Verses ${startChapter}:${startVerse}-${endVerse}`;
+      }
+    } else {
+      // Single chapter and verse, e.g., 'Genesis 1:1'
+      title = `${book} ${startChapter}${startVerse ? `:${startVerse}` : ''}`;
+      verses = startVerse ? `Verse ${startChapter}:${startVerse}` : `Chapter ${startChapter}`;
+    }
 
     const result = {
       title,
