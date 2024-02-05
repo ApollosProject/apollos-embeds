@@ -18,6 +18,40 @@ const VIDEO_MEDIA_FIELDS = gql`
   }
 `;
 
+const CONTENT_CARD_FRAGMENT = gql`
+  fragment ContentCard on CardListItem {
+    id
+    title
+    labelText
+    summary
+    coverImage {
+      name
+      sources {
+        uri
+      }
+    }
+    hasAction
+    action
+    actionIcon
+    relatedNode {
+      id
+      __typename
+      ... on ContentItem {
+        parentItem {
+          title
+        }
+        title
+        videos {
+          ...VideoMediaFields
+        }
+      }
+      ... on Url {
+        url
+      }
+    }
+  }
+`;
+
 const CONTENT_NODE_FRAGMENT = gql`
   fragment ContentNodeFragment on ContentNode {
     title
@@ -62,4 +96,10 @@ const EVENT_FRAGMENT = gql`
   }
 `;
 
-export { VIDEO_MEDIA_FIELDS, CONTENT_NODE_FRAGMENT, CONTENT_SINGLE_FRAGMENT, EVENT_FRAGMENT };
+export {
+  VIDEO_MEDIA_FIELDS,
+  CONTENT_NODE_FRAGMENT,
+  CONTENT_SINGLE_FRAGMENT,
+  EVENT_FRAGMENT,
+  CONTENT_CARD_FRAGMENT,
+};

@@ -36,7 +36,7 @@ function HorizontalCardListFeature(props = {}) {
     if (item.action === 'OPEN_URL') {
       analytics.track('OpenUrl', {
         url: item?.relatedNode?.url,
-      });            
+      });
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -112,6 +112,7 @@ function HorizontalCardListFeature(props = {}) {
               image={props?.feature?.cards[0].coverImage}
               title={props?.feature?.cards[0].title}
               summary={props?.feature?.cards[0].subtitle}
+              channelLabel={props?.feature?.cards[0]?.relatedNode?.parentItem?.title}
               videoMedia={get(props?.feature?.cards[0], 'relatedNode?.videos[0]', null)}
               onClick={() => handleActionPress(props?.feature?.cards[0])}
               horizontal={true}
@@ -130,6 +131,7 @@ function HorizontalCardListFeature(props = {}) {
                   key={item.title}
                   image={item.coverImage}
                   title={item.title}
+                  channelLabel={item?.relatedNode?.parentItem?.title}
                   summary={item.summary}
                   onClick={() => handleActionPress(item)}
                   videoMedia={get(item, 'relatedNode?.videos[0]', null)}
@@ -155,6 +157,7 @@ function HorizontalCardListFeature(props = {}) {
               image={item.coverImage}
               title={item.title}
               summary={item.summary}
+              channelLabel={item?.relatedNode?.parentItem?.title}
               onClick={() => handleActionPress(item)}
               videoMedia={get(item, 'relatedNode?.videos[0]', null)}
               m={'0 20px 0 1px'}

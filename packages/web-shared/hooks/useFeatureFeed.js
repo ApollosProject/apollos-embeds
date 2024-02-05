@@ -1,8 +1,9 @@
 import { gql, useQuery } from '@apollo/client';
-import { VIDEO_MEDIA_FIELDS } from '../fragments';
+import { VIDEO_MEDIA_FIELDS, CONTENT_CARD_FRAGMENT } from '../fragments';
 
 export const FEED_FEATURES = gql`
   ${VIDEO_MEDIA_FIELDS}
+  ${CONTENT_CARD_FRAGMENT}
 
   query featureFeed($itemId: ID!) {
     node(id: $itemId) {
@@ -110,18 +111,7 @@ export const FEED_FEATURES = gql`
             title
             subtitle
             cards {
-              id
-              title
-              summary
-              coverImage {
-                name
-                sources {
-                  uri
-                }
-              }
-              hasAction
-              action
-              actionIcon
+              ...ContentCard
               relatedNode {
                 id
                 __typename
@@ -155,31 +145,7 @@ export const FEED_FEATURES = gql`
             title
             subtitle
             cards {
-              id
-              title
-              summary
-              coverImage {
-                name
-                sources {
-                  uri
-                }
-              }
-              hasAction
-              action
-              actionIcon
-              relatedNode {
-                id
-                __typename
-                ... on ContentItem {
-                  title
-                  videos {
-                    ...VideoMediaFields
-                  }
-                }
-                ... on Url {
-                  url
-                }
-              }
+              ...ContentCard
             }
           }
           ... on PrayerListFeature {

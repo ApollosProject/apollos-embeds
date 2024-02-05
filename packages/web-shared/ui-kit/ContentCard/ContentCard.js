@@ -2,10 +2,10 @@ import React from 'react';
 import { withTheme } from 'styled-components';
 import { Check } from 'phosphor-react';
 
-import { SmallBodyText, Box, H4, systemPropTypes, ProgressBar } from '../../ui-kit';
+import { SmallBodyText, Box, systemPropTypes, ProgressBar } from '../../ui-kit';
 import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
-import { BottomSlot, CompleteIndicator, Title, Summary } from './ContentCard.styles';
+import { BottomSlot, CompleteIndicator, Title, Summary, ChannelLabel } from './ContentCard.styles';
 
 function ContentCard(props = {}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
@@ -55,6 +55,9 @@ function ContentCard(props = {}) {
       </Box>
       {/* Masthead */}
       <Box padding="base" backdropFilter="blur(64px)" width={props.horizontal ? '50%' : ''}>
+        {props.channelLabel ? (
+          <ChannelLabel color="text.secondary">{props.channelLabel}</ChannelLabel>
+        ) : null}
         <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
         <Title>{props.title}</Title>
         <Summary color="text.secondary">{props.summary} </Summary>
