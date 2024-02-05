@@ -9,6 +9,7 @@ import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-pl
 import '@algolia/autocomplete-theme-classic';
 
 import { useSearchState } from '../../providers/SearchProvider';
+import { getURLFromType } from '../../utils';
 import Styled from './Search.styles';
 
 const MOBILE_BREAKPOINT = 428;
@@ -189,7 +190,11 @@ export default function Autocomplete({
               });
             },
             getItemUrl({ item }) {
-              return `/?query=${item.name}`;
+              if (item?.name) {
+                return `/?query=${item.name}`;
+              } else {
+                return `?id=${getURLFromType(item)}`;
+              }
             },
           },
         ];
