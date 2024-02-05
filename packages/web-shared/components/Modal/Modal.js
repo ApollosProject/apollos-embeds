@@ -77,6 +77,7 @@ const Modal = (props = {}) => {
                 alignItems="center"
                 justifyContent="center"
                 flexDirection={{ _: 'column-reverse', sm: 'row' }}
+                maxWidth={{ _: '100%', xs: '70%' }}
               >
                 <ChurchLogo
                   display="flex"
