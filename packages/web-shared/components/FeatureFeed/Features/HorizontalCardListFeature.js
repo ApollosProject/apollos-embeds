@@ -83,7 +83,6 @@ function HorizontalCardListFeature(props = {}) {
     return null;
   }
 
-  console.log(props.feature.cards);
   return (
     <Box pb="xxl" mb="l" className="apollos-widget-feature" {...props}>
       <Box display="flex" alignItems="center" mb="xs">
