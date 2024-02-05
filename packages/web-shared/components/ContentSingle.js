@@ -238,6 +238,12 @@ function ContentSingle(props = {}) {
             </>
           ) : null}
         </Box>
+        {/* Sub-Feature Feed */}
+        {hasFeatures ? (
+          <Box my="l">
+            <FeatureFeed data={feed} />
+          </Box>
+        ) : null}
         {/* Display content for series */}
         {hasChildContent ? (
           <Box mb="l">
@@ -349,13 +355,6 @@ function ContentSingle(props = {}) {
               </Box>
             </Box>
           </>
-        ) : null}
-
-        {/* Sub-Feature Feed */}
-        {hasFeatures ? (
-          <Box my="l">
-            <FeatureFeed data={feed} />
-          </Box>
         ) : null}
       </Box>
     </>
