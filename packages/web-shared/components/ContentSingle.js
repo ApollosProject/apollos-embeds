@@ -126,6 +126,8 @@ function ContentSingle(props = {}) {
     </BodyText>
   );
 
+  console.log('rendering....', siblingContentItems);
+
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
@@ -251,7 +253,7 @@ function ContentSingle(props = {}) {
 
             <Box
               display="grid"
-              gridGap="100px 30px"
+              gridGap="30px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
@@ -269,6 +271,7 @@ function ContentSingle(props = {}) {
                   summary={item.node?.summary}
                   onClick={() => handleActionPress(item.node)}
                   videoMedia={item.node?.videos?.[0]}
+                  channelLabel={item.node?.parentItem?.title}
                 />
               ))}
             </Box>
@@ -332,7 +335,7 @@ function ContentSingle(props = {}) {
               <H3 mb="xs">{props.feature?.title}</H3>
               <Box
                 display="grid"
-                gridGap="100px 30px"
+                gridGap="30px 30px"
                 gridTemplateColumns={{
                   _: 'repeat(1, minmax(0, 1fr));',
                   md: 'repeat(2, minmax(0, 1fr));',
@@ -350,6 +353,7 @@ function ContentSingle(props = {}) {
                     summary={item.node?.summary}
                     onClick={() => handleActionPress(item.node)}
                     videoMedia={item.node?.videos[0]}
+                    channelLabel={item.node?.parentItem?.title}
                   />
                 ))}
               </Box>

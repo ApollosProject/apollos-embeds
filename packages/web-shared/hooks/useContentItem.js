@@ -21,6 +21,9 @@ export const GET_CONTENT_ITEM = gql`
         uri
       }
     }
+    parentItem {
+      title
+    }
     videos {
       ...VideoMediaFields
     }

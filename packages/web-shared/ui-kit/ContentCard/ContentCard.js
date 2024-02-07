@@ -7,29 +7,39 @@ import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
 import { BottomSlot, CompleteIndicator, Title, Summary, ChannelLabel } from './ContentCard.styles';
 
-function ContentCard(props = {}) {
+function ContentCard({
+  videoMedia,
+  image,
+  title,
+  subtitle,
+  summary,
+  channelLabel,
+  horizontal,
+  onClick,
+  ...props
+}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
-    variables: { id: props.videoMedia?.id },
-    skip: !props.videoMedia?.id,
+    variables: { id: videoMedia?.id },
+    skip: !videoMedia?.id,
   });
 
   const percentWatched = getPercentWatched({
-    duration: props.videoMedia?.duration,
+    duration: videoMedia?.duration,
     userProgress,
   });
 
   return (
     <Box
       flex={1}
-      cursor={props.onClick ? 'pointer' : 'default'}
+      cursor={onClick ? 'pointer' : 'default'}
       borderRadius="xl"
       overflow="hidden"
       backgroundColor="neutral.gray6"
       height="100%"
-      display={props.horizontal ? 'flex' : ''}
+      display={horizontal ? 'flex' : ''}
       {...props}
     >
-      <Box position="relative" width={props.horizontal ? '50%' : ''}>
+      <Box position="relative" width={horizontal ? '50%' : ''}>
         {/* Image */}
         <Box
           backgroundSize="cover"
@@ -37,9 +47,7 @@ function ContentCard(props = {}) {
           backgroundPosition="center"
           backgroundRepeat="no-repeat"
           backgroundColor="material.regular"
-          backgroundImage={`url(${
-            props.image?.sources[0].uri ? props.image.sources[0].uri : null
-          })`}
+          backgroundImage={`url(${image?.sources[0].uri ? image.sources[0].uri : null})`}
           height="100%"
         />
         {/* Progress / Completed Indicators */}
@@ -54,13 +62,11 @@ function ContentCard(props = {}) {
         </BottomSlot>
       </Box>
       {/* Masthead */}
-      <Box padding="base" backdropFilter="blur(64px)" width={props.horizontal ? '50%' : ''}>
-        {props.channelLabel ? (
-          <ChannelLabel color="text.secondary">{props.channelLabel}</ChannelLabel>
-        ) : null}
-        <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
-        <Title>{props.title}</Title>
-        <Summary color="text.secondary">{props.summary} </Summary>
+      <Box padding="base" backdropFilter="blur(64px)" width={horizontal ? '50%' : ''}>
+        {channelLabel ? <ChannelLabel color="text.secondary">{channelLabel}</ChannelLabel> : null}
+        <SmallBodyText color="text.secondary">{subtitle}</SmallBodyText>
+        <Title>{title}</Title>
+        <Summary color="text.secondary">{summary} </Summary>
       </Box>
     </Box>
   );
