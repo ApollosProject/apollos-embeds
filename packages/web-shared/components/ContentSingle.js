@@ -126,7 +126,6 @@ function ContentSingle(props = {}) {
     </BodyText>
   );
 
-  console.log('rendering....', siblingContentItems);
 
   return (
     <>
