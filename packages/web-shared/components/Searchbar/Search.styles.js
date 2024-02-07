@@ -83,6 +83,15 @@ const Wrapper = withTheme(styled.div`
   .aa-Item {
     border-radius: 0;
   }
+
+  .chip-list-feature {
+    * > &:first-child {
+      margin-left: 1rem;
+    }
+    * > &:last-child {
+      margin-left: 1rem;
+    }
+  }
 `);
 
 const TextPrompt = withTheme(styled.div`
