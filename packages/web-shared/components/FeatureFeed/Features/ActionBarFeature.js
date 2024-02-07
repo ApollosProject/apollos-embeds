@@ -9,7 +9,7 @@ function ActionBarFeature(props = {}) {
   };
 
   return (
-    <Styled.ActionBar class="chip-list-feature">
+    <Styled.ActionBar>
       {props.feature?.actions?.map((item) => {
         return (
           <Styled.ActionBarItem flex="1" onClick={() => handleActionPress(item?.relatedNode?.url)}>
