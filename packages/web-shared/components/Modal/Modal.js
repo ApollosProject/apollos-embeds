@@ -94,7 +94,7 @@ const Modal = (props = {}) => {
                 mb="s"
                 alignItems="center"
                 justifyContent="space-between"
-                flexDirection={{ _: 'column-reverse', sm: 'row' }}
+                flexDirection={{ _: 'column-reverse', md: 'row' }}
               >
                 <Box width={{ _: '0', sm: '10%' }}></Box>
                 <Box
