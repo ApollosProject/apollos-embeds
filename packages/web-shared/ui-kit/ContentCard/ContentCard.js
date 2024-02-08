@@ -37,6 +37,7 @@ function ContentCard({
       backgroundColor="neutral.gray6"
       height="100%"
       display={horizontal ? 'flex' : ''}
+      onClick={onClick}
       {...props}
     >
       <Box position="relative" width={horizontal ? '50%' : ''}>
