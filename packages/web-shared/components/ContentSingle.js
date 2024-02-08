@@ -126,7 +126,6 @@ function ContentSingle(props = {}) {
     </BodyText>
   );
 
-
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
@@ -241,7 +240,7 @@ function ContentSingle(props = {}) {
         </Box>
         {/* Sub-Feature Feed */}
         {hasFeatures ? (
-          <Box my="l">
+          <Box mb="l">
             <FeatureFeed data={feed} />
           </Box>
         ) : null}

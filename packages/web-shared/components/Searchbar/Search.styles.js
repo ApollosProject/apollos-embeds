@@ -84,12 +84,14 @@ const Wrapper = withTheme(styled.div`
     border-radius: 0;
   }
 
-  .chip-list-feature {
-    * > &:first-child {
+  .chip-list-feature ul {
+    overflow-x: scroll;
+
+    & > *:first-child {
       margin-left: 1rem;
     }
-    * > &:last-child {
-      margin-left: 1rem;
+    & > *:last-child {
+      margin-right: 1rem;
     }
   }
 `);
