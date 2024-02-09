@@ -2,26 +2,25 @@ import React from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { getURLFromType } from '../../../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../../../ui-kit';
-import {
-  add as addBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../../providers/BreadcrumbProvider';
-import {
-  open as openModal,
-  set as setModal,
-  useModal,
-} from '../../../providers/ModalProvider';
 
+import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
+import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
+import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from 'phosphor-react';
+import { useAnalytics } from '../../../providers/AnalyticsProvider';
+
 function VerticalCardListFeature(props = {}) {
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const analytics = useAnalytics();
 
   const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL'){
+    if (item.action === 'OPEN_URL') {
+      analytics.track('OpenUrl', {
+        url: item?.relatedNode?.url,
+      });            
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -42,22 +41,24 @@ function VerticalCardListFeature(props = {}) {
   };
 
   const handlePrimaryActionPress = () => {
-    if (
-      searchParams.get('id') !==
-      getURLFromType(props?.feature?.primaryAction.relatedNode)
-    ) {
+    if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
       dispatchBreadcrumb(
         addBreadcrumb({
-          url: `?id=${getURLFromType(
-            props?.feature?.primaryAction.relatedNode
-          )}`,
+          url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
           title: props?.feature?.title,
         })
       );
       const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      state.modal
-        ? setSearchParams({ id })
-        : setSearchParams({ id, action: 'viewall' });
+
+      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
+        analytics.track('OpenFeatureFeed', {
+          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
+          fromFeatureId: props.feature?.id,
+          title: props.feature?.title,
+        });
+      }
+
+      state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
     }
   };
 
@@ -65,9 +66,9 @@ function VerticalCardListFeature(props = {}) {
   return (
     <Box pb="l" {...props}>
       <Box display="flex">
-        <H3 flex="1" mb="xs">
+        <H2 flex="1" mb="xs">
           {props.feature.title || props.feature.subtitle}
-        </H3>
+        </H2>
         {props?.feature?.cards?.length >= 5 && props?.feature?.primaryAction ? (
           <Button
             title="View All"
@@ -84,9 +85,7 @@ function VerticalCardListFeature(props = {}) {
           title={cards[0].title}
           summary={cards[0].summary}
           onClick={() => handleActionPress(cards[0])}
-          videoMedia={
-            cards[0].relatedNode?.videos ? cards[0].relatedNode.videos[0] : null
-          }
+          videoMedia={cards[0].relatedNode?.videos ? cards[0].relatedNode.videos[0] : null}
           horizontal={true}
         />
       ) : (

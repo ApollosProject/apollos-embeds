@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useCurrentChurch } from '../../hooks';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
@@ -17,17 +17,23 @@ import {
   useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
 import { X } from 'phosphor-react';
-import Logo from '../Logo';
+import Wordmark from '../Wordmark';
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
-  return <Logo source={currentChurch?.logo} theme={currentChurch?.theme} padding={10} {...props} />;
+
+  const { origin } = window.location;
+
+  return (
+    <Wordmark source={currentChurch?.wordmarkLightUrl} padding={10} {...props} href={origin} />
+  );
 }
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const ref = useRef();
 
   useEffect(() => {
     // Watch for changes to the `id` search param
@@ -51,21 +57,28 @@ const Modal = (props = {}) => {
     body.style.overflow = state.isOpen ? 'hidden' : 'auto';
   }, [state.isOpen]);
 
+  // When the content changes, scroll to the top of the page
+  useEffect(() => {
+    if (state.content && ref.current) {
+      ref.current.scrollTo(0, 0);
+    }
+  }, [state.content]);
+
   return (
     <Box>
       <Styled.Modal show={state.isOpen}>
         {state.content ? (
           <>
-            <Styled.ModalContainer>
+            <Styled.ModalContainer ref={ref}>
               <Box
                 width="100%"
                 display="flex"
-                mb="s"
-                alignItems="flex-start"
-                justifyContent="space-between"
+                mb="base"
+                alignItems="center"
+                justifyContent="center"
                 flexDirection={{ _: 'column-reverse', sm: 'row' }}
+                maxWidth={{ _: '100%', xs: '70%' }}
               >
-                <Box width={{ _: '0', sm: '10%' }}></Box>
                 <ChurchLogo
                   display="flex"
                   alignSelf="center"
@@ -75,23 +88,26 @@ const Modal = (props = {}) => {
                   size="60px"
                   borderRadius="xl"
                 />
-                <Box
-                  width={{ _: '100%', sm: '10%' }}
-                  mb={{ _: 'xs', sm: '0' }}
-                  ml={{ _: '0', sm: 'xs' }}
-                  display="flex"
-                  justifyContent="flex-end"
-                  alignItems="center"
-                >
-                  <Styled.Icon onClick={handleCloseModal} ml={{ _: 'auto', sm: '0' }}>
-                    <X size={16} weight="bold" />
-                  </Styled.Icon>
-                </Box>
+              </Box>
+              <Box
+                width={{ _: '100%', sm: '10%' }}
+                mb={{ _: 'xs', sm: '0' }}
+                ml={{ _: '0', sm: 'xs' }}
+                display="flex"
+                justifyContent="flex-end"
+                alignItems="center"
+                position="absolute"
+                top="xs"
+                right="xs"
+              >
+                <Styled.Icon onClick={handleCloseModal} ml={{ _: 'auto', sm: '0' }}>
+                  <X size={16} weight="bold" />
+                </Styled.Icon>
               </Box>
               <Box
                 width="100%"
                 display="flex"
-                mb="s"
+                mb="base"
                 alignItems="center"
                 justifyContent="space-between"
                 flexDirection={{ _: 'column-reverse', md: 'row' }}
@@ -101,7 +117,7 @@ const Modal = (props = {}) => {
                   width={{
                     _: '100%',
                     md: '700px',
-                    lg: '900px',
+                    lg: '750px',
                   }}
                   mx="auto"
                   justifyContent="center"

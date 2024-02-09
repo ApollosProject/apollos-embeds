@@ -1,9 +1,5 @@
-import React from 'react';
-import {
-  ContentItemProvider,
-  FeatureFeedProvider,
-  ContentFeedProvider,
-} from '../providers';
+import React, { useEffect } from 'react';
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
   ContentSingle,
   FeatureFeedList,
@@ -11,58 +7,49 @@ import {
   LivestreamSingle,
   Breadcrumbs,
   Modal,
+  ContentSeriesSingle,
 } from '../components';
 import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
 import { useSearchParams } from 'react-router-dom';
 import { parseSlugToIdAndType } from '../utils';
+import { useAnalytics } from '../providers/AnalyticsProvider';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
   const _id = searchParams.get('id');
-  const {type, randomId} = parseSlugToIdAndType(_id) ?? {};
+  const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
   switch (type) {
-    case 'EventContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
+    case 'Event':
     case 'UniversalContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={ContentSingle} options={options} />
-      );
+      return <ContentItemProvider Component={ContentSingle} options={options} />;
     }
     case 'ContentSeriesContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider
-          Component={ContentSeriesSingle}
-          options={options}
-        />
-      );
+      return <ContentItemProvider Component={ContentSeriesSingle} options={options} />;
     }
     case 'Livestream': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={LivestreamSingle} options={options} />
-      );
+      return <ContentItemProvider Component={LivestreamSingle} options={options} />;
     }
     case 'ContentChannel': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
-      return (
-        <ContentFeedProvider Component={ContentChannel} options={options} />
-      );
+      return <ContentFeedProvider Component={ContentChannel} options={options} />;
     }
     case 'Url': {
       return <h1>External Url</h1>;
@@ -71,9 +58,7 @@ function RenderFeatures(props) {
       const options = {
         variables: { itemId: `${type}:${randomId}` },
       };
-      return (
-        <FeatureFeedProvider Component={FeatureFeedList} options={options} />
-      );
+      return <FeatureFeedProvider Component={FeatureFeedList} options={options} />;
     }
     default: {
       return (
@@ -95,6 +80,15 @@ function RenderFeatures(props) {
 
 const FeatureFeed = (props) => {
   const state = useModalState();
+
+  const analytics = useAnalytics();
+
+  useEffect(() => {
+    console.log(props)
+    analytics.track('ViewFeatureFeed', {
+      featureFeedId: props.featureFeed,
+    })
+  }, []);
 
   return (
     <Box>

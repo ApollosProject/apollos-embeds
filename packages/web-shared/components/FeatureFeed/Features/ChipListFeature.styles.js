@@ -6,6 +6,7 @@ import { TypeStyles } from '../../../ui-kit/Typography';
 import { system } from '../../../ui-kit/_lib/system';
 
 const Chip = withTheme(styled.a`
+  ${TypeStyles.BodyText}
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,6 +18,7 @@ const Chip = withTheme(styled.a`
   padding: 6px 10px;
   white-space: nowrap;
   cursor: pointer;
+  text-decoration: none;
 
   &:hover {
     background: rgba(103, 103, 134, 0.2);
@@ -30,6 +32,9 @@ const List = withTheme(styled.ul`
   overflow-x: scroll;
   width: 100%;
   gap: 8px;
+  // Reset ul margin
+  margin-block-start: 0;
+  padding-inline-start: 0;
 
   scrollbar-width: thin; /* For Firefox */
   -ms-overflow-style: none; /* For Internet Explorer and Edge */

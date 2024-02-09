@@ -3,17 +3,14 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Searchbar } from '../components';
 
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
-  ContentItemProvider,
-  FeatureFeedProvider,
-  ContentFeedProvider,
-} from '../providers';
-import {
+  Breadcrumbs,
+  ContentChannel,
+  ContentSeriesSingle,
   ContentSingle,
   FeatureFeedList,
-  ContentChannel,
   LivestreamSingle,
-  Breadcrumbs,
   Modal,
 } from '../components';
 import { useModalState } from '../providers/ModalProvider';
@@ -29,7 +26,6 @@ function RenderFeatures(props) {
   const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
 
   switch (type) {
-    case 'EventContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem': {
@@ -37,38 +33,27 @@ function RenderFeatures(props) {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={ContentSingle} options={options} />
-      );
+      return <ContentItemProvider Component={ContentSingle} options={options} />;
     }
     case 'ContentSeriesContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider
-          Component={ContentSeriesSingle}
-          options={options}
-        />
-      );
+      return <ContentItemProvider Component={ContentSeriesSingle} options={options} />;
     }
     case 'Livestream': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={LivestreamSingle} options={options} />
-      );
+      return <ContentItemProvider Component={LivestreamSingle} options={options} />;
     }
     case 'ContentChannel': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
-      return (
-        <ContentFeedProvider Component={ContentChannel} options={options} />
-      );
+      return <ContentFeedProvider Component={ContentChannel} options={options} />;
     }
     case 'Url': {
       return <h1>External Url</h1>;
@@ -77,9 +62,7 @@ function RenderFeatures(props) {
       const options = {
         variables: { itemId: `${type}:${randomId}` },
       };
-      return (
-        <FeatureFeedProvider Component={FeatureFeedList} options={options} />
-      );
+      return <FeatureFeedProvider Component={FeatureFeedList} options={options} />;
     }
     default: {
       return (
@@ -100,12 +83,7 @@ const Search = (props) => {
       {modalState.modal ? (
         <Box>
           <Modal />
-          <Styled.Search
-            in={!searchState.loading}
-            timeout={300}
-            classNames="fade"
-            unmountOnExit
-          >
+          <Styled.Search in={!searchState.loading} timeout={300} classNames="fade" unmountOnExit>
             <Searchbar width="100%" />
           </Styled.Search>
         </Box>

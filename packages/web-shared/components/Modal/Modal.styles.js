@@ -1,8 +1,8 @@
-import { withTheme } from "styled-components";
-import styled, { css, keyframes } from "styled-components";
-import { themeGet } from "@styled-system/theme-get";
+import { withTheme } from 'styled-components';
+import styled, { css, keyframes } from 'styled-components';
+import { themeGet } from '@styled-system/theme-get';
 
-import { system } from "../../ui-kit/_lib/system";
+import { system } from '../../ui-kit/_lib/system';
 
 const slideIn = keyframes`
   from {
@@ -24,8 +24,8 @@ const slideOut = keyframes`
 `;
 
 const Modal = withTheme(styled.div`
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   position: fixed;
   bottom: 0;
   top: 0;
@@ -36,7 +36,7 @@ const Modal = withTheme(styled.div`
   align-items: center;
   z-index: 9999;
   animation: ${(props) => (props.show ? slideIn : slideOut)} 0.3s ease-in-out;
-  transform: translateY(${(props) => (props.show ? "0" : "100%")});
+  transform: translateY(${(props) => (props.show ? '0' : '100%')});
   ${system};
 `);
 
@@ -50,9 +50,10 @@ const ModalContainer = withTheme(styled.div`
   overflow-y: scroll;
   padding: 40px;
   box-sizing: border-box;
-  @media screen and (max-width: ${themeGet("breakpoints.sm")}) {
+  @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
     padding: 16px;
   }
+  position: relative;
   ${system};
 `);
 
@@ -72,7 +73,7 @@ const Icon = withTheme(styled.div`
   width: 32px;
 
   &:hover {
-    color: ${themeGet("colors.base.secondary")};
+    color: ${themeGet('colors.base.secondary')};
     cursor: pointer;
   }
   ${system};

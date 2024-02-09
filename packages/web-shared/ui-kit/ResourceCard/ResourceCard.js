@@ -5,14 +5,7 @@ import { systemPropTypes } from '../_lib/system';
 import { Box } from '..';
 import Styled from './ResourceCard.styles';
 
-function ResourceCard({
-  title,
-  subtitle,
-  leadingAsset,
-  tailingIcon,
-  onClick,
-  ...props
-}) {
+function ResourceCard({ title, subtitle, leadingAsset, tailingIcon, onClick, ...props }) {
   // Default tailing icon
   const Arrow = (
     <svg
@@ -36,13 +29,7 @@ function ResourceCard({
 
   // Default leading icon
   const Clip = (
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path
         d="M12.8412 4.35693L12.8413 4.35678C13.2869 3.90825 13.8168 3.55228 14.4004 3.30937C14.9841 3.06646 15.6101 2.94141 16.2423 2.94141C16.8745 2.94141 17.5005 3.06646 18.0842 3.30937C18.6679 3.55228 19.1977 3.90825 19.6433 4.35678L19.6436 4.35707C20.0921 4.80262 20.4481 5.33249 20.691 5.91618C20.9339 6.49986 21.0589 7.12583 21.0589 7.75804C21.0589 8.39026 20.9339 9.01623 20.691 9.59991C20.4481 10.1836 20.0921 10.7135 19.6436 11.159L19.6434 11.1592L16.9903 13.8123C16.088 14.7137 14.8647 15.22 13.5892 15.22C12.3137 15.22 11.0904 14.7137 10.188 13.8123L10.1881 13.8122L10.1858 13.8102C10.1168 13.7476 10.0612 13.6717 10.0224 13.5871C9.98365 13.5024 9.96246 13.4107 9.96017 13.3176C9.95788 13.2245 9.97453 13.1319 10.0091 13.0454C10.0437 12.959 10.0955 12.8804 10.1613 12.8146C10.2272 12.7487 10.3057 12.6969 10.3922 12.6623C10.4787 12.6278 10.5713 12.6111 10.6644 12.6134C10.7575 12.6157 10.8492 12.6369 10.9338 12.6757C11.0185 12.7145 11.0944 12.7701 11.1569 12.8391L11.1569 12.8391L11.1592 12.8414C11.805 13.4834 12.6786 13.8437 13.5892 13.8437C14.4998 13.8437 15.3734 13.4834 16.0192 12.8414L16.0193 12.8413L18.6723 10.1883C18.6724 10.1883 18.6724 10.1882 18.6724 10.1882C18.9926 9.86966 19.2466 9.491 19.42 9.07398C19.5934 8.65692 19.6826 8.20971 19.6826 7.75804C19.6826 7.30638 19.5934 6.85917 19.42 6.44211C19.2466 6.02505 18.9925 5.64636 18.6723 5.3278L18.6723 5.32778C18.0265 4.68583 17.1529 4.3255 16.2423 4.3255C15.3317 4.3255 14.4581 4.68583 13.8123 5.32778L13.8122 5.32791L11.957 7.18305C11.8264 7.3009 11.6555 7.36419 11.4796 7.35986C11.3032 7.35552 11.1352 7.2835 11.0104 7.15871C10.8856 7.03392 10.8136 6.86592 10.8092 6.68949C10.8049 6.51357 10.8682 6.3427 10.9861 6.21207L12.8412 4.35693Z"
         fill="#AFAFB3"
@@ -74,11 +61,7 @@ function ResourceCard({
   );
 
   return (
-    <Styled.ResourceCard
-      cursor={onClick ? 'pointer' : 'default'}
-      onClick={onClick}
-      {...props}
-    >
+    <Styled.ResourceCard cursor={onClick ? 'pointer' : 'default'} onClick={onClick} {...props}>
       <Box display="flex" justifyContent="center" alignItems="center">
         {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
         {LeadingAsset}
@@ -87,35 +70,15 @@ function ResourceCard({
         {/* Title and Subtitle */}
         <Styled.Heading>
           <Styled.Title>
-            <Styled.Ellipse
-              width={{
-                _: '100px',
-                sm: '250px',
-                md: '350px',
-                lg: '500px',
-              }}
-            >
-              {title}
-            </Styled.Ellipse>
+            <Styled.Ellipse width={'90%'}>{title}</Styled.Ellipse>
           </Styled.Title>
           <Styled.Subtitle>
-            <Styled.Ellipse
-              width={{
-                _: '100px',
-                sm: '150px',
-                md: '350px',
-                lg: '500px',
-              }}
-            >
-              {subtitle}
-            </Styled.Ellipse>
+            <Styled.Ellipse width={'90%'}>{subtitle}</Styled.Ellipse>
           </Styled.Subtitle>
         </Styled.Heading>
       </Styled.Wrapper>
       {/* Tailing Icon => defaults to arrow if undefined */}
-      <Styled.TailingIcon>
-        {tailingIcon ? tailingIcon : Arrow}
-      </Styled.TailingIcon>
+      <Styled.TailingIcon>{tailingIcon ? tailingIcon : Arrow}</Styled.TailingIcon>
     </Styled.ResourceCard>
   );
 }

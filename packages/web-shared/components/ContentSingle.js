@@ -5,17 +5,20 @@ import { Helmet } from 'react-helmet';
 
 import { getURLFromType } from '../utils';
 
+import { format, parseISO } from 'date-fns';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import { Box, H1, H2, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
-import { useHTMLContent, useVideoMediaProgress } from '../hooks';
-import { Title } from './ContentSingle.styles';
+import { Box, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
+import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
+import { Title, ParentTitle, ParentSummary } from './ContentSingle.styles';
 
 import VideoPlayer from './VideoPlayer';
+
 import InteractWhenLoaded from './InteractWhenLoaded';
+import TrackEventWhenLoaded from './TrackEventWhenLoaded';
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
@@ -24,11 +27,21 @@ function ContentSingle(props = {}) {
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();
 
+  const feedId = props?.data?.featureFeed?.id;
+  const {
+    feedLoading,
+    feedError,
+    data: feedData,
+  } = useFeatureFeed({
+    variables: {
+      itemId: feedId,
+    },
+  });
+
   const invalidPage = !props.loading && !props.data;
 
-  // temp
   // Video details
-  const videoMedia = props.data?.videos[0];
+  const videoMedia = props.data?.videos?.[0];
 
   const { userProgress } = useVideoMediaProgress({
     variables: { id: videoMedia?.id },
@@ -68,18 +81,30 @@ function ContentSingle(props = {}) {
     parentChannel,
     childContentItemsConnection,
     siblingContentItemsConnection,
-    featureFeed,
+    parentItem,
   } = props?.data;
 
   const childContentItems = childContentItemsConnection?.edges;
   const siblingContentItems = siblingContentItemsConnection?.edges;
   const hasChildContent = childContentItems?.length > 0;
   const hasSiblingContent = siblingContentItems?.length > 0;
-  const validFeatures = featureFeed?.features?.filter(
+  const hasParent = !!parentItem;
+
+  const feed = feedData?.node;
+  const validFeatures = feed?.features?.filter(
     (feature) => !!FeatureFeedComponentMap[feature?.__typename]
   );
   const hasFeatures = validFeatures?.length;
-
+  const formattedStartDate = props?.data?.start
+    ? format(parseISO(props.data.start), 'eee, MMMM do, yyyy')
+    : null;
+  const formattedStartToEnd =
+    props?.data?.start && props?.data?.end
+      ? `${format(parseISO(props.data.start), 'hh:mm a')} — ${format(
+          parseISO(props.data.end),
+          'hh:mm a'
+        )}`
+      : null;
   const handleActionPress = (item) => {
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
@@ -95,6 +120,13 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
+  const infoDivider = (
+    <BodyText color="text.tertiary" mx="xs">
+      |
+    </BodyText>
+  );
+
+
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
@@ -122,22 +154,32 @@ function ContentSingle(props = {}) {
         <meta name="twitter:image:alt" content={title} />
         {/* End Twitter tags */}
       </Helmet>
-      <Box margin="0 auto" maxWidth="750px">
+      <Box margin="0 auto" maxWidth={{ _: '750px' }}>
         <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
+        <TrackEventWhenLoaded
+          loading={props.loading}
+          eventName={'View Content'}
+          properties={{
+            itemId: props.data?.id,
+            parentId: props.data?.parentChannel?.id,
+            parentName: props.data?.parentChannel?.name,
+            title: props.data?.title,
+          }}
+        />
         {coverImage?.sources[0]?.uri || videoMedia ? (
           <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
             {videoMedia ? (
               <VideoPlayer
                 userProgress={userProgress}
                 parentNode={props.data}
-                coverImage={coverImage?.sources[0]?.uri}
+                coverImage={coverImage?.sources?.[0]?.uri}
               />
             ) : (
               <Box
                 backgroundSize="cover"
                 paddingBottom="56.25%"
                 backgroundPosition="center"
-                backgroundImage={`url(${coverImage?.sources[0]?.uri})`}
+                backgroundImage={`url(${coverImage?.sources?.[0]?.uri})`}
                 backgroundRepeat="no-repeat"
               />
             )}
@@ -163,10 +205,18 @@ function ContentSingle(props = {}) {
               {title && !hasChildContent ? <Title>{title}</Title> : null}
               {title && hasChildContent ? <Title>{title}</Title> : null}
               <Box display="flex" flexDirection="row">
-                {parentChannel.name ? (
+                {parentChannel?.name || props?.data?.location ? (
                   <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
-                    {parentChannel.name}
+                    {parentChannel?.name || props?.data?.location}
                   </BodyText>
+                ) : null}
+                {formattedStartDate ? infoDivider : null}
+                {formattedStartDate ? (
+                  <BodyText color="text.secondary">{formattedStartDate}</BodyText>
+                ) : null}
+                {formattedStartToEnd ? infoDivider : null}
+                {formattedStartToEnd ? (
+                  <BodyText color="text.secondary">{formattedStartToEnd}</BodyText>
                 ) : null}
               </Box>
             </Box>
@@ -189,6 +239,12 @@ function ContentSingle(props = {}) {
             </>
           ) : null}
         </Box>
+        {/* Sub-Feature Feed */}
+        {hasFeatures ? (
+          <Box my="l">
+            <FeatureFeed data={feed} />
+          </Box>
+        ) : null}
         {/* Display content for series */}
         {hasChildContent ? (
           <Box mb="l">
@@ -196,11 +252,10 @@ function ContentSingle(props = {}) {
 
             <Box
               display="grid"
-              gridGap="30px"
+              gridGap="30px 30px"
               gridTemplateColumns={{
                 _: 'repeat(1, minmax(0, 1fr));',
                 md: 'repeat(2, minmax(0, 1fr));',
-                lg: 'repeat(3, minmax(0, 1fr));',
               }}
               padding={{
                 _: '30px',
@@ -214,13 +269,62 @@ function ContentSingle(props = {}) {
                   title={item.node?.title}
                   summary={item.node?.summary}
                   onClick={() => handleActionPress(item.node)}
-                  videoMedia={item.node?.videos[0]}
+                  videoMedia={item.node?.videos?.[0]}
+                  channelLabel={item.node?.parentItem?.title}
                 />
               ))}
             </Box>
           </Box>
         ) : null}
         {/* Display content for sermons */}
+        {hasParent ? (
+          <>
+            <H3 flex="1" mr="xs" mb="xs">
+              This Series
+            </H3>
+            <Box flex="1" mb="l" minWidth="180px" {...props}>
+              <Box
+                position="relative"
+                display="flex"
+                backgroundColor="neutral.gray6"
+                overflow="hidden"
+                flexDirection={{ _: 'column', md: 'row' }}
+                mb="l"
+                borderRadius="l"
+                cursor="pointer"
+                onClick={() => handleActionPress(parentItem)}
+              >
+                {/* Image */}
+                <Box
+                  alignItems="center"
+                  backgroundColor="white"
+                  display="flex"
+                  overflow="hidden"
+                  width={{ _: '100%', md: '60%' }}
+                >
+                  <Box
+                    as="img"
+                    src={parentItem?.coverImage?.sources[0]?.uri}
+                    width="100%"
+                    height="100%"
+                  />
+                </Box>
+                {/* Masthead */}
+                <Box
+                  width={{ _: 'auto', md: '40%' }}
+                  padding={{ _: 'base', md: 'none' }}
+                  backdropFilter="blur(64px)"
+                  display="flex"
+                  flexDirection="column"
+                  paddingTop={{ md: 'xl' }}
+                >
+                  <ParentTitle>{parentItem?.title}</ParentTitle>
+                  <ParentSummary color="text.secondary">{parentItem?.summary}</ParentSummary>
+                </Box>
+              </Box>
+            </Box>
+          </>
+        ) : null}
         {hasSiblingContent ? (
           <>
             <H3 flex="1" mr="xs">
@@ -230,11 +334,10 @@ function ContentSingle(props = {}) {
               <H3 mb="xs">{props.feature?.title}</H3>
               <Box
                 display="grid"
-                gridGap="30px"
+                gridGap="30px 30px"
                 gridTemplateColumns={{
                   _: 'repeat(1, minmax(0, 1fr));',
                   md: 'repeat(2, minmax(0, 1fr));',
-                  lg: 'repeat(3, minmax(0, 1fr));',
                 }}
                 padding={{
                   _: '30px',
@@ -249,18 +352,12 @@ function ContentSingle(props = {}) {
                     summary={item.node?.summary}
                     onClick={() => handleActionPress(item.node)}
                     videoMedia={item.node?.videos[0]}
+                    channelLabel={item.node?.parentItem?.title}
                   />
                 ))}
               </Box>
             </Box>
           </>
-        ) : null}
-
-        {/* Sub-Feature Feed */}
-        {hasFeatures ? (
-          <Box my="l">
-            <FeatureFeed data={featureFeed} />
-          </Box>
         ) : null}
       </Box>
     </>

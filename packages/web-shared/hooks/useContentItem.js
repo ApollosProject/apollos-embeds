@@ -1,14 +1,44 @@
 import { gql, useQuery } from '@apollo/client';
-import { VIDEO_MEDIA_FIELDS } from '../fragments';
+import {
+  VIDEO_MEDIA_FIELDS,
+  CONTENT_NODE_FRAGMENT,
+  CONTENT_SINGLE_FRAGMENT,
+  EVENT_FRAGMENT,
+} from '../fragments';
 
 export const GET_CONTENT_ITEM = gql`
   ${VIDEO_MEDIA_FIELDS}
+  ${CONTENT_NODE_FRAGMENT}
+  ${CONTENT_SINGLE_FRAGMENT}
+  ${EVENT_FRAGMENT}
+
+  fragment SubCardFragment on ContentItem {
+    id
+    title
+    summary
+    coverImage {
+      sources {
+        uri
+      }
+    }
+    parentItem {
+      title
+    }
+    videos {
+      ...VideoMediaFields
+    }
+  }
 
   query getContentItem($id: ID!) {
     node(id: $id) {
       id
       __typename
 
+      ...ContentNodeFragment
+      ...ContentSingleFragment
+      ... on Event {
+        ...eventFragment
+      }
       ... on MediaContentItem {
         originId
       }
@@ -41,86 +71,26 @@ export const GET_CONTENT_ITEM = gql`
         videos {
           ...VideoMediaFields
         }
+        parentItem {
+          ...SubCardFragment
+        }
         childContentItemsConnection {
           edges {
             node {
-              id
-              title
-              summary
-              coverImage {
-                sources {
-                  uri
-                }
-              }
-              videos {
-                ...VideoMediaFields
-              }
+              ...SubCardFragment
             }
           }
         }
         siblingContentItemsConnection {
           edges {
             node {
-              id
-              title
-              summary
-              coverImage {
-                sources {
-                  uri
-                }
-              }
-              videos {
-                ...VideoMediaFields
-              }
+              ...SubCardFragment
             }
           }
         }
         ... on FeaturesNode {
           featureFeed {
             id
-            features {
-              id
-              ... on HorizontalCardListFeature {
-                title
-                cards {
-                  id
-                  title
-                  summary
-                  coverImage {
-                    name
-                    sources {
-                      uri
-                    }
-                  }
-                  hasAction
-                  action
-                  actionIcon
-                  relatedNode {
-                    id
-                    __typename
-                    ... on ContentItem {
-                      title
-                    }
-                    ... on Url {
-                      url
-                    }
-                  }
-                }
-              }
-              ... on ButtonFeature {
-                action {
-                  title
-                  action
-                  relatedNode {
-                    id
-                    __typename
-                    ... on Url {
-                      url
-                    }
-                  }
-                }
-              }
-            }
           }
         }
       }

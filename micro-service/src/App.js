@@ -29,10 +29,14 @@ function ChurchLogo(props) {
 }
 
 function App(props) {
-  const subdomain =
+  let subdomain =
     process.env.NODE_ENV === 'production'
       ? window.location.hostname.split('.').slice(0, -2).join('.')
       : window.location.hostname.split('.').slice(0, -1).join('.');
+
+  if (process.env.NODE_ENV !== 'production' && !subdomain) {
+    subdomain = 'apollos-demo';
+  }
   const churchSlug = subdomain.replace(/-/g, '_');
   const searchParams = new URLSearchParams(window.location.search);
   const _root = searchParams.get('root');
