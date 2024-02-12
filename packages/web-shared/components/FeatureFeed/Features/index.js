@@ -1,21 +1,25 @@
+import ActionBarFeature from './ActionBarFeature';
+import ActionListFeature from './ActionListFeature';
 import ButtonFeature from './ButtonFeature';
 import ChipListFeature from './ChipListFeature';
 import HeroListFeature from './HeroListFeature';
 import HorizontalCardListFeature from './HorizontalCardListFeature';
 import HorizontalMediaListFeature from './HorizontalMediaListFeature';
-import VerticalCardListFeature from './VerticalCardListFeature';
-import ActionListFeature from './ActionListFeature';
+import HtmlFeature from './HtmlFeature';
 import PrayerListFeature from './PrayerListFeature';
-import ActionBarFeature from './ActionBarFeature';
+import ScriptureFeature from './ScriptureFeature';
+import VerticalCardListFeature from './VerticalCardListFeature';
 
 export {
+  ActionBarFeature,
+  ActionListFeature,
   ButtonFeature,
   ChipListFeature,
   HeroListFeature,
   HorizontalCardListFeature,
   HorizontalMediaListFeature,
-  VerticalCardListFeature,
-  ActionListFeature,
+  HtmlFeature,
   PrayerListFeature,
-  ActionBarFeature,
+  ScriptureFeature,
+  VerticalCardListFeature,
 };

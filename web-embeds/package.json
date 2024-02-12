@@ -1,8 +1,12 @@
 {
   "name": "@apollosproject/apollos-embeds",
   "description": "Apollos React embed widgets",
-  "version": "0.1.18",
+  "version": "0.1.35",
   "license": "MIT",
+  "eslintIgnore": [
+    "/node_modules",
+    "/build"
+  ],
   "dependencies": {
     "@algolia/autocomplete-js": "^1.9.2",
     "@algolia/autocomplete-plugin-query-suggestions": "^1.9.2",
@@ -13,12 +17,14 @@
     "@apollosproject/web-shared": "link:../packages/web-shared",
     "@babel/preset-react": "^7.22.5",
     "@craco/craco": "^7.0.0",
+    "@segment/analytics-next": "^1.62.0",
     "@sentry/react": "^7.40.0",
     "@styled-system/theme-get": "^5.1.2",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "algoliasearch": "^4.17.0",
+    "amplitude-js": "^8.21.9",
     "apollo-upload-client": "^17.0.0",
     "apollo3-cache-persist": "^0.14.1",
     "autoprefixer": "^9.8.6",
@@ -26,6 +32,7 @@
     "color": "^4.2.3",
     "date-fns": "^2.29.3",
     "dompurify": "^2.4.3",
+    "eslint-plugin-prettier": "^5.1.3",
     "graphql": "^16.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
@@ -51,8 +58,12 @@
   "scripts": {
     "eject": "react-scripts eject",
     "dev": "craco start",
-    "build": "craco build",
-    "test": "craco test"
+    "build": "node scripts/build.js",
+    "test": "craco test",
+    "bump": "npm version patch && yarn build && git add . && git commit -m 'version bump' && git push && git push --tags && npm publish && npm run flush-cdn",
+    "format": "prettier --write .",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
+    "flush-cdn": "./flush-cdn-cache.sh"
   },
   "eslintConfig": {
     "extends": [
@@ -77,7 +88,12 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/runtime": "^7.22.5",
     "babel-plugin-module-resolver": "^5.0.0",
-    "babel-plugin-styled-components": "^2.1.4"
+    "babel-plugin-styled-components": "^2.1.4",
+    "eslint": "^8.45.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "prettier": "^3.0.0"
   },
   "targets": {
     "global": {

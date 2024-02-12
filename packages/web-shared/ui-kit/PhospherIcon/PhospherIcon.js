@@ -13,6 +13,11 @@ const PhospherIcon = ({ name, weight, size, color }) => {
   const normalizedName = pascalCase(name);
   const IconToRender = Icon[normalizedName];
 
+  if (!IconToRender) {
+    console.warn(`Icon ${name} not found in Phosphor-React`);
+    return null;
+  }
+
   return <IconToRender color={color} weight={weight} size={size} />;
 };
 

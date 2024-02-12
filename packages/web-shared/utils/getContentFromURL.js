@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  ContentItemProvider,
-  FeatureFeedProvider,
-  ContentFeedProvider,
-} from '../providers';
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
   ContentSingle,
   ContentSeriesSingle,
@@ -19,7 +15,6 @@ function getContentFromURL(url) {
   const { type, randomId } = parseSlugToIdAndType(url);
 
   switch (type) {
-    case 'EventContentItem':
     case 'MediaContentItem':
     case 'WeekendContentItem':
     case 'UniversalContentItem': {
@@ -27,50 +22,27 @@ function getContentFromURL(url) {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={ContentSingle} options={options} />
-      );
+      return <ContentItemProvider Component={ContentSingle} options={options} />;
     }
     case 'ContentSeriesContentItem': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider
-          Component={ContentSeriesSingle}
-          options={options}
-        />
-      );
-    }
-    case 'InformationalContentItem': {
-      const options = {
-        variables: { id: `${type}:${randomId}` },
-      };
-
-      return (
-        <ContentItemProvider
-          Component={InformationalContentSingle}
-          options={options}
-        />
-      );
+      return <ContentItemProvider Component={ContentSeriesSingle} options={options} />;
     }
     case 'Livestream': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
 
-      return (
-        <ContentItemProvider Component={LivestreamSingle} options={options} />
-      );
+      return <ContentItemProvider Component={LivestreamSingle} options={options} />;
     }
     case 'ContentChannel': {
       const options = {
         variables: { id: `${type}:${randomId}` },
       };
-      return (
-        <ContentFeedProvider Component={ContentChannel} options={options} />
-      );
+      return <ContentFeedProvider Component={ContentChannel} options={options} />;
     }
     case 'Url': {
       return <h1>External Url</h1>;
@@ -79,9 +51,7 @@ function getContentFromURL(url) {
       const options = {
         variables: { itemId: `${type}:${randomId}` },
       };
-      return (
-        <FeatureFeedProvider Component={FeatureFeedList} options={options} />
-      );
+      return <FeatureFeedProvider Component={FeatureFeedList} options={options} />;
     }
     default: {
       return <Box>No Content</Box>;

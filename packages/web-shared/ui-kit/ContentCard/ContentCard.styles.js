@@ -38,6 +38,16 @@ export const Summary = withTheme(styled.div`
   ${system}
 `);
 
+export const ChannelLabel = withTheme(styled.h6`
+  ${TypeStyles.SmallBodyText}
+  font-weight: 500;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  ${system}
+`);
+
 export const Title = withTheme(styled.div`
   ${TypeStyles.H4}
   display: -webkit-box;

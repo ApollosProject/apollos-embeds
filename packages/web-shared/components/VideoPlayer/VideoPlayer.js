@@ -1,9 +1,12 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../hooks';
 import { Box } from '../../ui-kit';
 import { EmbededPlayer, VideoPlayer as Player } from './VideoPlayer.styles';
+import amplitude from '../../analytics/amplitude';
+import { useAnalytics } from '../../providers/AnalyticsProvider';
+import { get } from 'lodash';
 
 const PROGRESS_CHECK_INTERVAL_SECONDS = 10;
 
@@ -12,15 +15,16 @@ const PROGRESS_CHECK_INTERVAL_SECONDS = 10;
 // the useEffect cleanup callback, where we send the analytics event.
 const _analyticsData = {
   position: 0,
-  totalLength: undefined,
 };
 
 function VideoPlayer(props = {}) {
   const previouslyReportedPlayhead = useRef(0);
   const [_interactWithNode] = useInteractWithNode();
   const parseHTMLContent = useHTMLContent();
+  const analytics = useAnalytics();
 
   const { status } = useLivestreamStatus(props.parentNode);
+  const sessionId = useRef(new Date().getTime());
   const isLiveStreaming = status === 'isLive';
 
   // Player state
@@ -36,6 +40,7 @@ function VideoPlayer(props = {}) {
   });
 
   const userProgress = props.userProgress || { playhead: 0, complete: false };
+
   // Callback wrapper for more concise invocation syntax, and so we can
   // automatically keep cache in sync with new interaction data.
   const interactWithVideo = useCallback(
@@ -81,6 +86,49 @@ function VideoPlayer(props = {}) {
     [_interactWithNode, videoMedia, isLiveStreaming]
   );
 
+  // This *could* be extracted to a local hook.
+  const trackVideoEvent = useCallback(
+    ({ eventName, properties }) => {
+      const today = new Date();
+      const livestreamProperties = isLiveStreaming
+        ? {
+            contentAssetId: `livestream_${today.getFullYear()}_${
+              today.getMonth() + 1
+            }_${today.getDate()}`,
+            livestream: true,
+            publishedAt: new Date(get(props, 'livestream.eventStartTime')),
+          }
+        : {};
+      const combinedProperties = {
+        sessionId: sessionId.current,
+        contentAssetId: get(props, 'parentNode.id'),
+        parentOriginId: get(props, 'parentNode.originId'),
+        originId: get(props, 'parentNode.videos[0].originId'),
+        originSource: get(props, 'parentNode.videos[0].originType'),
+        videoPlayer: 'Apollos Web',
+        sound: 1,
+        fullScreen: true,
+        livestream: false,
+        timestamp: today.toUTCString(),
+        title: get(props, 'parentNode.title'),
+        totalLength: get(props, 'parentNode.videos[0].duration'),
+        publishedAt: new Date(parseInt(get(props, 'parentNode.publishDate', '0'), 10)),
+        ...livestreamProperties,
+        ..._analyticsData,
+        ...properties,
+      };
+      analytics.track(eventName, combinedProperties);
+    },
+    [props, amplitude, isLiveStreaming]
+  );
+
+  // Trigger VideoPlaybackExited when unmounting
+  useEffect(() => {
+    return () => {
+      trackVideoEvent({ eventName: 'VideoPlaybackExited' });
+    };
+  }, []);
+
   const catchUpLivestream = () => {
     const eventStartTime = props.parentNode?.start;
     const millisecondsSinceStart = new Date() - new Date(eventStartTime);
@@ -92,9 +140,12 @@ function VideoPlayer(props = {}) {
   // ------------------------------------------
 
   const handleVideoLoad = async (evt) => {
+    // TODO: Is this needed? According to Apollos TV/Roku Segment Events: totalLength => Total length of the video, in seconds
+    // Total length of the video is passed in with video source props: props.parentNode.videos[0].duration
     const newDuration = Math.floor(evt.duration, 2);
+    // _analyticsData.totalLength = newDuration;
     setDuration(newDuration);
-    _analyticsData.totalLength = newDuration;
+
     if (isLiveStreaming) {
       catchUpLivestream();
     } else if (!isLiveStreaming && (!userProgress || userProgress?.complete)) {
@@ -110,10 +161,12 @@ function VideoPlayer(props = {}) {
       const { playhead } = userProgress;
       playerRef.current?.seekTo(playhead);
     }
+    trackVideoEvent({ eventName: 'VideoPlaybackStarted' });
   };
 
   const handleVideoEnded = async () => {
     interactWithVideo('COMPLETE');
+    trackVideoEvent({ eventName: 'VideoPlaybackCompleted' });
     if (props.onVideoEnd instanceof Function) {
       props.onVideoEnd();
     }
@@ -122,6 +175,7 @@ function VideoPlayer(props = {}) {
   const handleVideoPlayed = () => {
     if (paused) {
       setPaused(false);
+      trackVideoEvent({ eventName: 'VideoPlaybackResumed' });
     }
   };
 
@@ -131,6 +185,7 @@ function VideoPlayer(props = {}) {
       interactWithVideo('VIEW', {
         progress: currentTime,
       });
+      trackVideoEvent({ eventName: 'VideoPlaybackPaused' });
     }
   };
 
@@ -144,13 +199,24 @@ function VideoPlayer(props = {}) {
 
   const handleVideoProgress = (evt) => {
     const newCurrentTime = Math.floor(evt.playedSeconds);
-
-    setCurrentTime(newCurrentTime);
+    const oldCurrentTime = Math.floor(currentTime);
     _analyticsData.position = newCurrentTime;
+    setCurrentTime(newCurrentTime);
 
     // covers rewinding
     if (progressTime > currentTime) {
       setProgressTime(currentTime);
+    }
+
+    if (Math.abs(newCurrentTime - oldCurrentTime) >= 2) {
+      // If the currentTime moves more than 1 second, we know we are skipping
+      setProgressTime(newCurrentTime);
+      setCurrentTime(newCurrentTime);
+      trackVideoEvent({
+        eventName: 'VideoPlaybackSeekStarted',
+        properties: { position: oldCurrentTime, seekPosition: newCurrentTime },
+      });
+      trackVideoEvent({ eventName: 'VideoPlaybackSeekCompleted' });
     }
 
     // Store the users' progress via an Interaction if enough seconds have elapsed
@@ -160,12 +226,14 @@ function VideoPlayer(props = {}) {
       interactWithVideo('VIEW', {
         progress: currentTime,
       });
+      trackVideoEvent({ eventName: 'VideoContentPlaying' });
     }
   };
 
   const handleVideoError = (evt) => {
     // eslint-disable-next-line no-console
     console.error('Video Error', evt);
+    trackVideoEvent({ eventName: 'VideoPlaybackInterrupted' });
   };
 
   const source = isLiveStreaming

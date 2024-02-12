@@ -10,6 +10,7 @@ export const VALIDATE_REGISTER = gql`
         firstName
         lastName
         email
+        phone
         campus {
           name
         }

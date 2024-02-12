@@ -25,21 +25,21 @@ function Breadcrumbs(props = {}) {
   const pathname = window.location.pathname;
   const dynamicRoute = /^\/[a-z0-9-]+$/i;
 
+  if (state.length === 0) {
+    return null;
+  }
+
   return (
-    <Box display="flex" alignItems="center" mb="xl">
-      {state.length > 0 ? (
-        <Button
-          variant="link"
-          title={
-            dynamicRoute.test(pathname)
-              ? `${pathname.slice(1).charAt(0).toUpperCase()}${pathname.slice(
-                  2
-                )}`
-              : 'Home'
-          }
-          onClick={() => handleBreadClick({ id: -1, url: '' })}
-        />
-      ) : null}
+    <Box display="flex" alignItems="center" mb="base">
+      <Button
+        variant="link"
+        title={
+          dynamicRoute.test(pathname)
+            ? `${pathname.slice(1).charAt(0).toUpperCase()}${pathname.slice(2)}`
+            : 'Home'
+        }
+        onClick={() => handleBreadClick({ id: -1, url: '' })}
+      />
 
       {state.map(function (item) {
         if (state.length === item.id + 1) {

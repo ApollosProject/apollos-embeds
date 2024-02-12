@@ -1,0 +1,27 @@
+name: Lint Web Embeds
+
+on:
+  push:
+    paths:
+      - 'web-embeds/**'
+  pull_request:
+    paths:
+      - 'web-embeds/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '16'
+
+      - name: Install Dependencies
+        run: cd web-embeds && yarn install
+
+      - name: Run Lint
+        run: cd web-embeds && yarn lint

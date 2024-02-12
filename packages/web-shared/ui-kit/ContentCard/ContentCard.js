@@ -2,56 +2,53 @@ import React from 'react';
 import { withTheme } from 'styled-components';
 import { Check } from 'phosphor-react';
 
-import {
-  SmallBodyText,
-  Box,
-  H4,
-  systemPropTypes,
-  ProgressBar,
-} from '../../ui-kit';
+import { SmallBodyText, Box, systemPropTypes, ProgressBar } from '../../ui-kit';
 import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
-import {
-  BottomSlot,
-  CompleteIndicator,
-  Title,
-  Summary,
-} from './ContentCard.styles';
+import { BottomSlot, CompleteIndicator, Title, Summary, ChannelLabel } from './ContentCard.styles';
 
-function ContentCard(props = {}) {
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: props.videoMedia?.id },
-      skip: !props.videoMedia?.id,
-    }
-  );
+function ContentCard({
+  videoMedia,
+  image,
+  title,
+  subtitle,
+  summary,
+  channelLabel,
+  horizontal,
+  onClick,
+  ...props
+}) {
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
+    variables: { id: videoMedia?.id },
+    skip: !videoMedia?.id,
+  });
 
   const percentWatched = getPercentWatched({
-    duration: props.videoMedia?.duration,
+    duration: videoMedia?.duration,
     userProgress,
   });
 
   return (
     <Box
       flex={1}
-      cursor={props.onClick ? 'pointer' : 'default'}
+      cursor={onClick ? 'pointer' : 'default'}
       borderRadius="xl"
       overflow="hidden"
       backgroundColor="neutral.gray6"
       height="100%"
-      display={props.horizontal ? 'flex' : ''}
+      display={horizontal ? 'flex' : ''}
+      onClick={onClick}
       {...props}
     >
-      <Box position="relative" width={props.horizontal ? '50%' : ''}>
+      <Box position="relative" width={horizontal ? '50%' : ''}>
         {/* Image */}
         <Box
           backgroundSize="cover"
           paddingBottom="56.25%"
           backgroundPosition="center"
+          backgroundRepeat="no-repeat"
           backgroundColor="material.regular"
-          backgroundImage={`url(${
-            props.image?.sources[0].uri ? props.image.sources[0].uri : null
-          })`}
+          backgroundImage={`url(${image?.sources[0].uri ? image.sources[0].uri : null})`}
           height="100%"
         />
         {/* Progress / Completed Indicators */}
@@ -66,14 +63,11 @@ function ContentCard(props = {}) {
         </BottomSlot>
       </Box>
       {/* Masthead */}
-      <Box
-        padding="base"
-        backdropFilter="blur(64px)"
-        width={props.horizontal ? '50%' : ''}
-      >
-        <SmallBodyText color="text.secondary">{props.subtitle}</SmallBodyText>
-        <Title>{props.title}</Title>
-        <Summary color="text.secondary">{props.summary} </Summary>
+      <Box padding="base" backdropFilter="blur(64px)" width={horizontal ? '50%' : ''}>
+        {channelLabel ? <ChannelLabel color="text.secondary">{channelLabel}</ChannelLabel> : null}
+        <SmallBodyText color="text.secondary">{subtitle}</SmallBodyText>
+        <Title>{title}</Title>
+        <Summary color="text.secondary">{summary} </Summary>
       </Box>
     </Box>
   );
