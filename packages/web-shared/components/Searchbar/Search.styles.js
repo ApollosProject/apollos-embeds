@@ -86,6 +86,8 @@ const Wrapper = withTheme(styled.div`
 
   .chip-list-feature ul {
     overflow-x: auto;
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.5rem;
 
     & > *:first-child {
       margin-left: 1rem;
