@@ -71,7 +71,6 @@ function HeroListFeature(props = {}) {
 
   const actions = props.feature?.actions;
 
-  console.log(props);
 
   return (
     <Box mb="base" minWidth="180px" {...props}>
