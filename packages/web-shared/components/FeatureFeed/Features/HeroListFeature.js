@@ -20,7 +20,7 @@ function HeroListFeature(props = {}) {
     if (item.action === 'OPEN_URL') {
       analytics.track('OpenUrl', {
         url: item?.relatedNode?.url,
-      });      
+      });
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -70,6 +70,8 @@ function HeroListFeature(props = {}) {
   };
 
   const actions = props.feature?.actions;
+
+  console.log(props);
 
   return (
     <Box mb="base" minWidth="180px" {...props}>
@@ -121,6 +123,11 @@ function HeroListFeature(props = {}) {
           flexDirection="column"
           paddingTop={{ md: 'xl', lg: 'xxxl' }}
         >
+          {props?.feature?.heroCard?.relatedNode?.parentItem?.title ? (
+            <Styled.ChannelLabel color="text.secondary">
+              {props?.feature?.heroCard?.relatedNode?.parentItem?.title}
+            </Styled.ChannelLabel>
+          ) : null}
           <Styled.Title>{props?.feature?.heroCard?.title}</Styled.Title>
           <Styled.Summary color="text.secondary">
             {props?.feature?.heroCard?.summary}
