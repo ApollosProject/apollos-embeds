@@ -85,7 +85,7 @@ const Wrapper = withTheme(styled.div`
   }
 
   .chip-list-feature ul {
-    overflow-x: scroll;
+    overflow-x: auto;
 
     & > *:first-child {
       margin-left: 1rem;
