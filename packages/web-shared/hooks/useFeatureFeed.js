@@ -176,30 +176,11 @@ export const FEED_FEATURES = gql`
             title
             subtitle
             heroCard {
-              id
-              title
-              labelText
-              summary
-              coverImage {
-                name
-                sources {
-                  uri
-                }
-              }
-              hasAction
-              action
-              actionIcon
+              ...ContentCard
               relatedNode {
-                id
-                __typename
-
                 ... on ContentItem {
-                  title
                   originId
                   originType
-                  videos {
-                    ...VideoMediaFields
-                  }
                 }
               }
             }
