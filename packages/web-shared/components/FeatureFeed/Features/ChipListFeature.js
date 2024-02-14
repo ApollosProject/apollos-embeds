@@ -8,11 +8,15 @@ function ChipListFeature(props = {}) {
     return null;
   }
 
+  const title = props.feature.title || props.feature.subtitle;
+
   return (
     <Box className="chip-list-feature">
-      <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        {props.feature.title || props.feature.subtitle}
-      </Box>
+      {!!title ? (
+        <Box padding="xs" fontWeight="600" color="base.gray" id="results">
+          {title}
+        </Box>
+      ) : null}
       <Styled.List>
         {props.feature?.chips?.map(({ title, iconName, relatedNode }, index) => {
           return (
