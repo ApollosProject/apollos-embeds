@@ -66,7 +66,7 @@ For the 'FeatureFeed' embed, which displays the church's content, add `data-type
 
 _⚠️ Make sure to replace [INSERT_CHURCH_SLUG_HERE] with your church's unique identifier, or 'slug'._
 
-### Disabling Caching for Local Testing
+### Enabling Caching for Local Frustration
 
 For local development and testing purposes, you might want to enable caching to ensure you're not receiving the latest responses directly from the API. To do this, please refer to the Apollo client configuration file:
 
