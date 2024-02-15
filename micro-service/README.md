@@ -68,7 +68,7 @@ _⚠️ Make sure to replace [INSERT_CHURCH_SLUG_HERE] with your church's unique
 
 ### Disabling Caching for Local Testing
 
-For local development and testing purposes, you might want to disable caching to ensure you're receiving the latest responses directly from the API. To do this, please refer to the Apollo client configuration file:
+For local development and testing purposes, you might want to enable caching to ensure you're not receiving the latest responses directly from the API. To do this, please refer to the Apollo client configuration file:
 
 [../packages/web-shared/client/apollosApiLink.js](../packages/web-shared/client/apollosApiLink.js)
 
