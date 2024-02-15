@@ -53,6 +53,11 @@ const Summary = withTheme(styled.div`
   ${system}
 `);
 
+const ChannelLabel = withTheme(styled.h3`
+  ${TypeStyles.SmallBodyText}
+  ${system}
+`);
+
 const Container = styled.div`
   display: grid;
 
@@ -83,4 +88,5 @@ export default {
   Summary,
   Container,
   Item,
+  ChannelLabel,
 };

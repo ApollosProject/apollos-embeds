@@ -29,7 +29,6 @@ const Chip = withTheme(styled.a`
 const List = withTheme(styled.ul`
   display: flex;
   align-items: center;
-  overflow-x: scroll;
   width: 100%;
   gap: 8px;
   // Reset ul margin
