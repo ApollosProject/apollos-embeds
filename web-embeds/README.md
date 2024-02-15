@@ -130,4 +130,3 @@ In this file, locate the header configuration within the `apollosApiLink` functi
 | ymca_gc                    |
 
 ---
-```
