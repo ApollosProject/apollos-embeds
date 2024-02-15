@@ -70,7 +70,7 @@ const Searchbar = (props = {}) => {
           sm: '400px',
         }}
       >
-        What can we help you find?
+        What are you looking for?
       </Box>
     </Styled.TextPrompt>
   );
