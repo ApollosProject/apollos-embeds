@@ -75,7 +75,7 @@ For local development and testing purposes, you might want to enable caching to 
 In this file, locate the header configuration within the `apollosApiLink` function and comment the following line:
 
 ```javascript
-// 'x-cache-me-not': 1,
+'x-cache-me-not': 1,
 
 
 ### Options
