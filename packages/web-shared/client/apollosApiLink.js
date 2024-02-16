@@ -8,6 +8,7 @@ const apollosApiLink = (church_slug) =>
       headers: {
         ...headers,
         'x-church': church_slug,
+        'x-cache-me-not': 1,
       },
     }));
 
