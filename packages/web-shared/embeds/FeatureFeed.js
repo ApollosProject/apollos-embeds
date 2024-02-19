@@ -14,68 +14,32 @@ import { Box } from '../ui-kit';
 import { useSearchParams } from 'react-router-dom';
 import { parseSlugToIdAndType } from '../utils';
 import { useAnalytics } from '../providers/AnalyticsProvider';
+import { getComponentFromType } from '../utils/getContentFromURL';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
   const _id = searchParams.get('id');
   const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
-  switch (type) {
-    case 'MediaContentItem':
-    case 'WeekendContentItem':
-    case 'Event':
-    case 'UniversalContentItem': {
-      const options = {
-        variables: { id: `${type}:${randomId}` },
-      };
+  const Component = getComponentFromType({ type, id: randomId });
 
-      return <ContentItemProvider Component={ContentSingle} options={options} />;
-    }
-    case 'ContentSeriesContentItem': {
-      const options = {
-        variables: { id: `${type}:${randomId}` },
-      };
-
-      return <ContentItemProvider Component={ContentSeriesSingle} options={options} />;
-    }
-    case 'Livestream': {
-      const options = {
-        variables: { id: `${type}:${randomId}` },
-      };
-
-      return <ContentItemProvider Component={LivestreamSingle} options={options} />;
-    }
-    case 'ContentChannel': {
-      const options = {
-        variables: { id: `${type}:${randomId}` },
-      };
-      return <ContentFeedProvider Component={ContentChannel} options={options} />;
-    }
-    case 'Url': {
-      return <h1>External Url</h1>;
-    }
-    case 'FeatureFeed': {
-      const options = {
-        variables: { itemId: `${type}:${randomId}` },
-      };
-      return <FeatureFeedProvider Component={FeatureFeedList} options={options} />;
-    }
-    default: {
-      return (
-        <Box>
-          <FeatureFeedProvider
-            Component={FeatureFeedList}
-            options={{
-              variables: {
-                itemId: props.featureFeed,
-              },
-            }}
-            {...props}
-          />
-        </Box>
-      );
-    }
+  if (Component) {
+    return Component;
   }
+  // If not component is found, fallback to a FeatureFeed
+  return (
+    <Box>
+      <FeatureFeedProvider
+        Component={FeatureFeedList}
+        options={{
+          variables: {
+            itemId: props.featureFeed,
+          },
+        }}
+        {...props}
+      />
+    </Box>
+  );
 }
 
 const FeatureFeed = (props) => {
@@ -84,10 +48,10 @@ const FeatureFeed = (props) => {
   const analytics = useAnalytics();
 
   useEffect(() => {
-    console.log(props)
+    console.log(props);
     analytics.track('ViewFeatureFeed', {
       featureFeedId: props.featureFeed,
-    })
+    });
   }, []);
 
   return (

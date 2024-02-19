@@ -21,44 +21,48 @@ function ScriptureFeature(props = {}) {
   };
 
   function parseBibleReference(reference) {
-    // This regex handles cases like 'Genesis 1-3' and 'Genesis 1:1-3:24'
-    const regex = /^([\w\s]+)\s(\d+)(?::(\d+))?(?:-(\d+)(?::(\d+))?)?$/;
+    const regex = /^([\w\s]+)\s(\d+)(?::(\d+))?(?:-(\d+)?(?::(\d+))?)?$/;
     const match = reference.match(regex);
 
     if (!match) {
       return null; // Invalid format
     }
 
-    const [_, book, startChapter, startVerse, endChapter, endVerse] = match;
-    let title, verses;
+    const [_, book, startChapter, startVerse = '', endChapterOrVerse, endVerse = ''] = match;
 
-    if (endChapter || endVerse) {
-      // Case for a range
-      if (endChapter && !endVerse) {
-        // Range of chapters, e.g., 'Genesis 1-3'
-        title = `${book} ${startChapter}-${endChapter}`;
-        verses = `Chapters ${startChapter}-${endChapter}`;
-      } else if (startChapter !== endChapter) {
-        // Range of chapters and verses, e.g., 'Genesis 1:1-3:24'
-        title = `${book} ${startChapter}:${startVerse}-${endChapter}:${endVerse}`;
-        verses = `Verses ${startChapter}:${startVerse}-${endChapter}:${endVerse}`;
-      } else {
-        // Range within a single chapter, e.g., 'Genesis 1:1-24'
-        title = `${book} ${startChapter}:${startVerse}-${endVerse}`;
-        verses = `Verses ${startChapter}:${startVerse}-${endVerse}`;
-      }
+    let title, verses;
+    let isRangeWithinSingleChapter = false;
+    let actualEndVerse = endVerse;
+
+    // Determine if it's a range within the same chapter
+    if (startChapter === endChapterOrVerse || (startVerse && endChapterOrVerse && !endVerse)) {
+      isRangeWithinSingleChapter = true;
+      // If endChapterOrVerse is not empty and endVerse is empty, it means endChapterOrVerse is actually the endVerse
+      actualEndVerse = endChapterOrVerse && !endVerse ? endChapterOrVerse : endVerse;
+    }
+
+    if (isRangeWithinSingleChapter) {
+      // Range within the same chapter
+      title = `${book} ${startChapter}:${startVerse}-${actualEndVerse}`;
+      verses = `Verses ${startChapter}:${startVerse}-${actualEndVerse}`;
+    } else if (startVerse && endVerse) {
+      // Range spans chapters and verses
+      title = `${book} ${startChapter}:${startVerse}-${endChapterOrVerse}:${endVerse}`;
+      verses = `Verses ${startChapter}:${startVerse}-${endChapterOrVerse}:${endVerse}`;
+    } else if (!startVerse && endChapterOrVerse) {
+      // Range spans entire chapters
+      title = `${book} ${startChapter}-${endChapterOrVerse}`;
+      verses = `Chapters ${startChapter}-${endChapterOrVerse}`;
     } else {
-      // Single chapter and verse, e.g., 'Genesis 1:1'
-      title = `${book} ${startChapter}${startVerse ? `:${startVerse}` : ''}`;
+      // Single chapter or verse
+      title = `${book} ${startChapter}${startVerse ? ':' + startVerse : ''}`;
       verses = startVerse ? `Verse ${startChapter}:${startVerse}` : `Chapter ${startChapter}`;
     }
 
-    const result = {
+    return {
       title,
       verses,
     };
-
-    return result;
   }
 
   const ScriptureItem = ({ scripture }) => {

@@ -11,36 +11,35 @@ import {
 import parseSlugToIdAndType from './parseSlugToIdAndType';
 import { Box } from '../ui-kit';
 
-function getContentFromURL(url) {
-  const { type, randomId } = parseSlugToIdAndType(url);
-
+export function getComponentFromType({ type, id }) {
   switch (type) {
     case 'MediaContentItem':
     case 'WeekendContentItem':
+    case 'Event':
     case 'UniversalContentItem': {
       const options = {
-        variables: { id: `${type}:${randomId}` },
+        variables: { id: `${type}:${id}` },
       };
 
       return <ContentItemProvider Component={ContentSingle} options={options} />;
     }
     case 'ContentSeriesContentItem': {
       const options = {
-        variables: { id: `${type}:${randomId}` },
+        variables: { id: `${type}:${id}` },
       };
 
       return <ContentItemProvider Component={ContentSeriesSingle} options={options} />;
     }
     case 'Livestream': {
       const options = {
-        variables: { id: `${type}:${randomId}` },
+        variables: { id: `${type}:${id}` },
       };
 
       return <ContentItemProvider Component={LivestreamSingle} options={options} />;
     }
     case 'ContentChannel': {
       const options = {
-        variables: { id: `${type}:${randomId}` },
+        variables: { id: `${type}:${id}` },
       };
       return <ContentFeedProvider Component={ContentChannel} options={options} />;
     }
@@ -49,14 +48,20 @@ function getContentFromURL(url) {
     }
     case 'FeatureFeed': {
       const options = {
-        variables: { itemId: `${type}:${randomId}` },
+        variables: { itemId: `${type}:${id}` },
       };
       return <FeatureFeedProvider Component={FeatureFeedList} options={options} />;
     }
     default: {
-      return <Box>No Content</Box>;
+      return null;
     }
   }
+}
+
+function getContentFromURL(url) {
+  const { type, randomId } = parseSlugToIdAndType(url) ?? {};
+
+  return getComponentFromType({ type, id: randomId });
 }
 
 export default getContentFromURL;
