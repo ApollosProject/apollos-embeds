@@ -39,19 +39,19 @@ const infoDivider = (
 
 const CalendarIconWrapper = styled.span`
   margin-right: ${({ theme }) => theme.space.xxs};
-  display: inline-block;
+  display: inline-flex;
   @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
     display: none;
   }
 `;
 
-const CalendarIcon = ({ name, size }) => (
+const CalendarIcon = ({ name }) => (
   <CalendarIconWrapper>
-    <PhospherIcon name={name} size={size} />
+    <PhospherIcon name={name} />
   </CalendarIconWrapper>
 );
 
-const CalendarDataContainer = styled.div`
+const FlexBodyText = styled(BodyText)`
   display: flex;
   align-items: center;
 `;
@@ -60,24 +60,24 @@ function CalendarData({ start, end, location }) {
   return (
     <>
       {location ? (
-        <BodyText color="text.secondary" mb={'xxs'}>
-          <CalendarIcon name="globe" size={16} />
+        <FlexBodyText color="text.secondary" mb={'xxs'}>
+          <CalendarIcon name="globe" />
           {location}
-        </BodyText>
+        </FlexBodyText>
       ) : null}
       {start && location ? infoDivider : null}
       {start ? (
-        <BodyText color="text.secondary" mb={'xxs'}>
+        <FlexBodyText color="text.secondary" mb={'xxs'}>
           <CalendarIcon name="calendar" />
           {start}
-        </BodyText>
+        </FlexBodyText>
       ) : null}
       {end && start ? infoDivider : null}
       {end ? (
-        <BodyText color="text.secondary" mb={'xxs'}>
+        <FlexBodyText color="text.secondary" mb={'xxs'}>
           <CalendarIcon name="clock" />
           {end}
-        </BodyText>
+        </FlexBodyText>
       ) : null}
     </>
   );
