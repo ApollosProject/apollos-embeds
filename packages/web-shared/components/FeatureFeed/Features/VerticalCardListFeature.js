@@ -20,7 +20,7 @@ function VerticalCardListFeature(props = {}) {
     if (item.action === 'OPEN_URL') {
       analytics.track('OpenUrl', {
         url: item?.relatedNode?.url,
-      });            
+      });
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -97,7 +97,7 @@ function VerticalCardListFeature(props = {}) {
               title={item.title}
               summary={item.summary}
               onClick={() => handleActionPress(item)}
-              videoMedia={item.relatedNode?.videos[0]}
+              videoMedia={item.relatedNode?.videos?.[0]}
             />
           ))}
         </Styled.Container>
