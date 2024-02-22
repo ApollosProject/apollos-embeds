@@ -94,7 +94,8 @@ function HorizontalCardListFeature(props = {}) {
             title="View All"
             variant="link"
             onClick={handlePrimaryActionPress}
-            icon={<CaretRight size={18} weight="bold" />}
+            icon={<CaretRight className="primary-action-icon" size={18} weight="bold" />}
+            className="primary-action-button"
           />
         ) : null}
       </Box>

@@ -20,7 +20,7 @@ function VerticalCardListFeature(props = {}) {
     if (item.action === 'OPEN_URL') {
       analytics.track('OpenUrl', {
         url: item?.relatedNode?.url,
-      });            
+      });
       return window.open(getURLFromType(item.relatedNode), '_blank');
     }
 
@@ -75,6 +75,7 @@ function VerticalCardListFeature(props = {}) {
             variant="link"
             onClick={handlePrimaryActionPress}
             icon={<CaretRight size={18} weight="bold" />}
+            className="primary-action-button"
           />
         ) : null}
       </Box>
