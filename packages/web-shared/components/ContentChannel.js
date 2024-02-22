@@ -38,7 +38,7 @@ function ContentChannel(props = {}) {
               title={item.node.title}
               summary={item.node.summary}
               onClick={() => handleActionPress(item)}
-              videoMedia={item.relatedNode?.videos[0]}
+              videoMedia={item.relatedNode?.videos?.[0]}
             />
           );
         })}
