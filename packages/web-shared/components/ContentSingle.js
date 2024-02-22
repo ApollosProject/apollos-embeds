@@ -11,7 +11,17 @@ import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
-import { Box, Loader, Longform, H3, ContentCard, BodyText, ShareButton } from '../ui-kit';
+import {
+  Box,
+  Loader,
+  Longform,
+  H3,
+  ContentCard,
+  BodyText,
+  ShareButton,
+  Icons,
+  PhospherIcon,
+} from '../ui-kit';
 import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
 import { Title, ParentTitle, ParentSummary } from './ContentSingle.styles';
 
@@ -19,6 +29,59 @@ import VideoPlayer from './VideoPlayer';
 
 import InteractWhenLoaded from './InteractWhenLoaded';
 import TrackEventWhenLoaded from './TrackEventWhenLoaded';
+import styled from 'styled-components';
+
+const infoDivider = (
+  <BodyText color="text.tertiary" mx="xs" display={{ xs: 'none', sm: 'block' }}>
+    |
+  </BodyText>
+);
+
+const CalendarIconWrapper = styled.span`
+  margin-right: ${({ theme }) => theme.space.xxs};
+  display: inline-block;
+  @media (min-width: ${({ theme }) => theme.breakpoints.sm}) {
+    display: none;
+  }
+`;
+
+const CalendarIcon = ({ name, size }) => (
+  <CalendarIconWrapper>
+    <PhospherIcon name={name} size={size} />
+  </CalendarIconWrapper>
+);
+
+const CalendarDataContainer = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+function CalendarData({ start, end, location }) {
+  return (
+    <>
+      {location ? (
+        <BodyText color="text.secondary" mb={'xxs'}>
+          <CalendarIcon name="globe" size={16} />
+          {location}
+        </BodyText>
+      ) : null}
+      {start && location ? infoDivider : null}
+      {start ? (
+        <BodyText color="text.secondary" mb={'xxs'}>
+          <CalendarIcon name="calendar" />
+          {start}
+        </BodyText>
+      ) : null}
+      {end && start ? infoDivider : null}
+      {end ? (
+        <BodyText color="text.secondary" mb={'xxs'}>
+          <CalendarIcon name="clock" />
+          {end}
+        </BodyText>
+      ) : null}
+    </>
+  );
+}
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
@@ -120,11 +183,6 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
-  const infoDivider = (
-    <BodyText color="text.tertiary" mx="xs">
-      |
-    </BodyText>
-  );
 
   return (
     <>
@@ -199,33 +257,38 @@ function ContentSingle(props = {}) {
             }}
             mb="s"
           >
-            <Box>
+            <Box width="100%">
               {/* Title */}
-              {title && !hasChildContent ? <Title>{title}</Title> : null}
-              {title && hasChildContent ? <Title>{title}</Title> : null}
-              <Box display="flex" flexDirection="row">
-                {parentChannel?.name || props?.data?.location ? (
+              <Box
+                display="flex"
+                flexDirection="row"
+                justifyContent="space-between"
+                alignItems="center"
+              >
+                {title ? <Title>{title}</Title> : null}
+                {/* Button moves below on mobile views */}
+                <ShareButton
+                  ml={{ md: 'xs' }}
+                  display={{ xs: 'none', sm: 'inline-block' }}
+                  contentTitle={title}
+                />
+              </Box>
+              <Box display="flex" flexDirection={{ sm: 'row', xs: 'column' }} width="100%">
+                {parentChannel?.name ? (
                   <BodyText color="text.secondary" mb={title && !hasChildContent ? 'xxs' : ''}>
-                    {parentChannel?.name || props?.data?.location}
+                    {parentChannel?.name}
                   </BodyText>
                 ) : null}
-                {formattedStartDate ? infoDivider : null}
-                {formattedStartDate ? (
-                  <BodyText color="text.secondary">{formattedStartDate}</BodyText>
-                ) : null}
-                {formattedStartToEnd ? infoDivider : null}
-                {formattedStartToEnd ? (
-                  <BodyText color="text.secondary">{formattedStartToEnd}</BodyText>
-                ) : null}
+
+                <CalendarData
+                  start={formattedStartDate}
+                  end={formattedStartToEnd}
+                  location={props?.data?.location}
+                />
               </Box>
             </Box>
-            <Box
-              mt={{
-                _: 'xs',
-                md: '0',
-              }}
-            >
-              <ShareButton ml={{ md: 'xs' }} contentTitle={title} />
+            <Box mb="xs" display={{ xs: 'inline-block', sm: 'none' }}>
+              <ShareButton contentTitle={title} />
             </Box>
           </Box>
           {htmlContent ? (
