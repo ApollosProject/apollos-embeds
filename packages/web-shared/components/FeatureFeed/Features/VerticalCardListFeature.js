@@ -75,6 +75,7 @@ function VerticalCardListFeature(props = {}) {
             variant="link"
             onClick={handlePrimaryActionPress}
             icon={<CaretRight size={18} weight="bold" />}
+            className="primary-action-button"
           />
         ) : null}
       </Box>
