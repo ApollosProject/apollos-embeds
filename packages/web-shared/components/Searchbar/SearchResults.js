@@ -10,7 +10,11 @@ import Feed from '../FeatureFeed';
 import { ResourceCard, Box } from '../../ui-kit';
 
 import { getURLFromType } from '../../utils';
-import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../providers/BreadcrumbProvider';
+import {
+  add as addBreadcrumb,
+  reset as resetBreadcrumb,
+  useBreadcrumbDispatch,
+} from '../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from 'phosphor-react';
 
@@ -139,6 +143,8 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
   }, [autocompleteState.collections]);
 
   const handleActionPress = (item) => {
+    console.log(item);
+    dispatchBreadcrumb(resetBreadcrumb());
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
