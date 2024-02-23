@@ -5,7 +5,11 @@ import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
-import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../providers/BreadcrumbProvider';
+import {
+  add as addBreadcrumb,
+  reset as resetBreadcrumb,
+  useBreadcrumbDispatch,
+} from '../../providers/BreadcrumbProvider';
 
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 
@@ -19,7 +23,7 @@ function FeatureFeedListGrid(props = {}) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item.relatedNode)}`,
-          title: item.relatedNode?.title,
+          title: item.title,
         })
       );
       setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
