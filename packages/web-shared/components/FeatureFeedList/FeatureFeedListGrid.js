@@ -49,7 +49,7 @@ function FeatureFeedListGrid(props = {}) {
             title={item.title}
             summary={item.summary}
             onClick={() => handleActionPress(item)}
-            videoMedia={item.relatedNode?.videos[0]}
+            videoMedia={item.relatedNode?.videos?.[0]}
             channelLabel={item.relatedNode?.parentItem?.title}
           />
         ))}
