@@ -143,7 +143,6 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
   }, [autocompleteState.collections]);
 
   const handleActionPress = (item) => {
-    console.log(item);
     dispatchBreadcrumb(resetBreadcrumb());
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
