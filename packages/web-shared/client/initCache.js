@@ -1,12 +1,45 @@
 import { InMemoryCache } from '@apollo/client/core';
 import { persistCache } from 'apollo3-cache-persist';
+import { uri } from './httpLink';
 
-import fragmentTypes from './fragmentTypes.json';
-import introspectionToPossibleTypes from './introspectionToPossibleTypes';
+const initCache = async (initialState, { church }) => {
+  const res = await fetch(uri, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'x-church': church,
+    },
+    body: JSON.stringify({
+      query: `
+          {
+            __schema {
+              types {
+                kind
+                name
+                possibleTypes {
+                  name
+                }
+              }
+            }
+          }
+        `,
+    }),
+  });
 
-const initCache = (initialState) => {
+  const { data } = await res.json();
+
+  /* eslint no-underscore-dangle: 0 */
+  data.__schema.types = await data.__schema.types.filter((type) => type.possibleTypes !== null);
+
+  const possibleTypes = {};
+  data.__schema.types.forEach((supertype) => {
+    if (supertype.possibleTypes) {
+      possibleTypes[supertype.name] = [...supertype.possibleTypes.map((subtype) => subtype.name)];
+    }
+  });
+
   const cache = new InMemoryCache({
-    possibleTypes: introspectionToPossibleTypes(fragmentTypes),
+    possibleTypes,
     typePolicies: {
       Query: {
         fields: {
@@ -18,8 +51,7 @@ const initCache = (initialState) => {
                 return incoming;
               }
               if (
-                incoming?.pageInfo?.endCursor ===
-                  existing?.pageInfo?.endCursor ||
+                incoming?.pageInfo?.endCursor === existing?.pageInfo?.endCursor ||
                 existing?.edges.length === existing?.totalCount
               ) {
                 return existing;

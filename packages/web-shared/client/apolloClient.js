@@ -7,7 +7,7 @@ import httpLink from './httpLink';
 import initCache from './initCache';
 import buildErrorLink from './buildErrorLink';
 
-const client = (church_slug) => {
+const client = async (church_slug) => {
   let storeIsResetting = false;
   const onAuthError = async () => {
     if (!storeIsResetting) {
@@ -18,14 +18,9 @@ const client = (church_slug) => {
     storeIsResetting = false;
   };
 
-  const cache = initCache();
+  const cache = await initCache(null, { church: church_slug });
   const errorLink = buildErrorLink(onAuthError, church_slug);
-  const link = ApolloLink.from([
-    apollosApiLink(church_slug),
-    errorLink,
-    authLink,
-    httpLink,
-  ]);
+  const link = ApolloLink.from([apollosApiLink(church_slug), errorLink, authLink, httpLink]);
 
   return new ApolloClient({
     link,

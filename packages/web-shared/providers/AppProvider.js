@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider } from '@apollo/client';
 
-import client from '../client';
+import initClient from '../client';
 import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import AnalyticsProvider from './AnalyticsProvider';
@@ -11,8 +11,19 @@ import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
 
 function AppProvider(props = {}) {
+  const [client, setClient] = useState(null);
+  useEffect(() => {
+    const initialize = async () => {
+      const client = await initClient(props.church);
+      setClient(client);
+    };
+    initialize();
+  }, [props.church]);
+  if (!client) {
+    return null;
+  }
   return (
-    <ApolloProvider client={client(props.church)} {...props}>
+    <ApolloProvider client={client} {...props}>
       <AuthProvider>
         <AnalyticsProvider church={props.church}>
           <SearchProvider

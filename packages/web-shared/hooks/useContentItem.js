@@ -54,6 +54,11 @@ export const GET_CONTENT_ITEM = gql`
           }
         }
       }
+      ... on FeaturesNode {
+        featureFeed {
+          id
+        }
+      }
       ... on ContentItem {
         title
         originId
@@ -86,11 +91,6 @@ export const GET_CONTENT_ITEM = gql`
             node {
               ...SubCardFragment
             }
-          }
-        }
-        ... on FeaturesNode {
-          featureFeed {
-            id
           }
         }
       }
