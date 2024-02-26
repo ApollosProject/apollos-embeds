@@ -117,7 +117,7 @@ function ContentSeriesSingle(props = {}) {
         <meta name="twitter:image:alt" content={title} />
         {/* End Twitter tags */}
       </Helmet>
-      <Box margin="0 auto">
+      <Box margin="0 auto" className="content-series-single">
         <InteractWhenLoaded loading={props.loading} nodeId={props.data.id} action={'VIEW'} />
         <TrackEventWhenLoaded
           loading={props.loading}
