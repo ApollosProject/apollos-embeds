@@ -211,7 +211,7 @@ function ContentSingle(props = {}) {
         <meta name="twitter:image:alt" content={title} />
         {/* End Twitter tags */}
       </Helmet>
-      <Box margin="0 auto" maxWidth={{ _: '750px' }}>
+      <Box margin="0 auto" maxWidth={{ _: '750px' }} className="content-single">
         <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
         <TrackEventWhenLoaded
           loading={props.loading}

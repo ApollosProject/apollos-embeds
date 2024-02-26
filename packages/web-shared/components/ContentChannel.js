@@ -28,7 +28,14 @@ function ContentChannel(props = {}) {
   };
 
   return (
-    <Box pb="l" display="flex" flexDirection="column" alignItems="center" {...props}>
+    <Box
+      pb="l"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      {...props}
+      className="content-channel"
+    >
       <Box display="grid" gridTemplateColumns="repeat(3, 1fr)" gridGap="70px 20px">
         {props.data?.edges?.map((item, index) => {
           return (

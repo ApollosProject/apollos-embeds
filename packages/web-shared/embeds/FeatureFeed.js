@@ -55,7 +55,7 @@ const FeatureFeed = (props) => {
   }, []);
 
   return (
-    <Box>
+    <Box className="feature-feed">
       {state.modal ? (
         <Box>
           <Modal />
