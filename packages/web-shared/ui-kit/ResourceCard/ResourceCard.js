@@ -61,7 +61,12 @@ function ResourceCard({ title, subtitle, leadingAsset, tailingIcon, onClick, ...
   );
 
   return (
-    <Styled.ResourceCard cursor={onClick ? 'pointer' : 'default'} onClick={onClick} {...props}>
+    <Styled.ResourceCard
+      cursor={onClick ? 'pointer' : 'default'}
+      onClick={onClick}
+      {...props}
+      className="resource-card"
+    >
       <Box display="flex" justifyContent="center" alignItems="center">
         {/* Leading Icon => If image URL is passed, use image => If no image URL or svg/other is passed as prop, use props => defaults to clip if undefined*/}
         {LeadingAsset}

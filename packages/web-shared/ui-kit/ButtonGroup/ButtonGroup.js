@@ -16,16 +16,18 @@ const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
     return <></>;
   }
   return (
-    <Styled.ButtonGroup>
+    <Styled.ButtonGroup className="slide-button-group">
       <Styled.Button
         disabled={currentSlide === 0}
         onClick={() => goToSlide(currentSlide - 1)}
+        className="slide-button-left"
       >
         {<CaretLeft weight="bold" size={20} />}
       </Styled.Button>
       <Styled.Button
         disabled={isRightEndReach}
         onClick={() => goToSlide(currentSlide + 1)}
+        className="slide-button-right"
       >
         {<CaretRight weight="bold" size={20} />}
       </Styled.Button>

@@ -20,11 +20,7 @@ const ShareButton = (props = {}) => {
       const isShareButton = event.target.closest('button[title="Share"]');
 
       // Check if message is visible and click is outside of message
-      if (
-        isMessageVisible &&
-        !event.target.closest('#menu') &&
-        !isShareButton
-      ) {
+      if (isMessageVisible && !event.target.closest('#menu') && !isShareButton) {
         // If all conditions are true, hide message by updating state
         setMessageVisible(false);
       }
@@ -59,7 +55,7 @@ const ShareButton = (props = {}) => {
   };
 
   return (
-    <Box position="relative">
+    <Box position="relative" className="share-button">
       <Button
         title="Share"
         icon={<Share weight="bold" size={18} />}
