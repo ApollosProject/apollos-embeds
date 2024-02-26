@@ -9,12 +9,17 @@ function Wordmark({ size, source, href }) {
   if (href) {
     return (
       <a href={href}>
-        <Styled.WrappedImage src={source || './icon.png'} alt="Logo" size={size} />
+        <Styled.WrappedImage
+          className="wordmark"
+          src={source || './icon.png'}
+          alt="Logo"
+          size={size}
+        />
       </a>
     );
   }
 
-  return <Styled.Image src={source || './icon.png'} alt="Logo" size={size} />;
+  return <Styled.Image className="wordmark" src={source || './icon.png'} alt="Logo" size={size} />;
 }
 
 Wordmark.propTypes = {
