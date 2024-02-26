@@ -1,14 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { systemPropTypes, Box, PhospherIcon } from '../../../ui-kit';
 import Styled from './ChipListFeature.styles';
 
-function ChipListFeature(props = {}) {
-  if (props?.feature?.chips?.length === 0 || !props?.feature?.chips) {
+function ChipListFeature({ feature }) {
+  if (feature?.chips?.length === 0 || !feature?.chips) {
     return null;
   }
 
-  const title = props.feature.title || props.feature.subtitle;
+  const title = feature.title || feature.subtitle;
+  const origin = window.location.origin;
 
   return (
     <Box className="chip-list-feature">
@@ -18,9 +20,11 @@ function ChipListFeature(props = {}) {
         </Box>
       ) : null}
       <Styled.List>
-        {props.feature?.chips?.map(({ title, iconName, relatedNode }, index) => {
+        {feature?.chips?.map(({ title, iconName, relatedNode }, index) => {
+          const linkOrigin = new URL(relatedNode.url).origin;
+          const external = linkOrigin !== origin;
           return (
-            <Styled.Chip href={relatedNode.url} key={index}>
+            <Styled.Chip href={relatedNode.url} key={index} target={external ? '_blank' : '_self'}>
               <PhospherIcon
                 name={iconName || 'arrow-up-right'}
                 size={20}
@@ -38,6 +42,19 @@ function ChipListFeature(props = {}) {
 
 ChipListFeature.propTypes = {
   ...systemPropTypes,
+  feature: PropTypes.shape({
+    title: PropTypes.string,
+    subtitle: PropTypes.string,
+    chips: PropTypes.arrayOf(
+      PropTypes.shape({
+        title: PropTypes.string,
+        iconName: PropTypes.string,
+        relatedNode: PropTypes.shape({
+          url: PropTypes.string,
+        }),
+      })
+    ),
+  }),
 };
 
 export default ChipListFeature;
