@@ -104,7 +104,6 @@ function useContentItem(options = {}) {
     errorPolicy: 'all',
     ...options,
   });
-  console.log(query, 'query', GET_CONTENT_ITEM.loc.source);
 
   return {
     item: query?.data?.node,
