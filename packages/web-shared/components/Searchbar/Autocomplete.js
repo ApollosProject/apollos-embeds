@@ -180,7 +180,7 @@ export default function Autocomplete({
                     indexName: `ContentItem_${searchState.church}`,
                     query,
                     params: {
-                      hitsPerPage: 4,
+                      hitsPerPage: 8,
                       clickAnalytics: true,
                       // highlightPreTag: '<mark>',
                       // highlightPostTag: '</mark>',
