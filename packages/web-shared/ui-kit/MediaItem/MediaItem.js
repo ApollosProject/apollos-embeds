@@ -1,35 +1,20 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
 import isNil from 'lodash/isNil';
-import { Check } from 'phosphor-react';
+import { Check } from '@phosphor-icons/react';
 import { unit } from '../../utils';
 
-import {
-  BodyText,
-  SmallBodyText,
-  Box,
-  H4,
-  systemPropTypes,
-  ProgressBar,
-} from '../../ui-kit';
+import { BodyText, SmallBodyText, Box, H4, systemPropTypes, ProgressBar } from '../../ui-kit';
 import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
-import {
-  Title,
-  Image,
-  BottomSlot,
-  CompleteIndicator,
-  Ellipsis,
-} from './MediaItem.styles';
+import { Title, Image, BottomSlot, CompleteIndicator, Ellipsis } from './MediaItem.styles';
 import LiveChip from './LiveChip';
 import { useLivestreamStatus } from '../../hooks';
 function MediaItem(props = {}) {
-  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress(
-    {
-      variables: { id: props.videoMedia?.id },
-      skip: !props.videoMedia?.id,
-    }
-  );
+  const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
+    variables: { id: props.videoMedia?.id },
+    skip: !props.videoMedia?.id,
+  });
 
   const percentWatched = getPercentWatched({
     duration: props.videoMedia?.duration,

@@ -5,7 +5,7 @@ import React from 'react';
 
 import { systemPropTypes } from '../_lib/system';
 
-import * as Icon from 'phosphor-react';
+import * as Icon from '@phosphor-icons/react';
 
 const pascalCase = (string) => flow(camelCase, upperFirst)(string);
 
@@ -14,7 +14,7 @@ const PhospherIcon = ({ name, weight, size, color }) => {
   const IconToRender = Icon[normalizedName];
 
   if (!IconToRender) {
-    console.warn(`Icon ${name} not found in Phosphor-React`);
+    console.warn(`Icon ${name} not found in @phosphor-icons/react`);
     return null;
   }
 

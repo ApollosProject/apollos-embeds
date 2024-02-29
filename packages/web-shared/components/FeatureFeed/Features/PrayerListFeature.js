@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { systemPropTypes, Box, H3 } from '../../../ui-kit';
 import Styled from './PrayerListFeature.styles';
-import { Plus, X } from 'phosphor-react';
+import { Plus, X } from '@phosphor-icons/react';
 
 function PrayerListFeature(props = {}) {
   // Generate random background color
   const randomHSLA = () => `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`;
 
   //Background colors for requestors with no profile picture
-  const [backgroundColors, setBackgroundColors] = useState(
-    props.feature?.prayers?.map(randomHSLA)
-  );
+  const [backgroundColors, setBackgroundColors] = useState(props.feature?.prayers?.map(randomHSLA));
 
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -44,17 +42,12 @@ function PrayerListFeature(props = {}) {
     }
 
     const capitalizedFirstName =
-      firstName === null
-        ? ''
-        : firstName.charAt(0).toUpperCase() + firstName.slice(1);
+      firstName === null ? '' : firstName.charAt(0).toUpperCase() + firstName.slice(1);
 
     const capitalizedLastName =
-      lastName === null
-        ? ''
-        : lastName.charAt(0).toUpperCase() + lastName.slice(1);
+      lastName === null ? '' : lastName.charAt(0).toUpperCase() + lastName.slice(1);
 
-    const combinedNames =
-      capitalizedFirstName.charAt(0) + capitalizedLastName.charAt(0);
+    const combinedNames = capitalizedFirstName.charAt(0) + capitalizedLastName.charAt(0);
 
     return combinedNames;
   };
@@ -74,10 +67,7 @@ function PrayerListFeature(props = {}) {
             ) : (
               <Styled.Avatar backgroundColor={item.backgroundColor}>
                 <H3>
-                  {combineAndCapitalizeNames(
-                    item.requestor?.firstName,
-                    item.requestor?.lastName
-                  )}
+                  {combineAndCapitalizeNames(item.requestor?.firstName, item.requestor?.lastName)}
                 </H3>
               </Styled.Avatar>
             )}
@@ -93,12 +83,7 @@ function PrayerListFeature(props = {}) {
 
   //Is this needed?
   const AddDailyPrayer = (
-    <Box
-      position="relative"
-      display="inline-block"
-      padding="2px 5px"
-      onClick={openModal}
-    >
+    <Box position="relative" display="inline-block" padding="2px 5px" onClick={openModal}>
       <Styled.Avatar>
         <Plus size={36} />
       </Styled.Avatar>
@@ -121,18 +106,13 @@ function PrayerListFeature(props = {}) {
               ) : (
                 <Styled.Avatar backgroundColor={backgroundColor}>
                   <H3>
-                    {combineAndCapitalizeNames(
-                      item.requestor?.firstName,
-                      item.requestor?.lastName
-                    )}
+                    {combineAndCapitalizeNames(item.requestor?.firstName, item.requestor?.lastName)}
                   </H3>
                 </Styled.Avatar>
               );
             return (
               <Box
-                onClick={() =>
-                  openModal(item?.requestor, item?.text, backgroundColor)
-                }
+                onClick={() => openModal(item?.requestor, item?.text, backgroundColor)}
                 key={index}
               >
                 {Avatar}

@@ -16,7 +16,7 @@ import {
   reset as resetBreadcrumb,
   useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
-import { X } from 'phosphor-react';
+import { X } from '@phosphor-icons/react';
 import Wordmark from '../Wordmark';
 
 function ChurchLogo(props) {

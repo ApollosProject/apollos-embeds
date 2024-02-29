@@ -6,7 +6,7 @@ import { Box, Button } from '../../ui-kit';
 import Styled from './ShareButton.styles';
 import options from './options';
 import icons from './icons';
-import { Share } from 'phosphor-react';
+import { Share } from '@phosphor-icons/react';
 
 const ShareButton = (props = {}) => {
   // Define state variable isMessageVisible with initial value false

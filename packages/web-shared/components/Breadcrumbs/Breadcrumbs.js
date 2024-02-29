@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { useSearchParams, useNavigate, useLocation } from 'react-router-dom';
-import { CaretRight } from 'phosphor-react';
+import { CaretRight } from '@phosphor-icons/react';
 import { Box, Button, SystemText } from '../../ui-kit';
 import {
   remove as removeBreadcrumb,

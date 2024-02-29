@@ -8,7 +8,7 @@ import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { useAnalytics } from '../../../providers/AnalyticsProvider';
 import Carousel from 'react-multi-carousel';
-import { CaretRight } from 'phosphor-react';
+import { CaretRight } from '@phosphor-icons/react';
 const SHOW_VIEW_ALL_LIMIT = 5;
 
 const responsive = {

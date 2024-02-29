@@ -16,7 +16,7 @@ import {
   useBreadcrumbDispatch,
 } from '../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
-import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from 'phosphor-react';
+import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from '@phosphor-icons/react';
 
 function Hit({ hit }) {
   return hit?.title;

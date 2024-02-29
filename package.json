@@ -1,5 +1,6 @@
 {
   "name": "apollos-embeds",
+  "private": true,
   "version": "0.0.1",
   "main": "index.js",
   "repository": "https://github.com/ApollosProject/apollos-embeds.git",
@@ -9,6 +10,6 @@
     "packages": [
       "packages/*"
     ],
-    "nohoist": [ ]
+    "nohoist": []
   }
 }

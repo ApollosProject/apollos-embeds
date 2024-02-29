@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { User, MagnifyingGlass, ArrowLeft } from 'phosphor-react';
+import { User, MagnifyingGlass, ArrowLeft } from '@phosphor-icons/react';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box, Avatar } from '../../ui-kit';
