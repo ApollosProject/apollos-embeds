@@ -2,6 +2,7 @@ import ActionBarFeature from './ActionBarFeature';
 import ActionListFeature from './ActionListFeature';
 import ButtonFeature from './ButtonFeature';
 import ChipListFeature from './ChipListFeature';
+import EventBlockFeature from './EventBlockFeature';
 import HeroListFeature from './HeroListFeature';
 import HorizontalCardListFeature from './HorizontalCardListFeature';
 import HorizontalMediaListFeature from './HorizontalMediaListFeature';
@@ -15,6 +16,7 @@ export {
   ActionListFeature,
   ButtonFeature,
   ChipListFeature,
+  EventBlockFeature,
   HeroListFeature,
   HorizontalCardListFeature,
   HorizontalMediaListFeature,
