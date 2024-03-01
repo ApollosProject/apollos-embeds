@@ -1,0 +1,24 @@
+# Github action to deploy the web-embed project to NPM
+
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+
+      - name: Install dependencies
+        run: npm bump
+        working-directory: web-embeds
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
