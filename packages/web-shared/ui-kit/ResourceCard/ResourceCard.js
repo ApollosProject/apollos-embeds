@@ -1,5 +1,5 @@
 import React from 'react';
-import { CaretRight } from 'phosphor-react';
+import { CaretRight } from '@phosphor-icons/react';
 
 import { systemPropTypes } from '../_lib/system';
 import { Box } from '..';

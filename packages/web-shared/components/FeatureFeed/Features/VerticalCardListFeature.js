@@ -7,7 +7,7 @@ import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import Styled from './VerticalCardListFeature.styles';
-import { CaretRight } from 'phosphor-react';
+import { CaretRight } from '@phosphor-icons/react';
 import { useAnalytics } from '../../../providers/AnalyticsProvider';
 
 function VerticalCardListFeature(props = {}) {

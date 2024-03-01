@@ -7,15 +7,7 @@ import { Link } from 'react-router-dom';
 import Color from 'color';
 import ImageUploader from './ImageUploader';
 
-import {
-  Button,
-  Avatar,
-  BodyText,
-  Box,
-  Card,
-  H4,
-  ListItem,
-} from '../../ui-kit';
+import { Button, Avatar, BodyText, Box, Card, H4, ListItem } from '../../ui-kit';
 import Logo from '../Logo';
 import {
   UserCirclePlus,
@@ -26,7 +18,7 @@ import {
   ArrowSquareOut,
   X,
   Camera,
-} from 'phosphor-react';
+} from '@phosphor-icons/react';
 import Styled from './Profile.styles';
 
 import { useCurrentUser, useCurrentChurch } from '../../hooks';
@@ -72,9 +64,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
       setCrop(undefined); // Makes crop preview update between images.
       setShowImageUploader(true);
       const reader = new FileReader();
-      reader.addEventListener('load', () =>
-        setImgSrc(reader.result?.toString() || '')
-      );
+      reader.addEventListener('load', () => setImgSrc(reader.result?.toString() || ''));
       reader.readAsDataURL(e.target.files[0]);
     }
   }
@@ -105,12 +95,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
             </Styled.CloseIcon>
           </Box>
           {/* Header */}
-          <Box
-            display="flex"
-            alignItems="center"
-            flexDirection="column"
-            mb="base"
-          >
+          <Box display="flex" alignItems="center" flexDirection="column" mb="base">
             {imgSrc && showImageUploader ? (
               <ImageUploader
                 crop={crop}
@@ -123,17 +108,9 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               <>
                 <Box position="relative">
                   {currentUser?.profile?.photo?.uri ? (
-                    <Avatar
-                      src={currentUser?.profile?.photo?.uri}
-                      alt="avatar"
-                      width="72px"
-                    />
+                    <Avatar src={currentUser?.profile?.photo?.uri} alt="avatar" width="72px" />
                   ) : (
-                    <Box
-                      color="base.primary"
-                      position="relative"
-                      margin="-10px"
-                    >
+                    <Box color="base.primary" position="relative" margin="-10px">
                       <UserCirclePlus
                         size={90}
                         weight="fill"
@@ -150,11 +127,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                             weight="fill"
                             color={themeGet('colors.base.white')({ theme })}
                           />
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={onSelectFile}
-                          />
+                          <input type="file" accept="image/*" onChange={onSelectFile} />
                         </Styled.UploadIcon>
                       )}
                     </Box>
@@ -166,9 +139,7 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
 
                 {!state.token && !imgSrc ? (
                   <Button
-                    backgroundColor={Color(
-                      themeGet('colors.base.primary')({ theme })
-                    )
+                    backgroundColor={Color(themeGet('colors.base.primary')({ theme }))
                       .fade(0.85)
                       .toString()}
                     borderRadius="100px"
@@ -216,14 +187,11 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
               </Box>
             </>
           ) : null}
-          {showDetails && !imgSrc ? (
-            <ProfileDetails setShowDetails={setShowDetails} />
-          ) : null}
+          {showDetails && !imgSrc ? <ProfileDetails setShowDetails={setShowDetails} /> : null}
           {/* Mobile App Ad */}
           {!showDetails &&
           !imgSrc &&
-          (currentChurch?.mobileAppStoreUrl ||
-            currentChurch?.mobilePlayStoreUrl) ? (
+          (currentChurch?.mobileAppStoreUrl || currentChurch?.mobilePlayStoreUrl) ? (
             <>
               <Box
                 alignItems="center"
