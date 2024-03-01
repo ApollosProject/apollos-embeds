@@ -213,38 +213,57 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
                   </Box>
                 )}
                 <ul className="aa-List" {...autocomplete.getListProps()}>
-                  {items.map((item, index) => (
-                    <li
-                      key={`${item.objectID ? item.objectID : index}-${collection.source.sourceId}`}
-                      className="aa-Item"
-                      {...autocomplete.getItemProps({
-                        item,
-                        source,
-                      })}
-                    >
-                      {collection.source.sourceId === 'querySuggestionsPlugin' && (
-                        <QuerySuggestionItem
-                          item={item}
-                          autocomplete={autocomplete}
-                          handleActionPress={handleActionPress}
+                  {items.map((item, index) => {
+                    if (
+                      collection.source.sourceId === 'querySuggestionsPlugin' &&
+                      !inputProps.value
+                    ) {
+                      return (
+                        <li
+                          key={`${item.objectID ? item.objectID : index}-${
+                            collection.source.sourceId
+                          }`}
+                          className="aa-Item"
                           {...autocomplete.getItemProps({
                             item,
                             source,
                           })}
-                        />
-                      )}
-                      {collection.source.sourceId === 'recentSearchesPlugin' && (
-                        <PastQueryItem
-                          item={item}
-                          autocomplete={autocomplete}
+                        >
+                          <QuerySuggestionItem
+                            item={item}
+                            autocomplete={autocomplete}
+                            handleActionPress={handleActionPress}
+                            {...autocomplete.getItemProps({
+                              item,
+                              source,
+                            })}
+                          />
+                        </li>
+                      );
+                    } else if (collection.source.sourceId === 'recentSearchesPlugin') {
+                      return (
+                        <li
+                          key={`${item.objectID ? item.objectID : index}-${
+                            collection.source.sourceId
+                          }`}
+                          className="aa-Item"
                           {...autocomplete.getItemProps({
                             item,
                             source,
                           })}
-                        />
-                      )}
-                    </li>
-                  ))}
+                        >
+                          <PastQueryItem
+                            item={item}
+                            autocomplete={autocomplete}
+                            {...autocomplete.getItemProps({
+                              item,
+                              source,
+                            })}
+                          />
+                        </li>
+                      );
+                    }
+                  })}
                 </ul>
               </div>
             );
