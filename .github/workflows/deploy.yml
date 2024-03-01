@@ -18,7 +18,7 @@ jobs:
         uses: actions/setup-node@v2
 
       - name: Install dependencies
-        run: npm bump
+        run: npm run bump
         working-directory: web-embeds
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
