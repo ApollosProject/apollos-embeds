@@ -8,6 +8,7 @@ import {
   ActionBarFeature,
   ActionListFeature,
   ChipListFeature,
+  EventBlockFeature,
   PrayerListFeature,
   ScriptureFeature,
 } from './Features';
@@ -23,6 +24,7 @@ const FeatureFeedComponentMap = {
   ActionBarFeature,
   ActionListFeature,
   ChipListFeature,
+  EventBlockFeature,
   PrayerListFeature,
   ScriptureFeature,
 };
