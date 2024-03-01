@@ -19,7 +19,7 @@ jobs:
         with:
           registry-url: https://registry.npmjs.org/
 
-      - name: Install dependencies
+      - name: Deploy to NPM
         run: npm run bump
         working-directory: web-embeds
         env:
