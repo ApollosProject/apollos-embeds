@@ -6,7 +6,7 @@ import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H2, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-import { CaretRight } from 'phosphor-react';
+import { CaretRight } from '@phosphor-icons/react';
 import { useAnalytics } from '../../../providers/AnalyticsProvider';
 
 import Carousel from 'react-multi-carousel';

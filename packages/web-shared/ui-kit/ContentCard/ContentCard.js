@@ -1,6 +1,6 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
-import { Check } from 'phosphor-react';
+import { Check } from '@phosphor-icons/react';
 
 import { SmallBodyText, Box, systemPropTypes, ProgressBar } from '../../ui-kit';
 import { useVideoMediaProgress } from '../../hooks';

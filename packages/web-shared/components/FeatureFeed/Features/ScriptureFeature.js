@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { systemPropTypes, Box } from '../../../ui-kit';
 import PropTypes from 'prop-types';
 import Styled from './ScriptureFeature.styles';
-import { ArrowsInSimple, ArrowsOutSimple } from 'phosphor-react';
+import { ArrowsInSimple, ArrowsOutSimple } from '@phosphor-icons/react';
 
 function ScriptureFeature(props = {}) {
   const [isExpanded, setIsExpanded] = useState(false);

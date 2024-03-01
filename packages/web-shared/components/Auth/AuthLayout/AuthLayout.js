@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CaretLeft } from 'phosphor-react';
+import { CaretLeft } from '@phosphor-icons/react';
 
 import { Box, Card, Button } from '../../../ui-kit';
 import customizations from './customizations';
@@ -34,14 +34,7 @@ function AuthLayout(props = {}) {
       alignItems="center"
       backgroundColor="neutral.gray6"
     >
-      <Card
-        p="l"
-        pt="base"
-        display="flex"
-        flexDirection="column"
-        width="440px"
-        {...props}
-      >
+      <Card p="l" pt="base" display="flex" flexDirection="column" width="440px" {...props}>
         {state.prevStep === authSteps.Identity ? (
           <Button
             variant="link"
@@ -56,9 +49,7 @@ function AuthLayout(props = {}) {
           />
         ) : null}
         <Heading>{props.heading || customizations.defaulthHeading}</Heading>
-        <SubHeading>
-          {props.subHeading || customizations.defaultSubHeading}
-        </SubHeading>
+        <SubHeading>{props.subHeading || customizations.defaultSubHeading}</SubHeading>
         {props.children}
       </Card>
     </Box>
