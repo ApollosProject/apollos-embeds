@@ -66,6 +66,16 @@ export const FEED_FEATURES = gql`
               }
             }
           }
+
+          ... on EventBlockFeature {
+            id
+            start
+            duration
+            allDay
+            location
+            title
+          }
+
           ... on HorizontalMediaListFeature {
             id
             title

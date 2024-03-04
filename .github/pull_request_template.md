@@ -1,9 +1,7 @@
 ## 🐛 Issue
 
-<!-- Link to the issue in basecamp this PR is addressing. If there is no related issue or related pull request, consider briefly describing the problem or enhancement being addressed. -->
-
-<!--Github issue this PR will close. Remove if not valid.-->
-Closes #
+<!-- Link to the issue in Github or Basecamp this PR is addressing. If there is no related issue or related pull request, consider briefly describing the problem or enhancement being addressed. -->
+Closes <link>
 
 ## ✏️ Solution
 
