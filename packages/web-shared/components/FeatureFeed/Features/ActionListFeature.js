@@ -1,10 +1,10 @@
 import React from 'react';
 import { getURLFromType } from '../../../utils';
-import { systemPropTypes, ResourceCard, Box } from '../../../ui-kit';
+import { systemPropTypes, ResourceCard, Box, H5 } from '../../../ui-kit';
 import Styled from './ActionListFeature.styles';
 import { useNavigate } from 'react-router-dom';
 
-function ActionListFeature(props = {}) {
+function ActionListFeature({ feature, emptyPlaceholderText }) {
   const navigate = useNavigate();
 
   const handleActionPress = (item) => {
@@ -14,17 +14,24 @@ function ActionListFeature(props = {}) {
     });
   };
 
-  if (props?.feature?.actions?.length === 0 || !props?.feature?.actions) {
+  if (feature?.actions?.length === 0 || !feature?.actions) {
+    if (emptyPlaceholderText) {
+      return (
+        <Box className="empty-placeholder-text-container">
+          <H5 className="empty-placeholder-text">{emptyPlaceholderText}</H5>
+        </Box>
+      );
+    }
     return null;
   }
 
   return (
     <Box>
       <Box padding="xs" fontWeight="600" color="base.gray" id="results">
-        {props.feature.title || props.feature.subtitle}
+        {feature.title || feature.subtitle}
       </Box>
       <Styled.List>
-        {props.feature?.actions?.map((item, index) => {
+        {feature?.actions?.map((item, index) => {
           return (
             <Styled.Wrapper key={index}>
               <ResourceCard
