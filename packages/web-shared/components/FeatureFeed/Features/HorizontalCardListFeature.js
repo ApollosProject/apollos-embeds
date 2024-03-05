@@ -44,7 +44,7 @@ function HorizontalCardListFeature(props = {}) {
       dispatchBreadcrumb(
         addBreadcrumb({
           url: `?id=${getURLFromType(item.relatedNode)}`,
-          title: item.relatedNode?.title,
+          title: item.relatedNode?.title || item?.title,
         })
       );
       setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
