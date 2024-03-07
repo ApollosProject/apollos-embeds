@@ -38,3 +38,9 @@
 .apollos-widget input:focus-visible {
   outline: none;
 }
+
+@media only screen and (min-device-width: 320px) {
+  #apollos-project-widget > div > div > div > div {
+    height: 100vh;
+  }
+}
