@@ -8,7 +8,11 @@ import { getURLFromType } from '../utils';
 import { format, parseISO } from 'date-fns';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
-import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
+import {
+  add as addBreadcrumb,
+  remove as removeBreadcrumb,
+  useBreadcrumbDispatch,
+} from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import {
@@ -169,6 +173,7 @@ function ContentSingle(props = {}) {
         )}`
       : null;
   const handleActionPress = (item) => {
+    dispatchBreadcrumb(removeBreadcrumb());
     if (searchParams.get('id') !== getURLFromType(item)) {
       dispatchBreadcrumb(
         addBreadcrumb({
