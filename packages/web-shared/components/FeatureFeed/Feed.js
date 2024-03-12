@@ -10,7 +10,7 @@ import { Box, Loader } from '../../ui-kit';
 
 import FeatureFeedComponentMap from './FeatureFeedComponentMap';
 
-const Feed = ({ loading, data }) => {
+const Feed = ({ loading, data, emptyPlaceholderText }) => {
   const transformLink = useLink();
   // Clunky, silly workaround for an Apollo query `loading` prop problem.
   // We don't want cache updates or background refetch calls to trigger
@@ -41,7 +41,7 @@ const Feed = ({ loading, data }) => {
     );
   }
 
-  const features = data.features?.map(feature => (feature.cards === null ? undefined : feature));
+  const features = data.features?.map((feature) => (feature.cards === null ? undefined : feature));
   const renderedFeatures = compact(features);
 
   if (!renderedFeatures?.length) {
@@ -65,7 +65,7 @@ const Feed = ({ loading, data }) => {
       return null;
     }
 
-    const handleTransformLink = url => {
+    const handleTransformLink = (url) => {
       // just bulletproofing
       if (!isFunction(transformLink)) return url;
       return transformLink(url);
@@ -76,6 +76,7 @@ const Feed = ({ loading, data }) => {
         key={`${feature.id}_${i}`}
         feature={feature}
         transformLink={handleTransformLink}
+        emptyPlaceholderText={emptyPlaceholderText}
       />
     );
   });
