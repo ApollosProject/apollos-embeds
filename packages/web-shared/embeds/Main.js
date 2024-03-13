@@ -4,11 +4,7 @@ import { useSearchParams } from 'react-router-dom';
 
 import { Searchbar } from '../components';
 
-import {
-  ContentItemProvider,
-  FeatureFeedProvider,
-  ContentFeedProvider,
-} from '../providers';
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
   ContentSingle,
   FeatureFeedList,
@@ -42,24 +38,14 @@ function RenderEmbed(props) {
     }
     case 'Search': {
       return (
-        <Styled.Search
-          in={!searchState.loading}
-          timeout={300}
-          classNames="fade"
-          unmountOnExit
-        >
+        <Styled.Search in={!searchState.loading} timeout={300} classNames="fade" unmountOnExit>
           <Searchbar width="100%" />
         </Styled.Search>
       );
     }
     default: {
       return (
-        <Styled.Search
-          in={!searchState.loading}
-          timeout={300}
-          classNames="fade"
-          unmountOnExit
-        >
+        <Styled.Search in={!searchState.loading} timeout={300} classNames="fade" unmountOnExit>
           <Searchbar width="100%" />
         </Styled.Search>
       );
@@ -84,6 +70,7 @@ const Main = () => {
               searchFeed={widget.dataset.searchFeed}
               featureFeed={widget.dataset.featureFeed}
               modal={widget.dataset.modal}
+              emptyPlaceholderText={widget.dataset.emptyPlaceholderText}
             />,
             widget
           );

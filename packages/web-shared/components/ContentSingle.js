@@ -269,6 +269,7 @@ function ContentSingle(props = {}) {
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"
+                mb="base"
               >
                 {title ? <Title>{title}</Title> : null}
                 {/* Button moves below on mobile views */}
