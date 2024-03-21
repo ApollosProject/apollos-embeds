@@ -13,7 +13,7 @@ import {
 
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 
-function FeatureFeedListGrid(props = {}) {
+function FeatureFeedListGrid({ loading, data, emptyPlaceholderText }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [state, dispatch] = useModal();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
@@ -35,6 +35,14 @@ function FeatureFeedListGrid(props = {}) {
     }
   };
 
+  if (!loading && data?.features[0]?.cards?.length === 0 && emptyPlaceholderText) {
+    return (
+      <Box className="empty-placeholder-text-container">
+        <H3 class="empty-placeholder-text">{emptyPlaceholderText}</H3>
+      </Box>
+    );
+  }
+
   return (
     <Box pb="l">
       <Box
@@ -46,7 +54,7 @@ function FeatureFeedListGrid(props = {}) {
           lg: 'repeat(3, 1fr)',
         }}
       >
-        {props.data?.features[0]?.cards?.map((item, index) => (
+        {data?.features[0]?.cards?.map((item, index) => (
           <ContentCard
             key={index}
             image={item.coverImage}
