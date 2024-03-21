@@ -103,6 +103,7 @@ function ContentSingle(props = {}) {
     variables: {
       itemId: feedId,
     },
+    skip: !feedId,
   });
 
   const invalidPage = !props.loading && !props.data;
