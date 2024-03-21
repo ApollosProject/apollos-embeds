@@ -11,7 +11,6 @@ import Styled from './App.styles';
 
 import ErrorPage from './error-page';
 import { parseSlugToIdAndType } from '@apollosproject/web-shared/utils';
-import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -31,6 +30,14 @@ function ChurchLogo(props) {
 
 function App(props) {
   let subdomain = 'cedar_creek';
+  // let subdomain =
+  //   process.env.NODE_ENV === 'production'
+  //     ? window.location.hostname.split('.').slice(0, -2).join('.')
+  //     : window.location.hostname.split('.').slice(0, -1).join('.');
+
+  // if (process.env.NODE_ENV !== 'production' && !subdomain) {
+  //   subdomain = 'apollos-demo';
+  // }
   const churchSlug = subdomain.replace(/-/g, '_');
   const searchParams = new URLSearchParams(window.location.search);
   const _root = searchParams.get('root');
@@ -52,17 +59,10 @@ function App(props) {
   // Widgets require a church slug to get the correct data
   if (churchSlug) {
     return (
-      <HelmetProvider>
-        <AppProvider church={churchSlug} modal="true">
-          <Helmet>
-            <title>Test title</title>
-            <meta property="og:title" content={'My Title'} />
-            <meta property="og:description" content={'My Title summary'} />
-          </Helmet>
-          <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
-          <RouterProvider router={router} />
-        </AppProvider>
-      </HelmetProvider>
+      <AppProvider church={churchSlug} modal="true">
+        <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
+        <RouterProvider router={router} />
+      </AppProvider>
     );
   }
 
