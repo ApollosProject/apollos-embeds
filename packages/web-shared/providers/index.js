@@ -6,6 +6,12 @@ import ContentItemProvider from './ContentItemProvider';
 import FeatureFeedProvider from './FeatureFeedProvider';
 import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  StaticRouterProvider,
+  createStaticRouter,
+  createStaticHandler,
+} from 'react-router-dom/server';
 
 export {
   AppProvider,
@@ -16,4 +22,9 @@ export {
   FeatureFeedProvider,
   ModalProvider,
   SearchProvider,
+  createBrowserRouter,
+  RouterProvider,
+  StaticRouterProvider,
+  createStaticRouter,
+  createStaticHandler,
 };

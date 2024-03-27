@@ -94,7 +94,6 @@ function ContentSeriesSingle(props = {}) {
   return (
     <>
       <Helmet>
-        <title>{title}</title>
         {/* Standard metadata tags */}
         <title>{title}</title>
         <meta name="description" content={summary} />

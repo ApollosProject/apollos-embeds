@@ -16,9 +16,14 @@ import { parseSlugToIdAndType } from '../utils';
 import { useAnalytics } from '../providers/AnalyticsProvider';
 import { getComponentFromType } from '../utils/getContentFromURL';
 
-function RenderFeatures(props) {
+function RenderFeatures({ featureFeed, nodeId, ...props }) {
   const [searchParams] = useSearchParams();
-  const _id = searchParams.get('id');
+  let _id = searchParams.get('id');
+
+  if (!_id && nodeId) {
+    _id = nodeId;
+  }
+  console.log({ _id });
   const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
   const Component = getComponentFromType({ type, id: randomId });
@@ -42,13 +47,14 @@ function RenderFeatures(props) {
   );
 }
 
-const FeatureFeed = (props) => {
+const FeatureFeed = ({ featureFeed, ...props }) => {
   const state = useModalState();
 
   const analytics = useAnalytics();
 
+  console.log('render feature feed');
+
   useEffect(() => {
-    console.log(props);
     analytics.track('ViewFeatureFeed', {
       featureFeedId: props.featureFeed,
     });
@@ -66,13 +72,14 @@ const FeatureFeed = (props) => {
                 itemId: props.featureFeed,
               },
             }}
+            featureFeed={props.featureFeed}
             {...props}
           />
         </Box>
       ) : (
         <>
           <Breadcrumbs />
-          <RenderFeatures {...props} />
+          <RenderFeatures {...props} featureFeed={props.featureFeed} />
         </>
       )}
     </Box>
