@@ -20,10 +20,6 @@ function RenderFeatures({ featureFeed, nodeId, ...props }) {
   const [searchParams] = useSearchParams();
   let _id = searchParams.get('id');
 
-  if (!_id && nodeId) {
-    _id = nodeId;
-  }
-  console.log({ _id });
   const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
   const Component = getComponentFromType({ type, id: randomId });
