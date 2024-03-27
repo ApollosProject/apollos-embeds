@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'React App',
-  description: 'Web site created with Next.js.',
+  title: 'Apollos Embeds',
+  description: 'Apollos Web Embeds',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

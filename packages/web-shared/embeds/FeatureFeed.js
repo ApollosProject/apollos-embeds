@@ -18,7 +18,7 @@ import { getComponentFromType } from '../utils/getContentFromURL';
 
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
-  let _id = searchParams.get('id');
+  const _id = searchParams.get('id');
 
   const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
@@ -66,14 +66,13 @@ const FeatureFeed = (props) => {
                 itemId: props.featureFeed,
               },
             }}
-            featureFeed={props.featureFeed}
             {...props}
           />
         </Box>
       ) : (
         <>
           <Breadcrumbs />
-          <RenderFeatures {...props} featureFeed={props.featureFeed} />
+          <RenderFeatures {...props} />
         </>
       )}
     </Box>
