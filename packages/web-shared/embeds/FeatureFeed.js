@@ -16,7 +16,7 @@ import { parseSlugToIdAndType } from '../utils';
 import { useAnalytics } from '../providers/AnalyticsProvider';
 import { getComponentFromType } from '../utils/getContentFromURL';
 
-function RenderFeatures({ featureFeed, nodeId, ...props }) {
+function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
   let _id = searchParams.get('id');
 
@@ -43,12 +43,10 @@ function RenderFeatures({ featureFeed, nodeId, ...props }) {
   );
 }
 
-const FeatureFeed = ({ featureFeed, ...props }) => {
+const FeatureFeed = (props) => {
   const state = useModalState();
 
   const analytics = useAnalytics();
-
-  console.log('render feature feed');
 
   useEffect(() => {
     analytics.track('ViewFeatureFeed', {
