@@ -7,11 +7,15 @@ import Styled from './Logo.styles';
 import { Box, systemPropTypes } from '../../ui-kit';
 
 function Logo({ fill, size, padding, theme, source, ...rest }) {
-  let themeData = '';
-  try {
-    themeData = JSON.parse(theme);
-  } catch (error) {
-    console.error('Error parsing JSON');
+  let themeData;
+  if (typeof theme === 'string') {
+    try {
+      themeData = JSON.parse(theme);
+    } catch (error) {
+      console.error('Error parsing JSON');
+    }
+  } else {
+    themeData = theme;
   }
 
   return (
