@@ -26,6 +26,15 @@ Sentry.init({
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
+
+  //Can't set favicon in SSR
+  if (typeof document !== 'undefined') {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (currentChurch?.logo) {
+      favicon.href = currentChurch.logo;
+    }
+  }
+
   return <Logo source={currentChurch?.logo} {...props} />;
 }
 
