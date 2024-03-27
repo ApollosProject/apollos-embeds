@@ -15,6 +15,7 @@ import Styled from './App.styles';
 
 import ErrorPage from './error-page';
 import { parseSlugToIdAndType } from '@apollosproject/web-shared/utils';
+import { getChurchSlug } from './utils';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -28,29 +29,17 @@ function ChurchLogo(props) {
   return <Logo source={currentChurch?.logo} {...props} />;
 }
 
-function App(props) {
-  let subdomain = 'cedar-creek';
-  //   process.env.NODE_ENV === 'production'
-  //     ? window.location.hostname.split('.').slice(0, -2).join('.')
-  //     : window.location.hostname.split('.').slice(0, -1).join('.');
-
-  // if (process.env.NODE_ENV !== 'production' && !subdomain) {
-  //   subdomain = 'cedar-creek';
-  // }
-  const churchSlug = subdomain.replace(/-/g, '_');
-  // const searchParams = new URLSearchParams(window.location.search);
-  const _root = props.searchParams?.root;
-  const _id = props.searchParams?.id;
+function App({ searchParams, url }) {
+  const churchSlug = getChurchSlug(url);
+  const _root = searchParams?.root;
 
   const { type, randomId } = parseSlugToIdAndType(_root) ?? {};
 
   const ssr = typeof document === 'undefined';
 
-  console.log({ ssr, _id });
-
   const mainRoute = (
     <Styled.FeedWrapper>
-      <FeatureFeed featureFeed={`${type}:${randomId}`} nodeId={_id} church={churchSlug} />
+      <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
     </Styled.FeedWrapper>
   );
 
@@ -69,15 +58,14 @@ function App(props) {
     return (
       <AppProvider church={churchSlug} modal="true">
         <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
+        {/** When using SSR, avoid the router. it crashes */}
         {ssr ? mainRoute : <RouterProvider router={router} />}
       </AppProvider>
     );
   }
 
   // eslint-disable-next-line no-console
-  console.log(
-    `⚠️  Feature Feed could not render feed of id "FeatureFeed:5aae43e6-3526-4cd2-8dfe-771d2ce8a333"`
-  );
+  console.log(`⚠️  Feature Feed could not render feed of id ${searchParams?.root}`);
 
   return (
     <AppProvider>
