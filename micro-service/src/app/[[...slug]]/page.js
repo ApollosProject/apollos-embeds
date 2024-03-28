@@ -55,7 +55,7 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
 export default function Page(props) {
   const headersList = headers();
-  console.log(headersList);
+  console.log(JSON.stringify(headersList));
   return (
     <>
       <Head>
