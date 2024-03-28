@@ -11,6 +11,7 @@ import Modal from './Modal';
 import Profile from './Profile';
 import Searchbar from './Searchbar';
 import VideoPlayer from './VideoPlayer';
+import Wordmark from './Wordmark';
 
 export {
   AuthManager,
@@ -26,4 +27,5 @@ export {
   Profile,
   Searchbar,
   VideoPlayer,
+  Wordmark,
 };
