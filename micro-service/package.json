@@ -26,7 +26,6 @@
   },
   "scripts": {
     "eject": "react-scripts eject",
-    "test": "craco test",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
