@@ -7,7 +7,7 @@ import Head from 'next/head';
 
 export const dynamic = 'force-dynamic';
 
-export async function generateMetadata({ params, searchParams, ...other }, parent) {
+export async function generateMetadata({ params, searchParams }, parent) {
   const id = searchParams?.id;
 
   if (!id) return parent;
