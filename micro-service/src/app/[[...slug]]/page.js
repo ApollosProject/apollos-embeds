@@ -12,7 +12,8 @@ export async function generateMetadata({ params, searchParams }, parent) {
 
   if (!id) return parent;
 
-  const route = headers().get('referer');
+  const route =
+    headers().get('host') || headers().get('x-forwarded-host') || headers().get('referer');
 
   const churchSlug = getChurchSlug(route);
 
@@ -54,14 +55,14 @@ export async function generateMetadata({ params, searchParams }, parent) {
 }
 
 export default function Page(props) {
-  const headersList = headers();
-  console.log(JSON.stringify(Array.from(headersList.entries()), null, 2));
+  const url =
+    headers().get('host') || headers().get('x-forwarded-host') || headers().get('referer');
   return (
     <>
       <Head>
         <link rel="icon" type="image/x-icon" href="../../file.svg" />
       </Head>
-      <ClientOnly {...props} url={headersList.get('referer')} />
+      <ClientOnly {...props} url={url} />
     </>
   );
 }
