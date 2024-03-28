@@ -194,7 +194,6 @@ function ContentSingle(props = {}) {
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
       <Helmet>
-        <title>{title}</title>
         {/* Standard metadata tags */}
         <title>{title}</title>
         <meta name="description" content={summary} />

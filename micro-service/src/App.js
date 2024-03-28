@@ -1,8 +1,12 @@
+'use client';
 import React from 'react';
 import * as Sentry from '@sentry/react';
 import { FeatureFeed } from '@apollosproject/web-shared/embeds';
-import { AppProvider } from '@apollosproject/web-shared/providers';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import {
+  AppProvider,
+  createBrowserRouter,
+  RouterProvider,
+} from '@apollosproject/web-shared/providers';
 
 import { Button, Box, BodyText } from '@apollosproject/web-shared/ui-kit';
 import { Logo } from '@apollosproject/web-shared/components';
@@ -11,6 +15,7 @@ import Styled from './App.styles';
 
 import ErrorPage from './error-page';
 import { parseSlugToIdAndType } from '@apollosproject/web-shared/utils';
+import { getChurchSlug } from './utils';
 
 Sentry.init({
   dsn: process.env.REACT_APP_SENTRY_DSN,
@@ -21,54 +26,55 @@ Sentry.init({
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
-  const favicon = document.getElementById('favicon');
-  if (currentChurch?.logo) {
-    favicon.href = currentChurch.logo;
+
+  //Can't set favicon in SSR
+  if (typeof document !== 'undefined') {
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (currentChurch?.logo) {
+      favicon.href = currentChurch.logo;
+    }
   }
+
   return <Logo source={currentChurch?.logo} {...props} />;
 }
 
-function App(props) {
-  let subdomain =
-    process.env.NODE_ENV === 'production'
-      ? window.location.hostname.split('.').slice(0, -2).join('.')
-      : window.location.hostname.split('.').slice(0, -1).join('.');
-
-  if (process.env.NODE_ENV !== 'production' && !subdomain) {
-    subdomain = 'apollos-demo';
-  }
-  const churchSlug = subdomain.replace(/-/g, '_');
-  const searchParams = new URLSearchParams(window.location.search);
-  const _root = searchParams.get('root');
+function App({ searchParams, url }) {
+  const churchSlug = getChurchSlug(url);
+  const _root = searchParams?.root;
 
   const { type, randomId } = parseSlugToIdAndType(_root) ?? {};
 
-  const router = createBrowserRouter([
+  const ssr = typeof document === 'undefined';
+
+  const mainRoute = (
+    <Styled.FeedWrapper>
+      <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
+    </Styled.FeedWrapper>
+  );
+
+  const routerConfig = [
     {
       path: '/',
-      element: (
-        <Styled.FeedWrapper>
-          <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
-        </Styled.FeedWrapper>
-      ),
+      element: mainRoute,
       errorElement: <ErrorPage />,
     },
-  ]);
+  ];
+
+  const router = ssr ? null : createBrowserRouter(routerConfig);
 
   // Widgets require a church slug to get the correct data
   if (churchSlug) {
     return (
       <AppProvider church={churchSlug} modal="true">
         <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
-        <RouterProvider router={router} />
+        {/** When using SSR, avoid the router. it crashes */}
+        {ssr ? mainRoute : <RouterProvider router={router} />}
       </AppProvider>
     );
   }
 
   // eslint-disable-next-line no-console
-  console.log(
-    `⚠️  Feature Feed could not render feed of id "FeatureFeed:5aae43e6-3526-4cd2-8dfe-771d2ce8a333"`
-  );
+  console.log(`⚠️  Feature Feed could not render feed of id ${searchParams?.root}`);
 
   return (
     <AppProvider>

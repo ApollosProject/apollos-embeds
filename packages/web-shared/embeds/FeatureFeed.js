@@ -19,6 +19,7 @@ import { getComponentFromType } from '../utils/getContentFromURL';
 function RenderFeatures(props) {
   const [searchParams] = useSearchParams();
   const _id = searchParams.get('id');
+
   const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
 
   const Component = getComponentFromType({ type, id: randomId });
@@ -48,7 +49,6 @@ const FeatureFeed = (props) => {
   const analytics = useAnalytics();
 
   useEffect(() => {
-    console.log(props);
     analytics.track('ViewFeatureFeed', {
       featureFeedId: props.featureFeed,
     });

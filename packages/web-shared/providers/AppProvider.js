@@ -19,6 +19,7 @@ function AppProvider(props = {}) {
     };
     initialize();
   }, [props.church]);
+
   if (!client) {
     return null;
   }
