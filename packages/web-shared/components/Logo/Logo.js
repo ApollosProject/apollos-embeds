@@ -7,19 +7,8 @@ import Styled from './Logo.styles';
 import { Box, systemPropTypes } from '../../ui-kit';
 
 function Logo({ fill, size, padding, theme, source, ...rest }) {
-  let themeData;
-  if (typeof theme === 'string') {
-    try {
-      themeData = JSON.parse(theme);
-    } catch (error) {
-      console.error('Error parsing JSON');
-    }
-  } else {
-    themeData = theme;
-  }
-
   return (
-    <Box backgroundColor={themeData?.colors?.primary ?? ''} {...rest}>
+    <Box backgroundColor={theme?.colors?.primary ?? ''} {...rest}>
       <Styled.Image src={source || './icon.png'} alt="Logo" size={size} fill={fill} />
     </Box>
   );

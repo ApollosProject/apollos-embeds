@@ -9,7 +9,7 @@ import {
 } from '@apollosproject/web-shared/providers';
 
 import { Button, Box, BodyText } from '@apollosproject/web-shared/ui-kit';
-import { Logo } from '@apollosproject/web-shared/components';
+import { Wordmark } from '@apollosproject/web-shared/components';
 import { useCurrentChurch } from '@apollosproject/web-shared/hooks';
 import Styled from './App.styles';
 
@@ -35,7 +35,9 @@ function ChurchLogo(props) {
     }
   }
 
-  return <Logo source={currentChurch?.logo} {...props} />;
+  return (
+    <Wordmark source={currentChurch?.wordmarkLightUrl} padding={10} {...props} href={origin} />
+  );
 }
 
 function App({ searchParams, url }) {
@@ -66,7 +68,15 @@ function App({ searchParams, url }) {
   if (churchSlug) {
     return (
       <AppProvider church={churchSlug} modal="true">
-        <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
+        <ChurchLogo
+          display="flex"
+          alignSelf="center"
+          justifyContent="center"
+          margin="20px"
+          p="s"
+          size="60px"
+          borderRadius="xl"
+        />
         {/** When using SSR, avoid the router. it crashes */}
         {ssr ? mainRoute : <RouterProvider router={router} />}
       </AppProvider>
