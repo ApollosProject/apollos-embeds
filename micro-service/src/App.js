@@ -66,15 +66,7 @@ function App({ searchParams, url }) {
   if (churchSlug) {
     return (
       <AppProvider church={churchSlug} modal="true">
-        <ChurchLogo
-          display="flex"
-          alignSelf="center"
-          justifyContent="center"
-          margin="20px"
-          p="s"
-          size={60}
-          borderRadius="xl"
-        />
+        <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
         {/** When using SSR, avoid the router. it crashes */}
         {ssr ? mainRoute : <RouterProvider router={router} />}
       </AppProvider>
