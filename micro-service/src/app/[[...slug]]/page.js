@@ -1,3 +1,4 @@
+import React from 'react';
 import '../../index.css';
 import { ClientOnly } from './client';
 import { headers } from 'next/headers';
