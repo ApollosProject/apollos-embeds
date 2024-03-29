@@ -26,6 +26,9 @@ const slideOut = keyframes`
 const Modal = withTheme(styled.div`
   width: 100%;
   height: 100%;
+  @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
+    height: 100vh;
+  }
   position: fixed;
   bottom: 0;
   top: 0;
