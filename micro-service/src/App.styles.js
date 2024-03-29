@@ -1,7 +1,5 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import { H1, TypeStyles } from '@apollosproject/web-shared/ui-kit';
+import { H1, TypeStyles, withTheme, styled } from '@apollosproject/web-shared/ui-kit';
 
 import { system } from '@apollosproject/web-shared/ui-kit/_lib/system';
 

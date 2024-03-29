@@ -1,3 +1,4 @@
+import styled, { withTheme, css } from 'styled-components';
 import theme from './_config/theme';
 
 import { system, systemPropTypes } from './_lib/system';
@@ -83,4 +84,8 @@ export {
   systemPropTypes,
   utils,
   // ====================
+  // Reexport to ensure that styled-components is using the same instance as the consuming app
+  styled,
+  withTheme,
+  css,
 };

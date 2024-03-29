@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { systemPropTypes } from '../_lib/system';
 import Styled from './Loader.styles';
 
-function Loader(props = {}) {
+function Loader({ text = null, ...props }) {
   return (
     <Styled {...props}>
       <SVG />
@@ -48,10 +48,6 @@ Loader.propTypes = {
   ...systemPropTypes,
   centered: PropTypes.bool,
   text: PropTypes.string,
-};
-
-Loader.defaultProps = {
-  text: null,
 };
 
 Loader.SVG = SVG;
