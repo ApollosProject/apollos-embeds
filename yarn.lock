@@ -232,9 +232,9 @@
     "@amplitude/types" "^1.10.2"
     tslib "^2.0.0"
 
-"@apollo/client@^3.7.4":
+"@apollo/client@^3.9.9":
   version "3.9.9"
-  resolved "https://registry.npmjs.org/@apollo/client/-/client-3.9.9.tgz#38f983a1ad24e2687abfced0a9c1c3bef8d32616"
+  resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.9.9.tgz#38f983a1ad24e2687abfced0a9c1c3bef8d32616"
   integrity sha512-/sMecU/M0WK9knrguts1lSLV8xFKzIgOMVb4mi6MOxgJXjliDB8PvOtmXhTqh2cVMMR4TzXgOnb+af/690zlQw==
   dependencies:
     "@graphql-typed-document-node/core" "^3.1.1"
@@ -251,10 +251,6 @@
     ts-invariant "^0.10.3"
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
-
-"@apollosproject/web-shared@link:packages/packages/web-shared":
-  version "0.0.0"
-  uid ""
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4", "@babel/code-frame@^7.12.13", "@babel/code-frame@^7.23.5", "@babel/code-frame@^7.24.1":
   version "7.24.2"
@@ -643,9 +639,9 @@
   dependencies:
     tslib "^2.4.1"
 
-"@segment/analytics-next@^1.62.0":
+"@segment/analytics-next@^1.66.0":
   version "1.66.0"
-  resolved "https://registry.npmjs.org/@segment/analytics-next/-/analytics-next-1.66.0.tgz#2a863f5c3af6eb4232a9170b026aaed49d9259b0"
+  resolved "https://registry.yarnpkg.com/@segment/analytics-next/-/analytics-next-1.66.0.tgz#2a863f5c3af6eb4232a9170b026aaed49d9259b0"
   integrity sha512-euCOLXUAAfcd/kI5FkCrOJ+Sp3QuCn3f9/1U5J+rly+lfqczKqw4x7A5aon6X3ncBJjfEP3gt9OZdcmgco18Ow==
   dependencies:
     "@lukeed/uuid" "^2.0.0"
@@ -2439,9 +2435,9 @@ graphql-tag@^2.12.6:
   dependencies:
     tslib "^2.1.0"
 
-graphql@^16.6.0:
+graphql@^16.8.1:
   version "16.8.1"
-  resolved "https://registry.npmjs.org/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
   integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
 
 has-flag@^3.0.0:

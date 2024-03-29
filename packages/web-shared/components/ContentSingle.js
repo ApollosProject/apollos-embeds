@@ -190,12 +190,16 @@ function ContentSingle(props = {}) {
     }
   };
 
+  // Try and convince Google that this is the canonical URL
+  const canonicalUrl = `${window.location.origin}?id=${searchParams.get('id')}`;
+
   return (
     <>
       {/* TODO: Max width set to 750px due to low resolution pictures. Can be increased as higher quality images are used */}
       <Helmet>
         {/* Standard metadata tags */}
         <title>{title}</title>
+        <link rel="canonical" href={canonicalUrl} />
         <meta name="description" content={summary} />
         <meta name="image" content={coverImage?.sources[0]?.uri} />
         {/* End standard metadata tags */}
