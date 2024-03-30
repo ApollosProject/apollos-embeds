@@ -20,7 +20,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Deploy to NPM
-        run: npm run build && npm run bump
+        run: npm run bump
         working-directory: web-embeds
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
