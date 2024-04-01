@@ -124,6 +124,22 @@ function ContentSingle(props = {}) {
     }
   }, [invalidPage, navigate]);
 
+  // Try and convince Google that this is the canonical URL
+  const canonicalUrl = `${window.location.origin}/?id=${searchParams.get('id')}`;
+
+  // Some websites have existing canonical links that need to be updated.
+  useEffect(() => {
+    const canonicalLink = document.querySelector('link[rel="canonical"]');
+    if (canonicalLink) {
+      const oldValue = canonicalLink.getAttribute('href');
+      canonicalLink.setAttribute('href', canonicalUrl);
+      // Reset when we are done.
+      return () => {
+        canonicalLink.setAttribute('href', oldValue);
+      };
+    }
+  }, []);
+
   if (props.loading || invalidPage) {
     return (
       <Box
@@ -189,9 +205,6 @@ function ContentSingle(props = {}) {
       dispatch(setModal(url));
     }
   };
-
-  // Try and convince Google that this is the canonical URL
-  const canonicalUrl = `${window.location.origin}?id=${searchParams.get('id')}`;
 
   return (
     <>
