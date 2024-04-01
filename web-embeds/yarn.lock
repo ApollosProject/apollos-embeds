@@ -260,6 +260,26 @@
     tslib "^2.3.0"
     zen-observable-ts "^1.2.5"
 
+"@apollo/client@^3.9.9":
+  version "3.9.9"
+  resolved "https://registry.npmjs.org/@apollo/client/-/client-3.9.9.tgz#38f983a1ad24e2687abfced0a9c1c3bef8d32616"
+  integrity sha512-/sMecU/M0WK9knrguts1lSLV8xFKzIgOMVb4mi6MOxgJXjliDB8PvOtmXhTqh2cVMMR4TzXgOnb+af/690zlQw==
+  dependencies:
+    "@graphql-typed-document-node/core" "^3.1.1"
+    "@wry/caches" "^1.0.0"
+    "@wry/equality" "^0.5.6"
+    "@wry/trie" "^0.5.0"
+    graphql-tag "^2.12.6"
+    hoist-non-react-statics "^3.3.2"
+    optimism "^0.18.0"
+    prop-types "^15.7.2"
+    rehackt "0.0.6"
+    response-iterator "^0.2.6"
+    symbol-observable "^4.0.0"
+    ts-invariant "^0.10.3"
+    tslib "^2.3.0"
+    zen-observable-ts "^1.2.5"
+
 "@apollosproject/web-shared@link:../packages/web-shared":
   version "0.0.0"
   uid ""
@@ -2000,6 +2020,11 @@
   resolved "https://registry.yarnpkg.com/@phosphor-icons/react/-/react-2.0.15.tgz#4d8e28484d45649f53a6cd75db161cf8b8379e1d"
   integrity sha512-PQKNcRrfERlC8gJGNz0su0i9xVmeubXSNxucPcbCLDd9u0cwJVTEyYK87muul/svf0UXFdL2Vl6bbeOhT1Mwow==
 
+"@phosphor-icons/react@^2.0.15":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@phosphor-icons/react/-/react-2.1.4.tgz#94c6dd69a5bcb5093dbf9f473d4fa83fbc27d1d2"
+  integrity sha512-EeNwgcg1aeK5vG/JYVTullnZzk5zjftOrjLb1iYetyhn5ImFFREc+xG0FAB/dAY277DGDSF8pNdNbqG1SUKIxQ==
+
 "@pkgr/core@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@pkgr/core/-/core-0.1.1.tgz#1ec17e2edbec25c8306d424ecfbf13c7de1aaa31"
@@ -2077,10 +2102,27 @@
     dset "^3.1.2"
     tslib "^2.4.1"
 
+"@segment/analytics-core@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npmjs.org/@segment/analytics-core/-/analytics-core-1.5.0.tgz#c1dcd73267b7928b695403c111333343674943a4"
+  integrity sha512-xFM9sS4ltRWDnNE6bD/bwLAGGBI1Doidf35J6ePyuOfecZ7c0sADtk9xR1QD98CDDFVaQcrfV/O1l4rBZvCm4A==
+  dependencies:
+    "@lukeed/uuid" "^2.0.0"
+    "@segment/analytics-generic-utils" "1.2.0"
+    dset "^3.1.2"
+    tslib "^2.4.1"
+
 "@segment/analytics-generic-utils@1.1.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@segment/analytics-generic-utils/-/analytics-generic-utils-1.1.0.tgz#b3e4de81ec76e98ef94977a5b995af0a42760708"
   integrity sha512-nOgmbfsKD0jFzH3df+PtjLq3qTspdcFpIy/F5ziho5qiE+QATM8wY9TpvCNBbcHr2f3OGzT6SgjJLFlmM5Yb+w==
+
+"@segment/analytics-generic-utils@1.2.0":
+  version "1.2.0"
+  resolved "https://registry.npmjs.org/@segment/analytics-generic-utils/-/analytics-generic-utils-1.2.0.tgz#9232162d6dbcd18501813fdff18035ce48fd24bf"
+  integrity sha512-DfnW6mW3YQOLlDQQdR89k4EqfHb0g/3XvBXkovH1FstUN93eL1kfW9CsDcVQyH3bAC5ZsFyjA/o/1Q2j0QeoWw==
+  dependencies:
+    tslib "^2.4.1"
 
 "@segment/analytics-next@^1.62.0":
   version "1.62.0"
@@ -2090,6 +2132,24 @@
     "@lukeed/uuid" "^2.0.0"
     "@segment/analytics-core" "1.4.0"
     "@segment/analytics-generic-utils" "1.1.0"
+    "@segment/analytics.js-video-plugins" "^0.2.1"
+    "@segment/facade" "^3.4.9"
+    "@segment/tsub" "^2.0.0"
+    dset "^3.1.2"
+    js-cookie "3.0.1"
+    node-fetch "^2.6.7"
+    spark-md5 "^3.0.1"
+    tslib "^2.4.1"
+    unfetch "^4.1.0"
+
+"@segment/analytics-next@^1.66.0":
+  version "1.66.0"
+  resolved "https://registry.npmjs.org/@segment/analytics-next/-/analytics-next-1.66.0.tgz#2a863f5c3af6eb4232a9170b026aaed49d9259b0"
+  integrity sha512-euCOLXUAAfcd/kI5FkCrOJ+Sp3QuCn3f9/1U5J+rly+lfqczKqw4x7A5aon6X3ncBJjfEP3gt9OZdcmgco18Ow==
+  dependencies:
+    "@lukeed/uuid" "^2.0.0"
+    "@segment/analytics-core" "1.5.0"
+    "@segment/analytics-generic-utils" "1.2.0"
     "@segment/analytics.js-video-plugins" "^0.2.1"
     "@segment/facade" "^3.4.9"
     "@segment/tsub" "^2.0.0"
@@ -6728,9 +6788,9 @@ graphql-tag@^2.12.6:
   dependencies:
     tslib "^2.1.0"
 
-graphql@^16.6.0:
+graphql@^16.6.0, graphql@^16.8.1:
   version "16.8.1"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
+  resolved "https://registry.npmjs.org/graphql/-/graphql-16.8.1.tgz#1930a965bef1170603702acdb68aedd3f3cf6f07"
   integrity sha512-59LZHPdGZVh695Ud9lRzPBVTtlX9ZCV150Er2W43ro37wVof0ctenSaskPPjN7lVTIN8mSZt8PHUNKZuNQUuxw==
 
 gzip-size@^6.0.0:
@@ -9911,9 +9971,9 @@ react-side-effect@^2.1.0:
   resolved "https://registry.yarnpkg.com/react-side-effect/-/react-side-effect-2.1.2.tgz#dc6345b9e8f9906dc2eeb68700b615e0b4fe752a"
   integrity sha512-PVjOcvVOyIILrYoyGEpDN3vmYNLdy1CajSFNt4TDsVQC5KpTijDvWVoR+/7Rz2xT978D8/ZtFceXxzsPwZEDvw==
 
-react-transition-group@4.4.5:
+react-transition-group@4.4.5, react-transition-group@^4.4.5:
   version "4.4.5"
-  resolved "https://registry.yarnpkg.com/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
+  resolved "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.5.tgz#e53d4e3f3344da8521489fbef8f2581d42becdd1"
   integrity sha512-pZcd1MCJoiKiBR2NRxeCRg13uCXbydPnmB4EOeRrY7480qNWO8IIgQG6zlDkm6uRMsURXPuKq0GWtiM59a5Q6g==
   dependencies:
     "@babel/runtime" "^7.5.5"
@@ -10052,6 +10112,11 @@ regjsparser@^0.9.1:
   integrity sha512-dQUtn90WanSNl+7mQKcXAgZxvUe7Z0SqXlgzv0za4LwiUhyzBC58yQO3liFoUgu8GiJVInAhJjkj1N0EtQ5nkQ==
   dependencies:
     jsesc "~0.5.0"
+
+rehackt@0.0.6:
+  version "0.0.6"
+  resolved "https://registry.npmjs.org/rehackt/-/rehackt-0.0.6.tgz#7a0a2247f2295e7548915417e44fbbf03bf004f4"
+  integrity sha512-l3WEzkt4ntlEc/IB3/mF6SRgNHA6zfQR7BlGOgBTOmx7IJJXojDASav+NsgXHFjHn+6RmwqsGPFgZpabWpeOdw==
 
 relateurl@^0.2.7:
   version "0.2.7"

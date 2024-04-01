@@ -19,8 +19,12 @@ jobs:
         with:
           registry-url: https://registry.npmjs.org/
 
+      - name: Yarn Install
+        run: yarn
+        working-directory: web-embeds
+
       - name: Deploy to NPM
-        run: npm run bump
+        run: yarn bump
         working-directory: web-embeds
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

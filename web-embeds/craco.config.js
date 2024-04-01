@@ -1,3 +1,5 @@
+const webpack = require("webpack");
+
 // craco.config.js
 module.exports = {
   webpack: {
@@ -5,6 +7,13 @@ module.exports = {
       // Override JavaScript file names
       webpackConfig.output.filename = "static/js/index.js";
       webpackConfig.output.chunkFilename = "static/js/[name].chunk.js";
+
+      webpackConfig.plugins = [
+        ...webpackConfig.plugins,
+        new webpack.optimize.LimitChunkCountPlugin({
+          maxChunks: 1,
+        }),
+      ];
 
       // Override CSS file names in production
       if (env === "production") {
