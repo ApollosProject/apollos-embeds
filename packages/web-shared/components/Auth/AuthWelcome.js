@@ -5,7 +5,7 @@ import { Box, Button } from '../../ui-kit';
 import AuthLayout from './AuthLayout';
 import steps from './authSteps';
 
-const AuthWelcome = () => {
+const AuthWelcome = (props) => {
   const [state, dispatch] = useAuth();
 
   const handleSubmit = async ({ step, type }) => {
@@ -13,7 +13,7 @@ const AuthWelcome = () => {
   };
 
   return (
-    <AuthLayout>
+    <AuthLayout {...props}>
       <Box flexDirection="row">
         <Button
           mr="base"

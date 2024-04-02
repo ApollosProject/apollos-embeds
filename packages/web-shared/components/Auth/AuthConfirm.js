@@ -11,7 +11,7 @@ import AuthLayout from './AuthLayout';
 import authSteps from './authSteps';
 import { useAnalytics } from '../../providers/AnalyticsProvider';
 
-const AuthConfirm = () => {
+const AuthConfirm = (props) => {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [state, dispatch] = useAuth();
@@ -63,7 +63,7 @@ const AuthConfirm = () => {
           email: user?.email,
           phone: user?.phone,
           numberOfSharedProfiles: sharedProfiles.length,
-        });        
+        });
         dispatch(
           updateAuth({
             token,
@@ -77,7 +77,7 @@ const AuthConfirm = () => {
           userId: user?.id,
           email: user?.email,
           phone: user?.phone,
-        });   
+        });
         if (needsOnboarding) {
           dispatch(
             updateAuth({
@@ -130,6 +130,7 @@ const AuthConfirm = () => {
 
   return (
     <AuthLayout
+      {...props}
       heading="We sent you a code..."
       subHeading={`Verify the code we sent to your ${state.type === 'email' ? 'email' : 'phone'}.`}
     >
