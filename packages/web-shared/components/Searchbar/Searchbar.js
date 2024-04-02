@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { User, MagnifyingGlass, ArrowLeft } from '@phosphor-icons/react';
+import { MagnifyingGlass, ArrowLeft } from '@phosphor-icons/react';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
-import { Box, Avatar } from '../../ui-kit';
+import { Box } from '../../ui-kit';
 import { useCurrentUser } from '../../hooks';
 import { useSearchState } from '../../providers/SearchProvider';
 
-import Profile from '../Profile';
 import Autocomplete from '../Searchbar/Autocomplete';
 import SearchResults from '../Searchbar/SearchResults';
+
+import ProfileButton from '../Profile/ProfileButton';
 
 import Styled from './Search.styles';
 
@@ -17,7 +18,6 @@ const MOBILE_BREAKPOINT = 428;
 
 const Searchbar = (props = {}) => {
   const searchState = useSearchState();
-  const [showProfile, setShowProfile] = useState(false);
   const [showTextPrompt, setShowTextPrompt] = useState(true);
   const [autocompleteInstance, setAutocompleteInstance] = useState(null);
   const [autocompleteState, setAutocompleteState] = useState({
@@ -94,13 +94,6 @@ const Searchbar = (props = {}) => {
     }
   }, [autocompleteState.isOpen]);
 
-  const handleOpenProfile = () => {
-    setShowProfile(true);
-  };
-  const handleCloseProfile = () => {
-    setShowProfile(false);
-  };
-
   const handleGetAutocompleteInstance = (instance) => {
     setAutocompleteInstance(instance);
   };
@@ -146,19 +139,10 @@ const Searchbar = (props = {}) => {
               </Box>
             </Styled.InterfaceWrapper>
           </Styled.Interface>
-          <Box padding="12px" onClick={handleOpenProfile}>
-            {currentUser?.profile?.photo?.uri ? (
-              <Avatar src={currentUser?.profile?.photo?.uri} width="38px" alt="avatar" />
-            ) : (
-              <Styled.Profile>
-                <User size={18} weight="bold" color={userExist ? 'white' : null} />
-              </Styled.Profile>
-            )}
-          </Box>
+          <ProfileButton />
         </Box>
         <SearchResults autocompleteState={autocompleteState} autocomplete={autocompleteInstance} />
       </Styled.Wrapper>
-      {showProfile ? <Profile handleCloseProfile={handleCloseProfile} /> : null}
     </Box>
   );
 };
