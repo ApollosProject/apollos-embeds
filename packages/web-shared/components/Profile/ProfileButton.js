@@ -1,7 +1,7 @@
 import { Box, Avatar } from '../../ui-kit';
 import { User } from '@phosphor-icons/react';
 import { useCurrentUser } from '../../hooks';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import Profile from './Profile';
 
 const ProfileButton = (props) => {

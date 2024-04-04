@@ -3,7 +3,7 @@ import React, { useState, useRef } from 'react';
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
 import { canvasPreview } from './canvasPreview';
 import { useDebounceEffect } from './useDebounceEffect';
-import { Button, Box } from '../../ui-kit';
+import { H4, Button, Box } from '../../ui-kit';
 import { useUploadProfileImage } from '../../hooks';
 import { GET_CURRENT_USER } from '../../hooks/useCurrentUser';
 
@@ -97,19 +97,14 @@ export default function ImageUploader(props) {
     <div className="ImageUploader">
       {!!props.imgSrc ? (
         <Box mb="base">
-          <Styled.Title mb="xs">Crop your new profile picture</Styled.Title>
+          <H4 mb="xs">Crop your new profile picture</H4>
           <ReactCrop
             crop={props.crop}
             onChange={(_, percentCrop) => props.setCrop(percentCrop)}
             onComplete={(c) => setCompletedCrop(c)}
             aspect={aspect}
           >
-            <img
-              ref={imgRef}
-              alt="Crop me"
-              src={props.imgSrc}
-              onLoad={onImageLoad}
-            />
+            <img ref={imgRef} alt="Crop me" src={props.imgSrc} onLoad={onImageLoad} />
           </ReactCrop>
         </Box>
       ) : null}
