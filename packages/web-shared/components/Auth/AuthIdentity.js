@@ -7,7 +7,7 @@ import { Button, Input, SmallSystemText, Box } from '../../ui-kit';
 import { validateEmail, validatePhoneNumber } from '../../utils';
 import AuthLayout from './AuthLayout';
 
-const AuthIdentity = () => {
+const AuthIdentity = (props) => {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [state, dispatch] = useAuth();
@@ -72,9 +72,7 @@ const AuthIdentity = () => {
       setStatus('LOADING');
       requestLogin({
         variables: {
-          identity: validEmail
-            ? { email: values.identity }
-            : { phone: values.identity },
+          identity: validEmail ? { email: values.identity } : { phone: values.identity },
         },
       });
     } else {
@@ -87,9 +85,8 @@ const AuthIdentity = () => {
 
   return (
     <AuthLayout
-      heading={
-        state.type === 'login' ? 'Welcome back!' : 'We’re glad you’re here.'
-      }
+      {...props}
+      heading={state.type === 'login' ? 'Welcome back!' : 'We’re glad you’re here.'}
       subHeading={
         state.type === 'login'
           ? 'Use the same phone number or email that you used when logging into the app before.'

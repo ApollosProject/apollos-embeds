@@ -256,7 +256,9 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
           ) : null}
         </Styled.ProfileCard>
       </Styled.Profile>
-      {showAuth && state.step !== authSteps.Success ? <AuthManager /> : null}
+      {showAuth && state.step !== authSteps.Success ? (
+        <AuthManager onClose={() => setShowAuth(false)} />
+      ) : null}
     </>
   );
 };
