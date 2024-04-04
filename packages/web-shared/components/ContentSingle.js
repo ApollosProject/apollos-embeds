@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import { ChatCircleText } from '@phosphor-icons/react';
 
 import { getURLFromType } from '../utils';
 
@@ -23,11 +24,14 @@ import {
   ContentCard,
   BodyText,
   ShareButton,
+  Button,
   Icons,
   PhospherIcon,
 } from '../ui-kit';
 import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
 import { Title, ParentTitle, ParentSummary } from './ContentSingle.styles';
+
+import Comments, { SIDEBAR_WITH } from './Comments';
 
 import VideoPlayer from './VideoPlayer';
 
@@ -89,6 +93,7 @@ function CalendarData({ start, end, location }) {
 
 function ContentSingle(props = {}) {
   const navigate = useNavigate();
+  const [showComments, setShowComments] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
@@ -160,6 +165,8 @@ function ContentSingle(props = {}) {
     id,
     coverImage,
     htmlContent,
+    commentsEnabled,
+    comments,
     title,
     summary,
     parentChannel,
@@ -233,68 +240,49 @@ function ContentSingle(props = {}) {
         <meta name="twitter:image:alt" content={title} />
         {/* End Twitter tags */}
       </Helmet>
-      <Box margin="0 auto" maxWidth={{ _: '750px' }} className="content-single">
-        <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
-        <TrackEventWhenLoaded
-          loading={props.loading}
-          eventName={'View Content'}
-          properties={{
-            itemId: props.data?.id,
-            parentId: props.data?.parentChannel?.id,
-            parentName: props.data?.parentChannel?.name,
-            title: props.data?.title,
-          }}
-        />
-        {coverImage?.sources[0]?.uri || videoMedia ? (
-          <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
-            {videoMedia ? (
-              <VideoPlayer
-                userProgress={userProgress}
-                parentNode={props.data}
-                coverImage={coverImage?.sources?.[0]?.uri}
-              />
-            ) : (
-              <Box
-                backgroundSize="cover"
-                paddingBottom="56.25%"
-                backgroundPosition="center"
-                backgroundImage={`url(${coverImage?.sources?.[0]?.uri})`}
-                backgroundRepeat="no-repeat"
-              />
-            )}
-          </Box>
-        ) : null}
+      <Box pr={{ md: showComments ? SIDEBAR_WITH : 0 }}>
+        <Box margin="0 auto" maxWidth={{ _: '750px' }} className="content-single">
+          <InteractWhenLoaded loading={props.loading} nodeId={id} action={'VIEW'} />
+          <TrackEventWhenLoaded
+            loading={props.loading}
+            eventName={'View Content'}
+            properties={{
+              itemId: props.data?.id,
+              parentId: props.data?.parentChannel?.id,
+              parentName: props.data?.parentChannel?.name,
+              title: props.data?.title,
+            }}
+          />
+          {coverImage?.sources[0]?.uri || videoMedia ? (
+            <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
+              {videoMedia ? (
+                <VideoPlayer
+                  userProgress={userProgress}
+                  parentNode={props.data}
+                  coverImage={coverImage?.sources?.[0]?.uri}
+                />
+              ) : (
+                <Box
+                  backgroundSize="cover"
+                  paddingBottom="56.25%"
+                  backgroundPosition="center"
+                  backgroundImage={`url(${coverImage?.sources?.[0]?.uri})`}
+                  backgroundRepeat="no-repeat"
+                />
+              )}
+            </Box>
+          ) : null}
 
-        <Box mb="l">
-          <Box
-            display="flex"
-            flexDirection={{
-              _: 'column',
-              md: 'row',
-            }}
-            justifyContent="space-between"
-            alignItems={{
-              _: 'start',
-              md: 'center',
-            }}
-            mb="s"
-          >
-            <Box width="100%">
+          <Box mb="l">
+            <Box mb="s" borderBottom="1px solid" borderColor="text.quaternary">
               {/* Title */}
               <Box
                 display="flex"
                 flexDirection="row"
                 justifyContent="space-between"
                 alignItems="center"
-                mb="base"
               >
                 {title ? <Title>{title}</Title> : null}
-                {/* Button moves below on mobile views */}
-                <ShareButton
-                  ml={{ md: 'xs' }}
-                  display={{ xs: 'none', sm: 'inline-block' }}
-                  contentTitle={title}
-                />
               </Box>
               <Box display="flex" flexDirection={{ sm: 'row', xs: 'column' }} width="100%">
                 {parentChannel?.name ? (
@@ -309,114 +297,64 @@ function ContentSingle(props = {}) {
                   location={props?.data?.location}
                 />
               </Box>
-            </Box>
-            <Box mb="xs" display={{ xs: 'inline-block', sm: 'none' }}>
-              <ShareButton contentTitle={title} />
-            </Box>
-          </Box>
-          {htmlContent ? (
-            <>
-              <Longform
-                dangerouslySetInnerHTML={{
-                  __html: parseHTMLContent(htmlContent),
-                }}
-              />
-            </>
-          ) : null}
-        </Box>
-        {/* Sub-Feature Feed */}
-        {hasFeatures ? (
-          <Box mb="l">
-            <FeatureFeed data={feed} />
-          </Box>
-        ) : null}
-        {/* Display content for series */}
-        {hasChildContent ? (
-          <Box mb="l">
-            <H3 mb="xs">{props.feature?.title}</H3>
 
-            <Box
-              display="grid"
-              gridGap="30px 30px"
-              gridTemplateColumns={{
-                _: 'repeat(1, minmax(0, 1fr));',
-                md: 'repeat(2, minmax(0, 1fr));',
-              }}
-              padding={{
-                _: '30px',
-                md: '0',
-              }}
-            >
-              {childContentItems?.map((item, index) => (
-                <ContentCard
-                  key={item.node?.title + index}
-                  image={item.node?.coverImage}
-                  title={item.node?.title}
-                  summary={item.node?.summary}
-                  onClick={() => handleActionPress(item.node)}
-                  videoMedia={item.node?.videos?.[0]}
-                  channelLabel={item.node?.parentItem?.title}
-                />
-              ))}
-            </Box>
-          </Box>
-        ) : null}
-        {/* Display content for sermons */}
-        {hasParent ? (
-          <>
-            <H3 flex="1" mr="xs" mb="xs">
-              This Series
-            </H3>
-            <Box flex="1" mb="l" minWidth="180px" {...props}>
-              <Box
-                position="relative"
-                display="flex"
-                backgroundColor="neutral.gray6"
-                overflow="hidden"
-                flexDirection={{ _: 'column', md: 'row' }}
-                mb="l"
-                borderRadius="l"
-                cursor="pointer"
-                onClick={() => handleActionPress(parentItem)}
-              >
-                {/* Image */}
-                <Box
-                  alignItems="center"
-                  backgroundColor="white"
-                  display="flex"
-                  overflow="hidden"
-                  width={{ _: '100%', md: '60%' }}
-                >
-                  <Box
-                    as="img"
-                    src={parentItem?.coverImage?.sources[0]?.uri}
-                    width="100%"
-                    height="100%"
+              <Box display="flex" flexDirection="row" gridGap={8}>
+                {commentsEnabled ? (
+                  <Button
+                    title="Responses"
+                    icon={<ChatCircleText weight="bold" size={18} />}
+                    variant="secondary"
+                    size="micro"
+                    onClick={() => setShowComments(!showComments)}
                   />
-                </Box>
-                {/* Masthead */}
-                <Box
-                  width={{ _: 'auto', md: '40%' }}
-                  padding={{ _: 'base', md: 'none' }}
-                  backdropFilter="blur(64px)"
-                  display="flex"
-                  flexDirection="column"
-                  paddingTop={{ md: 'xl' }}
-                >
-                  <ParentTitle>{parentItem?.title}</ParentTitle>
-                  <ParentSummary color="text.secondary">{parentItem?.summary}</ParentSummary>
-                </Box>
+                ) : null}
+                <ShareButton contentTitle={title} variant="secondary" size="micro" />
               </Box>
             </Box>
-          </>
-        ) : null}
-        {hasSiblingContent ? (
-          <>
-            <H3 flex="1" mr="xs">
-              In This Series
-            </H3>
+            {htmlContent ? (
+              <>
+                <Longform
+                  dangerouslySetInnerHTML={{
+                    __html: parseHTMLContent(htmlContent),
+                  }}
+                />
+              </>
+            ) : null}
+          </Box>
+          {/* Sub-Feature Feed */}
+          {hasFeatures ? (
+            <Box mb="l">
+              <FeatureFeed data={feed} />
+            </Box>
+          ) : null}
+
+          <Box
+            display="flex"
+            flexDirection="row"
+            gridGap={8}
+            borderTop="1px solid"
+            borderColor="text.quaternary"
+            py={4}
+            mt="s"
+            mb="base"
+          >
+            {commentsEnabled ? (
+              <Button
+                title="Responses"
+                icon={<ChatCircleText weight="bold" size={18} />}
+                variant="secondary"
+                size="micro"
+                onClick={() => setShowComments(!showComments)}
+              />
+            ) : null}
+            <ShareButton contentTitle={title} variant="secondary" size="micro" />
+          </Box>
+
+          {/* Display content for series */}
+          {hasChildContent ? (
             <Box mb="l">
               <H3 mb="xs">{props.feature?.title}</H3>
+
               <Box
                 display="grid"
                 gridGap="30px 30px"
@@ -429,20 +367,111 @@ function ContentSingle(props = {}) {
                   md: '0',
                 }}
               >
-                {siblingContentItems?.map((item, index) => (
+                {childContentItems?.map((item, index) => (
                   <ContentCard
                     key={item.node?.title + index}
                     image={item.node?.coverImage}
                     title={item.node?.title}
                     summary={item.node?.summary}
                     onClick={() => handleActionPress(item.node)}
-                    videoMedia={item.node?.videos[0]}
+                    videoMedia={item.node?.videos?.[0]}
                     channelLabel={item.node?.parentItem?.title}
                   />
                 ))}
               </Box>
             </Box>
-          </>
+          ) : null}
+
+          {/* Display content for sermons */}
+          {hasParent ? (
+            <>
+              <H3 flex="1" mr="xs" mb="xs">
+                This Series
+              </H3>
+              <Box flex="1" mb="l" minWidth="180px" {...props}>
+                <Box
+                  position="relative"
+                  display="flex"
+                  backgroundColor="neutral.gray6"
+                  overflow="hidden"
+                  flexDirection={{ _: 'column', md: 'row' }}
+                  mb="l"
+                  borderRadius="l"
+                  cursor="pointer"
+                  onClick={() => handleActionPress(parentItem)}
+                >
+                  {/* Image */}
+                  <Box
+                    alignItems="center"
+                    backgroundColor="white"
+                    display="flex"
+                    overflow="hidden"
+                    width={{ _: '100%', md: '60%' }}
+                  >
+                    <Box
+                      as="img"
+                      src={parentItem?.coverImage?.sources[0]?.uri}
+                      width="100%"
+                      height="100%"
+                    />
+                  </Box>
+                  {/* Masthead */}
+                  <Box
+                    width={{ _: 'auto', md: '40%' }}
+                    padding={{ _: 'base', md: 'none' }}
+                    backdropFilter="blur(64px)"
+                    display="flex"
+                    flexDirection="column"
+                    paddingTop={{ md: 'xl' }}
+                  >
+                    <ParentTitle>{parentItem?.title}</ParentTitle>
+                    <ParentSummary color="text.secondary">{parentItem?.summary}</ParentSummary>
+                  </Box>
+                </Box>
+              </Box>
+            </>
+          ) : null}
+          {hasSiblingContent ? (
+            <>
+              <H3 flex="1" mr="xs">
+                In This Series
+              </H3>
+              <Box mb="l">
+                <H3 mb="xs">{props.feature?.title}</H3>
+                <Box
+                  display="grid"
+                  gridGap="30px 30px"
+                  gridTemplateColumns={{
+                    _: 'repeat(1, minmax(0, 1fr));',
+                    md: 'repeat(2, minmax(0, 1fr));',
+                  }}
+                  padding={{
+                    _: '30px',
+                    md: '0',
+                  }}
+                >
+                  {siblingContentItems?.map((item, index) => (
+                    <ContentCard
+                      key={item.node?.title + index}
+                      image={item.node?.coverImage}
+                      title={item.node?.title}
+                      summary={item.node?.summary}
+                      onClick={() => handleActionPress(item.node)}
+                      videoMedia={item.node?.videos[0]}
+                      channelLabel={item.node?.parentItem?.title}
+                    />
+                  ))}
+                </Box>
+              </Box>
+            </>
+          ) : null}
+        </Box>
+        {showComments ? (
+          <Comments
+            parent={props?.data}
+            comments={comments}
+            onClose={() => setShowComments(false)}
+          />
         ) : null}
       </Box>
     </>

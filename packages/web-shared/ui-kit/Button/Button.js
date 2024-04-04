@@ -20,10 +20,12 @@ const Button = ({
       {...props}
     >
       <Styled.Content flexDirection={props.flexDirection}>
-        <Styled.Title disabled={props.disabled} size={size}>
-          {props.title}
-        </Styled.Title>
-        <Styled.Icon>{props?.icon}</Styled.Icon>
+        {props.title ? (
+          <Styled.Title disabled={props.disabled} size={size}>
+            {props.title}
+          </Styled.Title>
+        ) : null}
+        {props.icon ? <Styled.Icon>{props?.icon}</Styled.Icon> : null}
       </Styled.Content>
     </Styled.Button>
   );

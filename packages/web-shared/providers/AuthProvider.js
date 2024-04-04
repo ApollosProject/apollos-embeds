@@ -4,11 +4,8 @@ import React, { createContext, useContext, useEffect, useReducer } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 import authSteps from '../components/Auth/authSteps';
-import {
-  ANONYMOUS_ID,
-  AUTH_REFRESH_TOKEN_KEY,
-  AUTH_TOKEN_KEY,
-} from '../config/keys';
+import { ANONYMOUS_ID, AUTH_REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY } from '../config/keys';
+import { useApolloClient } from '@apollo/client';
 
 const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();
@@ -72,17 +69,15 @@ function reducer(state, action) {
 }
 
 function AuthProvider(props = {}) {
+  const client = useApolloClient();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { initialized, authenticated, token, refreshToken, anonymousId } =
-    state;
+  const { initialized, authenticated, token, refreshToken, anonymousId } = state;
 
   // Initialize auth state
   useEffect(() => {
     function restoreAuthentication() {
       const storedToken = window.localStorage.getItem(AUTH_TOKEN_KEY);
-      const storedRefreshToken = window.localStorage.getItem(
-        AUTH_REFRESH_TOKEN_KEY
-      );
+      const storedRefreshToken = window.localStorage.getItem(AUTH_REFRESH_TOKEN_KEY);
       const storedAnonymousId = window.localStorage.getItem(ANONYMOUS_ID);
 
       if (storedToken) {
@@ -108,8 +103,9 @@ function AuthProvider(props = {}) {
   // Respond to changes in auth state (login/logout)
   useEffect(() => {
     function setTokensInLocalStorage() {
-      if (token) {
+      if (token && token !== window.localStorage.getItem(AUTH_TOKEN_KEY)) {
         window.localStorage.setItem(AUTH_TOKEN_KEY, token);
+        client.refetchQueries({ include: 'active' });
 
         if (!authenticated) {
           dispatch(update({ authenticated: true }));
@@ -150,9 +146,7 @@ function AuthProvider(props = {}) {
 
   return (
     <AuthStateContext.Provider value={state}>
-      <AuthDispatchContext.Provider value={dispatch}>
-        {props.children}
-      </AuthDispatchContext.Provider>
+      <AuthDispatchContext.Provider value={dispatch}>{props.children}</AuthDispatchContext.Provider>
     </AuthStateContext.Provider>
   );
 }
