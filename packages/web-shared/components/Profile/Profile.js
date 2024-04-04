@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Color from 'color';
 import ImageUploader from './ImageUploader';
 
-import { Button, Avatar, BodyText, Box, Card, H4, ListItem } from '../../ui-kit';
+import { Button, Avatar, BodyText, Box, H4, ListItem } from '../../ui-kit';
 import Logo from '../Logo';
 import {
   UserCirclePlus,
@@ -158,7 +158,9 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
           {/* Profile Actions */}
           {state.token && !showDetails && !imgSrc ? (
             <>
-              <Styled.Title mb="xs">My Profile</Styled.Title>
+              <H4 color="text.secondary" mb="xs">
+                My Profile
+              </H4>
               <Box>
                 <ListItem
                   onClick={() => setShowDetails(true)}
