@@ -130,7 +130,7 @@ const buttonWidth = ({ width }) => {
   `;
 };
 
-const buttonColorState = ({ theme, disabled, focused, hovered }) => {
+const buttonColorState = ({ theme, variant, disabled, focused, hovered }) => {
   if (disabled) {
     return css`
       color: ${theme.colors.text.secondary};
@@ -173,7 +173,7 @@ const buttonColorTypeProp = ({ variant }) => {
 
     case 'secondary':
       return css`
-        color: ${themeGet('colors.text.action')};
+        color: ${themeGet('colors.text.secondary')};
       `;
     case 'link':
       return css`

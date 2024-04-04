@@ -69,6 +69,20 @@ const CONTENT_SINGLE_FRAGMENT = gql`
   fragment ContentSingleFragment on ContentItem {
     title
     htmlContent
+    commentsEnabled
+    comments {
+      id
+      isLiked
+      text
+      person {
+        id
+        firstName
+        lastName
+        photo {
+          uri
+        }
+      }
+    }
     coverImage {
       sources {
         uri
