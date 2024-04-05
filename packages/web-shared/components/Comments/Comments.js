@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Box, H4, Button } from '../../ui-kit';
 import { X, ArrowRight, ChatsCircle } from '@phosphor-icons/react';
 import { useCurrentUser } from '../../hooks';
@@ -24,69 +24,82 @@ const Comments = ({ visible, parent, comments, onClose }) => {
 
   return (
     <Box
-      width={{ md: SIDEBAR_WITH }}
       position="fixed"
-      top={58}
+      top={0}
       right={0}
       bottom={0}
-      left={{ _: 0, md: 'auto' }}
-      backgroundColor="fill.paper"
-      borderLeftStyle={{ _: 'none', md: 'solid' }}
-      borderLeftWidth={{ _: '0', md: '1px' }}
-      borderLeftColor="text.quaternary"
-      display="flex"
-      flexDirection="column"
+      left={0}
+      backgroundColor="material.regular"
+      zIndex={1000}
+      onClick={onClose}
     >
       <Box
-        p="xs"
-        borderBottom="1px solid"
-        borderColor="text.quaternary"
+        width={{ md: SIDEBAR_WITH }}
+        position="fixed"
+        top={0}
+        right={0}
+        bottom={0}
+        left={{ _: 0, md: 'auto' }}
+        backgroundColor="fill.paper"
+        borderLeftStyle={{ _: 'none', md: 'solid' }}
+        borderLeftWidth={{ _: '0', md: '1px' }}
+        borderLeftColor="text.quaternary"
         display="flex"
-        flexDirection="row"
-        justifyContent="space-between"
-        alignItems="center"
+        flexDirection="column"
+        zIndex={1000}
+        onClick={(e) => e.stopPropagation()}
       >
-        <H4>Responses</H4>
-        <Box cursor="pointer" display="flex" color="text.secondary" onClick={onClose}>
-          <X />
-        </Box>
-      </Box>
-      {currentUser ? (
-        <>
-          <Box style={{ overflowY: 'scroll' }}>
-            {comments.map((comment) => (
-              <Comment key={comment.id} {...comment} />
-            ))}
-            <div ref={scrollRef} style={{ height: 1 }} />
-          </Box>
-          <AddComment parent={parent} onAdd={scrollToBottom} />
-        </>
-      ) : (
         <Box
-          p="md"
-          flexGrow="1"
+          p="xs"
+          borderBottom="1px solid"
+          borderColor="text.quaternary"
           display="flex"
-          flexDirection="column"
+          flexDirection="row"
+          justifyContent="space-between"
           alignItems="center"
-          justifyContent="center"
         >
-          <Box color="base.primary">
-            <ChatsCircle size={90} weight="fill" />
+          <H4>Responses</H4>
+          <Box cursor="pointer" display="flex" color="text.secondary" onClick={onClose}>
+            <X />
           </Box>
-          <H4>Join the conversation</H4>
-          <Button
-            variant="secondary"
-            title="Sign up or Login"
-            onClick={() => setShowAuth(true)}
-            color="base.primary"
-            icon={<ArrowRight size={24} />}
-            mt="base"
-          />
         </Box>
-      )}
-      {showAuth && state.step !== authSteps.Success ? (
-        <AuthManager onClose={() => setShowAuth(false)} />
-      ) : null}
+        {currentUser ? (
+          <>
+            <Box flexGrow={1} style={{ overflowY: 'scroll' }}>
+              {comments.map((comment) => (
+                <Comment key={comment.id} {...comment} />
+              ))}
+              <div ref={scrollRef} style={{ height: 1 }} />
+            </Box>
+            <AddComment parent={parent} onAdd={scrollToBottom} />
+          </>
+        ) : (
+          <Box
+            p="md"
+            flexGrow="1"
+            display="flex"
+            flexDirection="column"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Box color="base.primary">
+              <ChatsCircle size={90} weight="fill" />
+            </Box>
+            <H4>Join the conversation</H4>
+            <Button
+              variant="secondary"
+              title="Sign up or Login"
+              onClick={() => setShowAuth(true)}
+              color="base.primary"
+              icon={<ArrowRight size={24} />}
+              mt="base"
+            />
+          </Box>
+        )}
+        {showAuth && state.step !== authSteps.Success ? (
+          <AuthManager onClose={() => setShowAuth(false)} />
+        ) : null}
+      </Box>
     </Box>
   );
 };

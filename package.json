@@ -8,7 +8,9 @@
   "license": "MIT",
   "workspaces": {
     "packages": [
-      "packages/*"
+      "packages/*",
+      "micro-service",
+      "web-embeds"
     ],
     "nohoist": []
   }

@@ -1,5 +1,5 @@
 import { gql, useMutation } from '@apollo/client';
-import { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Spinner, PaperPlaneTilt } from '@phosphor-icons/react';
 import styled, { withTheme } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';

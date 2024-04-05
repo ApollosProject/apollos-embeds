@@ -139,7 +139,9 @@ const Searchbar = (props = {}) => {
               </Box>
             </Styled.InterfaceWrapper>
           </Styled.Interface>
-          <ProfileButton />
+          <Box p={16}>
+            <ProfileButton />
+          </Box>
         </Box>
         <SearchResults autocompleteState={autocompleteState} autocomplete={autocompleteInstance} />
       </Styled.Wrapper>
