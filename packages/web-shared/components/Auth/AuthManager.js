@@ -15,25 +15,25 @@ function AuthManager(props = {}) {
   const render = () => {
     switch (step) {
       case authSteps.Welcome: {
-        return <Welcome />;
+        return <Welcome {...props} />;
       }
       case authSteps.Identity: {
-        return <Identity />;
+        return <Identity {...props} />;
       }
       case authSteps.Details: {
-        return <Details />;
+        return <Details {...props} />;
       }
       case authSteps.Merge: {
-        return <Merge />;
+        return <Merge {...props} />;
       }
       case authSteps.Confirm: {
-        return <Confirm />;
+        return <Confirm {...props} />;
       }
       case authSteps.Success: {
         return null;
       }
       default: {
-        return <Welcome />;
+        return <Welcome {...props} />;
       }
     }
   };

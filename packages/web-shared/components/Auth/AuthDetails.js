@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import {
-  useForm,
-  useUpdateProfileFields,
-  useCurrentUser,
-  useCompleteRegister,
-} from '../../hooks';
+import { useForm, useUpdateProfileFields, useCurrentUser, useCompleteRegister } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Input, Select } from '../../ui-kit';
 import authSteps from '../Auth/authSteps';
@@ -16,7 +11,7 @@ function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function AuthDetails() {
+function AuthDetails(props) {
   const [status, setStatus] = useState('IDLE');
   const [error, setError] = useState(null);
   const [user, setUser] = useState(null);
@@ -61,6 +56,7 @@ function AuthDetails() {
 
   return (
     <AuthLayout
+      {...props}
       heading="Complete your profile"
       subHeading="Help us learn a little more about you so we can connect you with the
     best ministries and events."

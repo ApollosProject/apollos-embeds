@@ -8,9 +8,9 @@ import {
   RouterProvider,
 } from '@apollosproject/web-shared/providers';
 
+import AppHeader from '@apollosproject/web-shared/components/AppHeader';
+
 import { Button, Box, BodyText } from '@apollosproject/web-shared/ui-kit';
-import { Logo } from '@apollosproject/web-shared/components';
-import { useCurrentChurch } from '@apollosproject/web-shared/hooks';
 import Styled from './App.styles';
 
 import ErrorPage from './error-page';
@@ -24,20 +24,6 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-function ChurchLogo(props) {
-  const { currentChurch } = useCurrentChurch();
-
-  //Can't set favicon in SSR
-  if (typeof document !== 'undefined') {
-    const favicon = document.querySelector('link[rel="icon"]');
-    if (currentChurch?.logo) {
-      favicon.href = currentChurch.logo;
-    }
-  }
-
-  return <Logo source={currentChurch?.logo} {...props} />;
-}
-
 function App({ searchParams, url }) {
   const churchSlug = getChurchSlug(url);
   const _root = searchParams?.root;
@@ -47,9 +33,12 @@ function App({ searchParams, url }) {
   const ssr = typeof document === 'undefined';
 
   const mainRoute = (
-    <Styled.FeedWrapper>
-      <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
-    </Styled.FeedWrapper>
+    <>
+      <AppHeader />
+      <Styled.FeedWrapper>
+        <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
+      </Styled.FeedWrapper>
+    </>
   );
 
   const routerConfig = [
@@ -66,7 +55,6 @@ function App({ searchParams, url }) {
   if (churchSlug) {
     return (
       <AppProvider church={churchSlug} modal="true">
-        <ChurchLogo display="flex" alignItems="center" justifyContent="center" marginTop="40px" />
         {/** When using SSR, avoid the router. it crashes */}
         {ssr ? mainRoute : <RouterProvider router={router} />}
       </AppProvider>

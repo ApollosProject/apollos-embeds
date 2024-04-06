@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CaretLeft } from '@phosphor-icons/react';
+import { CaretLeft, X } from '@phosphor-icons/react';
 
 import { Box, Card, Button } from '../../../ui-kit';
 import customizations from './customizations';
@@ -47,7 +47,19 @@ function AuthLayout(props = {}) {
             flexDirection="row-reverse"
             icon={<CaretLeft />}
           />
-        ) : null}
+        ) : (
+          <Button
+            variant="link"
+            title="Close"
+            onClick={props.onClose}
+            alignSelf="flex-end"
+            color="text.action"
+            alignItems="center"
+            display="flex"
+            flexDirection="row-reverse"
+            icon={<X />}
+          />
+        )}
         <Heading>{props.heading || customizations.defaulthHeading}</Heading>
         <SubHeading>{props.subHeading || customizations.defaultSubHeading}</SubHeading>
         {props.children}

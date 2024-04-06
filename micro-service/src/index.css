@@ -15,8 +15,12 @@ html {
 html,
 body {
   height: 100%;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #f8f8fa;
+}
+
+* {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
+    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
 img {
@@ -36,4 +40,6 @@ input:focus-visible {
   outline: none;
 }
 
-::selection { background: rgba(110,197,184, 0.62); /* base.tertiary */ }
+::selection {
+  background: rgba(110, 197, 184, 0.62); /* base.tertiary */
+}

@@ -1,7 +1,7 @@
 import { withTheme } from 'styled-components';
 import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import { H4, Card, utils } from '../../ui-kit';
+import Card from '../../ui-kit/Card';
 import { system } from '../../ui-kit/_lib/system';
 import Color from 'color';
 
@@ -12,6 +12,7 @@ const Profile = withTheme(styled.div`
   position: absolute;
   transition: opacity 0.3s ease;
   z-index: 9999;
+  right: 0;
 
   @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
     position: fixed;
@@ -20,12 +21,8 @@ const Profile = withTheme(styled.div`
     right: 0;
     left: 0;
   }
-  ${system};
-`);
 
-const Title = withTheme(styled(H4)`
-  color: ${themeGet('colors.text.secondary')};
-  font-size: ${utils.rem('16px')};
+  ${system};
 `);
 
 const ProfileCard = withTheme(styled(Card)`
@@ -87,7 +84,6 @@ const AppLinks = withTheme(styled.div`
 
 const Styled = {
   Profile,
-  Title,
   CloseIcon,
   UploadIcon,
   AppLinks,
