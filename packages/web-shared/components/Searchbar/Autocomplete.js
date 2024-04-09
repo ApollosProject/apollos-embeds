@@ -152,6 +152,7 @@ export default function Autocomplete({
                       facetFilters: [`church:${searchState.church}`],
                       hitsPerPage: 4,
                       clickAnalytics: true,
+                      getRankingInfo: true,
                       // highlightPreTag: '<mark>',
                       // highlightPostTag: '</mark>',
                     },
@@ -182,6 +183,7 @@ export default function Autocomplete({
                     params: {
                       hitsPerPage: 8,
                       clickAnalytics: true,
+                      getRankingInfo: true,
                       // highlightPreTag: '<mark>',
                       // highlightPostTag: '</mark>',
                     },
