@@ -5,7 +5,7 @@
   "license": "MIT",
   "dependencies": {
     "@apollo/client": "^3.7.4",
-    "@apollosproject/web-shared": "link:../packages/web-shared",
+    "@apollosproject/web-shared": "*",
     "@babel/preset-react": "^7.22.5",
     "@craco/craco": "^7.0.0",
     "@segment/analytics-next": "^1.62.0",
