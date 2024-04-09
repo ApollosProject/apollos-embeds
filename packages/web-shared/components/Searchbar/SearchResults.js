@@ -171,6 +171,39 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
   // Makes SSR consistent on aria aspects
   const inputProps = autocomplete.getInputProps({});
 
+  // Hack: join results from each collection back to a single array, and re-sort them by Algolia's ranking
+  // TODO: Remove once we have a single index for all content
+  const allResults = [];
+  autocompleteState.collections
+    .filter((collection) => ['pages', 'content'].includes(collection.source.sourceId))
+    .forEach((collection) => {
+      allResults.push(...collection.items.map((item) => ({ ...item, source: collection.source })));
+    });
+  // Algolia adds a _rankingInfo property to each item, which we can use to sort the results
+  // We want to sort the results first by nbExactWords (desc), then proximityDistance (asc), then last by userScore (desc)
+  // This is super hacky and results are not to be guaranteed, but should improve results over displaying them in the order they come back
+  allResults.sort((a, b) => {
+    if (a._rankingInfo.nbExactWords > b._rankingInfo.nbExactWords) {
+      return -1;
+    }
+    if (a._rankingInfo.nbExactWords < b._rankingInfo.nbExactWords) {
+      return 1;
+    }
+    if (a._rankingInfo.proximityDistance < b._rankingInfo.proximityDistance) {
+      return -1;
+    }
+    if (a._rankingInfo.proximityDistance > b._rankingInfo.proximityDistance) {
+      return 1;
+    }
+    if (a._rankingInfo.userScore > b._rankingInfo.userScore) {
+      return -1;
+    }
+    if (a._rankingInfo.userScore < b._rankingInfo.userScore) {
+      return 1;
+    }
+    return 0;
+  });
+
   return (
     <Box
       id="panel"
@@ -207,7 +240,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
                     Trending Searches
                   </Box>
                 )}
-                {collection.source.sourceId === 'recentSearchesPlugin' && (
+                {collection.source.sourceId === 'recentSearchesPlugin' && !inputProps.value && (
                   <Box padding="xs" fontWeight="600" color="base.gray">
                     Search History
                   </Box>
@@ -240,7 +273,10 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
                           />
                         </li>
                       );
-                    } else if (collection.source.sourceId === 'recentSearchesPlugin') {
+                    } else if (
+                      collection.source.sourceId === 'recentSearchesPlugin' &&
+                      !inputProps.value
+                    ) {
                       return (
                         <li
                           key={`${item.objectID ? item.objectID : index}-${
@@ -268,41 +304,42 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
               </div>
             );
           }
-
-          // Rendering of regular items
-
-          return autocompleteState.query !== '' ? (
-            <div key={`source-${index}`} className="aa-Source">
-              <ul className="aa-List" {...autocomplete.getListProps()}>
-                {items.map((item) => (
-                  <Box
-                    as="li"
-                    borderRadius="0"
-                    padding="0"
-                    key={item.objectID}
-                    className="aa-Item"
-                    {...autocomplete.getItemProps({
-                      item,
-                      source,
-                    })}
-                  >
-                    <ResourceCard
-                      leadingAsset={item?.coverImage}
-                      title={item?.title}
-                      onClick={() => {
-                        if (collection.source.sourceId === 'pages') {
-                          return handleStaticActionPress(item);
-                        }
-                        return handleActionPress(item);
-                      }}
-                      background="none"
-                    />
-                  </Box>
-                ))}
-              </ul>
-            </div>
-          ) : null;
         })}
+      {
+        // Rendering of regular items
+        autocompleteState.query !== '' ? (
+          <div className="aa-Source">
+            <ul className="aa-List" {...autocomplete.getListProps()}>
+              {allResults.map((item) => (
+                <Box
+                  as="li"
+                  borderRadius="0"
+                  padding="0"
+                  key={item.objectID}
+                  className="aa-Item"
+                  {...autocomplete.getItemProps({
+                    item,
+                    source: item.source,
+                  })}
+                >
+                  <ResourceCard
+                    leadingAsset={item?.coverImage}
+                    title={item?.title}
+                    subtitle={item?.summary}
+                    onClick={() => {
+                      if (collection.source.sourceId === 'pages') {
+                        return handleStaticActionPress(item);
+                      }
+                      return handleActionPress(item);
+                    }}
+                    background="none"
+                  />
+                </Box>
+              ))}
+            </ul>
+          </div>
+        ) : null
+      }
       {autocompleteState.isOpen && autocompleteState.query === '' && searchState.searchFeed ? (
         <Box className="empty-feed">
           <FeatureFeedProvider
