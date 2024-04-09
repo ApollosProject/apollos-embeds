@@ -109,7 +109,7 @@ export default function Autocomplete({
   const autocomplete = useMemo(() => {
     return createAutocomplete({
       openOnFocus: true,
-      plugins: [querySuggestionsPlugin, recentSearchesPlugin],
+      plugins: [querySuggestionsPlugin],
       shouldPanelOpen({ state }) {
         return state.query !== '' || state.collections?.length > 0;
       },

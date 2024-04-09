@@ -230,9 +230,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
         autocompleteState.collections.map((collection, index) => {
           const { source, items } = collection;
           // Rendering of Query Suggestions
-          if (
-            ['querySuggestionsPlugin', 'recentSearchesPlugin'].includes(collection.source.sourceId)
-          ) {
+          if (['querySuggestionsPlugin'].includes(collection.source.sourceId)) {
             return (
               <div key={`source-${index}`} className="aa-Source">
                 {collection.source.sourceId === 'querySuggestionsPlugin' && !inputProps.value && (
@@ -327,7 +325,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
                     title={item?.title}
                     subtitle={item?.summary}
                     onClick={() => {
-                      if (collection.source.sourceId === 'pages') {
+                      if (item.source.sourceId === 'pages') {
                         return handleStaticActionPress(item);
                       }
                       return handleActionPress(item);
