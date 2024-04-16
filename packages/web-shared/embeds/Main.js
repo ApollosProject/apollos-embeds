@@ -53,7 +53,7 @@ function RenderEmbed(props) {
   }
 }
 
-const Main = () => {
+const Main = ({ type }) => {
   const widgetDivs = Array.from(document.querySelectorAll('.apollos-widget')); // Convert NodeList to Array
 
   return (

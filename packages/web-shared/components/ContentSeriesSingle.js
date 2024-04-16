@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams, useLocation } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { getURLFromType } from '../utils';
 import { add as addBreadcrumb, useBreadcrumbDispatch } from '../providers/BreadcrumbProvider';
@@ -19,6 +19,7 @@ import { themeGet } from '@styled-system/theme-get';
 function ContentSeriesSingle(props = {}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const location = useLocation();
   const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();

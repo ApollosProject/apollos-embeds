@@ -36,6 +36,16 @@ function App() {
       element: <Main />,
       errorElement: <ErrorPage />,
     },
+    {
+      path: "/ac/:slug",
+      element: <Main type="content" />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/af/:slug",
+      element: <Main type="feed" />,
+      errorElement: <ErrorPage />,
+    },
   ]);
 
   return (
