@@ -1,21 +1,21 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
 
-import { useNavigate } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
 
 import { Button, systemPropTypes } from '../../../ui-kit';
+import { useNavigation } from '../../../providers/NavigationProvider';
 
 function ButtonFeature(props = {}) {
-  const navigate = useNavigate();
+  const { navigate } = useNavigation();
   // Event Handlers
   const handleActionPress = () => {
     if (props.feature?.action?.relatedNode?.url) {
       window.open(props.transformLink(props.feature?.action?.relatedNode?.url), '_blank');
     } else {
       navigate({
-        pathname: '/',
-        search: `?id=${getURLFromType(props.feature.action.relatedNode)}`,
+        id: getURLFromType(item.relatedNode),
+        ,
       });
     }
   };

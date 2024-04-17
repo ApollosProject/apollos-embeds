@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { ApolloProvider } from '@apollo/client';
 
@@ -6,9 +6,12 @@ import initClient from '../client';
 import { ThemeProvider } from '../ui-kit';
 import AuthProvider from './AuthProvider';
 import AnalyticsProvider from './AnalyticsProvider';
-import BreadcrumbProvider from './BreadcrumbProvider';
 import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
+
+const ShouldUsePathRouter = createContext(false);
+
+export const useShouldUsePathRouter = () => useContext(ShouldUsePathRouter);
 
 function AppProvider(props = {}) {
   const [client, setClient] = useState(null);
@@ -23,24 +26,25 @@ function AppProvider(props = {}) {
   if (!client) {
     return null;
   }
+
   return (
-    <ApolloProvider client={client} {...props}>
-      <AuthProvider>
-        <AnalyticsProvider church={props.church}>
-          <SearchProvider
-            church={props.church}
-            searchFeed={props.searchFeed}
-            customPlaceholder={props.customPlaceholder}
-          >
-            <BreadcrumbProvider>
+    <ShouldUsePathRouter.Provider value={props.usePathRouter}>
+      <ApolloProvider client={client} {...props}>
+        <AuthProvider>
+          <AnalyticsProvider church={props.church}>
+            <SearchProvider
+              church={props.church}
+              searchFeed={props.searchFeed}
+              customPlaceholder={props.customPlaceholder}
+            >
               <ModalProvider>
                 <ThemeProvider>{props.children}</ThemeProvider>
               </ModalProvider>
-            </BreadcrumbProvider>
-          </SearchProvider>
-        </AnalyticsProvider>
-      </AuthProvider>
-    </ApolloProvider>
+            </SearchProvider>
+          </AnalyticsProvider>
+        </AuthProvider>
+      </ApolloProvider>
+    </ShouldUsePathRouter.Provider>
   );
 }
 

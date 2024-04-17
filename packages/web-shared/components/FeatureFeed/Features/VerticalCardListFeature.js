@@ -1,66 +1,15 @@
 import React from 'react';
-import { useSearchParams } from 'react-router-dom';
-
-import { getURLFromType } from '../../../utils';
 
 import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
-import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
-import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from '@phosphor-icons/react';
-import { useAnalytics } from '../../../providers/AnalyticsProvider';
+import useHandleActionPress, {
+  useHandlePrimaryActionPress,
+} from '../../../hooks/useHandleActionPress';
 
 function VerticalCardListFeature(props = {}) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
-  const [state, dispatch] = useModal();
-  const analytics = useAnalytics();
-
-  const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL') {
-      analytics.track('OpenUrl', {
-        url: item?.relatedNode?.url,
-      });
-      return window.open(getURLFromType(item.relatedNode), '_blank');
-    }
-
-    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(item.relatedNode)}`,
-          title: item.relatedNode?.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
-    }
-    if (state.modal) {
-      const url = getURLFromType(item.relatedNode);
-      dispatch(setModal(url));
-      dispatch(openModal());
-    }
-  };
-
-  const handlePrimaryActionPress = () => {
-    if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-          title: props?.feature?.title,
-        })
-      );
-      const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-
-      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
-        analytics.track('OpenFeatureFeed', {
-          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-          fromFeatureId: props.feature?.id,
-          title: props.feature?.title,
-        });
-      }
-
-      state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
-    }
-  };
+  const handleActionPress = useHandleActionPress();
+  const handlePrimaryActionPress = useHandlePrimaryActionPress(props.feature);
 
   const cards = props.feature?.cards;
   return (

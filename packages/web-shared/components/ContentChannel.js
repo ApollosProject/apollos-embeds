@@ -3,18 +3,19 @@ import { useNavigate } from 'react-router-dom';
 
 import { getURLFromType } from '../utils';
 import { ContentCard, Box, H3, systemPropTypes, Button } from '../ui-kit';
+import { useNavigation } from '../providers/NavigationProvider';
 
 const PAGE_SIZE = 20;
 
 function ContentChannel(props = {}) {
-  const navigate = useNavigate();
+  const { navigate } = useNavigation();
 
   const hasMorePages = props.data?.totalCount > props.data?.edges?.length;
 
   const handleActionPress = (item) => {
     navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
+      ,
+      id: getURLFromType(item.relatedNode),
     });
   };
 

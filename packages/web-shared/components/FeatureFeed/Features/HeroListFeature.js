@@ -1,54 +1,29 @@
 import React from 'react';
 import { withTheme } from 'styled-components';
-import { useSearchParams } from 'react-router-dom';
 import { getURLFromType } from '../../../utils';
 import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
 import { Box, Button, H2, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
 import Styled from './HeroListFeature.styles';
-import { useNavigate } from 'react-router-dom';
-import { useAnalytics } from '../../../providers/AnalyticsProvider';
+import { useNavigation } from '../../../providers/NavigationProvider';
+import useHandleActionPress, {
+  useHandlePrimaryActionPress,
+} from '../../../hooks/useHandleActionPress';
 
 function HeroListFeature(props = {}) {
   const [state, dispatch] = useModal();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
-  const navigate = useNavigate();
-  const analytics = useAnalytics();
 
-  const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL') {
-      analytics.track('OpenUrl', {
-        url: item?.relatedNode?.url,
-      });
-      return window.open(getURLFromType(item.relatedNode), '_blank');
-    }
+  const { id, navigate } = useNavigation();
 
-    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(item.relatedNode)}`,
-          title: item.relatedNode?.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
-    }
-    navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
-    });
-  };
+  const handleActionPress = useHandleActionPress();
+  const handlePrimaryActionClick = useHandlePrimaryActionPress(props.feature);
 
   // Event Handlers
   const handleHeroCardPress = () => {
-    if (searchParams.get('id') !== getURLFromType(props.feature?.heroCard?.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`,
-          title: props.feature?.heroCard?.relatedNode?.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(props.feature?.heroCard?.relatedNode)}`);
+    if (id !== getURLFromType(props.feature?.heroCard?.relatedNode)) {
+      navigate({
+        id: getURLFromType(props.feature?.heroCard?.relatedNode),
+        ,
+      });
     }
 
     if (state.modal) {
@@ -58,19 +33,7 @@ function HeroListFeature(props = {}) {
     }
   };
 
-  const handlePrimaryActionClick = () => {
-    if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
-      analytics.track('OpenFeatureFeed', {
-        featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-        fromFeatureId: props.feature?.id,
-        title: props.feature?.title,
-      });
-    }
-    setSearchParams(`?id=${getURLFromType(props.feature.primaryAction.relatedNode)}`);
-  };
-
   const actions = props.feature?.actions;
-
 
   return (
     <Box mb="base" minWidth="180px" {...props}>

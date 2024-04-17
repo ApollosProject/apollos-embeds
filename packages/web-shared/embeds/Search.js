@@ -5,7 +5,6 @@ import { Searchbar } from '../components';
 
 import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import {
-  Breadcrumbs,
   ContentChannel,
   ContentSeriesSingle,
   ContentSingle,
@@ -16,14 +15,14 @@ import {
 import { useModalState } from '../providers/ModalProvider';
 import { useSearchState } from '../providers/SearchProvider';
 import { Box } from '../ui-kit';
+import { useNavigation } from '../providers/NavigationProvider';
 
 import Styled from './Search.styles';
 
 function RenderFeatures(props) {
-  const [searchParams] = useSearchParams();
-  const _id = searchParams.get('id');
+  const { id } = useNavigation();
 
-  const [type, randomId] = _id?.split(/-(.*)/s) ?? [];
+  const [type, randomId] = id?.split(/-(.*)/s) ?? [];
 
   switch (type) {
     case 'MediaContentItem':
@@ -89,7 +88,6 @@ const Search = (props) => {
         </Box>
       ) : (
         <>
-          <Breadcrumbs />
           <RenderFeatures {...props} />
         </>
       )}

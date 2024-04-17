@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -20,29 +21,29 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <style>
-      * {
-        font-family:
-          "Inter",
-          -apple-system,
-          BlinkMacSystemFont,
-          Segoe UI,
-          Roboto,
-          Oxygen,
-          Ubuntu,
-          Cantarell,
-          Fira Sans,
-          Droid Sans,
-          Helvetica Neue,
-          sans-serif;
-      }
-    </style>
-  </head>
+  <style>
+    * {
+      font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        Segoe UI,
+        Roboto,
+        Oxygen,
+        Ubuntu,
+        Cantarell,
+        Fira Sans,
+        Droid Sans,
+        Helvetica Neue,
+        sans-serif;
+    }
+  </style>
+</head>
 
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <!-- This is an example of how to use the apollos widgets -->
-    <!-- <div
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <!-- This is an example of how to use the apollos widgets -->
+  <!-- <div
       data-church="cedar_creek"
       data-type="FeatureFeed"
       data-feature-feed="FeatureFeed:5aae43e6-3526-4cd2-8dfe-771d2ce8a333"
@@ -52,24 +53,14 @@
       style="max-width: 1180px; padding: 40px; margin: auto; margin-top: 20px"
     ></div> -->
 
-    <div
-      data-type="FeatureFeed"
-      data-church="liquid_church"
-      data-feature-feed="FeatureFeed:04160599-4edf-4824-98c5-02c1a8854c48"
-      data-placeholder="What are you looking for?"
-      data-modal="true"
-      class="apollos-widget"
-    ></div>
+  <div data-type="FeatureFeed" data-church="liquid_church"
+    data-feature-feed="FeatureFeed:04160599-4edf-4824-98c5-02c1a8854c48" data-placeholder="What are you looking for?"
+    data-modal="true" data-use-path-router="false" class="apollos-widget"></div>
 
-    <div
-      data-type="FeatureFeed"
-      data-church="liquid_church"
-      data-feature-feed="FeatureFeed:7ff30e63-caa8-4015-bc00-73633e857b2f"
-      data-modal="true"
-      class="apollos-widget"
-      data-empty-placeholder-text="No jobs today!"
-    ></div>
-    <!-- 
+  <div data-type="FeatureFeed" data-church="liquid_church"
+    data-feature-feed="FeatureFeed:7ff30e63-caa8-4015-bc00-73633e857b2f" data-modal="true" class="apollos-widget"
+    data-empty-placeholder-text="No jobs today!"></div>
+  <!-- 
     <div
       data-church="cedar_creek"
       data-type="Search"
@@ -78,23 +69,13 @@
       class="apollos-widget"
       style="max-width: 1180px; padding: 40px; margin: auto; margin-top: 20px"
     ></div> -->
-    <div
-      data-church="liquid_church"
-      data-type="Auth"
-      data-modal="true"
-      class="apollos-widget"
-      style="max-width: 1180px; padding: 40px; margin: auto; margin-top: 20px"
-      data-search-feed="FeatureFeed:07e1050d-a6c4-4b46-a2a0-12d8fbf1df3c"
-    ></div>
-    <div
-      data-type="FeatureFeed"
-      data-church="liquid_church"
-      data-feature-feed="FeatureFeed:d3912726-487b-4635-9cec-99ed84a21209"
-      data-modal="true"
-      class="apollos-widget"
-    ></div>
+  <div data-church="liquid_church" data-type="Auth" data-modal="true" class="apollos-widget"
+    style="max-width: 1180px; padding: 40px; margin: auto; margin-top: 20px"
+    data-search-feed="FeatureFeed:07e1050d-a6c4-4b46-a2a0-12d8fbf1df3c"></div>
+  <div data-type="FeatureFeed" data-church="liquid_church"
+    data-feature-feed="FeatureFeed:d3912726-487b-4635-9cec-99ed84a21209" data-modal="true" class="apollos-widget"></div>
 
-    <!--
+  <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
 
@@ -104,5 +85,6 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
-  </body>
+</body>
+
 </html>

@@ -1,5 +1,4 @@
 import AuthManager from './Auth';
-import Breadcrumbs from './Breadcrumbs';
 import ContentChannel from './ContentChannel';
 import ContentSingle from './ContentSingle';
 import ContentSeriesSingle from './ContentSeriesSingle';
@@ -15,7 +14,6 @@ import Wordmark from './Wordmark';
 
 export {
   AuthManager,
-  Breadcrumbs,
   ContentChannel,
   ContentSingle,
   ContentSeriesSingle,

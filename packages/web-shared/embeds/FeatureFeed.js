@@ -1,26 +1,17 @@
 import React, { useEffect } from 'react';
-import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
-import {
-  ContentSingle,
-  FeatureFeedList,
-  ContentChannel,
-  LivestreamSingle,
-  Breadcrumbs,
-  Modal,
-  ContentSeriesSingle,
-} from '../components';
+import { FeatureFeedProvider } from '../providers';
+import { FeatureFeedList, Modal } from '../components';
 import { useModalState } from '../providers/ModalProvider';
 import { Box } from '../ui-kit';
-import { useSearchParams } from 'react-router-dom';
 import { parseSlugToIdAndType } from '../utils';
 import { useAnalytics } from '../providers/AnalyticsProvider';
 import { getComponentFromType } from '../utils/getContentFromURL';
+import { useNavigation } from '../providers/NavigationProvider';
 
 function RenderFeatures(props) {
-  const [searchParams] = useSearchParams();
-  const _id = searchParams.get('id');
+  const { id } = useNavigation();
 
-  const { type, randomId } = parseSlugToIdAndType(_id) ?? {};
+  const { type, randomId } = parseSlugToIdAndType(id) ?? {};
 
   const Component = getComponentFromType({ type, id: randomId });
 
@@ -71,7 +62,6 @@ const FeatureFeed = (props) => {
         </Box>
       ) : (
         <>
-          <Breadcrumbs />
           <RenderFeatures {...props} />
         </>
       )}
