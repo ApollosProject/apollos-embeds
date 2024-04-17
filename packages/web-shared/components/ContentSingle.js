@@ -33,6 +33,7 @@ import InteractWhenLoaded from './InteractWhenLoaded';
 import TrackEventWhenLoaded from './TrackEventWhenLoaded';
 import styled from 'styled-components';
 import { useNavigation } from '../providers/NavigationProvider';
+import { useShouldUsePathRouter } from '../providers/AppProvider';
 
 const infoDivider = (
   <BodyText color="text.tertiary" mx="xs" display={{ xs: 'none', sm: 'block' }}>
@@ -89,6 +90,7 @@ function CalendarData({ start, end, location }) {
 function ContentSingle(props = {}) {
   const { navigate, id: idFromParams } = useNavigation();
   const [showComments, setShowComments] = useState(false);
+  const usePathRouter = useShouldUsePathRouter();
 
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();
@@ -123,7 +125,10 @@ function ContentSingle(props = {}) {
   }, [invalidPage, navigate]);
 
   // Try and convince Google that this is the canonical URL
-  const canonicalUrl = `${window.location.origin}/?id=${idFromParams}`;
+  // TODO: Find a better way to determine this.
+  const canonicalUrl = usePathRouter
+    ? `${window.location.origin}/ac/${idFromParams}`
+    : `${window.location.origin}/?id=${idFromParams}`;
 
   // Some websites have existing canonical links that need to be updated.
   useEffect(() => {

@@ -4,13 +4,14 @@ import '@algolia/autocomplete-theme-classic';
 import { parseAlgoliaHitHighlight } from '@algolia/autocomplete-preset-algolia';
 
 import { useSearchState } from '../../providers/SearchProvider';
-import { Box } from '../../ui-kit';
+import { FeatureFeedProvider } from '../../providers';
+import Feed from '../FeatureFeed';
+import { ResourceCard, Box } from '../../ui-kit';
 
 import { getURLFromType } from '../../utils';
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from '@phosphor-icons/react';
 import { useNavigation } from '../../providers/NavigationProvider';
-import { FeatureFeedProvider } from '../../providers';
 
 function Hit({ hit }) {
   return hit?.title;
