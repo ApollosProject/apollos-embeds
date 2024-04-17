@@ -15,7 +15,6 @@ function ButtonFeature(props = {}) {
     } else {
       navigate({
         id: getURLFromType(item.relatedNode),
-        ,
       });
     }
   };

@@ -10,7 +10,6 @@ function ActionListFeature({ feature, emptyPlaceholderText }) {
   const handleActionPress = (item) => {
     navigate({
       id: getURLFromType(item.relatedNode),
-      ,
     });
   };
 

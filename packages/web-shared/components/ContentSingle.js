@@ -191,10 +191,8 @@ function ContentSingle(props = {}) {
       : null;
   const handleActionPress = (item) => {
     if (idFromParams !== getURLFromType(item)) {
-      console.log('navigate');
       navigate({
         id: getURLFromType(item),
-        ,
       });
     }
     if (state.modal) {

@@ -14,7 +14,6 @@ function ContentChannel(props = {}) {
 
   const handleActionPress = (item) => {
     navigate({
-      ,
       id: getURLFromType(item.relatedNode),
     });
   };

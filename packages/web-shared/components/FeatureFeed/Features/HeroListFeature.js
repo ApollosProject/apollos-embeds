@@ -22,7 +22,6 @@ function HeroListFeature(props = {}) {
     if (id !== getURLFromType(props.feature?.heroCard?.relatedNode)) {
       navigate({
         id: getURLFromType(props.feature?.heroCard?.relatedNode),
-        ,
       });
     }
 

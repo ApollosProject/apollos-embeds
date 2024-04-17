@@ -12,7 +12,6 @@ function ListItem({ title, subtitle, leadingIcon, tailingIcon, node, onClick, ..
   const handleActionPress = () => {
     navigate({
       id: getURLFromType(node),
-      ,
     });
   };
 
