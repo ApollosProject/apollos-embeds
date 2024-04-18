@@ -19,6 +19,7 @@ function App() {
   const searchElement = document.querySelector("[data-search-feed]");
   const churchElement = document.querySelector("[data-church]");
   const placeholderElement = document.querySelector("[data-placeholder]");
+  const pathRouter = document.querySelector("[data-use-path-router]");
 
   const searchFeed = searchElement
     ? searchElement.getAttribute("data-search-feed")
@@ -30,10 +31,24 @@ function App() {
     ? placeholderElement.getAttribute("data-placeholder")
     : null;
 
+  const usePathRouter = pathRouter
+    ? pathRouter.getAttribute("data-use-path-router") === "true"
+    : false;
+
   const router = createBrowserRouter([
     {
       path: "*",
       element: <Main />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/ac/:contentId",
+      element: <Main type="content" />,
+      errorElement: <ErrorPage />,
+    },
+    {
+      path: "/af/:feedId",
+      element: <Main type="feed" />,
       errorElement: <ErrorPage />,
     },
   ]);
@@ -43,6 +58,7 @@ function App() {
       church={church}
       searchFeed={searchFeed}
       customPlaceholder={customPlaceholder}
+      usePathRouter={usePathRouter}
     >
       <RouterProvider router={router} />
     </AppProvider>

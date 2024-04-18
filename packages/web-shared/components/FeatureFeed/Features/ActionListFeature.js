@@ -2,15 +2,14 @@ import React from 'react';
 import { getURLFromType } from '../../../utils';
 import { systemPropTypes, ResourceCard, Box, H5 } from '../../../ui-kit';
 import Styled from './ActionListFeature.styles';
-import { useNavigate } from 'react-router-dom';
+import { useNavigation } from '../../../providers/NavigationProvider';
 
 function ActionListFeature({ feature, emptyPlaceholderText }) {
-  const navigate = useNavigate();
+  const { navigate } = useNavigation();
 
   const handleActionPress = (item) => {
     navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
+      id: getURLFromType(item.relatedNode),
     });
   };
 

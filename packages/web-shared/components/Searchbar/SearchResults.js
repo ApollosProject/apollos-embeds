@@ -1,5 +1,4 @@
 import React, { useEffect, useState, createElement, Fragment } from 'react';
-import { useSearchParams } from 'react-router-dom';
 
 import '@algolia/autocomplete-theme-classic';
 import { parseAlgoliaHitHighlight } from '@algolia/autocomplete-preset-algolia';
@@ -10,13 +9,9 @@ import Feed from '../FeatureFeed';
 import { ResourceCard, Box } from '../../ui-kit';
 
 import { getURLFromType } from '../../utils';
-import {
-  add as addBreadcrumb,
-  reset as resetBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../providers/BreadcrumbProvider';
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from '@phosphor-icons/react';
+import { useNavigation } from '../../providers/NavigationProvider';
 
 function Hit({ hit }) {
   return hit?.title;
@@ -125,9 +120,8 @@ function PastQueryItem({ item, autocomplete }) {
 
 const SearchResults = ({ autocompleteState, autocomplete }) => {
   const searchState = useSearchState();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
   const [state, dispatch] = useModal();
+  const { navigate, id } = useNavigation();
 
   const [isResultsEmpty, setIsResultsEmpty] = useState(false);
 
@@ -143,16 +137,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
   }, [autocompleteState.collections]);
 
   const handleActionPress = (item) => {
-    dispatchBreadcrumb(resetBreadcrumb());
-    if (searchParams.get('id') !== getURLFromType(item)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(item)}`,
-          title: item.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(item)}`);
-    }
+    navigate({ id: getURLFromType(item) });
     if (state.modal) {
       const url = getURLFromType(item);
       dispatch(setModal(url));

@@ -4,20 +4,15 @@ import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
 import { Box } from '../../ui-kit';
 import { Searchbar } from '../../components';
-import Breadcrumbs from '../Breadcrumbs';
-import { useSearchParams } from 'react-router-dom';
-import {
-  open as openModal,
-  close as closeModal,
-  set as setModal,
-  useModal,
-} from '../../providers/ModalProvider';
-import {
-  reset as resetBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../providers/BreadcrumbProvider';
+import { useNavigation } from '../../providers/NavigationProvider';
 import { X } from '@phosphor-icons/react';
 import Wordmark from '../Wordmark';
+import {
+  set as setModal,
+  useModal,
+  close as closeModal,
+  open as openModal,
+} from '../../providers/ModalProvider';
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
@@ -31,25 +26,25 @@ function ChurchLogo(props) {
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
+
   const ref = useRef();
+  const { id, navigate } = useNavigation();
 
   useEffect(() => {
     // Watch for changes to the `id` search param
-    if (searchParams.get('id')) {
+    if (id) {
       dispatch(openModal());
-      dispatch(setModal(searchParams.get('id')));
+      dispatch(setModal(id));
     }
-    if (searchParams.get('id') === null) {
+    if (id === null) {
       dispatch(closeModal());
     }
-  }, [dispatch, searchParams]);
+  }, [dispatch, id]);
 
   function handleCloseModal() {
     dispatch(closeModal());
-    setSearchParams('');
-    dispatchBreadcrumb(resetBreadcrumb());
+    // Navigate to root
+    navigate();
   }
 
   useEffect(() => {
@@ -127,7 +122,6 @@ const Modal = (props = {}) => {
                 </Box>
                 <Box width={{ _: '0', sm: '10%' }}></Box>
               </Box>
-              <Breadcrumbs />
               <Box
                 width={{
                   _: '100%',

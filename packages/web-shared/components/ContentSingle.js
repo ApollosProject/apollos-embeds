@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import { ChatCircleText } from '@phosphor-icons/react';
 
@@ -9,11 +8,6 @@ import { getURLFromType } from '../utils';
 import { format, parseISO } from 'date-fns';
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
-import {
-  add as addBreadcrumb,
-  remove as removeBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../providers/BreadcrumbProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
 
 import {
@@ -38,6 +32,8 @@ import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import TrackEventWhenLoaded from './TrackEventWhenLoaded';
 import styled from 'styled-components';
+import { useNavigation } from '../providers/NavigationProvider';
+import { useShouldUsePathRouter } from '../providers/AppProvider';
 
 const infoDivider = (
   <BodyText color="text.tertiary" mx="xs" display={{ xs: 'none', sm: 'block' }}>
@@ -92,10 +88,10 @@ function CalendarData({ start, end, location }) {
 }
 
 function ContentSingle(props = {}) {
-  const navigate = useNavigate();
+  const { navigate, id: idFromParams } = useNavigation();
   const [showComments, setShowComments] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
+  const usePathRouter = useShouldUsePathRouter();
+
   const [state, dispatch] = useModal();
   const parseHTMLContent = useHTMLContent();
 
@@ -123,14 +119,16 @@ function ContentSingle(props = {}) {
 
   useEffect(() => {
     if (!state.modal && invalidPage) {
-      navigate({
-        pathname: '/',
-      });
+      // return home if the page is invalid
+      navigate();
     }
   }, [invalidPage, navigate]);
 
   // Try and convince Google that this is the canonical URL
-  const canonicalUrl = `${window.location.origin}/?id=${searchParams.get('id')}`;
+  // TODO: Find a better way to determine this.
+  const canonicalUrl = usePathRouter
+    ? `${window.location.origin}/ac/${idFromParams}`
+    : `${window.location.origin}/?id=${idFromParams}`;
 
   // Some websites have existing canonical links that need to be updated.
   useEffect(() => {
@@ -197,15 +195,10 @@ function ContentSingle(props = {}) {
         )}`
       : null;
   const handleActionPress = (item) => {
-    dispatchBreadcrumb(removeBreadcrumb());
-    if (searchParams.get('id') !== getURLFromType(item)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(item)}`,
-          title: item.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(item)}`);
+    if (idFromParams !== getURLFromType(item)) {
+      navigate({
+        id: getURLFromType(item),
+      });
     }
     if (state.modal) {
       const url = getURLFromType(item);

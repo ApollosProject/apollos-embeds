@@ -1,23 +1,15 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import { createPortal } from 'react-dom';
-import { useSearchParams } from 'react-router-dom';
 
 import { Searchbar } from '../components';
 
-import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
-import {
-  ContentSingle,
-  FeatureFeedList,
-  ContentChannel,
-  LivestreamSingle,
-  Breadcrumbs,
-  Modal,
-} from '../components';
-import { useModalState } from '../providers/ModalProvider';
+import { FeatureFeedProvider } from '../providers';
+import { FeatureFeedList, Modal } from '../components';
 import { useSearchState } from '../providers/SearchProvider';
 import { Box } from '../ui-kit';
 
 import Styled from './Search.styles';
+import NavigationProvider from '../providers/NavigationProvider';
 
 function RenderEmbed(props) {
   const searchState = useSearchState();
@@ -53,30 +45,32 @@ function RenderEmbed(props) {
   }
 }
 
-const Main = () => {
+const Main = ({ type }) => {
   const widgetDivs = Array.from(document.querySelectorAll('.apollos-widget')); // Convert NodeList to Array
 
   return (
-    <Box>
+    <NavigationProvider>
       <Box>
-        <Modal />
-        {/* Portal all widgets component */}
-        {widgetDivs.map((widget, index) => {
-          return createPortal(
-            <RenderEmbed
-              key={index}
-              type={widget.dataset.type}
-              church={widget.dataset.church}
-              searchFeed={widget.dataset.searchFeed}
-              featureFeed={widget.dataset.featureFeed}
-              modal={widget.dataset.modal}
-              emptyPlaceholderText={widget.dataset.emptyPlaceholderText}
-            />,
-            widget
-          );
-        })}
+        <Box>
+          <Modal />
+          {/* Portal all widgets component */}
+          {widgetDivs.map((widget, index) => {
+            return createPortal(
+              <RenderEmbed
+                key={index}
+                type={widget.dataset.type}
+                church={widget.dataset.church}
+                searchFeed={widget.dataset.searchFeed}
+                featureFeed={widget.dataset.featureFeed}
+                modal={widget.dataset.modal}
+                emptyPlaceholderText={widget.dataset.emptyPlaceholderText}
+              />,
+              widget
+            );
+          })}
+        </Box>
       </Box>
-    </Box>
+    </NavigationProvider>
   );
 };
 

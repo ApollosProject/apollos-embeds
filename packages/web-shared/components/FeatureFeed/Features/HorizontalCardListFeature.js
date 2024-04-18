@@ -1,15 +1,13 @@
 import React from 'react';
 import get from 'lodash/get';
-import { useSearchParams } from 'react-router-dom';
 
-import { getURLFromType } from '../../../utils';
 import { ContentCard, Box, H2, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
-import { add as addBreadcrumb, useBreadcrumbDispatch } from '../../../providers/BreadcrumbProvider';
-import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
 import { CaretRight } from '@phosphor-icons/react';
-import { useAnalytics } from '../../../providers/AnalyticsProvider';
 
 import Carousel from 'react-multi-carousel';
+import useHandleActionPress, {
+  useHandlePrimaryActionPress,
+} from '../../../hooks/useHandleActionPress';
 
 const responsive = {
   lg: {
@@ -27,57 +25,8 @@ const responsive = {
 };
 
 function HorizontalCardListFeature(props = {}) {
-  const [searchParams, setSearchParams] = useSearchParams();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
-  const [state, dispatch] = useModal();
-  const analytics = useAnalytics();
-
-  const handleActionPress = (item) => {
-    if (item.action === 'OPEN_URL') {
-      analytics.track('OpenUrl', {
-        url: item?.relatedNode?.url,
-      });
-      return window.open(getURLFromType(item.relatedNode), '_blank');
-    }
-
-    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(item.relatedNode)}`,
-          title: item.relatedNode?.title || item?.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
-    }
-    if (state.modal) {
-      const url = getURLFromType(item.relatedNode);
-      dispatch(setModal(url));
-      dispatch(openModal());
-    }
-  };
-
-  const handlePrimaryActionPress = () => {
-    if (searchParams.get('id') !== getURLFromType(props?.feature?.primaryAction.relatedNode)) {
-      if (props?.feature?.title) {
-        dispatchBreadcrumb(
-          addBreadcrumb({
-            url: `?id=${getURLFromType(props?.feature?.primaryAction.relatedNode)}`,
-            title: props?.feature?.title,
-          })
-        );
-      }
-      const id = getURLFromType(props?.feature?.primaryAction.relatedNode);
-      if (props.feature?.primaryAction?.action === 'OPEN_FEED') {
-        analytics.track('OpenFeatureFeed', {
-          featureFeedId: props.feature?.primaryAction?.relatedNode?.id,
-          fromFeatureId: props.feature?.id,
-          title: props.feature?.title,
-        });
-      }
-
-      state.modal ? setSearchParams({ id }) : setSearchParams({ id, action: 'viewall' });
-    }
-  };
+  const handleActionPress = useHandleActionPress();
+  const handlePrimaryActionPress = useHandlePrimaryActionPress(props.feature);
 
   if (props?.feature?.cards?.length === 0 || !props?.feature?.cards) {
     return null;

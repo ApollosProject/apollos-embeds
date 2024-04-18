@@ -21,8 +21,10 @@ import {
 import { useVideoMediaProgress, useLivestreamStatus, useHTMLContent } from '../hooks';
 import VideoPlayer from './VideoPlayer';
 import TrackEventWhenLoaded from './TrackEventWhenLoaded';
+import { useNavigation } from '../providers/NavigationProvider';
+
 function LivestreamSingle(props = {}) {
-  const navigate = useNavigate();
+  const { navigate } = useNavigation();
   const parseHTMLContent = useHTMLContent();
 
   const invalidPage = !props.loading && !props.data;
@@ -87,8 +89,7 @@ function LivestreamSingle(props = {}) {
 
   const handleActionPress = (item) => {
     navigate({
-      pathname: '/',
-      search: `?id=${getURLFromType(item.relatedNode)}`,
+      id: getURLFromType(item.relatedNode),
     });
   };
 

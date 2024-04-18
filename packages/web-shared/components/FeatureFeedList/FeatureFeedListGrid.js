@@ -1,32 +1,20 @@
 import React from 'react';
 
-import { useSearchParams } from 'react-router-dom';
 import { withTheme } from 'styled-components';
 
 import { getURLFromType } from '../../utils';
 import { Box, ContentCard, H3 } from '../../ui-kit';
-import {
-  add as addBreadcrumb,
-  reset as resetBreadcrumb,
-  useBreadcrumbDispatch,
-} from '../../providers/BreadcrumbProvider';
 
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
+import { useNavigation } from '../../providers/NavigationProvider';
 
 function FeatureFeedListGrid({ loading, data, emptyPlaceholderText }) {
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { navigate, id } = useNavigation();
   const [state, dispatch] = useModal();
-  const dispatchBreadcrumb = useBreadcrumbDispatch();
 
   const handleActionPress = (item) => {
-    if (searchParams.get('id') !== getURLFromType(item.relatedNode)) {
-      dispatchBreadcrumb(
-        addBreadcrumb({
-          url: `?id=${getURLFromType(item.relatedNode)}`,
-          title: item.title,
-        })
-      );
-      setSearchParams(`?id=${getURLFromType(item.relatedNode)}`);
+    if (id !== getURLFromType(item.relatedNode)) {
+      navigate({ id: getURLFromType(item.relatedNode) });
     }
     if (state.modal) {
       const url = getURLFromType(item.relatedNode);
