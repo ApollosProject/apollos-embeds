@@ -15,7 +15,7 @@ const NavigationProvider = (props = {}) => {
 
   if (shouldUsePathRouter) {
     navigate = ({ id } = {}) => {
-      const type = id.includes('FeatureFeed') ? 'feed' : 'content';
+      const type = id?.includes('FeatureFeed') ? 'feed' : 'content';
       if (id) {
         nativeNavigate({
           pathname: `/${type === 'content' ? 'ac' : 'af'}/${id}`,

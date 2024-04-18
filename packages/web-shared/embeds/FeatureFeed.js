@@ -10,7 +10,6 @@ import { useNavigation } from '../providers/NavigationProvider';
 
 function RenderFeatures(props) {
   const { id } = useNavigation();
-
   const { type, randomId } = parseSlugToIdAndType(id) ?? {};
 
   const Component = getComponentFromType({ type, id: randomId });

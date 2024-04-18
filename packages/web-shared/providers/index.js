@@ -5,6 +5,7 @@ import ContentItemProvider from './ContentItemProvider';
 import FeatureFeedProvider from './FeatureFeedProvider';
 import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
+import NavigationProvider from './NavigationProvider';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 export {
@@ -17,4 +18,5 @@ export {
   SearchProvider,
   createBrowserRouter,
   RouterProvider,
+  NavigationProvider,
 };

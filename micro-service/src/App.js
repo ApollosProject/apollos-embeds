@@ -6,6 +6,7 @@ import {
   AppProvider,
   createBrowserRouter,
   RouterProvider,
+  NavigationProvider,
 } from '@apollosproject/web-shared/providers';
 
 import AppHeader from '@apollosproject/web-shared/components/AppHeader';
@@ -36,7 +37,9 @@ function App({ searchParams, url }) {
     <>
       <AppHeader />
       <Styled.FeedWrapper>
-        <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
+        <NavigationProvider>
+          <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
+        </NavigationProvider>
       </Styled.FeedWrapper>
     </>
   );
