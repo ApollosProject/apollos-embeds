@@ -45,19 +45,22 @@ function convertToOutlookLink({ start, duration, location, allDay, title }) {
   return `https://outlook.live.com/calendar/action/compose&rru=addevent&startdt=${startDateString}&enddt=${endDateString}&subject=${title}&location=${locationString}`;
 }
 
-const AddToCalendar = ({ start, duration, allDay, location, title = 'Event' }) => {
+const AddToCalendar = ({ start, duration, allDay, location, title = 'Event', icsUrl }) => {
   return (
     <Menu as="div" style={{ position: 'relative' }}>
       <ActionIcon>
         <CalendarPlus size={16} weight="bold" />
       </ActionIcon>
       <List>
-        <Menu.Item>
-          <MenuLink href={convertToIcsLink({ start, duration, allDay, location, title })}>
-            <AppleLogo size={14} weight="fill" />
-            &nbsp;Apple Calendar
-          </MenuLink>
-        </Menu.Item>
+        {icsUrl ? (
+            <Menu.Item>
+              <MenuLink href={icsUrl}>
+                <AppleLogo size={14} weight="fill" />
+                &nbsp;Apple Calendar
+              </MenuLink>
+            </Menu.Item>
+        ) : null}
+
         <Menu.Item>
           <MenuLink
             href={convertToGoogleLink({ start, duration, allDay, location, title })}

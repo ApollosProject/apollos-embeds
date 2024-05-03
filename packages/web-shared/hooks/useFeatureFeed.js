@@ -71,6 +71,7 @@ export const FEED_FEATURES = gql`
             id
             start
             duration
+            icsUrl
             allDay
             location
             title
