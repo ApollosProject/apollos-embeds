@@ -43,7 +43,6 @@ const AddToCalendar = ({ start, duration, allDay, location, title = 'Event', ics
             </MenuLink>
           </Menu.Item>
         ) : null}
-
         <Menu.Item>
           <MenuLink
             href={convertToGoogleLink({ start, duration, allDay, location, title })}
