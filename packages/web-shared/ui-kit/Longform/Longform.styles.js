@@ -3,6 +3,7 @@ import { themeGet } from '@styled-system/theme-get';
 
 import { system } from '../_lib/system';
 import { TypeStyles } from '../Typography';
+import { utils } from "../index";
 
 const Longform = styled.div`
   ${TypeStyles.BodyText};
@@ -17,6 +18,7 @@ const Longform = styled.div`
   h1 {
     margin-bottom: ${themeGet('space.xl')};
     margin-top: ${themeGet('space.xl')};
+    line-height: ${utils.rem('32px')};
   }
   h2 {
     margin-bottom: ${themeGet('space.l')};
