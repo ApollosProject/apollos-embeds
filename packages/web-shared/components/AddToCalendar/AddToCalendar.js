@@ -10,23 +10,6 @@ import {
 import { ActionIcon, List, MenuLink } from './AddToCalendar.styles';
 import { addSeconds, parseISO } from 'date-fns';
 
-function convertToIcsLink({ start, duration, location, allDay, title }) {
-  const startDate = parseISO(start);
-  const endDate = addSeconds(startDate, duration);
-  const startDateString = startDate.toISOString().replace(/-|:|\.\d+/g, '');
-  const endDateString = endDate.toISOString().replace(/-|:|\.\d+/g, '');
-  const locationString = (location || '').replace(/<[^>]+>/g, ' ');
-  return `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-DTSTART:${startDateString}
-DTEND:${endDateString}
-SUMMARY:${title}
-LOCATION:${locationString}
-END:VEVENT
-END:VCALENDAR`;
-}
-
 function convertToGoogleLink({ start, duration, location, allDay, title }) {
   const startDate = parseISO(start);
   const endDate = addSeconds(startDate, duration);
@@ -45,19 +28,21 @@ function convertToOutlookLink({ start, duration, location, allDay, title }) {
   return `https://outlook.live.com/calendar/action/compose&rru=addevent&startdt=${startDateString}&enddt=${endDateString}&subject=${title}&location=${locationString}`;
 }
 
-const AddToCalendar = ({ start, duration, allDay, location, title = 'Event' }) => {
+const AddToCalendar = ({ start, duration, allDay, location, title = 'Event', icsUrl }) => {
   return (
     <Menu as="div" style={{ position: 'relative' }}>
       <ActionIcon>
         <CalendarPlus size={16} weight="bold" />
       </ActionIcon>
       <List>
-        <Menu.Item>
-          <MenuLink href={convertToIcsLink({ start, duration, allDay, location, title })}>
-            <AppleLogo size={14} weight="fill" />
-            &nbsp;Apple Calendar
-          </MenuLink>
-        </Menu.Item>
+        {icsUrl ? (
+          <Menu.Item>
+            <MenuLink href={icsUrl}>
+              <AppleLogo size={14} weight="fill" />
+              &nbsp;Apple Calendar
+            </MenuLink>
+          </Menu.Item>
+        ) : null}
         <Menu.Item>
           <MenuLink
             href={convertToGoogleLink({ start, duration, allDay, location, title })}
@@ -76,15 +61,14 @@ const AddToCalendar = ({ start, duration, allDay, location, title = 'Event' }) =
             &nbsp;Microsoft Outlook
           </MenuLink>
         </Menu.Item>
-        <Menu.Item>
-          <MenuLink
-            href={convertToIcsLink({ start, duration, allDay, location, title })}
-            target="blank"
-          >
-            <FileArrowDown size={14} weight="fill" />
-            &nbsp;Download .ics
-          </MenuLink>
-        </Menu.Item>
+        {icsUrl ? (
+          <Menu.Item>
+            <MenuLink href={icsUrl} target="blank">
+              <FileArrowDown size={14} weight="fill" />
+              &nbsp;Download .ics
+            </MenuLink>
+          </Menu.Item>
+        ) : null}
       </List>
     </Menu>
   );

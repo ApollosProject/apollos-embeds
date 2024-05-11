@@ -104,7 +104,7 @@ function convertAddressToGoogleMapLink(html) {
 }
 
 const EventBlockFeature = ({ feature }) => {
-  const { allDay, start, duration, location, title } = feature;
+  const { allDay, start, duration, location, title, icsUrl } = feature;
   const timelines = eventTimestampLines({ start, duration, allDay });
   const theme = useTheme();
 
@@ -120,6 +120,7 @@ const EventBlockFeature = ({ feature }) => {
             {timelines[1] ? <BodyText color="text.secondary">{timelines[1]}</BodyText> : undefined}
           </Details>
           <AddToCalendar
+            icsUrl={icsUrl}
             allDay={allDay}
             start={start}
             duration={duration}
