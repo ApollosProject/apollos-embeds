@@ -33,6 +33,7 @@ const Searchbar = (props = {}) => {
   const userExist = !!currentUser;
   const firstName = currentUser?.profile?.firstName || '';
   const [isMobile, setIsMobile] = useState(false);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
   const textWelcome =
     firstName === '' ? <strong>Hey!&nbsp;</strong> : <strong>Hey {firstName}!&nbsp; </strong>;
@@ -93,6 +94,27 @@ const Searchbar = (props = {}) => {
       setShowTextPrompt(false);
     }
   }, [autocompleteState.isOpen]);
+
+  useEffect(() => {
+    if (isMobile && autocompleteState.isOpen) {
+      // Save the current scroll position
+      setScrollPosition(window.scrollY);
+
+      // Set body to fixed position to prevent scrolling
+      document.body.style.position = 'fixed';
+    } else {
+      // Restore body to normal position
+      document.body.style.position = '';
+
+      // Restore the scroll position
+      window.scrollTo(0, scrollPosition);
+    }
+
+    // Clean up the effect when the component unmounts
+    return () => {
+      document.body.style.position = '';
+    };
+  }, [autocompleteState.isOpen, scrollPosition, isMobile]);
 
   const handleGetAutocompleteInstance = (instance) => {
     setAutocompleteInstance(instance);
