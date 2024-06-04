@@ -35,7 +35,7 @@ const showPanel = ({ dropdown }) => {
         padding-bottom: 15px;
       }
       @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
-        height: 100vh;
+        max-height: 80vh;
         z-index: 1000;
         padding-bottom: 15px;
       }
