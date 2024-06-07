@@ -24,7 +24,7 @@ function Wordmark({ size, source, href }) {
 
 Wordmark.propTypes = {
   ...systemPropTypes,
-  size: PropTypes.number,
+  size: PropTypes.string,
   source: PropTypes.string,
 };
 
