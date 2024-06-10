@@ -26,9 +26,6 @@ Sentry.init({
   tracesSampleRate: 1.0,
 });
 
-const appStoreUrl = process.env.NEXT_PUBLIC_APPLE_APP_STORE_LINK;
-const playStoreUrl = process.env.NEXT_PUBLIC_GOOGLE_PLAY_STORE_LINK;
-
 function App({ searchParams, url }) {
   const churchSlug = getChurchSlug(url);
   const _root = searchParams?.root;
@@ -43,7 +40,7 @@ function App({ searchParams, url }) {
       <Styled.FeedWrapper>
         <NavigationProvider>
           <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
-          <StoreLinks appStoreUrl={appStoreUrl} playStoreUrl={playStoreUrl} />
+          <StoreLinks />
         </NavigationProvider>
       </Styled.FeedWrapper>
     </>

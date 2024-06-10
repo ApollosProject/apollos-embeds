@@ -1,4 +1,5 @@
 import { Box } from '../../ui-kit';
+import { useCurrentChurch } from '../../hooks';
 
 import downloadOnAppStore from './download-on-app-store';
 import downloadOnPlayStore from './download-on-play-store';
@@ -7,7 +8,8 @@ const AppStoreLink = () => <div dangerouslySetInnerHTML={{ __html: downloadOnApp
 
 const PlayStoreLink = () => <div dangerouslySetInnerHTML={{ __html: downloadOnPlayStore }} />;
 
-const StoreLinks = ({ appStoreUrl, playStoreUrl }) => {
+const StoreLinks = () => {
+  const { currentChurch } = useCurrentChurch();
   return (
     <Box
       py={8}
@@ -22,12 +24,12 @@ const StoreLinks = ({ appStoreUrl, playStoreUrl }) => {
       </Box>
       <Box display="flex" justifyContent="center">
         <Box px={8} py={8}>
-          <a href={appStoreUrl}>
+          <a href={currentChurch?.mobileAppStoreUrl}>
             <AppStoreLink />
           </a>
         </Box>
         <Box px={8} py={8}>
-          <a href={playStoreUrl}>
+          <a href={currentChurch?.mobilePlayStoreUrl}>
             <PlayStoreLink />
           </a>
         </Box>
