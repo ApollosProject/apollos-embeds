@@ -10,6 +10,7 @@ import {
 } from '@apollosproject/web-shared/providers';
 
 import AppHeader from '@apollosproject/web-shared/components/AppHeader';
+import StoreLinks from '@apollosproject/web-shared/components/StoreLinks';
 
 import { Button, Box, BodyText } from '@apollosproject/web-shared/ui-kit';
 import Styled from './App.styles';
@@ -39,6 +40,7 @@ function App({ searchParams, url }) {
       <Styled.FeedWrapper>
         <NavigationProvider>
           <FeatureFeed featureFeed={`${type}:${randomId}`} church={churchSlug} />
+          <StoreLinks />
         </NavigationProvider>
       </Styled.FeedWrapper>
     </>
