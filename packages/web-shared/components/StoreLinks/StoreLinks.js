@@ -10,32 +10,34 @@ const PlayStoreLink = () => <div dangerouslySetInnerHTML={{ __html: downloadOnPl
 
 const StoreLinks = () => {
   const { currentChurch } = useCurrentChurch();
-  return (
-    <Box
-      py={8}
-      px={16}
-      display="flex"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-    >
-      <Box py={8} px={8}>
-        <p>find the app on</p>
-      </Box>
-      <Box display="flex" justifyContent="center">
-        <Box px={8} py={8}>
-          <a href={currentChurch?.mobileAppStoreUrl}>
-            <AppStoreLink />
-          </a>
+  if (currentChurch.mobileAppStoreUrl && currentChurch?.mobilePlayStoreUrl) {
+    return (
+      <Box
+        py={8}
+        px={16}
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+      >
+        <Box py={8} px={8}>
+          <p>find the app on</p>
         </Box>
-        <Box px={8} py={8}>
-          <a href={currentChurch?.mobilePlayStoreUrl}>
-            <PlayStoreLink />
-          </a>
+        <Box display="flex" justifyContent="center">
+          <Box px={8} py={8}>
+            <a href={currentChurch.mobileAppStoreUrl}>
+              <AppStoreLink />
+            </a>
+          </Box>
+          <Box px={8} py={8}>
+            <a href={currentChurch.mobilePlayStoreUrl}>
+              <PlayStoreLink />
+            </a>
+          </Box>
         </Box>
       </Box>
-    </Box>
-  );
+    );
+  }
 };
 
 export default StoreLinks;
