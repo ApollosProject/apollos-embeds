@@ -10,7 +10,7 @@ const PlayStoreLink = () => <div dangerouslySetInnerHTML={{ __html: downloadOnPl
 
 const StoreLinks = () => {
   const { currentChurch } = useCurrentChurch();
-  if (currentChurch.mobileAppStoreUrl && currentChurch?.mobilePlayStoreUrl) {
+  if (currentChurch?.mobileAppStoreUrl && currentChurch?.mobilePlayStoreUrl) {
     return (
       <Box
         py={8}
