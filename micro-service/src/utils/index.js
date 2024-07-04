@@ -1,5 +1,4 @@
 export const getChurchSlug = (host) => {
-  return 'king_of_kings'
   let subdomain =
     process.env.NODE_ENV === 'production'
       ? host.split('.').slice(0, -2).join('.')
