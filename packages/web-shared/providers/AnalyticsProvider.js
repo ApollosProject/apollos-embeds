@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useCurrentChurch, useCurrentUser } from '../hooks';
 import amplitude from '../analytics/amplitude';
 import clientFactory from '../analytics/segment';
-import useIsBot from "../hooks/useIsBot";
+import { isbot } from "isbot";
 
 const Context = createContext();
 
@@ -56,7 +56,7 @@ export const GET_ANALYTICS_USER = gql`
 export const AnalyticsProvider = ({ children, church }) => {
   const { currentChurch } = useCurrentChurch();
   const { currentUser } = useCurrentUser();
-  const isBot = useIsBot();
+  const isBot = isbot(navigator.userAgent);
 
   const segmentClients = [
     clientFactory('YxKgDjmwjTQrTdm6mO34kArQIYFmfnAY', true),
@@ -71,7 +71,7 @@ export const AnalyticsProvider = ({ children, church }) => {
       { track: amplitude.trackEvent, identify: amplitude.init },
       ...segmentClients,
     ];
-  }, [isBot]);
+  }, [isBot, segmentClients]);
 
   amplitude.init(currentChurch?.webAmplitudeKey, currentUser);
 
