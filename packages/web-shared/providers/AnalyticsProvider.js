@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client';
 import { useCurrentChurch, useCurrentUser } from '../hooks';
 import amplitude from '../analytics/amplitude';
 import clientFactory from '../analytics/segment';
-import { isbot } from "isbot";
+import { isbot } from 'isbot';
 
 const Context = createContext();
 
@@ -52,7 +52,7 @@ export const GET_ANALYTICS_USER = gql`
  * @param {Array} clients An array of analytics clients to track events to.
  * Each client should have the functions (or subset of) defined above.
  * @param {church} church The church slug to pass to the analytics client's group function.
- */ 
+ */
 export const AnalyticsProvider = ({ children, church }) => {
   const { currentChurch } = useCurrentChurch();
   const { currentUser } = useCurrentUser();
@@ -67,10 +67,7 @@ export const AnalyticsProvider = ({ children, church }) => {
     if (isBot) {
       return [];
     }
-    return [
-      { track: amplitude.trackEvent, identify: amplitude.init },
-      ...segmentClients,
-    ];
+    return [{ track: amplitude.trackEvent, identify: amplitude.init }, ...segmentClients];
   }, [isBot, segmentClients]);
 
   amplitude.init(currentChurch?.webAmplitudeKey, currentUser);
@@ -79,7 +76,7 @@ export const AnalyticsProvider = ({ children, church }) => {
   const { data } = useQuery(GET_ANALYTICS_USER, {
     returnPartialData: true,
     errorPolicy: 'ignore',
-  });  
+  });
 
   const client = useMemo(() => {
     // add some standard properties to all events
@@ -90,60 +87,46 @@ export const AnalyticsProvider = ({ children, church }) => {
         newProps.userOriginType = data?.currentUser?.originType;
       }
 
-      if (church?.slug) {
-        newProps.church = church?.slug;
+      if (church) {
+        newProps.church = church;
       }
       return newProps;
-    };       
-    return {   
+    };
+    return {
       screen: (screenName, properties, ...args) =>
-      Promise.all(
-        clients?.map((c) => {
-          // backwards compatibility: if no screen method is provided, use track
-          // This is mainly used to support Legacy Amplitude + CoreAnalytics
-          // which does not provide a "screen" method.
-          const apollosProperties = addProperties(properties);
-          if (!c?.screen && c.track) {
-            return c.track(screenName, apollosProperties, ...args);
-          }
-          return (
-            c?.screen && c.screen(screenName, apollosProperties, ...args)
-          );
-        })
-      ),
-    track: (eventName, properties, ...args) => {
-      // backwards compatibility, older method syntax was to pass an object
-      if (typeof eventName === 'object') {
-        properties = eventName.properties;
-        eventName = eventName.eventName;
-      }
+        Promise.all(
+          clients?.map((c) => {
+            // backwards compatibility: if no screen method is provided, use track
+            // This is mainly used to support Legacy Amplitude + CoreAnalytics
+            // which does not provide a "screen" method.
+            const apollosProperties = addProperties(properties);
+            if (!c?.screen && c.track) {
+              return c.track(screenName, apollosProperties, ...args);
+            }
+            return c?.screen && c.screen(screenName, apollosProperties, ...args);
+          })
+        ),
+      track: (eventName, properties, ...args) => {
+        // backwards compatibility, older method syntax was to pass an object
+        if (typeof eventName === 'object') {
+          properties = eventName.properties;
+          eventName = eventName.eventName;
+        }
 
-      const apollosProperties = addProperties(properties);
+        const apollosProperties = addProperties(properties);
 
-      return Promise.all(
-        clients?.map(
-          (c) => c?.track && c.track(eventName, apollosProperties, ...args)
-        )
-      );
-    },
-    identify: (...args) =>
-      Promise.all(clients?.map((c) => c?.identify && c.identify(...args))),
-    flush: (...args) =>
-      Promise.all(clients?.map((c) => c?.flush && c.flush(...args))),
-    group: (...args) =>
-      Promise.all(clients?.map((c) => c?.group && c.group(...args))),
-    alias: (...args) =>
-      Promise.all(clients?.map((c) => c?.alias && c.alias(...args))),
-    reset: (...args) =>
-      Promise.all(clients?.map((c) => c?.reset && c.reset(...args))),
-  };
+        return Promise.all(
+          clients?.map((c) => c?.track && c.track(eventName, apollosProperties, ...args))
+        );
+      },
+      identify: (...args) => Promise.all(clients?.map((c) => c?.identify && c.identify(...args))),
+      flush: (...args) => Promise.all(clients?.map((c) => c?.flush && c.flush(...args))),
+      group: (...args) => Promise.all(clients?.map((c) => c?.group && c.group(...args))),
+      alias: (...args) => Promise.all(clients?.map((c) => c?.alias && c.alias(...args))),
+      reset: (...args) => Promise.all(clients?.map((c) => c?.reset && c.reset(...args))),
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    clients,
-    data?.currentUser?.originId,
-    data?.currentUser?.originType,
-    church?.slug,    
-  ]);
+  }, [clients, data?.currentUser?.originId, data?.currentUser?.originType, church]);
   useEffect(() => {
     if (!data?.currentUser?.profile?.id) {
       return;
@@ -163,7 +146,7 @@ export const AnalyticsProvider = ({ children, church }) => {
     if (data?.currentUser?.profile?.id) {
       if (lastId.current && lastId.current !== data?.currentUser?.profile?.id) {
         client.reset(); // only call reset after a logout and log back in as a different user
-        client.group(church?.slug); // needs to be re-called after reset
+        client.group(church); // needs to be re-called after reset
       }
       lastId.current = data?.currentUser?.profile?.id;
     }
@@ -171,7 +154,7 @@ export const AnalyticsProvider = ({ children, church }) => {
 
   // Auto-set group
   useEffect(() => {
-    client.group(church?.slug); // also called on reset
+    client.group(church); // also called on reset
   }, [client, church, data?.currentUser?.profile?.id]);
 
   return <Context.Provider value={client}>{children}</Context.Provider>;
