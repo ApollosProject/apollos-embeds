@@ -266,7 +266,7 @@ function ContentSingle(props = {}) {
             </Box>
           ) : null}
 
-          <Box mb="l">
+          <Box mb="l" role="main">
             <Box mb="s" borderBottom="1px solid" borderColor="text.quaternary">
               {/* Title */}
               <Box
@@ -392,6 +392,13 @@ function ContentSingle(props = {}) {
                   borderRadius="l"
                   cursor="pointer"
                   onClick={() => handleActionPress(parentItem)}
+                  role="link"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleActionPress(parentItem);
+                    }
+                  }}
                 >
                   {/* Image */}
                   <Box
