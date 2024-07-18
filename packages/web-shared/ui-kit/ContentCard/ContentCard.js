@@ -39,6 +39,13 @@ function ContentCard({
       display={horizontal ? 'flex' : ''}
       onClick={onClick}
       className="content-card"
+      role="link"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          onClick(e);
+        }
+      }}
       {...props}
     >
       <Box position="relative" width={horizontal ? '50%' : ''}>

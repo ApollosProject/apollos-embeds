@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { forwardRef, useEffect, useRef } from 'react';
 import { useCurrentChurch } from '../../hooks';
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import Styled from './Modal.styles';
@@ -28,6 +28,7 @@ const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
 
   const ref = useRef();
+  const imageRef = useRef();
   const { id, navigate } = useNavigation();
 
   useEffect(() => {
@@ -59,12 +60,20 @@ const Modal = (props = {}) => {
     }
   }, [state.content]);
 
+  // When the modal is open, focus on the modal
+  // This is for accessibility
+  useEffect(() => {
+    if (ref.current && state.isOpen) {
+      ref.current.focus();
+    }
+  }, [ref.current, state.isOpen]);
+
   return (
     <Box>
       <Styled.Modal show={state.isOpen}>
         {state.content ? (
           <>
-            <Styled.ModalContainer ref={ref}>
+            <Styled.ModalContainer ref={ref} role="dialog" tabIndex={-1} aria-dialog={true}>
               <Box
                 width="100%"
                 display="flex"
@@ -82,6 +91,7 @@ const Modal = (props = {}) => {
                   p="s"
                   size="60px"
                   borderRadius="xl"
+                  ref={imageRef}
                 />
               </Box>
               <Box
@@ -95,7 +105,16 @@ const Modal = (props = {}) => {
                 top="xs"
                 right="xs"
               >
-                <Styled.Icon onClick={handleCloseModal} ml={{ _: 'auto', sm: '0' }}>
+                <Styled.Icon
+                  onClick={handleCloseModal}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      handleCloseModal();
+                    }
+                  }}
+                  ml={{ _: 'auto', sm: '0' }}
+                  tabIndex={1}
+                >
                   <X size={16} weight="bold" />
                 </Styled.Icon>
               </Box>

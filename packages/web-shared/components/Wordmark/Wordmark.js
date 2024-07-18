@@ -5,10 +5,10 @@ import Styled from './Wordmark.styles';
 
 import { systemPropTypes } from '../../ui-kit';
 
-function Wordmark({ size, source, href }) {
+function Wordmark({ size, source, href, ref }) {
   if (href) {
     return (
-      <a href={href}>
+      <a href={href} ref={ref}>
         <Styled.WrappedImage
           className="wordmark"
           src={source || './icon.png'}
