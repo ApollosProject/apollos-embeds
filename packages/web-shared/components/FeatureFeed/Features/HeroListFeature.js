@@ -59,6 +59,12 @@ function HeroListFeature(props = {}) {
         borderRadius="l"
         cursor="pointer"
         onClick={handleHeroCardPress}
+        tabIndex="0"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            handleHeroCardPress();
+          }
+        }}
       >
         {/* Image */}
         <Box
