@@ -4,7 +4,9 @@ import base64 from 'base-64';
 
 import { AUTH_TOKEN_KEY, AUTH_REFRESH_TOKEN_KEY } from '../config/keys';
 
-const uri = process.env.REACT_APP_DATA_URL || 'https://cdn.apollos.app';
+const uri =
+  process.env.NEXT_PUBLIC_DATA_URL || process.env.REACT_APP_DATA_URL || 'https://cdn.apollos.app';
+
 let isRefreshing = false;
 let pendingRequests = [];
 
@@ -83,8 +85,7 @@ function getAuthTokenFromOperation(operation) {
 const buildErrorLink = (onAuthError, church_slug) =>
   onError(({ graphQLErrors, networkError, operation, forward }) => {
     if (graphQLErrors) {
-      const hasUnauthenticatedError =
-        checkIfUnauthenticatedError(graphQLErrors);
+      const hasUnauthenticatedError = checkIfUnauthenticatedError(graphQLErrors);
       const token = getAuthTokenFromOperation(operation);
       const tokenIsExpired = getTokenIsExpired(token);
       if (hasUnauthenticatedError && token && tokenIsExpired) {

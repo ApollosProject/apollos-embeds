@@ -2,6 +2,24 @@
 
 Apollo React Embeds are pre-built components that can be easily added to third-party websites, such as Webflow. These components provide a convenient way to integrate features such as authentication, a feature feed, and a banner widget, and ensure a consistent look and feel across all digital products.
 
+# Running the Micro-Service locally
+
+If you are developing on Apollos Admin, it is recommended that you run the Micro-Service.
+
+## Creating the .env File
+
+To set up your environment, you need to copy the `.env.sample` file to `.env` using the following bash script:
+
+```bash
+cp .env.sample .env
+```
+
+This script will create the .env file required to run the micro-service.
+
+Ensure you are running the Cluster as well and that the port set for `NEXT_PUBLIC_DATA_URL` in your `.env` file matches the cluster port (default is 4000).
+
+If setup correctly, you should be able to navigate to share links for the `apollos-demo` church from Admin and they open correctly in the Micro-Service
+
 # Deployment
 
 Follow the steps below to deploy your apollos-embeds:
