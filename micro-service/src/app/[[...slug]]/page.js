@@ -20,7 +20,8 @@ export async function generateMetadata({ searchParams }, parent) {
   const { type, randomId } = parseSlugToIdAndType(id) ?? [];
 
   // fetch data
-  const response = await fetch('https://cdn.apollos.app/', {
+  const uri = process.env.NEXT_PUBLIC_DATA_URL || 'https://cdn.apollos.app';
+  const response = await fetch(uri, {
     headers: {
       'content-type': 'application/json',
       'x-church': churchSlug,
