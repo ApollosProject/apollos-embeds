@@ -75,6 +75,8 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
     setImgSrc('');
   };
 
+  const { colors } = JSON.parse(currentChurch?.theme) || {};
+
   return (
     <>
       <Styled.Profile ref={ref}>
@@ -214,7 +216,10 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
                   justifyContent="center"
                   alignItems="center"
                 >
-                  <Logo source={currentChurch?.logo} />
+                  <Logo
+                    source={currentChurch?.logo}
+                    {...(colors?.iconBackground ? { backgroundColor: colors?.iconBackground } : {})}
+                  />
                 </Box>
                 <H4 mb="xxs">{rest.adTitle || 'Stay Connected'}</H4>
                 <BodyText maxWidth="285px" textAlign="center" mb="l">
