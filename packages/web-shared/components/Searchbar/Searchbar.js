@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MagnifyingGlass, ArrowLeft } from '@phosphor-icons/react';
+import { themeGet } from '@styled-system/theme-get';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box } from '../../ui-kit';
@@ -38,6 +39,8 @@ const Searchbar = (props = {}) => {
   const textWelcome =
     firstName === '' ? <strong>Hey!&nbsp;</strong> : <strong>Hey {firstName}!&nbsp; </strong>;
 
+  const placeholderWidth = isMobile ? { width: '400px' } : { width: '225px' };
+
   const textPrompt = searchState.customPlaceholder ? (
     <Styled.TextPrompt>
       <Box
@@ -46,10 +49,7 @@ const Searchbar = (props = {}) => {
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-        }}
-        width={{
-          _: '225px',
-          sm: '400px',
+          ...placeholderWidth,
         }}
       >
         {searchState.customPlaceholder}
@@ -65,10 +65,7 @@ const Searchbar = (props = {}) => {
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-        }}
-        width={{
-          _: '225px',
-          sm: '400px',
+          ...placeholderWidth,
         }}
       >
         What are you looking for?
