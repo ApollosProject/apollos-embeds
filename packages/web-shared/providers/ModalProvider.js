@@ -38,7 +38,7 @@ const reducer = (state, action) => {
     case actionTypes.open:
       return { ...state, isOpen: true };
     case actionTypes.close:
-      return { ...state, isOpen: false };
+      return { ...state, isOpen: false, content: null };
     case actionTypes.set:
       return { ...state, content: getContentFromURL(`${action.payload}`) };
     default:
