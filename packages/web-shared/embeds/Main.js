@@ -61,6 +61,7 @@ const Main = ({ type }) => {
                 type={widget.dataset.type}
                 church={widget.dataset.church}
                 searchFeed={widget.dataset.searchFeed}
+                searchProfileSize={widget.dataset.searchProfileSize}
                 featureFeed={widget.dataset.featureFeed}
                 modal={widget.dataset.modal}
                 emptyPlaceholderText={widget.dataset.emptyPlaceholderText}

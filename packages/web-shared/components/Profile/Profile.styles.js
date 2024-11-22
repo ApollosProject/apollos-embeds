@@ -12,7 +12,7 @@ const Profile = withTheme(styled.div`
   position: absolute;
   transition: opacity 0.3s ease;
   z-index: 9999;
-  right: 0;
+  right: -15px;
 
   @media screen and (max-width: ${themeGet('breakpoints.sm')}) {
     position: fixed;
