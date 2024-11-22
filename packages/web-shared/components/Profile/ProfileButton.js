@@ -32,7 +32,9 @@ const ProfileButton = (props) => {
           </Box>
         )}
       </Box>
-      {showProfile ? <Profile handleCloseProfile={() => setShowProfile(false)} /> : null}
+      {showProfile ? (
+        <Profile handleCloseProfile={() => setShowProfile(false)} size={props.popupSize} />
+      ) : null}
     </Box>
   );
 };
