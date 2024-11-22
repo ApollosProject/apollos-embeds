@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { MagnifyingGlass, ArrowLeft } from '@phosphor-icons/react';
-import { themeGet } from '@styled-system/theme-get';
 
 import { systemPropTypes } from '../../ui-kit/_lib/system';
 import { Box } from '../../ui-kit';
@@ -36,12 +35,8 @@ const Searchbar = (props = {}) => {
   const [isMobile, setIsMobile] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
-  const textWelcome = (
-    // 0.35ch works out visually to be the width of a &nbsp;
-    <strong style={{ marginRight: '0.35ch' }}>Hey{firstName !== '' ? ` ${firstName}` : ''}!</strong>
-  );
-
-  const placeholderWidth = isMobile ? { width: '400px' } : { width: '225px' };
+  const textWelcome =
+    firstName === '' ? <strong>Hey!&nbsp;</strong> : <strong>Hey {firstName}!&nbsp; </strong>;
 
   const textPrompt = searchState.customPlaceholder ? (
     <Styled.TextPrompt>
@@ -51,7 +46,10 @@ const Searchbar = (props = {}) => {
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-          ...placeholderWidth,
+        }}
+        width={{
+          _: '225px',
+          sm: '400px',
         }}
       >
         {searchState.customPlaceholder}
@@ -67,7 +65,10 @@ const Searchbar = (props = {}) => {
           overflow: 'hidden',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
-          ...placeholderWidth,
+        }}
+        width={{
+          _: '225px',
+          sm: '400px',
         }}
       >
         What are you looking for?
