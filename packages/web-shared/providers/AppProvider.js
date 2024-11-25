@@ -35,6 +35,7 @@ function AppProvider(props = {}) {
             <SearchProvider
               church={props.church}
               searchFeed={props.searchFeed}
+              searchProfileSize={props.searchProfileSize}
               customPlaceholder={props.customPlaceholder}
             >
               <ModalProvider>

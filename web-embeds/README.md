@@ -54,6 +54,13 @@ For the 'FeatureFeed' embed, which displays the church's content, add `data-type
 
 _⚠️ Make sure to replace [INSERT_CHURCH_SLUG_HERE] with your church's unique identifier, or 'slug'._
 
+## Search type: Custom Profile modal width:
+For the Search embed type, to control the width of the Profile modal that appears when click the "Profile" button, use the `data-search-profile-size` attribute.
+
+```
+<div class="apollos-widget" data-type="Search" data-church="bayside" data-search-profile-size="365px"></div>
+```
+
 ### Enabling Caching for Local Frustration
 
 For local development and testing purposes, you might want to enable caching to ensure you're not receiving the latest responses directly from the API. To do this, please refer to the Apollo client configuration file:
@@ -72,6 +79,7 @@ In this file, locate the header configuration within the `apollosApiLink` functi
 | ----------- |
 | Auth        |
 | FeatureFeed |
+| Search      |
 
 | data-church                |
 | -------------------------- |
