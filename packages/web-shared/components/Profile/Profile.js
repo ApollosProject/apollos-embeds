@@ -79,7 +79,7 @@ const Profile = ({ theme, handleCloseProfile, size, ...rest }) => {
 
   return (
     <>
-      <Styled.Profile ref={ref}>
+      <Styled.Profile ref={ref} {...(size ? { right: '-15px;' } : {})}>
         <Styled.ProfileCard
           borderRadius={{
             _: '0%',
