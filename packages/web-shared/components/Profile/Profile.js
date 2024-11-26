@@ -26,7 +26,7 @@ import themeGet from '@styled-system/theme-get';
 import { logout, useAuth } from '../../providers/AuthProvider';
 import authSteps from '../Auth/authSteps';
 
-const Profile = ({ theme, handleCloseProfile, ...rest }) => {
+const Profile = ({ theme, handleCloseProfile, size, ...rest }) => {
   const { currentUser } = useCurrentUser();
   const { currentChurch } = useCurrentChurch();
 
@@ -79,17 +79,19 @@ const Profile = ({ theme, handleCloseProfile, ...rest }) => {
 
   return (
     <>
-      <Styled.Profile ref={ref}>
+      <Styled.Profile ref={ref} {...(size ? { right: '-15px;' } : {})}>
         <Styled.ProfileCard
           borderRadius={{
             _: '0%',
             sm: 'xxl',
           }}
-          width={{
-            _: '100%',
-            sm: '350px',
-            md: '520px',
-          }}
+          width={
+            size ?? {
+              _: '100%',
+              sm: '350px',
+              md: '520px',
+            }
+          }
         >
           <Box display="flex" alignItems="center" justifyContent="end">
             <Styled.CloseIcon onClick={handleCloseProfile}>

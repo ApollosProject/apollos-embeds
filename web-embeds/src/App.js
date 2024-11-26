@@ -24,6 +24,9 @@ function App() {
   const searchFeed = searchElement
     ? searchElement.getAttribute("data-search-feed")
     : null;
+  const searchProfileSize = searchElement
+    ? searchElement.getAttribute("data-search-profile-size")
+    : null;
   const church = churchElement
     ? churchElement.getAttribute("data-church")
     : null;
@@ -57,6 +60,7 @@ function App() {
     <AppProvider
       church={church}
       searchFeed={searchFeed}
+      searchProfileSize={searchProfileSize}
       customPlaceholder={customPlaceholder}
       usePathRouter={usePathRouter}
     >
