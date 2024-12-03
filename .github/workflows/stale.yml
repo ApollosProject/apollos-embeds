@@ -1,5 +1,12 @@
 name: 'Close stale issues and PRs'
+
+permissions:
+  contents: write # only for delete-branch option
+  issues: write
+  pull-requests: write
+
 on:
+  workflow_dispatch:
   schedule:
     - cron: '30 1 * * *'
 
