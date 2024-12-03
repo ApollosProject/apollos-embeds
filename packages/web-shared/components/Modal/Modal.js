@@ -70,7 +70,7 @@ const Modal = (props = {}) => {
 
   return (
     <Box>
-      <Styled.Modal show={state.isOpen}>
+      <Styled.Modal className="apollos-modal" show={state.isOpen}>
         {state.content ? (
           <>
             <Styled.ModalContainer ref={ref} role="dialog" tabIndex={-1} aria-dialog={true}>
