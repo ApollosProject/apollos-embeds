@@ -26,14 +26,9 @@ function ChurchLogo(props) {
 
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
-
-  console.log('Modal props: ', props);
-
   const ref = useRef();
   const imageRef = useRef();
   const { id, navigate } = useNavigation();
-
-  console.log('Navigation ID: ', id);
 
   useEffect(() => {
     // Watch for changes to the `id` search param

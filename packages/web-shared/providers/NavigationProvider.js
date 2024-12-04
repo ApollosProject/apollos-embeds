@@ -6,11 +6,11 @@ const NavigationContext = createContext({ id: null, navigate: () => {} });
 
 const NavigationProvider = (props = {}) => {
   const [searchParams] = useSearchParams();
-  const { contentId, feedId } = useParams();
+  const { apollosId, contentId, feedId } = useParams();
   const shouldUsePathRouter = useShouldUsePathRouter();
   const nativeNavigate = useNavigate();
 
-  const id = contentId || feedId || searchParams.get('id');
+  const id = contentId || feedId || apollosId || searchParams.get('apollosId');
   let navigate = () => {};
 
   if (shouldUsePathRouter) {
@@ -31,7 +31,7 @@ const NavigationProvider = (props = {}) => {
     navigate = ({ id, type } = {}) => {
       if (id) {
         nativeNavigate({
-          search: `?id=${id}`,
+          search: `?apollosId=${id}`,
         });
       } else {
         nativeNavigate({
