@@ -9,6 +9,10 @@ import AnalyticsProvider from './AnalyticsProvider';
 import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
 
+const UseApollosIdParamContext = createContext(false);
+
+export const useApollosIdParam = () => useContext(UseApollosIdParamContext);
+
 const ShouldUsePathRouter = createContext(false);
 
 export const useShouldUsePathRouter = () => useContext(ShouldUsePathRouter);
@@ -28,24 +32,26 @@ function AppProvider(props = {}) {
   }
 
   return (
-    <ShouldUsePathRouter.Provider value={props.usePathRouter}>
-      <ApolloProvider client={client} {...props}>
-        <AuthProvider>
-          <AnalyticsProvider church={props.church}>
-            <SearchProvider
-              church={props.church}
-              searchFeed={props.searchFeed}
-              searchProfileSize={props.searchProfileSize}
-              customPlaceholder={props.customPlaceholder}
-            >
-              <ModalProvider>
-                <ThemeProvider>{props.children}</ThemeProvider>
-              </ModalProvider>
-            </SearchProvider>
-          </AnalyticsProvider>
-        </AuthProvider>
-      </ApolloProvider>
-    </ShouldUsePathRouter.Provider>
+    <UseApollosIdParamContext.Provider value={props.useApollosIdParam}>
+      <ShouldUsePathRouter.Provider value={props.usePathRouter}>
+        <ApolloProvider client={client} {...props}>
+          <AuthProvider>
+            <AnalyticsProvider church={props.church}>
+              <SearchProvider
+                church={props.church}
+                searchFeed={props.searchFeed}
+                searchProfileSize={props.searchProfileSize}
+                customPlaceholder={props.customPlaceholder}
+              >
+                <ModalProvider>
+                  <ThemeProvider>{props.children}</ThemeProvider>
+                </ModalProvider>
+              </SearchProvider>
+            </AnalyticsProvider>
+          </AuthProvider>
+        </ApolloProvider>
+      </ShouldUsePathRouter.Provider>
+    </UseApollosIdParamContext.Provider>
   );
 }
 
