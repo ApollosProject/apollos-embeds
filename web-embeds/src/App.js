@@ -20,6 +20,9 @@ function App() {
   const churchElement = document.querySelector("[data-church]");
   const placeholderElement = document.querySelector("[data-placeholder]");
   const pathRouter = document.querySelector("[data-use-path-router]");
+  const apollosIdParamElement = document.querySelector(
+    "[data-apollos-id-param]"
+  );
 
   const searchFeed = searchElement
     ? searchElement.getAttribute("data-search-feed")
@@ -36,6 +39,10 @@ function App() {
 
   const usePathRouter = pathRouter
     ? pathRouter.getAttribute("data-use-path-router") === "true"
+    : false;
+
+  const useApollosIdParam = apollosIdParamElement
+    ? apollosIdParamElement.getAttribute("data-apollos-id-param") === "true"
     : false;
 
   const router = createBrowserRouter([
@@ -63,6 +70,7 @@ function App() {
       searchProfileSize={searchProfileSize}
       customPlaceholder={customPlaceholder}
       usePathRouter={usePathRouter}
+      useApollosIdParam={useApollosIdParam}
     >
       <RouterProvider router={router} />
     </AppProvider>
