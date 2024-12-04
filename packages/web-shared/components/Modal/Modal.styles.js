@@ -38,8 +38,8 @@ const Modal = withTheme(styled.div`
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  animation: ${(props) => (props.show ? slideIn : slideOut)} 0.3s ease-in-out;
-  transform: translateY(${(props) => (props.show ? '0' : '100%')});
+  animation: ${(props) => (props?.show ? slideIn : slideOut)} 0.3s ease-in-out;
+  transform: translateY(${(props) => (props?.show ? '0' : '100%')});
   ${system};
 `);
 

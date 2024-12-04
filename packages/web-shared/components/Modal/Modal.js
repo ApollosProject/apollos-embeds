@@ -27,9 +27,13 @@ function ChurchLogo(props) {
 const Modal = (props = {}) => {
   const [state, dispatch] = useModal();
 
+  console.log('Modal props: ', props);
+
   const ref = useRef();
   const imageRef = useRef();
   const { id, navigate } = useNavigation();
+
+  console.log('Navigation ID: ', id);
 
   useEffect(() => {
     // Watch for changes to the `id` search param
@@ -70,7 +74,7 @@ const Modal = (props = {}) => {
 
   return (
     <Box>
-      <Styled.Modal className="apollos-modal" show={state.isOpen}>
+      <Styled.Modal className="apollos-modal" show={state.isOpen ?? false}>
         {state.content ? (
           <>
             <Styled.ModalContainer ref={ref} role="dialog" tabIndex={-1} aria-dialog={true}>
