@@ -324,7 +324,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
         ) : null
       }
       {autocompleteState.isOpen && autocompleteState.query === '' && searchState.searchFeed ? (
-        <Box className="empty-feed">
+        <Box className="empty-feed" margin="base">
           <FeatureFeedProvider
             Component={Feed}
             options={{
