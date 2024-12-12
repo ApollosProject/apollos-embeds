@@ -104,9 +104,6 @@ const Searchbar = (props = {}) => {
     } else {
       // Restore body to normal position
       document.body.style.position = '';
-
-      // Restore the scroll position
-      window.scrollTo(0, scrollPosition);
     }
 
     // Clean up the effect when the component unmounts
