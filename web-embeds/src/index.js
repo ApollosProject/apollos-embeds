@@ -15,7 +15,7 @@ window.document.body.insertAdjacentHTML(
   '<div id="apollos-project-widget"></div>'
 );
 
-window.apollosEmbedVersion = packageJson.version;
+window.apollosEmbedsVersion = packageJson.version;
 
 const root = ReactDOM.createRoot(
   document.getElementById("apollos-project-widget")
