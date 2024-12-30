@@ -60,12 +60,8 @@
     "dev": "craco start",
     "build": "node scripts/build.js",
     "test": "craco test",
-    "bump": "yarn build && ./scripts/bump.sh && npm publish && npm version 0.0.1 && npm run flush-cdn",
-    "bump:minor": "yarn build && ./scripts/bump.sh minor && npm publish && npm version 0.0.1 && npm run flush-cdn",
-    "bump:major": "yarn build && ./scripts/bump.sh major && npm publish && npm version 0.0.1 && npm run flush-cdn",
     "format": "prettier --write .",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint .",
-    "flush-cdn": "./flush-cdn-cache.sh"
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/eslint ."
   },
   "eslintConfig": {
     "extends": [
