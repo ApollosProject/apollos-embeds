@@ -24,7 +24,11 @@ jobs:
         working-directory: web-embeds
 
       - name: Deploy to NPM
-        run: yarn bump
+        run: |
+          ./scripts/bump.sh
+          yarn build
+          npm publish
+          ./flush-cdn-cache.sh
         working-directory: web-embeds
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
