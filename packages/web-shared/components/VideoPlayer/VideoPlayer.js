@@ -260,6 +260,7 @@ function VideoPlayer(props = {}) {
         <Player
           ref={playerRef}
           controls={true}
+          config={{ file: { hlsVersion: '1.5.19' } }}
           onEnded={handleVideoEnded}
           onError={handleVideoError}
           onReady={handleVideoLoad}
