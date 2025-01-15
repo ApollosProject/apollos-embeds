@@ -1,7 +1,7 @@
 ## 🐛 Issue
 
-<!-- Link to the issue in Github or Basecamp this PR is addressing. If there is no related issue or related pull request, consider briefly describing the problem or enhancement being addressed. -->
-Closes <link>
+<!-- Link to the issue in Linear this PR is addressing. If there is no related issue or related pull request, consider briefly describing the problem or enhancement being addressed. -->
+Closes APO-XXX
 
 ## ✏️ Solution
 
