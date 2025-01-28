@@ -8,6 +8,7 @@ import Carousel from 'react-multi-carousel';
 import useHandleActionPress, {
   useHandlePrimaryActionPress,
 } from '../../../hooks/useHandleActionPress';
+import {format, parseISO} from "date-fns";
 
 const responsive = {
   lg: {
@@ -62,6 +63,17 @@ function HorizontalCardListFeature(props = {}) {
               image={props?.feature?.cards[0].coverImage}
               title={props?.feature?.cards[0].title}
               summary={props?.feature?.cards[0].subtitle}
+              htmlContent={props?.feature?.cards[0].relatedNode?.htmlContent}
+              location={props?.feature?.cards[0].relatedNode?.location}
+              start={props?.feature?.cards[0].relatedNode?.start
+                ? format(parseISO(props?.feature?.cards[0].relatedNode?.start), 'eee, MMMM do, yyyy')
+                : null}
+              end={props?.feature?.cards[0].relatedNode?.start && props?.feature?.cards[0].relatedNode?.end
+                ? `${format(parseISO(props?.feature?.cards[0].relatedNode?.start), 'hh:mm a')} — ${format(
+                  parseISO(props?.feature?.cards[0].relatedNode?.end),
+                  'hh:mm a'
+                )}`
+                : null}
               channelLabel={props?.feature?.cards[0]?.relatedNode?.parentItem?.title}
               videoMedia={get(props?.feature?.cards[0], 'relatedNode?.videos[0]', null)}
               onClick={() => handleActionPress(props?.feature?.cards[0])}

@@ -132,6 +132,12 @@ export const FEED_FEATURES = gql`
                     ...VideoMediaFields
                   }
                 }
+                ... on Event {
+                  htmlContent
+                  start
+                  end
+                  location
+                }
                 ... on Url {
                   url
                 }
