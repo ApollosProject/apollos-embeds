@@ -2,11 +2,10 @@ import React from 'react';
 import { withTheme } from 'styled-components';
 import { Check } from '@phosphor-icons/react';
 
-import {SmallBodyText, Box, systemPropTypes, ProgressBar, Longform} from '../../ui-kit';
-import {useHTMLContent, useVideoMediaProgress} from '../../hooks';
+import { SmallBodyText, Box, systemPropTypes, ProgressBar } from '../../ui-kit';
+import { useVideoMediaProgress } from '../../hooks';
 import { getPercentWatched } from '../../utils';
 import { BottomSlot, CompleteIndicator, Title, Summary, ChannelLabel } from './ContentCard.styles';
-import EventCalendar from "../../components/EventCalendar";
 
 function ContentCard({
   videoMedia,
@@ -14,10 +13,6 @@ function ContentCard({
   title,
   subtitle,
   summary,
-  htmlContent,
-  start,
-  end,
-  location,
   channelLabel,
   horizontal,
   onClick,
@@ -27,7 +22,7 @@ function ContentCard({
     variables: { id: videoMedia?.id },
     skip: !videoMedia?.id,
   });
-  const parseHTMLContent = useHTMLContent();
+
   const percentWatched = getPercentWatched({
     duration: videoMedia?.duration,
     userProgress,
@@ -81,23 +76,6 @@ function ContentCard({
         <SmallBodyText color="text.secondary">{subtitle}</SmallBodyText>
         <Title>{title}</Title>
         <Summary color="text.secondary">{summary} </Summary>
-        {!!start || !!end || !!location ? (
-          <Box display="flex" flexDirection={{ sm: 'row', xs: 'column' }} width="100%">
-            <EventCalendar
-              start={start}
-              end={end}
-              location={location}
-            />
-          </Box>
-        ):null}
-
-        {htmlContent && (
-          <Longform
-            dangerouslySetInnerHTML={{
-              __html: parseHTMLContent(htmlContent),
-            }}
-          />
-        )}
       </Box>
     </Box>
   );
