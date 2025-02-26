@@ -4,7 +4,7 @@ export const trackEvent = (eventName, properties = null) => {
   amplitudeJS.getInstance().logEvent(eventName, properties);
 };
 
-export const init = (amplitudeKey, currentUser = false) => {
+export const init = (amplitudeKey, currentUser = null) => {
   const ampInstance = amplitudeJS.getInstance();
   if (amplitudeKey) {
     ampInstance.init(amplitudeKey);
