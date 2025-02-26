@@ -7,7 +7,6 @@ import { useAuth } from './AuthProvider';
 import { isbot } from 'isbot';
 
 const Context = createContext();
-const isBot = isbot(navigator.userAgent);
 const isDev = process.env.NODE_ENV !== 'production';
 
 export const GET_ANALYTICS_USER = gql`
@@ -69,6 +68,7 @@ export const AnalyticsProvider = ({ children, church }) => {
   const [authState] = useAuth();
   const { data: churchData } = useQuery(GET_CHURCH_ANALYTICS);
   const { currentUser } = useCurrentUser({ skip: !authState.authenticated });
+  const isBot = isbot(navigator.userAgent);
   const clients = useMemo(() => {
     if (isBot || isDev) {
       return [];
