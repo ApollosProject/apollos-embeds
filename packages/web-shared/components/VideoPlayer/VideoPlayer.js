@@ -1,4 +1,4 @@
-import React, {useCallback, useRef, useState, useEffect, useMemo } from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../hooks';
@@ -35,11 +35,9 @@ function VideoPlayer(props = {}) {
   const [paused, setPaused] = useState(false);
 
   // will find the first HLS video playlist provided
-  const videoMedia = props.parentNode?.videos?.find(video =>
-    video.sources?.some(source => source.uri.includes("youtube.com"))
-  ) || props.data?.videos?.[0];
-
-
+  const videoMedia = props.parentNode?.videos?.find((video) => {
+    return video.sources.length > 0;
+  });
 
   const userProgress = props.userProgress || { playhead: 0, complete: false };
 
@@ -242,13 +240,6 @@ function VideoPlayer(props = {}) {
     ? props.parentNode?.stream?.sources[0]?.uri
     : videoMedia?.sources[0]?.uri;
 
-  const config = useMemo(()=>{
-    if (source.includes("youtube.com")){
-      return undefined
-    }
-    return { file: { hlsVersion: '1.5.19' } };
-  }, [source]);
-
   if (props.parentNode?.videos?.embedHtml) {
     return (
       <EmbededPlayer
@@ -269,7 +260,7 @@ function VideoPlayer(props = {}) {
         <Player
           ref={playerRef}
           controls={true}
-          config={config}
+          config={{ file: { hlsVersion: '1.5.19' } }}
           onEnded={handleVideoEnded}
           onError={handleVideoError}
           onReady={handleVideoLoad}
