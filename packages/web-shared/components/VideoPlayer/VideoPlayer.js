@@ -243,7 +243,7 @@ function VideoPlayer(props = {}) {
     : videoMedia?.sources[0]?.uri;
 
   const config = useMemo(()=>{
-    if (source.includes("youtube.com")){
+    if (source?.includes("youtube.com")){
       return undefined
     }
     return { file: { hlsVersion: '1.5.19' } };
