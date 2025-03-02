@@ -36,10 +36,10 @@ function VideoPlayer(props = {}) {
 
   // will find the first HLS video playlist provided
   const hlsMedia = props.parentNode?.videos?.find(
-    (video) => video.sources.length && video.sources[0].uri.includes('.m3u8')
+    (video) => video.sources?.length && video.sources[0].uri?.includes('.m3u8')
   );
   const youtubeMedia = props.parentNode?.videos?.find(
-    (video) => video.sources.length && video.sources[0].uri.includes('youtube.com')
+    (video) => video.sources?.length && video.sources[0].uri?.includes('youtube.com')
   );
   const videoMedia = youtubeMedia || hlsMedia;
 
