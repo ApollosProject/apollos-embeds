@@ -3,12 +3,14 @@ import { gql, useQuery } from '@apollo/client';
 import { useCurrentChurch, useCurrentUser } from '../hooks';
 import amplitude from '../analytics/amplitude';
 import clientFactory from '../analytics/segment';
+import { useAuth } from './AuthProvider';
 import { isbot } from 'isbot';
 
 const Context = createContext();
+const isDev = process.env.NODE_ENV !== 'production';
 
 export const GET_ANALYTICS_USER = gql`
-  query GetAnalyticsUser {
+  query GetWebAnalyticsUser {
     currentUser {
       id
       originId
@@ -29,6 +31,15 @@ export const GET_ANALYTICS_USER = gql`
           uri
         }
       }
+    }
+  }
+`;
+
+export const GET_CHURCH_ANALYTICS = gql`
+  query {
+    currentChurch {
+      webAmplitudeKey
+      webSegmentKey
     }
   }
 `;
@@ -54,28 +65,27 @@ export const GET_ANALYTICS_USER = gql`
  * @param {church} church The church slug to pass to the analytics client's group function.
  */
 export const AnalyticsProvider = ({ children, church }) => {
-  const { currentChurch } = useCurrentChurch();
-  const { currentUser } = useCurrentUser();
+  const [authState] = useAuth();
+  const { data: churchData } = useQuery(GET_CHURCH_ANALYTICS);
+  const { currentUser } = useCurrentUser({ skip: !authState.authenticated });
   const isBot = isbot(navigator.userAgent);
-
-  const segmentClients = [
-    clientFactory('YxKgDjmwjTQrTdm6mO34kArQIYFmfnAY', true),
-    clientFactory(currentChurch?.webSegmentKey, true),
-  ].filter(Boolean);
-
   const clients = useMemo(() => {
-    if (isBot) {
+    if (isBot || isDev) {
       return [];
     }
+    amplitude.init(churchData?.currentChurch?.webAmplitudeKey, currentUser);
+    const segmentClients = [
+      clientFactory('YxKgDjmwjTQrTdm6mO34kArQIYFmfnAY', true),
+      clientFactory(churchData?.currentChurch?.webSegmentKey, true),
+    ].filter(Boolean);
     return [{ track: amplitude.trackEvent, identify: amplitude.init }, ...segmentClients];
-  }, [isBot, segmentClients]);
-
-  amplitude.init(currentChurch?.webAmplitudeKey, currentUser);
+  }, [isBot, churchData, currentUser]);
 
   // Auto track user
   const { data } = useQuery(GET_ANALYTICS_USER, {
     returnPartialData: true,
     errorPolicy: 'ignore',
+    skip: !authState.authenticated,
   });
 
   const client = useMemo(() => {
