@@ -39,7 +39,7 @@ function VideoPlayer(props = {}) {
     (video) => video.sources?.length && video.sources[0].uri?.includes('.m3u8')
   );
   const youtubeMedia = props.parentNode?.videos?.find(
-    (video) => video.sources?.length && video.sources[0].uri?.includes('youtube.com')
+    (video) => video.sources?.length && video.sources[0].uri?.includes('youtu')
   );
   const videoMedia = youtubeMedia || hlsMedia;
 
