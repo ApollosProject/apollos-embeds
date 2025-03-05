@@ -244,13 +244,6 @@ function VideoPlayer(props = {}) {
     ? props.parentNode?.stream?.sources[0]?.uri
     : videoMedia?.sources[0]?.uri;
 
-  const config = useMemo(() => {
-    if (source?.includes('youtube.com')) {
-      return undefined;
-    }
-    return { file: { hlsVersion: '1.5.19' } };
-  }, [source]);
-
   if (props.parentNode?.videos?.embedHtml) {
     return (
       <EmbededPlayer
@@ -271,7 +264,7 @@ function VideoPlayer(props = {}) {
         <Player
           ref={playerRef}
           controls={true}
-          config={config}
+          config={{ file: { hlsVersion: '1.5.19' } }}
           onEnded={handleVideoEnded}
           onError={handleVideoError}
           onReady={handleVideoLoad}
