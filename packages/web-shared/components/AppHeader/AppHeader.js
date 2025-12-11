@@ -1,7 +1,7 @@
 import { User } from '@phosphor-icons/react';
 
 import { useCurrentChurch } from '../../hooks';
-import { Box, Avatar } from '../../ui-kit';
+import { Box } from '../../ui-kit';
 import ProfileButton from '../Profile/ProfileButton';
 import SearchStyles from '../Searchbar/Search.styles';
 import Wordmark from '../Wordmark';
