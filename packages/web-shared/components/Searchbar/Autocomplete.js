@@ -1,12 +1,12 @@
-import React, { useEffect, useRef, useMemo } from 'react';
+import React, { useEffect, useRef, useMemo, useState } from 'react';
 
 import { createAutocomplete } from '@algolia/autocomplete-core';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
-import { X } from '@phosphor-icons/react';
 import algoliasearch from 'algoliasearch/lite';
 import '@algolia/autocomplete-theme-classic';
+import { X } from '@phosphor-icons/react';
 
 import Styled from './Search.styles';
 import { useSearchState } from '../../providers/SearchProvider';
@@ -30,14 +30,32 @@ export const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
   },
 });
 
+const checkForEventIndex = async (churchSlug) => {
+  if (!churchSlug) return false;
+  const index = searchClient.initIndex(`Event_${churchSlug}`);
+  try {
+    await index.search('', { hitsPerPage: 1 });
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 export default function Autocomplete({
   autocompleteState,
   setAutocompleteState,
   setShowTextPrompt,
   getAutocompleteInstance,
 }) {
+  const [hasEventIndex, setHasEventIndex] = useState(false);
   const searchState = useSearchState();
   const inputRef = useRef(null);
+
+  useEffect(() => {
+    checkForEventIndex(searchState.church).then((hasIndex) => {
+      setHasEventIndex(hasIndex);
+    });
+  }, []);
 
   function setAriaSelectedToFalseOnHover(parentClassName, childClassName, hoverElementClassName) {
     const parentElements = document.querySelectorAll(parentClassName);
@@ -186,23 +204,21 @@ export default function Autocomplete({
                       hitsPerPage: 8,
                       clickAnalytics: true,
                       getRankingInfo: true,
-
-                      // highlightPreTag: '<mark>',
-                      // highlightPostTag: '</mark>',
                     },
                   },
-                  {
-                    indexName: `Event_${searchState.church}`,
-                    query,
-                    params: {
-                      hitsPerPage: 8,
-                      clickAnalytics: true,
-                      getRankingInfo: true,
-
-                      // highlightPreTag: '<mark>',
-                      // highlightPostTag: '</mark>',
-                    },
-                  },
+                  ...(hasEventIndex
+                    ? [
+                        {
+                          indexName: `Event_${searchState.church}`,
+                          query,
+                          params: {
+                            hitsPerPage: 8,
+                            clickAnalytics: true,
+                            getRankingInfo: true,
+                          },
+                        },
+                      ]
+                    : []),
                 ],
               });
             },
@@ -217,7 +233,7 @@ export default function Autocomplete({
         ];
       },
     });
-  }, []);
+  }, [hasEventIndex]);
 
   const autoCompleteLabel = 'autocomplete-1-label';
   const autoCompleteId = 'autocomplete-1-input';
