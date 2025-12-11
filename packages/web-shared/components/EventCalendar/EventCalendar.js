@@ -1,8 +1,9 @@
-import React from "react";
-import {PhospherIcon, system, utils} from "../../ui-kit";
-import styled, {withTheme} from "styled-components";
-import TypeStyles from "../../ui-kit/Typography/_typeStyles";
+import React from 'react';
 
+import styled, { withTheme } from 'styled-components';
+
+import { PhospherIcon, system, utils } from '../../ui-kit';
+import TypeStyles from '../../ui-kit/Typography/_typeStyles';
 
 const BodyText = withTheme(styled.p`
   ${TypeStyles.BodyText}
@@ -35,7 +36,7 @@ const FlexBodyText = styled(BodyText)`
   align-items: center;
 `;
 
-const EventCalendar = ({ start, end, location }) =>{
+const EventCalendar = ({ start, end, location }) => {
   return (
     <>
       {location ? (
@@ -44,14 +45,14 @@ const EventCalendar = ({ start, end, location }) =>{
           {location}
         </FlexBodyText>
       ) : null}
-      {start && location ? <InfoDivider/> : null}
+      {start && location ? <InfoDivider /> : null}
       {start ? (
         <FlexBodyText color="text.secondary" mb={'xxs'}>
           <CalendarIcon name="calendar" />
           {start}
         </FlexBodyText>
       ) : null}
-      {end && start ? <InfoDivider/> : null}
+      {end && start ? <InfoDivider /> : null}
       {end ? (
         <FlexBodyText color="text.secondary" mb={'xxs'}>
           <CalendarIcon name="clock" />
@@ -60,6 +61,6 @@ const EventCalendar = ({ start, end, location }) =>{
       ) : null}
     </>
   );
-}
+};
 
 export default EventCalendar;

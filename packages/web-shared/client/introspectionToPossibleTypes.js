@@ -3,9 +3,7 @@ function introspectionToPossibleTypes(introspectionQueryResultData) {
 
   introspectionQueryResultData.__schema.types.forEach((supertype) => {
     if (supertype.possibleTypes) {
-      possibleTypes[supertype.name] = [
-        ...supertype.possibleTypes.map((subtype) => subtype.name),
-      ];
+      possibleTypes[supertype.name] = [...supertype.possibleTypes.map((subtype) => subtype.name)];
     }
   });
 

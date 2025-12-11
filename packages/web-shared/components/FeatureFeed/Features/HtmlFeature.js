@@ -1,8 +1,9 @@
 import React from 'react';
+
 import { withTheme } from 'styled-components';
 
-import { Longform, systemPropTypes } from '../../../ui-kit';
 import { useHTMLContent } from '../../../hooks';
+import { Longform, systemPropTypes } from '../../../ui-kit';
 
 function HtmlFeature(props = {}) {
   const parseHTMLContent = useHTMLContent();

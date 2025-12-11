@@ -1,8 +1,9 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
-import { systemPropTypes } from '../_lib/system';
 import Styled from './Button.styles';
+import { systemPropTypes } from '../_lib/system';
 
 // eslint-disable-next-line no-console
 const Button = ({

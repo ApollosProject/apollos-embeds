@@ -1,11 +1,11 @@
 import { ApolloClient, ApolloLink } from '@apollo/client';
-import { AUTH_TOKEN_KEY, AUTH_REFRESH_TOKEN_KEY } from '../config/keys';
 
 import apollosApiLink from './apollosApiLink';
 import authLink from './authLink';
+import buildErrorLink from './buildErrorLink';
 import httpLink from './httpLink';
 import initCache from './initCache';
-import buildErrorLink from './buildErrorLink';
+import { AUTH_TOKEN_KEY, AUTH_REFRESH_TOKEN_KEY } from '../config/keys';
 
 const client = async (church_slug) => {
   let storeIsResetting = false;

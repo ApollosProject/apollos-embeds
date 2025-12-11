@@ -1,6 +1,7 @@
 import React from 'react';
-import { withTheme } from 'styled-components';
+
 import { User } from '@phosphor-icons/react';
+import { withTheme } from 'styled-components';
 
 import { Box, systemPropTypes } from '../../ui-kit';
 

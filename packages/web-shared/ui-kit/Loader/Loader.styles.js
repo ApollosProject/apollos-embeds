@@ -1,6 +1,5 @@
-import { withTheme, css } from 'styled-components';
-import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css } from 'styled-components';
 
 import { system } from '../_lib/system';
 

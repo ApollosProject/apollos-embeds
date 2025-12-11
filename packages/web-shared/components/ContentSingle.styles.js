@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-import { withTheme } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import { system } from '../ui-kit/_lib/system';
+import styled, { withTheme } from 'styled-components';
 
+import { system } from '../ui-kit/_lib/system';
 import { TypeStyles } from '../ui-kit/Typography';
 
 export const Title = withTheme(styled.h1`

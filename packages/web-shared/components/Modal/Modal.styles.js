@@ -1,6 +1,5 @@
-import { withTheme } from 'styled-components';
-import styled, { css, keyframes } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css, keyframes } from 'styled-components';
 
 import { system } from '../../ui-kit/_lib/system';
 

@@ -1,13 +1,14 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
-import PropTypes from 'prop-types';
-import { ApolloProvider } from '@apollo/client';
 
-import initClient from '../client';
-import { ThemeProvider } from '../ui-kit';
-import AuthProvider from './AuthProvider';
+import { ApolloProvider } from '@apollo/client';
+import PropTypes from 'prop-types';
+
 import AnalyticsProvider from './AnalyticsProvider';
+import AuthProvider from './AuthProvider';
 import ModalProvider from './ModalProvider';
 import SearchProvider from './SearchProvider';
+import initClient from '../client';
+import { ThemeProvider } from '../ui-kit';
 
 const UseApollosIdParamContext = createContext(false);
 

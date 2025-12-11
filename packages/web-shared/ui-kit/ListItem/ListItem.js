@@ -1,10 +1,11 @@
 import React from 'react';
 
-import { systemPropTypes } from '../_lib/system';
-import { Box } from '..';
-import Styled from './ListItem.styles';
-import { getURLFromType } from '../../utils';
 import { useNavigate } from 'react-router-dom';
+
+import Styled from './ListItem.styles';
+import { Box } from '..';
+import { getURLFromType } from '../../utils';
+import { systemPropTypes } from '../_lib/system';
 
 function ListItem({ title, subtitle, leadingIcon, tailingIcon, node, onClick, ...props }) {
   // If item has link, redirect to URL
@@ -44,7 +45,7 @@ function ListItem({ title, subtitle, leadingIcon, tailingIcon, node, onClick, ..
     </svg>
   );
 
-  //If leadingIcon is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
+  // If leadingIcon is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
   const LeadingIcon = leadingIcon?.sources ? (
     <Styled.LeadingIcon>
       <Box

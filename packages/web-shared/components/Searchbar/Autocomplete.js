@@ -1,16 +1,16 @@
 import React, { useEffect, useRef, useMemo } from 'react';
-import { X } from '@phosphor-icons/react';
 
-import algoliasearch from 'algoliasearch/lite';
 import { createAutocomplete } from '@algolia/autocomplete-core';
-import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
+import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
+import { X } from '@phosphor-icons/react';
+import algoliasearch from 'algoliasearch/lite';
 import '@algolia/autocomplete-theme-classic';
 
+import Styled from './Search.styles';
 import { useSearchState } from '../../providers/SearchProvider';
 import { getURLFromType } from '../../utils';
-import Styled from './Search.styles';
 
 const MOBILE_BREAKPOINT = 428;
 const appId = 'Z0GWPR8XBE';
@@ -126,6 +126,7 @@ export default function Autocomplete({
             block: 'start',
           });
         }
+
         // (2) Synchronize the Autocomplete state with the React state.
         setAutocompleteState(state);
       },
@@ -153,6 +154,7 @@ export default function Autocomplete({
                       hitsPerPage: 4,
                       clickAnalytics: true,
                       getRankingInfo: true,
+
                       // highlightPreTag: '<mark>',
                       // highlightPostTag: '</mark>',
                     },
@@ -184,6 +186,7 @@ export default function Autocomplete({
                       hitsPerPage: 8,
                       clickAnalytics: true,
                       getRankingInfo: true,
+
                       // highlightPreTag: '<mark>',
                       // highlightPostTag: '</mark>',
                     },
@@ -195,6 +198,7 @@ export default function Autocomplete({
                       hitsPerPage: 8,
                       clickAnalytics: true,
                       getRankingInfo: true,
+
                       // highlightPreTag: '<mark>',
                       // highlightPostTag: '</mark>',
                     },

@@ -1,20 +1,22 @@
 import React from 'react';
+
 import { withTheme } from 'styled-components';
 
-import { getURLFromType } from '../../../utils';
-
-import { Button, systemPropTypes } from '../../../ui-kit';
 import { useNavigation } from '../../../providers/NavigationProvider';
+import { Button, systemPropTypes } from '../../../ui-kit';
+import { getURLFromType } from '../../../utils';
 
 function ButtonFeature(props = {}) {
   const { navigate } = useNavigation();
+  const relatedNode = props.feature?.action?.relatedNode;
+
   // Event Handlers
   const handleActionPress = () => {
-    if (props.feature?.action?.relatedNode?.url) {
-      window.open(props.transformLink(props.feature?.action?.relatedNode?.url), '_blank');
-    } else {
+    if (relatedNode?.url) {
+      window.open(props.transformLink(relatedNode.url), '_blank');
+    } else if (relatedNode) {
       navigate({
-        id: getURLFromType(item.relatedNode),
+        id: getURLFromType(relatedNode),
       });
     }
   };

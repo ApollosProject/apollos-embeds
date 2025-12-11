@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+
 import { Box, SmallBodyText } from '../../ui-kit';
 
 export default function DevVideoDetails({
@@ -11,14 +12,7 @@ export default function DevVideoDetails({
   progressTime,
 }) {
   return (
-    <Box
-      position="absolute"
-      top={0}
-      left={0}
-      p="s"
-      bg="rgba(0,0,0,0.15)"
-      pointerEvents="none"
-    >
+    <Box position="absolute" top={0} left={0} p="s" bg="rgba(0,0,0,0.15)" pointerEvents="none">
       <SmallBodyText>
         <SmallBodyText fontWeight="bold">parentNode.id:</SmallBodyText>
         {`\n${parentNode.id}`}
@@ -32,16 +26,13 @@ export default function DevVideoDetails({
         {`\n${videoMedia.id}\n`}
       </SmallBodyText>
       <SmallBodyText>
-        <SmallBodyText fontWeight="bold">paused:</SmallBodyText>{' '}
-        {paused.toString()}
+        <SmallBodyText fontWeight="bold">paused:</SmallBodyText> {paused.toString()}
       </SmallBodyText>
       <SmallBodyText>
-        <SmallBodyText fontWeight="bold">currentTime:</SmallBodyText>{' '}
-        {currentTime}
+        <SmallBodyText fontWeight="bold">currentTime:</SmallBodyText> {currentTime}
       </SmallBodyText>
       <SmallBodyText>
-        <SmallBodyText fontWeight="bold">progressTime:</SmallBodyText>{' '}
-        {progressTime}
+        <SmallBodyText fontWeight="bold">progressTime:</SmallBodyText> {progressTime}
       </SmallBodyText>
       <SmallBodyText>
         <SmallBodyText fontWeight="bold">duration:</SmallBodyText> {duration} (

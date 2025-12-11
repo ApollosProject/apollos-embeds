@@ -1,15 +1,13 @@
 import React from 'react';
+
 import { createPortal } from 'react-dom';
 
-import { Searchbar } from '../components';
-
+import Styled from './Search.styles';
+import { Searchbar, FeatureFeedList, Modal } from '../components';
 import { FeatureFeedProvider } from '../providers';
-import { FeatureFeedList, Modal } from '../components';
+import NavigationProvider from '../providers/NavigationProvider';
 import { useSearchState } from '../providers/SearchProvider';
 import { Box } from '../ui-kit';
-
-import Styled from './Search.styles';
-import NavigationProvider from '../providers/NavigationProvider';
 
 function RenderEmbed(props) {
   const searchState = useSearchState();

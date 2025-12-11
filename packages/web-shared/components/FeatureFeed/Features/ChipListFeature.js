@@ -1,8 +1,9 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
-import { systemPropTypes, Box, PhospherIcon } from '../../../ui-kit';
 import Styled from './ChipListFeature.styles';
+import { systemPropTypes, Box, PhospherIcon } from '../../../ui-kit';
 
 function ChipListFeature({ feature }) {
   if (feature?.chips?.length === 0 || !feature?.chips) {

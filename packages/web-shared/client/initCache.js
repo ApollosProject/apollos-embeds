@@ -1,5 +1,6 @@
 import { InMemoryCache } from '@apollo/client/core';
 import { persistCache } from 'apollo3-cache-persist';
+
 import { uri } from './httpLink';
 
 const initCache = async (initialState, { church }) => {

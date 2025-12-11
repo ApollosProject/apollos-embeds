@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { systemPropTypes } from '../_lib/system';
-
 import Styled from './Layout.styles';
+import { systemPropTypes } from '../_lib/system';
 
 function Layout(props = {}) {
   return <Styled {...props} />;

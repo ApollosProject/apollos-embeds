@@ -1,12 +1,12 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { useSearchParams } from 'react-router-dom';
 
+import Styled from './FeatureFeedList.styles';
+import FeatureFeedListGrid from './FeatureFeedListGrid';
 import { Feed } from '..';
 import { Box, Loader } from '../../ui-kit';
-
-import FeatureFeedListGrid from './FeatureFeedListGrid';
-import Styled from './FeatureFeedList.styles';
 
 const FeatureFeedList = (props) => {
   const [searchParams, setSearchParams] = useSearchParams();

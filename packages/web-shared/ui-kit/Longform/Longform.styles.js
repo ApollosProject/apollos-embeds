@@ -1,9 +1,9 @@
-import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled from 'styled-components';
 
 import { system } from '../_lib/system';
+import { utils } from '../index';
 import { TypeStyles } from '../Typography';
-import { utils } from "../index";
 
 const Longform = styled.div`
   ${TypeStyles.BodyText};

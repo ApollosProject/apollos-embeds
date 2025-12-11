@@ -1,20 +1,18 @@
 import React, { useEffect } from 'react';
+
+import { themeGet } from '@styled-system/theme-get';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { getURLFromType } from '../utils';
+import styled from 'styled-components';
 
-import { set as setModal, useModal } from '../providers/ModalProvider';
-
-import { Box, H2, Loader, Longform, H3, ContentCard, ShareButton } from '../ui-kit';
-
-import { useHTMLContent, useVideoMediaProgress } from '../hooks';
-
-import VideoPlayer from './VideoPlayer';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import TrackEventWhenLoaded from './TrackEventWhenLoaded';
-import styled from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
+import VideoPlayer from './VideoPlayer';
+import { useHTMLContent, useVideoMediaProgress } from '../hooks';
+import { set as setModal, useModal } from '../providers/ModalProvider';
 import { useNavigation } from '../providers/NavigationProvider';
+import { Box, H2, Loader, Longform, H3, ContentCard, ShareButton } from '../ui-kit';
+import { getURLFromType } from '../utils';
 
 function ContentSeriesSingle(props = {}) {
   const [state, dispatch] = useModal();

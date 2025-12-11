@@ -1,10 +1,9 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css } from 'styled-components';
 
-import { H4, TypeStyles } from '../../ui-kit/Typography';
 import { utils } from '../../ui-kit';
 import { system } from '../../ui-kit/_lib/system';
+import { H4, TypeStyles } from '../../ui-kit/Typography';
 
 const showDropdown = ({ dropdown }) => {
   if (dropdown) {

@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
+
+import { Share } from '@phosphor-icons/react';
 import PropTypes from 'prop-types';
 
-import { systemPropTypes } from '../_lib/system';
-import { Box, Button } from '../../ui-kit';
-import Styled from './ShareButton.styles';
-import options from './options';
 import icons from './icons';
-import { Share } from '@phosphor-icons/react';
+import options from './options';
+import Styled from './ShareButton.styles';
+import { Box, Button } from '../../ui-kit';
+import { systemPropTypes } from '../_lib/system';
 
 const ShareButton = (props = {}) => {
   // Define state variable isMessageVisible with initial value false

@@ -1,10 +1,11 @@
 import React from 'react';
+
+import { themeGet } from '@styled-system/theme-get';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
 
-import Box from '../Box';
 import { systemPropTypes } from '../_lib/system';
+import Box from '../Box';
 
 function Dot({ fill = 'white', size = 20, theme, ...rest }) {
   const themeFillValue = themeGet(`colors.${fill}`)({ theme });

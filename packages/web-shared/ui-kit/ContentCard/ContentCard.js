@@ -1,11 +1,12 @@
 import React from 'react';
-import { withTheme } from 'styled-components';
-import { Check } from '@phosphor-icons/react';
 
-import { SmallBodyText, Box, systemPropTypes, ProgressBar } from '../../ui-kit';
-import { useVideoMediaProgress } from '../../hooks';
-import { getPercentWatched } from '../../utils';
+import { Check } from '@phosphor-icons/react';
+import { withTheme } from 'styled-components';
+
 import { BottomSlot, CompleteIndicator, Title, Summary, ChannelLabel } from './ContentCard.styles';
+import { useVideoMediaProgress } from '../../hooks';
+import { SmallBodyText, Box, systemPropTypes, ProgressBar } from '../../ui-kit';
+import { getPercentWatched } from '../../utils';
 
 function ContentCard({
   videoMedia,

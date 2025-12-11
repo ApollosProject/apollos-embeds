@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { systemPropTypes } from '../_lib/system';
-
 import Styled from './Box.styles';
+import { systemPropTypes } from '../_lib/system';
 
 function Box(props = {}) {
   return <Styled {...props} />;

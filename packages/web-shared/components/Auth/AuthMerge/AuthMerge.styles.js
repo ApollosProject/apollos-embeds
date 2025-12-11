@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css } from 'styled-components';
 
 import { system, TypeStyles, utils } from '../../../ui-kit';
 

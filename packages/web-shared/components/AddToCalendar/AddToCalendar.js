@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Menu } from '@headlessui/react';
 import {
   CalendarPlus,
@@ -7,8 +8,9 @@ import {
   MicrosoftOutlookLogo,
   FileArrowDown,
 } from '@phosphor-icons/react';
-import { ActionIcon, List, MenuLink } from './AddToCalendar.styles';
 import { addSeconds, parseISO } from 'date-fns';
+
+import { ActionIcon, List, MenuLink } from './AddToCalendar.styles';
 
 function convertToGoogleLink({ start, duration, location, allDay, title }) {
   const startDate = parseISO(start);

@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
-import Styled from './VerticalCardListFeature.styles';
 import { CaretRight } from '@phosphor-icons/react';
+
+import Styled from './VerticalCardListFeature.styles';
 import useHandleActionPress, {
   useHandlePrimaryActionPress,
 } from '../../../hooks/useHandleActionPress';
+import { ContentCard, Box, H2, systemPropTypes, Button } from '../../../ui-kit';
 
 function VerticalCardListFeature(props = {}) {
   const handleActionPress = useHandleActionPress();

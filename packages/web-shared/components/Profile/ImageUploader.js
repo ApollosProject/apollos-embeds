@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
 
 import ReactCrop, { centerCrop, makeAspectCrop } from 'react-image-crop';
+
 import { canvasPreview } from './canvasPreview';
+import Styled from './Profile.styles';
 import { useDebounceEffect } from './useDebounceEffect';
-import { H4, Button, Box } from '../../ui-kit';
 import { useUploadProfileImage } from '../../hooks';
 import { GET_CURRENT_USER } from '../../hooks/useCurrentUser';
-
-import Styled from './Profile.styles';
+import { H4, Button, Box } from '../../ui-kit';
 
 function centerAspectCrop(mediaWidth, mediaHeight, aspect) {
   return centerCrop(
@@ -62,6 +62,7 @@ export default function ImageUploader(props) {
             size: size,
           },
         });
+
         // Access the uploaded photo URI from the response data
         const photoURI = data.uploadProfileImage.photo.uri;
         props.handleCloseImageUploader();

@@ -1,14 +1,14 @@
 import React, { useRef, useState } from 'react';
-import { Box, H4, Button } from '../../ui-kit';
+
 import { X, ArrowRight, ChatsCircle } from '@phosphor-icons/react';
-import { useCurrentUser } from '../../hooks';
-import { AuthManager } from '../../components';
 
-import { useAuth } from '../../providers/AuthProvider';
-import authSteps from '../Auth/authSteps';
-
-import Comment from './Comment';
 import AddComment from './AddComment';
+import Comment from './Comment';
+import { AuthManager } from '../../components';
+import { useCurrentUser } from '../../hooks';
+import { useAuth } from '../../providers/AuthProvider';
+import { Box, H4, Button } from '../../ui-kit';
+import authSteps from '../Auth/authSteps';
 
 export const SIDEBAR_WITH = 400;
 

@@ -1,8 +1,10 @@
-import { Box, Avatar } from '../../ui-kit';
-import { User } from '@phosphor-icons/react';
-import { useCurrentUser } from '../../hooks';
 import React, { useState } from 'react';
+
+import { User } from '@phosphor-icons/react';
+
 import Profile from './Profile';
+import { useCurrentUser } from '../../hooks';
+import { Box, Avatar } from '../../ui-kit';
 
 const ProfileButton = (props) => {
   const [showProfile, setShowProfile] = useState(false);

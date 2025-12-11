@@ -7,24 +7,22 @@
 // a-word-from-john-VW5pdmVyc2FsQ29udGVudEl0ZW0tNjY5ZmU1ZDMtOTc1My00YThlLThmMWUtMTYwM2JjM2NjMDRl
 // mens-breakfast-VW5pdmVyc2FsQ29udGVudEl0ZW0tYTA1Mzk4YjQtNzBjZi00MjhjLWI4NWMtYWRhYjEzNDhlZTgx
 
-
-const uuidRegex = /^[A-Z](\w)+\-/
+const uuidRegex = /^[A-Z](\w)+\-/;
 
 const parseSlugToIdAndType = (url) => {
   if (!url) return null;
 
-
   const isUuid = uuidRegex.test(url);
 
   if (!isUuid) {
-    const apollosIdEncoded = url.split('-').at(-1)
+    const apollosIdEncoded = url.split('-').at(-1);
     const apollosId = atob(apollosIdEncoded);
     const [type, randomId] = apollosId?.split(/-(.*)/s) ?? [];
-    if (type && randomId) return { type, randomId}
+    if (type && randomId) return { type, randomId };
   } else {
     const [type, randomId] = url?.split(/-(.*)/s) ?? [];
-    if (type && randomId) return { type, randomId}
+    if (type && randomId) return { type, randomId };
   }
-}
+};
 
 export default parseSlugToIdAndType;

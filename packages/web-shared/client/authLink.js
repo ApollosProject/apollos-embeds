@@ -1,4 +1,5 @@
 import { setContext } from '@apollo/client/link/context';
+
 import { AUTH_TOKEN_KEY } from '../config/keys';
 
 export default setContext(async (request, { headers }) => {

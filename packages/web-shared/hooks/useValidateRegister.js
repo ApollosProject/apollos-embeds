@@ -1,10 +1,7 @@
 import { gql, useMutation } from '@apollo/client';
 
 export const VALIDATE_REGISTER = gql`
-  mutation validateRegister(
-    $identity: AuthenticationIdentityInput!
-    $otp: String!
-  ) {
+  mutation validateRegister($identity: AuthenticationIdentityInput!, $otp: String!) {
     validateRegister(identity: $identity, otp: $otp) {
       person {
         firstName

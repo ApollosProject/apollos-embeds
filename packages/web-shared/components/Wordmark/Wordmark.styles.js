@@ -1,5 +1,4 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
+import styled, { withTheme, css } from 'styled-components';
 
 const DEFAULT_ICON_SIZE = '80px';
 

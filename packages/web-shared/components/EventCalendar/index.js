@@ -1,3 +1,3 @@
-import EventCalendar from "./EventCalendar";
+import EventCalendar from './EventCalendar';
 
 export default EventCalendar;

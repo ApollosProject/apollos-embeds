@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
 
 import { useForm, useUpdateProfileFields, useCurrentUser } from '../../hooks';
@@ -79,9 +80,7 @@ function ProfileDetails({ setShowDetails, ...props }) {
           title={isLoading ? 'Saving' : 'Save'}
           type="submit"
           onClick={() => handleSubmit()}
-          disabled={
-            !currentUser || !(values.firstName || values.lastName) || isLoading
-          }
+          disabled={!currentUser || !(values.firstName || values.lastName) || isLoading}
         />
       </Box>
     </Box>

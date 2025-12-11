@@ -1,9 +1,10 @@
 import React from 'react';
+
+import { themeGet } from '@styled-system/theme-get';
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
-import Styled from './Logo.styles';
 
+import Styled from './Logo.styles';
 import { Box, systemPropTypes } from '../../ui-kit';
 
 function Logo({ fill, size, padding, theme, source, ...rest }) {

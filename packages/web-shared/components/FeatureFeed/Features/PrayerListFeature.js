@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import { systemPropTypes, Box, H3 } from '../../../ui-kit';
-import Styled from './PrayerListFeature.styles';
+
 import { Plus, X } from '@phosphor-icons/react';
+
+import Styled from './PrayerListFeature.styles';
+import { systemPropTypes, Box, H3 } from '../../../ui-kit';
 
 function PrayerListFeature(props = {}) {
   // Generate random background color
   const randomHSLA = () => `hsla(${~~(360 * Math.random())}, 70%,  72%, 0.8)`;
 
-  //Background colors for requestors with no profile picture
+  // Background colors for requestors with no profile picture
   const [backgroundColors, setBackgroundColors] = useState(props.feature?.prayers?.map(randomHSLA));
 
   const [modalState, setModalState] = useState({
@@ -81,7 +83,7 @@ function PrayerListFeature(props = {}) {
     );
   };
 
-  //Is this needed?
+  // Is this needed?
   const AddDailyPrayer = (
     <Box position="relative" display="inline-block" padding="2px 5px" onClick={openModal}>
       <Styled.Avatar>

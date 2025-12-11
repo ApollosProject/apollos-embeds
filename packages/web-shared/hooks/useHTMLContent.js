@@ -1,5 +1,7 @@
-import DOMPurify from 'dompurify';
 import { useCallback } from 'react';
+
+import DOMPurify from 'dompurify';
+
 import useLink from './useLink';
 
 const useHTMLContent = () => {
@@ -13,7 +15,7 @@ const useHTMLContent = () => {
       const parser = new DOMParser();
       const doc = parser.parseFromString(sanitizedHTML, 'text/html');
 
-      const transformAnchorTag = anchorTag => {
+      const transformAnchorTag = (anchorTag) => {
         if (!anchorTag) return;
 
         const link = anchorTag.getAttribute('href');
@@ -40,7 +42,7 @@ const useHTMLContent = () => {
 
       return doc.body.innerHTML;
     },
-    [transformLink],
+    [transformLink]
   );
 
   return parseHTMLContent;

@@ -1,7 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
+
 import PropTypes from 'prop-types';
-import { Box, systemPropTypes, SystemText } from '..';
+
 import Styled from './Input.styles';
+import { Box, systemPropTypes, SystemText } from '..';
 
 const Input = ({ placeholder, value, handleOnChange, ...props }) => {
   const textInputRef = useRef();

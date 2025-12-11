@@ -1,10 +1,10 @@
 import React, { useRef, useState } from 'react';
+
 import { useSearchParams } from 'react-router-dom';
 
-import { Searchbar } from '../components';
-
-import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
+import Styled from './Search.styles';
 import {
+  Searchbar,
   ContentChannel,
   ContentSeriesSingle,
   ContentSingle,
@@ -12,12 +12,11 @@ import {
   LivestreamSingle,
   Modal,
 } from '../components';
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import { useModalState } from '../providers/ModalProvider';
+import { useNavigation } from '../providers/NavigationProvider';
 import { useSearchState } from '../providers/SearchProvider';
 import { Box } from '../ui-kit';
-import { useNavigation } from '../providers/NavigationProvider';
-
-import Styled from './Search.styles';
 
 function RenderFeatures(props) {
   const { id } = useNavigation();

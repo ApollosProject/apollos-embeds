@@ -1,5 +1,7 @@
 import React, { createContext, useContext } from 'react';
+
 import { useSearchParams, useParams, useNavigate } from 'react-router-dom';
+
 import { useApollosIdParam, useShouldUsePathRouter } from '../providers/AppProvider';
 
 const NavigationContext = createContext({ id: null, navigate: () => {} });
@@ -24,6 +26,7 @@ const NavigationProvider = (props = {}) => {
         nativeNavigate({
           pathname: `/${type === 'content' ? 'ac' : 'af'}/${id}`,
         });
+
         // Assume that no params
       } else {
         nativeNavigate({

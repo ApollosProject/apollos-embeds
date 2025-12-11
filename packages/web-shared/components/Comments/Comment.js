@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { Box, H5, Avatar } from '../../ui-kit';
 
 // turn line breaks into <br> tags and strip out any other html

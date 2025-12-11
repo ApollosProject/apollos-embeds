@@ -1,39 +1,34 @@
 import React, { useEffect, useState } from 'react';
+import { ChatCircleText } from '@phosphor-icons/react';
+import { format, parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
-import { ChatCircleText } from '@phosphor-icons/react';
+import styled from 'styled-components';
 
-import { getURLFromType } from '../utils';
-
-import { format, parseISO } from 'date-fns';
-import FeatureFeed from './FeatureFeed';
-import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
+import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
+import { useShouldUsePathRouter } from '../providers/AppProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
-
+import { useNavigation } from '../providers/NavigationProvider';
 import {
+  BodyText,
   Box,
+  Button,
+  ContentCard,
+  H3,
+  Icons,
   Loader,
   Longform,
-  H3,
-  ContentCard,
-  BodyText,
-  ShareButton,
-  Button,
-  Icons,
   PhospherIcon,
+  ShareButton,
 } from '../ui-kit';
-import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
-import { Title, ParentTitle, ParentSummary } from './ContentSingle.styles';
-
+import { getURLFromType } from '../utils';
 import Comments, { SIDEBAR_WITH } from './Comments';
-
-import VideoPlayer from './VideoPlayer';
-
+import { ParentSummary, ParentTitle, Title } from './ContentSingle.styles';
+import FeatureFeed from './FeatureFeed';
+import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
 import InteractWhenLoaded from './InteractWhenLoaded';
 import TrackEventWhenLoaded from './TrackEventWhenLoaded';
-import styled from 'styled-components';
-import { useNavigation } from '../providers/NavigationProvider';
-import { useShouldUsePathRouter } from '../providers/AppProvider';
+import VideoPlayer from './VideoPlayer';
 
 const infoDivider = (
   <BodyText color="text.tertiary" mx="xs" display={{ xs: 'none', sm: 'block' }}>
@@ -136,6 +131,7 @@ function ContentSingle(props = {}) {
     if (canonicalLink) {
       const oldValue = canonicalLink.getAttribute('href');
       canonicalLink.setAttribute('href', canonicalUrl);
+
       // Reset when we are done.
       return () => {
         canonicalLink.setAttribute('href', oldValue);

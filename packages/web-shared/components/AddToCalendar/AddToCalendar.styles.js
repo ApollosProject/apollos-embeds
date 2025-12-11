@@ -1,10 +1,10 @@
 import React from 'react';
-import { Menu } from '@headlessui/react';
-import styled from 'styled-components';
-import { withTheme } from 'styled-components';
-import { rgba } from 'polished';
 
+import { Menu } from '@headlessui/react';
 import { themeGet } from '@styled-system/theme-get';
+import { rgba } from 'polished';
+import styled, { withTheme } from 'styled-components';
+
 import { system } from '../../ui-kit/_lib/system';
 
 export const ActionIcon = withTheme(styled(Menu.Button)`

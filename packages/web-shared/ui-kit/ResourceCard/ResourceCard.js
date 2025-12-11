@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { CaretRight } from '@phosphor-icons/react';
 
-import { systemPropTypes } from '../_lib/system';
-import { Box } from '..';
 import Styled from './ResourceCard.styles';
+import { Box } from '..';
+import { systemPropTypes } from '../_lib/system';
 
 function ResourceCard({ title, subtitle, leadingAsset, tailingIcon, onClick, ...props }) {
   // Default tailing icon
@@ -43,7 +44,7 @@ function ResourceCard({ title, subtitle, leadingAsset, tailingIcon, onClick, ...
     </svg>
   );
 
-  //If leadingAsset is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
+  // If leadingAsset is an image with uri, add frame to image. Otherwise, use whatever is passed in. If undefined, use default clip icon
   const LeadingAsset = leadingAsset?.sources?.[0]?.uri ? (
     <Styled.LeadingAsset>
       <Box

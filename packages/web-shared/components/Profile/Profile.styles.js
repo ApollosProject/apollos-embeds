@@ -1,9 +1,9 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-import Card from '../../ui-kit/Card';
-import { system } from '../../ui-kit/_lib/system';
 import Color from 'color';
+import styled, { withTheme, css } from 'styled-components';
+
+import { system } from '../../ui-kit/_lib/system';
+import Card from '../../ui-kit/Card';
 
 const Profile = withTheme(styled.div`
   align-items: center;

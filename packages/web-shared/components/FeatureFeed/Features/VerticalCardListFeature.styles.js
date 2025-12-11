@@ -1,6 +1,6 @@
-import styled, { css } from 'styled-components';
-import 'react-multi-carousel/lib/styles.css';
 import { themeGet } from '@styled-system/theme-get';
+import 'react-multi-carousel/lib/styles.css';
+import styled, { css } from 'styled-components';
 
 const twoCardlayout = ({ length }) => {
   if (length === 2) {

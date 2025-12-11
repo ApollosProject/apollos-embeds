@@ -1,9 +1,9 @@
+import { themeGet } from '@styled-system/theme-get';
 import Color from 'color';
 import styled, { css, withTheme } from 'styled-components';
-import { themeGet } from '@styled-system/theme-get';
 
-import { TypeStyles } from '../Typography';
 import { system } from '../_lib/system';
+import { TypeStyles } from '../Typography';
 
 // Button
 // --------------------------------------------------------

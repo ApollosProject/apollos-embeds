@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+
 import { MagnifyingGlass, ArrowLeft } from '@phosphor-icons/react';
 import { themeGet } from '@styled-system/theme-get';
-
-import { systemPropTypes } from '../../ui-kit/_lib/system';
-import { Box } from '../../ui-kit';
-import { useCurrentUser } from '../../hooks';
-import { useSearchState } from '../../providers/SearchProvider';
-
-import Autocomplete from '../Searchbar/Autocomplete';
-import SearchResults from '../Searchbar/SearchResults';
-
-import ProfileButton from '../Profile/ProfileButton';
+import PropTypes from 'prop-types';
 
 import Styled from './Search.styles';
+import { useCurrentUser } from '../../hooks';
+import { useSearchState } from '../../providers/SearchProvider';
+import { Box } from '../../ui-kit';
+import { systemPropTypes } from '../../ui-kit/_lib/system';
+import ProfileButton from '../Profile/ProfileButton';
+import Autocomplete from '../Searchbar/Autocomplete';
+import SearchResults from '../Searchbar/SearchResults';
 
 const MOBILE_BREAKPOINT = 428;
 

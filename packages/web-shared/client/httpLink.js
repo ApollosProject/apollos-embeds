@@ -1,6 +1,6 @@
-import { createUploadLink } from 'apollo-upload-client';
 import { split, createHttpLink } from '@apollo/client';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { createUploadLink } from 'apollo-upload-client';
 
 export const uri =
   process.env.NEXT_PUBLIC_DATA_URL || process.env.REACT_APP_DATA_URL || 'https://cdn.apollos.app';

@@ -1,11 +1,9 @@
-import styled, { css } from 'styled-components';
-import { withTheme } from 'styled-components';
-
 import { themeGet } from '@styled-system/theme-get';
+import styled, { css, withTheme } from 'styled-components';
 
+import { unit } from '../../utils';
 import { system } from '../_lib/system';
 import { rem } from '../_utils';
-import { unit } from '../../utils';
 import { TypeStyles } from '../Typography';
 
 export const BottomSlot = withTheme(styled.div`
