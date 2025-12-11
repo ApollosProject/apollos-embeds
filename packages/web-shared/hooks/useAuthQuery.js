@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from 'react';
+
 import { useQuery } from '@apollo/client';
 
 import { useAuth, logout } from '../providers/AuthProvider';
@@ -6,17 +7,21 @@ import { useAuth, logout } from '../providers/AuthProvider';
 const useAuthQuery = (query, options = {}) => {
   const [state, dispatch] = useAuth();
   const { token, authenticated } = state;
-  const { data, error, loading, refetch: _refetch } =
-    useQuery(query, {
-      skip: !authenticated,
-      fetchPolicy: 'network-only',
-      onError: () => {
-        // eslint-disable-next-line no-console
-        console.warn('Authentication error: logging out...');
-        dispatch(logout());
-      },
-      ...options,
-    }) || {};
+  const {
+    data,
+    error,
+    loading,
+    refetch: _refetch,
+  } = useQuery(query, {
+    skip: !authenticated,
+    fetchPolicy: 'network-only',
+    onError: () => {
+      // eslint-disable-next-line no-console
+      console.warn('Authentication error: logging out...');
+      dispatch(logout());
+    },
+    ...options,
+  }) || {};
 
   // There's a bug where the query from `useQuery` is `undefined`
   // and will throw an error in the `useEffect` down below.

@@ -1,18 +1,22 @@
 import React, { useEffect, useState } from 'react';
+
 import PropTypes from 'prop-types';
 import { ThemeProvider as SCThemeProvider, withTheme } from 'styled-components';
-import defaultTheme from '../_config/theme';
+
 import { useCurrentChurch } from '../../hooks';
 import { useSearch, set } from '../../providers/SearchProvider';
+import defaultTheme from '../_config/theme';
 
 function ThemeProvider({ theme = defaultTheme, ...props }) {
   const [_colorScheme, setColorScheme] = useState('light');
   const [_colorTheme, setColorTheme] = useState({
     ...defaultTheme,
+
     // TODO: Fix light theme design before enabling theme switching
     // colors: props.theme.colors[_colorScheme],
     colors: {
       ...defaultTheme.colors.light,
+
       // only these three custom colors are currently supported
       base: {
         ...defaultTheme.colors.light.base,
@@ -42,10 +46,12 @@ function ThemeProvider({ theme = defaultTheme, ...props }) {
       const customTheme = JSON.parse(currentChurch?.theme);
       setColorTheme({
         ...defaultTheme,
+
         // TODO: Fix light theme design before enabling theme switching
         // colors: props.theme.colors[_colorScheme],
         colors: {
           ...defaultTheme.colors.light,
+
           // only these three custom colors are currently supported
           base: {
             ...defaultTheme.colors.light.base,

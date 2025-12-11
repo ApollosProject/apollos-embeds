@@ -1,10 +1,9 @@
 import React from 'react';
-import { withTheme } from 'styled-components';
-import styled from 'styled-components';
 
-import { system, systemPropTypes } from '../_lib/system';
+import styled, { withTheme } from 'styled-components';
 
 import TypeStyles from './_typeStyles';
+import { system, systemPropTypes } from '../_lib/system';
 
 const H5 = withTheme(styled.h5.attrs({
   className: 'heading-style-h5',

@@ -1,10 +1,12 @@
 import React, { createContext, useContext, useMemo, useEffect, useRef } from 'react';
+
 import { gql, useQuery } from '@apollo/client';
-import { useCurrentChurch, useCurrentUser } from '../hooks';
+import { isbot } from 'isbot';
+
+import { useAuth } from './AuthProvider';
 import amplitude from '../analytics/amplitude';
 import clientFactory from '../analytics/segment';
-import { useAuth } from './AuthProvider';
-import { isbot } from 'isbot';
+import { useCurrentChurch, useCurrentUser } from '../hooks';
 
 const Context = createContext();
 const isDev = process.env.NODE_ENV !== 'production';

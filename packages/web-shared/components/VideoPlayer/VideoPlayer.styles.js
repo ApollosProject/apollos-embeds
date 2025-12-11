@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 import ReactPlayer from 'react-player';
+import styled from 'styled-components';
 
 import { system } from '../../ui-kit';
 

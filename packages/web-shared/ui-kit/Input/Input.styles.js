@@ -1,10 +1,9 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 import Color from 'color';
+import styled, { withTheme, css } from 'styled-components';
 
-import { TypeStyles } from '../Typography';
 import { system } from '../_lib/system';
+import { TypeStyles } from '../Typography';
 
 const labelColor = ({ theme, focused, hasValue, error }) => {
   if (error) {
@@ -14,9 +13,7 @@ const labelColor = ({ theme, focused, hasValue, error }) => {
   }
 
   return css`
-    color: ${focused || hasValue
-      ? theme.colors.text.action
-      : theme.colors.text.secondary};
+    color: ${focused || hasValue ? theme.colors.text.action : theme.colors.text.secondary};
   `;
 };
 
@@ -56,8 +53,7 @@ const Input = withTheme(styled.input`
   ${TypeStyles.LargeSystemText}
   padding: ${themeGet('space.s')} 0 ${themeGet('space.xxs')} 0;
   transition: all ${themeGet('timing.xl')} ease-out;
-  placeholder-text-color: ${({ theme }) =>
-    Color(theme.colors.text.secondary).alpha(0)};
+  placeholder-text-color: ${({ theme }) => Color(theme.colors.text.secondary).alpha(0)};
   caret-color: ${themeGet('colors.base.primary')};
   border-top: 0;
   border-left: 0;

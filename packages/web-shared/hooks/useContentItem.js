@@ -1,4 +1,5 @@
 import { gql, useQuery } from '@apollo/client';
+
 import {
   VIDEO_MEDIA_FIELDS,
   CONTENT_NODE_FRAGMENT,

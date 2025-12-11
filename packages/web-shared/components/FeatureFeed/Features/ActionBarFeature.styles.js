@@ -1,9 +1,8 @@
-import styled from 'styled-components';
-import { withTheme } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme } from 'styled-components';
 
-import { TypeStyles } from '../../../ui-kit/Typography';
 import { system } from '../../../ui-kit/_lib/system';
+import { TypeStyles } from '../../../ui-kit/Typography';
 
 const ActionBar = withTheme(styled.div`
   display: flex;

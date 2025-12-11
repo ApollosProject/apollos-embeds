@@ -1,13 +1,13 @@
 import React from 'react';
-import get from 'lodash/get';
 
-import { Box, H2, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
-import Carousel from 'react-multi-carousel';
 import { CaretRight } from '@phosphor-icons/react';
+import get from 'lodash/get';
+import Carousel from 'react-multi-carousel';
 
 import useHandleActionPress, {
   useHandlePrimaryActionPress,
 } from '../../../hooks/useHandleActionPress';
+import { Box, H2, systemPropTypes, Button, MediaItem, ButtonGroup } from '../../../ui-kit';
 
 const SHOW_VIEW_ALL_LIMIT = 5;
 

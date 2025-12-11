@@ -1,30 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { systemPropTypes, utils } from '../../ui-kit';
-import { withTheme } from 'styled-components';
-import { AuthManager } from '../../components';
-import ProfileDetails from './ProfileDetails';
-import { Link } from 'react-router-dom';
-import Color from 'color';
-import ImageUploader from './ImageUploader';
+import React, { useEffect, useRef, useState } from 'react';
 
-import { Button, Avatar, BodyText, Box, H4, ListItem } from '../../ui-kit';
-import Logo from '../Logo';
 import {
-  UserCirclePlus,
-  ArrowRight,
   AndroidLogo,
   AppleLogo,
-  User,
+  ArrowRight,
   ArrowSquareOut,
-  X,
   Camera,
+  User,
+  UserCirclePlus,
+  X,
 } from '@phosphor-icons/react';
-import Styled from './Profile.styles';
-
-import { useCurrentUser, useCurrentChurch } from '../../hooks';
 import themeGet from '@styled-system/theme-get';
+import Color from 'color';
+import { Link } from 'react-router-dom';
+import { withTheme } from 'styled-components';
+
+import ImageUploader from './ImageUploader';
+import Styled from './Profile.styles';
+import ProfileDetails from './ProfileDetails';
+import { AuthManager } from '../../components';
+import { useCurrentChurch, useCurrentUser } from '../../hooks';
 import { logout, useAuth } from '../../providers/AuthProvider';
+import { Avatar, BodyText, Box, Button, H4, ListItem, systemPropTypes, utils } from '../../ui-kit';
 import authSteps from '../Auth/authSteps';
+import Logo from '../Logo';
 
 const Profile = ({ theme, handleCloseProfile, size, ...rest }) => {
   const { currentUser } = useCurrentUser();

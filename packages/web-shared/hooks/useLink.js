@@ -1,7 +1,9 @@
 import { useCallback } from 'react';
+
 import { parse } from 'tldts';
-import { isValidUrl } from '../utils';
+
 import useCurrentUser from './useCurrentUser';
+import { isValidUrl } from '../utils';
 
 const useLink = () => {
   const { currentUser } = useCurrentUser();
@@ -34,7 +36,7 @@ const useLink = () => {
 
       return formattedUrl;
     },
-    [rockAuthToken, currentUrl, parse],
+    [rockAuthToken, currentUrl, parse]
   );
 
   return transformLink;

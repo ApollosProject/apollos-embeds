@@ -1,12 +1,13 @@
 import React, { useEffect } from 'react';
-import { FeatureFeedProvider } from '../providers';
+
 import { FeatureFeedList, Modal } from '../components';
+import { FeatureFeedProvider } from '../providers';
+import { useAnalytics } from '../providers/AnalyticsProvider';
 import { useModalState } from '../providers/ModalProvider';
+import { useNavigation } from '../providers/NavigationProvider';
 import { Box } from '../ui-kit';
 import { parseSlugToIdAndType } from '../utils';
-import { useAnalytics } from '../providers/AnalyticsProvider';
 import { getComponentFromType } from '../utils/getContentFromURL';
-import { useNavigation } from '../providers/NavigationProvider';
 
 function RenderFeatures(props) {
   const { id } = useNavigation();
@@ -17,6 +18,7 @@ function RenderFeatures(props) {
   if (Component) {
     return Component;
   }
+
   // If not component is found, fallback to a FeatureFeed
   return (
     <Box>

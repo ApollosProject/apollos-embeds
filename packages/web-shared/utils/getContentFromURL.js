@@ -1,5 +1,6 @@
 import React from 'react';
-import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
+
+import parseSlugToIdAndType from './parseSlugToIdAndType';
 import {
   ContentSingle,
   ContentSeriesSingle,
@@ -8,7 +9,7 @@ import {
   InformationalContentSingle,
   LivestreamSingle,
 } from '../components';
-import parseSlugToIdAndType from './parseSlugToIdAndType';
+import { ContentItemProvider, FeatureFeedProvider, ContentFeedProvider } from '../providers';
 import { Box } from '../ui-kit';
 
 export function getComponentFromType({ type, id }) {

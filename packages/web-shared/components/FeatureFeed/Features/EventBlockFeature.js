@@ -1,5 +1,9 @@
 import React from 'react';
+
 import { ArrowSquareOut, MapPin, CalendarPlus, Clock } from '@phosphor-icons/react';
+import { addSeconds, isSameDay, parseISO } from 'date-fns';
+import { useTheme } from 'styled-components';
+
 import {
   Container,
   IconContainer,
@@ -8,11 +12,8 @@ import {
   Details,
   ActionIcon,
 } from './EventBlockFeature.styles';
-import { addSeconds, isSameDay, parseISO } from 'date-fns';
-
-import { useTheme } from 'styled-components';
-import AddToCalendar from '../../AddToCalendar';
 import { BodyText } from '../../../ui-kit';
+import AddToCalendar from '../../AddToCalendar';
 
 function eventTimestampLines({ start, duration, allDay }) {
   const startDate = parseISO(start);

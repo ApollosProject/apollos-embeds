@@ -1,7 +1,8 @@
-import { useEffect } from "react";
-import PropTypes from "prop-types";
+import { useEffect } from 'react';
 
-import { useInteractWithNode } from "../../hooks";
+import PropTypes from 'prop-types';
+
+import { useInteractWithNode } from '../../hooks';
 
 const InteractWhenLoaded = ({ loading, nodeId, action, data }) => {
   const [interactWhenLoaded] = useInteractWithNode();

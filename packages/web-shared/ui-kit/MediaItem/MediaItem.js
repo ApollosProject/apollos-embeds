@@ -1,15 +1,15 @@
 import React from 'react';
-import { withTheme } from 'styled-components';
-import isNil from 'lodash/isNil';
-import { Check } from '@phosphor-icons/react';
-import { unit } from '../../utils';
 
-import { BodyText, SmallBodyText, Box, H4, systemPropTypes, ProgressBar } from '../../ui-kit';
-import { useVideoMediaProgress } from '../../hooks';
-import { getPercentWatched } from '../../utils';
-import { Title, Image, BottomSlot, CompleteIndicator, Ellipsis } from './MediaItem.styles';
+import { Check } from '@phosphor-icons/react';
+import isNil from 'lodash/isNil';
+import { withTheme } from 'styled-components';
+
 import LiveChip from './LiveChip';
-import { useLivestreamStatus } from '../../hooks';
+import { Title, Image, BottomSlot, CompleteIndicator, Ellipsis } from './MediaItem.styles';
+import { useVideoMediaProgress, useLivestreamStatus } from '../../hooks';
+import { BodyText, SmallBodyText, Box, H4, systemPropTypes, ProgressBar } from '../../ui-kit';
+import { unit, getPercentWatched } from '../../utils';
+
 function MediaItem(props = {}) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
     variables: { id: props.videoMedia?.id },

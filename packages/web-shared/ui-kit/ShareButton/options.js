@@ -1,10 +1,10 @@
-import icons from './icons';
 import {
   shareLinkByEmail,
   shareLinkOnFacebook,
   shareLinkOnTwitter,
   shareLinkOnLinkedIn,
 } from './functions';
+import icons from './icons';
 
 const options = [
   {

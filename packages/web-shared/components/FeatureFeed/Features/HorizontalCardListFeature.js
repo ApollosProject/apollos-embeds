@@ -1,13 +1,13 @@
 import React from 'react';
-import get from 'lodash/get';
 
-import { ContentCard, Box, H2, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
 import { CaretRight } from '@phosphor-icons/react';
-
+import get from 'lodash/get';
 import Carousel from 'react-multi-carousel';
+
 import useHandleActionPress, {
   useHandlePrimaryActionPress,
 } from '../../../hooks/useHandleActionPress';
+import { ContentCard, Box, H2, systemPropTypes, Button, ButtonGroup } from '../../../ui-kit';
 
 const responsive = {
   lg: {

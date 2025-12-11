@@ -1,8 +1,9 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
-import { systemPropTypes } from '../_lib/system';
 import Styled from './Loader.styles';
+import { systemPropTypes } from '../_lib/system';
 
 function Loader({ text = null, ...props }) {
   return (

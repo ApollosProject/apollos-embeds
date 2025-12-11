@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
 import { Box, LargeSystemText, Select } from '../../../ui-kit';
@@ -8,12 +9,7 @@ function GenderField(props = {}) {
     <>
       <LargeSystemText>Gender</LargeSystemText>
       <Box display="flex" mt="base">
-        <Select
-          id="genderSelect"
-          name="gender"
-          onChange={props.onChange}
-          defaultValue=""
-        >
+        <Select id="genderSelect" name="gender" onChange={props.onChange} defaultValue="">
           <Select.Option value="" disabled>
             Select...
           </Select.Option>

@@ -1,18 +1,20 @@
 import React, { forwardRef, useEffect, useRef } from 'react';
-import { useCurrentChurch } from '../../hooks';
-import { systemPropTypes } from '../../ui-kit/_lib/system';
-import Styled from './Modal.styles';
-import { Box } from '../../ui-kit';
-import { Searchbar } from '../../components';
-import { useNavigation } from '../../providers/NavigationProvider';
+
 import { X } from '@phosphor-icons/react';
-import Wordmark from '../Wordmark';
+
+import Styled from './Modal.styles';
+import { Searchbar } from '../../components';
+import { useCurrentChurch } from '../../hooks';
 import {
   set as setModal,
   useModal,
   close as closeModal,
   open as openModal,
 } from '../../providers/ModalProvider';
+import { useNavigation } from '../../providers/NavigationProvider';
+import { Box } from '../../ui-kit';
+import { systemPropTypes } from '../../ui-kit/_lib/system';
+import Wordmark from '../Wordmark';
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();
@@ -43,6 +45,7 @@ const Modal = (props = {}) => {
 
   function handleCloseModal() {
     dispatch(closeModal());
+
     // Navigate to root
     navigate();
   }

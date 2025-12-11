@@ -1,13 +1,15 @@
-import { gql, useMutation } from '@apollo/client';
 import React, { useState, useRef, useEffect } from 'react';
+
+import { gql, useMutation } from '@apollo/client';
 import { Spinner, PaperPlaneTilt } from '@phosphor-icons/react';
-import styled, { withTheme } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
 import Color from 'color';
-import { TypeStyles } from '../../ui-kit/Typography';
-import { system } from '../../ui-kit/_lib/system';
-import { Avatar, Box, Button, H5 } from '../../ui-kit';
+import styled, { withTheme } from 'styled-components';
+
 import { useCurrentUser } from '../../hooks';
+import { Avatar, Box, Button, H5 } from '../../ui-kit';
+import { system } from '../../ui-kit/_lib/system';
+import { TypeStyles } from '../../ui-kit/Typography';
 
 const ADD_COMMENT = gql`
   mutation addComment($parentId: ID!, $text: String!) {

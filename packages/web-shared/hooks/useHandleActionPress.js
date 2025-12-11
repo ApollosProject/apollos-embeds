@@ -1,8 +1,7 @@
-import { getURLFromType } from '../utils';
-
-import { open as openModal, set as setModal, useModal } from '../providers/ModalProvider';
 import { useAnalytics } from '../providers/AnalyticsProvider';
+import { open as openModal, set as setModal, useModal } from '../providers/ModalProvider';
 import { useNavigation } from '../providers/NavigationProvider';
+import { getURLFromType } from '../utils';
 
 export const useHandleActionPress = () => {
   const [state, dispatch] = useModal();

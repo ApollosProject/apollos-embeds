@@ -1,6 +1,5 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css } from 'styled-components';
 
 import { system } from '../_lib/system';
 
@@ -13,8 +12,8 @@ const Option = withTheme(styled.div`
   display: flex;
   font-size: 16px;
   align-items: center;
-  padding: ${themeGet('space.xs')} ${themeGet('space.base')}
-    ${themeGet('space.xs')} ${themeGet('space.xs')};
+  padding: ${themeGet('space.xs')} ${themeGet('space.base')} ${themeGet('space.xs')}
+    ${themeGet('space.xs')};
   border-bottom: 1px solid ${themeGet('colors.neutral.gray3')};
   &:hover {
     color: ${themeGet('colors.base.secondary')};
@@ -27,8 +26,8 @@ const BorderlessOption = withTheme(styled.div`
   display: flex;
   font-size: 16px;
   align-items: center;
-  padding: ${themeGet('space.xs')} ${themeGet('space.base')}
-    ${themeGet('space.xs')} ${themeGet('space.xs')};
+  padding: ${themeGet('space.xs')} ${themeGet('space.base')} ${themeGet('space.xs')}
+    ${themeGet('space.xs')};
   &:hover {
     color: ${themeGet('colors.base.secondary')};
   }
@@ -63,9 +62,7 @@ const Wrapper = withTheme(styled.div`
     top: -11px;
     border-width: 0 11px 11px 11px;
     border-style: solid;
-    border-color: transparent transparent ${themeGet(
-      'colors.neutral.gray3'
-    )}; transparent;
+    border-color: transparent transparent ${themeGet('colors.neutral.gray3')}; transparent;
   }
 
   ::after {
@@ -75,9 +72,7 @@ const Wrapper = withTheme(styled.div`
     top: -9px;
     border-width: 0 10px 10px 10px;
     border-style: solid;
-    border-color: transparent transparent ${themeGet(
-      'colors.base.white'
-    )} transparent;
+    border-color: transparent transparent ${themeGet('colors.base.white')} transparent;
   }
 
   border: 1px solid ${themeGet('colors.neutral.gray3')};

@@ -1,3 +1,4 @@
+import TypeStyles from './_typeStyles';
 import BodyText from './BodyText';
 import H1 from './H1';
 import H2 from './H2';
@@ -9,7 +10,6 @@ import LargeSystemText from './LargeSystemText';
 import SmallBodyText from './SmallBodyText';
 import SmallSystemText from './SmallSystemText';
 import SystemText from './SystemText';
-import TypeStyles from './_typeStyles';
 
 export {
   BodyText,

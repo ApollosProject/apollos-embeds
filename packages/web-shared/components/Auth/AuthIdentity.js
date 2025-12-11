@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 
+import AuthLayout from './AuthLayout';
 import authSteps from './authSteps';
 import { useForm, useRequestLogin, useRequestRegister } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Button, Input, SmallSystemText, Box } from '../../ui-kit';
 import { validateEmail, validatePhoneNumber } from '../../utils';
-import AuthLayout from './AuthLayout';
 
 const AuthIdentity = (props) => {
   const [status, setStatus] = useState('IDLE');

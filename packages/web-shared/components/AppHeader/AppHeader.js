@@ -1,11 +1,10 @@
-import Wordmark from '../Wordmark';
-import { useCurrentChurch } from '../../hooks';
-import { Box, Avatar } from '../../ui-kit';
 import { User } from '@phosphor-icons/react';
 
-import SearchStyles from '../Searchbar/Search.styles';
-
+import { useCurrentChurch } from '../../hooks';
+import { Box } from '../../ui-kit';
 import ProfileButton from '../Profile/ProfileButton';
+import SearchStyles from '../Searchbar/Search.styles';
+import Wordmark from '../Wordmark';
 
 function ChurchLogo(props) {
   const { currentChurch } = useCurrentChurch();

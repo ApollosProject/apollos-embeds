@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { systemPropTypes, PhospherIcon } from '../../../ui-kit';
 import Styled from './ActionBarFeature.styles';
+import { systemPropTypes, PhospherIcon } from '../../../ui-kit';
 
 function ActionBarFeature(props = {}) {
   const handleActionPress = (url) => {

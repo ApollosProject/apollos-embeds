@@ -1,9 +1,10 @@
 import React from 'react';
+
 import { useNavigate } from 'react-router-dom';
 
-import { getURLFromType } from '../utils';
-import { ContentCard, Box, H3, systemPropTypes, Button } from '../ui-kit';
 import { useNavigation } from '../providers/NavigationProvider';
+import { ContentCard, Box, H3, systemPropTypes, Button } from '../ui-kit';
+import { getURLFromType } from '../utils';
 
 const PAGE_SIZE = 20;
 

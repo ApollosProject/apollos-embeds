@@ -6,8 +6,8 @@
 
 import React from 'react';
 
-import { SmallSystemText } from '../Typography';
 import { LiveChipContainer } from './MediaItem.styles';
+import { SmallSystemText } from '../Typography';
 
 export const ANIMATION_DURATION = 1300;
 

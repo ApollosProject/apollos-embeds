@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+import AuthLayout from './AuthLayout';
 import { useForm, useUpdateProfileFields, useCurrentUser, useCompleteRegister } from '../../hooks';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Input, Select } from '../../ui-kit';
 import authSteps from '../Auth/authSteps';
-
-import AuthLayout from './AuthLayout';
 
 function upperFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);

@@ -1,7 +1,6 @@
-import styled from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
-
 import { system, utils } from 'shared/ui-kit';
+import styled from 'styled-components';
 
 const BirthDateField = styled.div`
   position: relative;

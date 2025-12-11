@@ -1,5 +1,5 @@
-import { rem } from '../_utils';
 import colors from './colors';
+import { rem } from '../_utils';
 
 const theme = {
   breakpoints: {

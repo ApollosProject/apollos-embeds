@@ -1,3 +1,3 @@
-import InteractWhenLoaded from "./InteractWhenLoaded";
+import InteractWhenLoaded from './InteractWhenLoaded';
 
 export default InteractWhenLoaded;

@@ -1,7 +1,7 @@
-import styled, { css, keyframes } from 'styled-components';
-import { withTheme } from 'styled-components';
-import { system } from '../../../ui-kit/_lib/system';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { css, keyframes, withTheme } from 'styled-components';
+
+import { system } from '../../../ui-kit/_lib/system';
 
 const expandAnimation = keyframes`
   from {
@@ -114,7 +114,9 @@ const ScriptureItemExpandButton = withTheme(styled.div`
   right: 0;
   margin: 16px;
   opacity: 1;
-  transition: opacity 0.3s ease, background-color 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    background-color 0.3s ease;
   &:hover {
     opacity: 0.6;
     background-color: ${themeGet('colors.base.secondary')};

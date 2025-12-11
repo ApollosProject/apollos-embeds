@@ -1,13 +1,15 @@
 import React from 'react';
+
 import { withTheme } from 'styled-components';
-import { getURLFromType } from '../../../utils';
-import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
-import { Box, Button, H2, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
+
 import Styled from './HeroListFeature.styles';
-import { useNavigation } from '../../../providers/NavigationProvider';
 import useHandleActionPress, {
   useHandlePrimaryActionPress,
 } from '../../../hooks/useHandleActionPress';
+import { open as openModal, set as setModal, useModal } from '../../../providers/ModalProvider';
+import { useNavigation } from '../../../providers/NavigationProvider';
+import { Box, Button, H2, H4, systemPropTypes, ContentCard } from '../../../ui-kit';
+import { getURLFromType } from '../../../utils';
 
 function HeroListFeature(props = {}) {
   const [state, dispatch] = useModal();

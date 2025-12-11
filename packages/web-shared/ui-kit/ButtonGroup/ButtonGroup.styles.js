@@ -1,8 +1,8 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css } from 'styled-components';
 
 import { system } from '../_lib/system';
+
 const ButtonGroup = withTheme(styled.div`
   padding-top: 10px;
   display: flex;
@@ -21,9 +21,7 @@ const buttonState = ({ theme, type, disabled }) => {
     }
     &:disabled {
       opacity: 0.5;
-      background: ${type === 'secondary'
-        ? 'transparent'
-        : theme.colors.fill.system1};
+      background: ${type === 'secondary' ? 'transparent' : theme.colors.fill.system1};
       border: ${type === 'secondary' ? theme.colors.base.gray : 'transparent'};
       cursor: not-allowed;
     }

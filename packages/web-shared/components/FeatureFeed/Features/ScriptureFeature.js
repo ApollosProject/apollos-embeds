@@ -1,8 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { systemPropTypes, Box } from '../../../ui-kit';
-import PropTypes from 'prop-types';
-import Styled from './ScriptureFeature.styles';
+
 import { ArrowsInSimple, ArrowsOutSimple } from '@phosphor-icons/react';
+import PropTypes from 'prop-types';
+
+import Styled from './ScriptureFeature.styles';
+import { systemPropTypes, Box } from '../../../ui-kit';
 
 function ScriptureFeature(props = {}) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -37,6 +39,7 @@ function ScriptureFeature(props = {}) {
     // Determine if it's a range within the same chapter
     if (startChapter === endChapterOrVerse || (startVerse && endChapterOrVerse && !endVerse)) {
       isRangeWithinSingleChapter = true;
+
       // If endChapterOrVerse is not empty and endVerse is empty, it means endChapterOrVerse is actually the endVerse
       actualEndVerse = endChapterOrVerse && !endVerse ? endChapterOrVerse : endVerse;
     }

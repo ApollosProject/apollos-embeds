@@ -1,8 +1,9 @@
 import React from 'react';
-import { getURLFromType } from '../../../utils';
-import { systemPropTypes, ResourceCard, Box, H5 } from '../../../ui-kit';
+
 import Styled from './ActionListFeature.styles';
 import { useNavigation } from '../../../providers/NavigationProvider';
+import { systemPropTypes, ResourceCard, Box, H5 } from '../../../ui-kit';
+import { getURLFromType } from '../../../utils';
 
 function ActionListFeature({ feature, emptyPlaceholderText }) {
   const { navigate } = useNavigation();

@@ -1,11 +1,12 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { CaretLeft, X } from '@phosphor-icons/react';
 
-import { Box, Card, Button } from '../../../ui-kit';
-import customizations from './customizations';
+import { CaretLeft, X } from '@phosphor-icons/react';
+import PropTypes from 'prop-types';
+
 import { Heading, SubHeading } from './AuthLayout.styles';
+import customizations from './customizations';
 import { update as updateAuth, useAuth } from '../../../providers/AuthProvider';
+import { Box, Card, Button } from '../../../ui-kit';
 import authSteps from '../authSteps';
 
 function AuthLayout(props = {}) {

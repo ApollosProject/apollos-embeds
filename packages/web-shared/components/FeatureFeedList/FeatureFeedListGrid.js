@@ -2,11 +2,10 @@ import React from 'react';
 
 import { withTheme } from 'styled-components';
 
-import { getURLFromType } from '../../utils';
-import { Box, ContentCard, H3 } from '../../ui-kit';
-
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { useNavigation } from '../../providers/NavigationProvider';
+import { Box, ContentCard, H3 } from '../../ui-kit';
+import { getURLFromType } from '../../utils';
 
 function FeatureFeedListGrid({ loading, data, emptyPlaceholderText }) {
   const { navigate, id } = useNavigation();

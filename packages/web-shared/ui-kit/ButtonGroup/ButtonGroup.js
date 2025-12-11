@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-import { systemPropTypes } from '../_lib/system';
-import { Box } from '..';
-import Styled from './ButtonGroup.styles';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+
+import Styled from './ButtonGroup.styles';
+import { Box } from '..';
+import { systemPropTypes } from '../_lib/system';
 
 const ButtonGroup = ({ next, previous, goToSlide, ...rest }) => {
   const {

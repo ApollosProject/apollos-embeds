@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
 import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
+import { useApolloClient } from '@apollo/client';
+import PropTypes from 'prop-types';
 import { v4 as uuidv4 } from 'uuid';
 
 import authSteps from '../components/Auth/authSteps';
 import { ANONYMOUS_ID, AUTH_REFRESH_TOKEN_KEY, AUTH_TOKEN_KEY } from '../config/keys';
-import { useApolloClient } from '@apollo/client';
 
 const AuthStateContext = createContext();
 const AuthDispatchContext = createContext();

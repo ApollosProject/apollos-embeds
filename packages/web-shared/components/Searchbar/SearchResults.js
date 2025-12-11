@@ -2,16 +2,16 @@ import React, { useEffect, useState, createElement, Fragment } from 'react';
 
 import '@algolia/autocomplete-theme-classic';
 import { parseAlgoliaHitHighlight } from '@algolia/autocomplete-preset-algolia';
-
-import { useSearchState } from '../../providers/SearchProvider';
-import { FeatureFeedProvider } from '../../providers';
-import Feed from '../FeatureFeed';
-import { ResourceCard, Box } from '../../ui-kit';
-
-import { getURLFromType } from '../../utils';
-import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from '@phosphor-icons/react';
+
+import { recentSearchesPlugin } from './Autocomplete';
+import { FeatureFeedProvider } from '../../providers';
+import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { useNavigation } from '../../providers/NavigationProvider';
+import { useSearchState } from '../../providers/SearchProvider';
+import { ResourceCard, Box } from '../../ui-kit';
+import { getURLFromType } from '../../utils';
+import Feed from '../FeatureFeed';
 
 function Hit({ hit }) {
   return hit?.title;
@@ -164,6 +164,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
     .forEach((collection) => {
       allResults.push(...collection.items.map((item) => ({ ...item, source: collection.source })));
     });
+
   // Algolia adds a _rankingInfo property to each item, which we can use to sort the results
   // We want to sort the results first by nbExactWords (desc), then proximityDistance (asc), then last by userScore (desc)
   // This is super hacky and results are not to be guaranteed, but should improve results over displaying them in the order they come back
@@ -214,6 +215,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
       {autocompleteState.isOpen &&
         autocompleteState.collections.map((collection, index) => {
           const { source, items } = collection;
+
           // Rendering of Query Suggestions
           if (['querySuggestionsPlugin'].includes(collection.source.sourceId)) {
             return (
@@ -288,41 +290,38 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
             );
           }
         })}
-      {
-        // Rendering of regular items
-        autocompleteState.query !== '' ? (
-          <div className="aa-Source">
-            <ul className="aa-List" {...autocomplete.getListProps()}>
-              {allResults.map((item) => (
-                <Box
-                  as="li"
-                  borderRadius="0"
-                  padding="0"
-                  key={item.objectID}
-                  className="aa-Item"
-                  {...autocomplete.getItemProps({
-                    item,
-                    source: item.source,
-                  })}
-                >
-                  <ResourceCard
-                    leadingAsset={item?.coverImage}
-                    title={item?.title}
-                    subtitle={item?.summary}
-                    onClick={() => {
-                      if (item.source.sourceId === 'pages') {
-                        return handleStaticActionPress(item);
-                      }
-                      return handleActionPress(item);
-                    }}
-                    background="none"
-                  />
-                </Box>
-              ))}
-            </ul>
-          </div>
-        ) : null
-      }
+      {autocompleteState.query !== '' ? (
+        <div className="aa-Source">
+          <ul className="aa-List" {...autocomplete.getListProps()}>
+            {allResults.map((item) => (
+              <Box
+                as="li"
+                borderRadius="0"
+                padding="0"
+                key={item.objectID}
+                className="aa-Item"
+                {...autocomplete.getItemProps({
+                  item,
+                  source: item.source,
+                })}
+              >
+                <ResourceCard
+                  leadingAsset={item?.coverImage}
+                  title={item?.title}
+                  subtitle={item?.summary}
+                  onClick={() => {
+                    if (item.source.sourceId === 'pages') {
+                      return handleStaticActionPress(item);
+                    }
+                    return handleActionPress(item);
+                  }}
+                  background="none"
+                />
+              </Box>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       {autocompleteState.isOpen && autocompleteState.query === '' && searchState.searchFeed ? (
         <Box className="empty-feed" margin="base">
           <FeatureFeedProvider

@@ -1,9 +1,9 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
-import { systemPropTypes } from '../_lib/system';
-
 import { Container, Bar } from './ProgressBar.styles';
+import { systemPropTypes } from '../_lib/system';
 
 function ProgressBar(props = {}) {
   return (

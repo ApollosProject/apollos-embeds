@@ -1,7 +1,9 @@
 import React, { useState, useRef } from 'react';
+
 import PropTypes from 'prop-types';
-import { Box, systemPropTypes, SystemText } from '..';
+
 import Styled from './Select.styles';
+import { Box, systemPropTypes, SystemText } from '..';
 
 const Select = ({ label = false, placeholder, options, ...props }) => {
   const textInputRef = useRef();
@@ -59,11 +61,7 @@ const Select = ({ label = false, placeholder, options, ...props }) => {
             </option>
           ))}
         </Styled.Select>
-        {label ? (
-          <Styled.Label {...interactionStateProps}>{placeholder}</Styled.Label>
-        ) : (
-          <></>
-        )}
+        {label ? <Styled.Label {...interactionStateProps}>{placeholder}</Styled.Label> : <></>}
       </Box>
       {props.error && (
         <SystemText color="base.alert" mt="xxs">

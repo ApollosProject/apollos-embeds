@@ -1,6 +1,5 @@
-import { withTheme } from 'styled-components';
-import styled, { css } from 'styled-components';
 import { themeGet } from '@styled-system/theme-get';
+import styled, { withTheme, css } from 'styled-components';
 
 import { system } from '../_lib/system';
 
@@ -44,7 +43,7 @@ const Wrapper = withTheme(styled.div`
   ${system};
 `);
 
-//TODO: Find a better way to keep TailingIcon from from displaying outside of the Resource Card
+// TODO: Find a better way to keep TailingIcon from from displaying outside of the Resource Card
 const Heading = withTheme(styled.div`
   display: flex;
   flex-direction: column;

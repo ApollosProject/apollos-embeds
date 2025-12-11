@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
-import { Box, Button } from '../../ui-kit';
 import AuthLayout from './AuthLayout';
 import steps from './authSteps';
+import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
+import { Box, Button } from '../../ui-kit';
 
 const AuthWelcome = (props) => {
   const [state, dispatch] = useAuth();

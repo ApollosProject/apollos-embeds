@@ -1,12 +1,13 @@
 import React, { useCallback, useRef, useState, useEffect, useMemo } from 'react';
+
+import { get } from 'lodash';
 import PropTypes from 'prop-types';
 
-import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../hooks';
-import { Box } from '../../ui-kit';
 import { EmbededPlayer, VideoPlayer as Player } from './VideoPlayer.styles';
 import amplitude from '../../analytics/amplitude';
+import { useInteractWithNode, useLivestreamStatus, useHTMLContent } from '../../hooks';
 import { useAnalytics } from '../../providers/AnalyticsProvider';
-import { get } from 'lodash';
+import { Box } from '../../ui-kit';
 
 const PROGRESS_CHECK_INTERVAL_SECONDS = 10;
 
@@ -147,6 +148,7 @@ function VideoPlayer(props = {}) {
     // TODO: Is this needed? According to Apollos TV/Roku Segment Events: totalLength => Total length of the video, in seconds
     // Total length of the video is passed in with video source props: props.parentNode.videos[0].duration
     const newDuration = Math.floor(evt.duration, 2);
+
     // _analyticsData.totalLength = newDuration;
     setDuration(newDuration);
 

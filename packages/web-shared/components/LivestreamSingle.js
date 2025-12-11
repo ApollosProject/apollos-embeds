@@ -1,12 +1,15 @@
 import React, { useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
-import { Helmet } from 'react-helmet';
 
-import { getURLFromType } from '../utils';
+import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
+import { useNavigate } from 'react-router-dom';
+
 import FeatureFeed from './FeatureFeed';
 import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
-
+import TrackEventWhenLoaded from './TrackEventWhenLoaded';
+import VideoPlayer from './VideoPlayer';
+import { useVideoMediaProgress, useLivestreamStatus, useHTMLContent } from '../hooks';
+import { useNavigation } from '../providers/NavigationProvider';
 import {
   BodyText,
   Box,
@@ -18,10 +21,7 @@ import {
   Longform,
   ShareButton,
 } from '../ui-kit';
-import { useVideoMediaProgress, useLivestreamStatus, useHTMLContent } from '../hooks';
-import VideoPlayer from './VideoPlayer';
-import TrackEventWhenLoaded from './TrackEventWhenLoaded';
-import { useNavigation } from '../providers/NavigationProvider';
+import { getURLFromType } from '../utils';
 
 function LivestreamSingle(props = {}) {
   const { navigate } = useNavigation();

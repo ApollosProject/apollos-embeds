@@ -6,22 +6,16 @@ export function shareLinkByEmail(link) {
 }
 
 export function shareLinkOnFacebook(link) {
-  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    link
-  )}`;
+  const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(link)}`;
   window.open(url, '_blank', 'toolbar=0,location=0,menubar=0');
 }
 
 export function shareLinkOnTwitter(link) {
-  const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(
-    link
-  )}`;
+  const url = `https://twitter.com/intent/tweet?url=${encodeURIComponent(link)}`;
   window.open(url, '_blank', 'toolbar=0,location=0,menubar=0');
 }
 
 export function shareLinkOnLinkedIn(link) {
-  const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
-    link
-  )}`;
+  const url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(link)}`;
   window.open(url, '_blank', 'toolbar=0,location=0,menubar=0');
 }

@@ -1,8 +1,7 @@
-import { Box } from '../../ui-kit';
-import { useCurrentChurch } from '../../hooks';
-
 import downloadOnAppStore from './download-on-app-store';
 import downloadOnPlayStore from './download-on-play-store';
+import { useCurrentChurch } from '../../hooks';
+import { Box } from '../../ui-kit';
 
 const AppStoreLink = () => <div dangerouslySetInnerHTML={{ __html: downloadOnAppStore }} />;
 

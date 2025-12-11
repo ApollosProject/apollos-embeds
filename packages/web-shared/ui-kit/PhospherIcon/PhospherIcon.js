@@ -1,11 +1,11 @@
-import flow from 'lodash/flow';
-import camelCase from 'lodash/camelCase';
-import upperFirst from 'lodash/upperFirst';
 import React from 'react';
 
-import { systemPropTypes } from '../_lib/system';
-
 import * as Icon from '@phosphor-icons/react';
+import camelCase from 'lodash/camelCase';
+import flow from 'lodash/flow';
+import upperFirst from 'lodash/upperFirst';
+
+import { systemPropTypes } from '../_lib/system';
 
 const pascalCase = (string) => flow(camelCase, upperFirst)(string);
 

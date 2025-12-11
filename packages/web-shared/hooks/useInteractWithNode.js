@@ -1,6 +1,7 @@
+import { useCallback } from 'react';
+
 import { gql, useMutation } from '@apollo/client';
 import isObject from 'lodash/isObject';
-import { useCallback } from 'react';
 
 import { useAuthState } from '../providers/AuthProvider';
 
@@ -33,12 +34,10 @@ function transformVariables(variables) {
 
   // Map the `data` object to an array of key/value pairs,
   // to conform to InteractionDataField schema
-  const transformedData = Object.entries(variables?.data).map(
-    ([field, value]) => ({
-      field,
-      value,
-    })
-  );
+  const transformedData = Object.entries(variables?.data).map(([field, value]) => ({
+    field,
+    value,
+  }));
 
   return {
     ...variables,

@@ -1,8 +1,9 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { withTheme } from 'styled-components';
-import Styled from './Wordmark.styles';
 
+import Styled from './Wordmark.styles';
 import { systemPropTypes } from '../../ui-kit';
 
 function Wordmark({ size, source, href, ref }) {

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import { useAuth } from '../../providers/AuthProvider';
-import { Box } from '../../ui-kit';
 import Confirm from './AuthConfirm';
 import Details from './AuthDetails';
-import Merge from './AuthMerge';
 import Identity from './AuthIdentity';
+import Merge from './AuthMerge';
 import authSteps from './authSteps';
 import Welcome from './AuthWelcome';
+import { useAuth } from '../../providers/AuthProvider';
+import { Box } from '../../ui-kit';
 
 function AuthManager(props = {}) {
   const [{ step }] = useAuth();

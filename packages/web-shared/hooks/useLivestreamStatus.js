@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+
 import {
   isWithinInterval,
   isBefore,
@@ -45,19 +46,25 @@ const useLivestreamStatus = (livestream) => {
     if (isBefore(now, liveStreamStart)) {
       setComingUp(true);
       timeouts.push(
-        setTimeout(() => {
-          setComingUp(false);
-          setIsLive(true);
-        }, differenceInMilliseconds(liveStreamStart, now))
+        setTimeout(
+          () => {
+            setComingUp(false);
+            setIsLive(true);
+          },
+          differenceInMilliseconds(liveStreamStart, now)
+        )
       );
     }
 
     // The current time is before the Live Stream ENDS, so we need to trigger the state to disable the label when it's no longer live
     if (isBefore(now, liveStreamEnd)) {
       timeouts.push(
-        setTimeout(() => {
-          setIsLive(false);
-        }, differenceInMilliseconds(liveStreamEnd, now))
+        setTimeout(
+          () => {
+            setIsLive(false);
+          },
+          differenceInMilliseconds(liveStreamEnd, now)
+        )
       );
     }
 

@@ -1,11 +1,11 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 
 import { useContentItem } from '../hooks';
 
 function ContentItemProvider({ Component, options }) {
   const { loading, error, item } = useContentItem(options);
-
 
   return <Component data={item} loading={loading} error={error} />;
 }
