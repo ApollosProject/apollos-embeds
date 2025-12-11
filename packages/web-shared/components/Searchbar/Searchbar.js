@@ -34,8 +34,8 @@ const Searchbar = (props = {}) => {
   const [isMobile, setIsMobile] = useState(false);
   const [scrollPosition, setScrollPosition] = useState(0);
 
+  // 0.35ch works out visually to be the width of a &nbsp;
   const textWelcome = (
-    // 0.35ch works out visually to be the width of a &nbsp;
     <strong style={{ marginRight: '0.35ch' }}>Hey{firstName !== '' ? ` ${firstName}` : ''}!</strong>
   );
 

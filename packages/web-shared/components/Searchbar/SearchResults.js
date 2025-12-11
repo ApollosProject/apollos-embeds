@@ -4,13 +4,13 @@ import '@algolia/autocomplete-theme-classic';
 import { parseAlgoliaHitHighlight } from '@algolia/autocomplete-preset-algolia';
 import { ClockCounterClockwise, MagnifyingGlass, CaretRight, X } from '@phosphor-icons/react';
 
+import { recentSearchesPlugin } from './Autocomplete';
 import { FeatureFeedProvider } from '../../providers';
 import { open as openModal, set as setModal, useModal } from '../../providers/ModalProvider';
 import { useNavigation } from '../../providers/NavigationProvider';
 import { useSearchState } from '../../providers/SearchProvider';
 import { ResourceCard, Box } from '../../ui-kit';
 import { getURLFromType } from '../../utils';
-import { recentSearchesPlugin } from './Autocomplete';
 import Feed from '../FeatureFeed';
 
 function Hit({ hit }) {
@@ -290,42 +290,38 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
             );
           }
         })}
-      {
-
-        // Rendering of regular items
-        autocompleteState.query !== '' ? (
-          <div className="aa-Source">
-            <ul className="aa-List" {...autocomplete.getListProps()}>
-              {allResults.map((item) => (
-                <Box
-                  as="li"
-                  borderRadius="0"
-                  padding="0"
-                  key={item.objectID}
-                  className="aa-Item"
-                  {...autocomplete.getItemProps({
-                    item,
-                    source: item.source,
-                  })}
-                >
-                  <ResourceCard
-                    leadingAsset={item?.coverImage}
-                    title={item?.title}
-                    subtitle={item?.summary}
-                    onClick={() => {
-                      if (item.source.sourceId === 'pages') {
-                        return handleStaticActionPress(item);
-                      }
-                      return handleActionPress(item);
-                    }}
-                    background="none"
-                  />
-                </Box>
-              ))}
-            </ul>
-          </div>
-        ) : null
-      }
+      {autocompleteState.query !== '' ? (
+        <div className="aa-Source">
+          <ul className="aa-List" {...autocomplete.getListProps()}>
+            {allResults.map((item) => (
+              <Box
+                as="li"
+                borderRadius="0"
+                padding="0"
+                key={item.objectID}
+                className="aa-Item"
+                {...autocomplete.getItemProps({
+                  item,
+                  source: item.source,
+                })}
+              >
+                <ResourceCard
+                  leadingAsset={item?.coverImage}
+                  title={item?.title}
+                  subtitle={item?.summary}
+                  onClick={() => {
+                    if (item.source.sourceId === 'pages') {
+                      return handleStaticActionPress(item);
+                    }
+                    return handleActionPress(item);
+                  }}
+                  background="none"
+                />
+              </Box>
+            ))}
+          </ul>
+        </div>
+      ) : null}
       {autocompleteState.isOpen && autocompleteState.query === '' && searchState.searchFeed ? (
         <Box className="empty-feed" margin="base">
           <FeatureFeedProvider

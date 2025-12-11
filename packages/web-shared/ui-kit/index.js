@@ -3,8 +3,6 @@ import styled, { withTheme, css } from 'styled-components';
 import theme from './_config/theme';
 import { system, systemPropTypes } from './_lib/system';
 import * as utils from './_utils';
-
-// UI Kit components
 import Avatar from './Avatar';
 import Box from './Box';
 import Button from './Button';
@@ -40,10 +38,7 @@ import {
 } from './Typography';
 
 export {
-  // ====================
   ThemeProvider,
-
-  // ====================
   Avatar,
   Box,
   Button,

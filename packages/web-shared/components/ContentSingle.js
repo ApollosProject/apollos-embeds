@@ -1,10 +1,18 @@
 import React, { useEffect, useState } from 'react';
+
 import { ChatCircleText } from '@phosphor-icons/react';
 import { format, parseISO } from 'date-fns';
 import PropTypes from 'prop-types';
 import { Helmet } from 'react-helmet';
 import styled from 'styled-components';
 
+import Comments, { SIDEBAR_WITH } from './Comments';
+import { ParentSummary, ParentTitle, Title } from './ContentSingle.styles';
+import FeatureFeed from './FeatureFeed';
+import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
+import InteractWhenLoaded from './InteractWhenLoaded';
+import TrackEventWhenLoaded from './TrackEventWhenLoaded';
+import VideoPlayer from './VideoPlayer';
 import { useFeatureFeed, useHTMLContent, useVideoMediaProgress } from '../hooks';
 import { useShouldUsePathRouter } from '../providers/AppProvider';
 import { set as setModal, useModal } from '../providers/ModalProvider';
@@ -22,13 +30,6 @@ import {
   ShareButton,
 } from '../ui-kit';
 import { getURLFromType } from '../utils';
-import Comments, { SIDEBAR_WITH } from './Comments';
-import { ParentSummary, ParentTitle, Title } from './ContentSingle.styles';
-import FeatureFeed from './FeatureFeed';
-import FeatureFeedComponentMap from './FeatureFeed/FeatureFeedComponentMap';
-import InteractWhenLoaded from './InteractWhenLoaded';
-import TrackEventWhenLoaded from './TrackEventWhenLoaded';
-import VideoPlayer from './VideoPlayer';
 
 const infoDivider = (
   <BodyText color="text.tertiary" mx="xs" display={{ xs: 'none', sm: 'block' }}>

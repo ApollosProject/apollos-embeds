@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+
 import {
   AndroidLogo,
   AppleLogo,
@@ -14,15 +15,15 @@ import Color from 'color';
 import { Link } from 'react-router-dom';
 import { withTheme } from 'styled-components';
 
+import ImageUploader from './ImageUploader';
+import Styled from './Profile.styles';
+import ProfileDetails from './ProfileDetails';
 import { AuthManager } from '../../components';
 import { useCurrentChurch, useCurrentUser } from '../../hooks';
 import { logout, useAuth } from '../../providers/AuthProvider';
 import { Avatar, BodyText, Box, Button, H4, ListItem, systemPropTypes, utils } from '../../ui-kit';
 import authSteps from '../Auth/authSteps';
 import Logo from '../Logo';
-import ImageUploader from './ImageUploader';
-import ProfileDetails from './ProfileDetails';
-import Styled from './Profile.styles';
 
 const Profile = ({ theme, handleCloseProfile, size, ...rest }) => {
   const { currentUser } = useCurrentUser();

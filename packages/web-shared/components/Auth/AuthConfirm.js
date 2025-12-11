@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
+
 import isEmpty from 'lodash/isEmpty';
 
+import AuthLayout from './AuthLayout';
+import authSteps from './authSteps';
 import { useValidateLogin, useValidateRegister } from '../../hooks';
 import { useAnalytics } from '../../providers/AnalyticsProvider';
 import { update as updateAuth, useAuth } from '../../providers/AuthProvider';
 import { Box, Button, Input } from '../../ui-kit';
-import AuthLayout from './AuthLayout';
-import authSteps from './authSteps';
 
 const AuthConfirm = (props) => {
   const [status, setStatus] = useState('IDLE');
@@ -143,12 +144,7 @@ const AuthConfirm = (props) => {
           error={error?.passcode}
         />
       </Box>
-      <Button
-        title={`Verify${isLoading ? 'ing...' : ''}`}
-
-        // disabled={!isPinReady}
-        onClick={handleSignInSubmit}
-      />
+      <Button title={`Verify${isLoading ? 'ing...' : ''}`} onClick={handleSignInSubmit} />
     </AuthLayout>
   );
 };
