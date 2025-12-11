@@ -4,9 +4,9 @@ import { createAutocomplete } from '@algolia/autocomplete-core';
 import { createQuerySuggestionsPlugin } from '@algolia/autocomplete-plugin-query-suggestions';
 import { createLocalStorageRecentSearchesPlugin } from '@algolia/autocomplete-plugin-recent-searches';
 import { getAlgoliaResults } from '@algolia/autocomplete-preset-algolia';
+import { X } from '@phosphor-icons/react';
 import algoliasearch from 'algoliasearch/lite';
 import '@algolia/autocomplete-theme-classic';
-import { X } from '@phosphor-icons/react';
 
 import Styled from './Search.styles';
 import { useSearchState } from '../../providers/SearchProvider';
@@ -18,7 +18,7 @@ const apiKey = '251ec8d76f6c62ac793c1337b39bda58';
 const searchClient = algoliasearch(appId, apiKey);
 
 // Recent Searches Index Definition
-export const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
   key: 'navbar',
   transformSource({ source }) {
     return {
@@ -127,7 +127,7 @@ export default function Autocomplete({
   const autocomplete = useMemo(() => {
     return createAutocomplete({
       openOnFocus: true,
-      plugins: [querySuggestionsPlugin, recentSearchesPlugin],
+      plugins: [querySuggestionsPlugin],
       shouldPanelOpen({ state }) {
         return state.query !== '' || state.collections?.length > 0;
       },
