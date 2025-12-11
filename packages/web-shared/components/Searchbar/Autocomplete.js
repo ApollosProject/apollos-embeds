@@ -194,44 +194,30 @@ export default function Autocomplete({
             getItems({ query }) {
               return getAlgoliaResults({
                 searchClient,
-                queries: hasEventIndex
-                  ? [
-                      {
-                        indexName: `ContentItem_${searchState.church}`,
-                        query,
-                        params: {
-                          hitsPerPage: 8,
-                          clickAnalytics: true,
-                          getRankingInfo: true,
-                          // highlightPreTag: '<mark>',
-                          // highlightPostTag: '</mark>',
-                        },
-                      },
-                      {
-                        indexName: `Event_${searchState.church}`,
-                        query,
-                        params: {
-                          hitsPerPage: 8,
-                          clickAnalytics: true,
-                          getRankingInfo: true,
-                          // highlightPreTag: '<mark>',
-                          // highlightPostTag: '</mark>',
-                        },
-                      },
-                    ]
-                  : [
-                      {
-                        indexName: `ContentItem_${searchState.church}`,
-                        query,
-                        params: {
-                          hitsPerPage: 8,
-                          clickAnalytics: true,
-                          getRankingInfo: true,
-                          // highlightPreTag: '<mark>',
-                          // highlightPostTag: '</mark>',
-                        },
-                      },
-                    ],
+queries: [
+  {
+    indexName: `ContentItem_${searchState.church}`,
+    query,
+    params: {
+      hitsPerPage: 8,
+      clickAnalytics: true,
+      getRankingInfo: true,
+    },
+  },
+  ...(hasEventIndex
+    ? [
+        {
+          indexName: `Event_${searchState.church}`,
+          query,
+          params: {
+            hitsPerPage: 8,
+            clickAnalytics: true,
+            getRankingInfo: true,
+          },
+        },
+      ]
+    : []),
+],
               });
             },
             getItemUrl({ item }) {
