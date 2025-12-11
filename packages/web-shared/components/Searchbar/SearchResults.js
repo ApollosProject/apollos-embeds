@@ -10,6 +10,7 @@ import { useNavigation } from '../../providers/NavigationProvider';
 import { useSearchState } from '../../providers/SearchProvider';
 import { ResourceCard, Box } from '../../ui-kit';
 import { getURLFromType } from '../../utils';
+import { recentSearchesPlugin } from './Autocomplete';
 import Feed from '../FeatureFeed';
 
 function Hit({ hit }) {
@@ -290,6 +291,7 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
           }
         })}
       {
+
         // Rendering of regular items
         autocompleteState.query !== '' ? (
           <div className="aa-Source">

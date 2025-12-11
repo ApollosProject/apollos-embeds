@@ -18,7 +18,7 @@ const apiKey = '251ec8d76f6c62ac793c1337b39bda58';
 const searchClient = algoliasearch(appId, apiKey);
 
 // Recent Searches Index Definition
-const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+export const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
   key: 'navbar',
   transformSource({ source }) {
     return {
@@ -109,7 +109,7 @@ export default function Autocomplete({
   const autocomplete = useMemo(() => {
     return createAutocomplete({
       openOnFocus: true,
-      plugins: [querySuggestionsPlugin],
+      plugins: [querySuggestionsPlugin, recentSearchesPlugin],
       shouldPanelOpen({ state }) {
         return state.query !== '' || state.collections?.length > 0;
       },
