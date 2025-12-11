@@ -18,7 +18,7 @@ const apiKey = '251ec8d76f6c62ac793c1337b39bda58';
 const searchClient = algoliasearch(appId, apiKey);
 
 // Recent Searches Index Definition
-const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
+export const recentSearchesPlugin = createLocalStorageRecentSearchesPlugin({
   key: 'navbar',
   transformSource({ source }) {
     return {
