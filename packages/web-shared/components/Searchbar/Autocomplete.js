@@ -188,17 +188,6 @@ export default function Autocomplete({
                       // highlightPostTag: '</mark>',
                     },
                   },
-                  {
-                    indexName: `Event_${searchState.church}`,
-                    query,
-                    params: {
-                      hitsPerPage: 8,
-                      clickAnalytics: true,
-                      getRankingInfo: true,
-                      // highlightPreTag: '<mark>',
-                      // highlightPostTag: '</mark>',
-                    },
-                  },
                 ],
               });
             },
