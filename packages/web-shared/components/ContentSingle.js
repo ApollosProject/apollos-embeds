@@ -37,6 +37,12 @@ const infoDivider = (
   </BodyText>
 );
 
+const timeDivider = (
+  <BodyText color="text.tertiary" mx="xs" display={{ xs: 'none', sm: 'block' }}>
+    -
+  </BodyText>
+);
+
 const CalendarIconWrapper = styled.span`
   margin-right: ${({ theme }) => theme.space.xxs};
   display: inline-flex;
@@ -56,7 +62,26 @@ const FlexBodyText = styled(BodyText)`
   align-items: center;
 `;
 
-function CalendarData({ start, end, location }) {
+function CalendarData({ start, end, startTime, endTime, location }) {
+  const [formatEndDateTime, setFormatEndDateTime] = useState(null);
+  const [formatStartDateTime, setFormatStartDateTime] = useState(null);
+
+  useEffect(() => {
+    if (start === end) {
+      setFormatEndDateTime(endTime);
+    } else {
+      setFormatEndDateTime(end + ' | ' + endTime);
+    }
+  }, [start, end, endTime]);
+
+  useEffect(() => {
+    if (startTime) {
+      setFormatStartDateTime(start + ' | ' + startTime);
+    } else {
+      setFormatEndDateTime(start);
+    }
+  }, [start, startTime]);
+
   return (
     <>
       {location ? (
@@ -66,17 +91,17 @@ function CalendarData({ start, end, location }) {
         </FlexBodyText>
       ) : null}
       {start && location ? infoDivider : null}
-      {start ? (
+      {formatStartDateTime ? (
         <FlexBodyText color="text.secondary" mb={'xxs'}>
           <CalendarIcon name="calendar" />
-          {start}
+          {formatStartDateTime}
         </FlexBodyText>
       ) : null}
-      {end && start ? infoDivider : null}
-      {end ? (
+      {formatStartDateTime && formatEndDateTime ? timeDivider : null}
+      {formatEndDateTime ? (
         <FlexBodyText color="text.secondary" mb={'xxs'}>
           <CalendarIcon name="clock" />
-          {end}
+          {formatEndDateTime}
         </FlexBodyText>
       ) : null}
     </>
@@ -184,13 +209,14 @@ function ContentSingle(props = {}) {
   const formattedStartDate = props?.data?.start
     ? format(parseISO(props.data.start), 'eee, MMMM do, yyyy')
     : null;
-  const formattedStartToEnd =
-    props?.data?.start && props?.data?.end
-      ? `${format(parseISO(props.data.start), 'hh:mm a')} — ${format(
-          parseISO(props.data.end),
-          'hh:mm a'
-        )}`
-      : null;
+  const formattedStartTime = props?.data?.start
+    ? format(parseISO(props.data.start), 'hh:mm a')
+    : null;
+  const formattedEndDate = props?.data?.end
+    ? format(parseISO(props.data.end), 'eee, MMMM do, yyyy')
+    : null;
+  const formattedEndTime = props?.data?.end ? format(parseISO(props.data.end), 'hh:mm a') : null;
+
   const handleActionPress = (item) => {
     if (idFromParams !== getURLFromType(item)) {
       navigate({
@@ -283,7 +309,9 @@ function ContentSingle(props = {}) {
 
                 <CalendarData
                   start={formattedStartDate}
-                  end={formattedStartToEnd}
+                  end={formattedEndDate}
+                  startTime={formattedStartTime}
+                  endTime={formattedEndTime}
                   location={props?.data?.location}
                 />
               </Box>
