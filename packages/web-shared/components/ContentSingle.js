@@ -90,19 +90,23 @@ function CalendarData({ start, end, startTime, endTime, location }) {
           {location}
         </FlexBodyText>
       ) : null}
-      {start && location ? infoDivider : null}
-      {formatStartDateTime ? (
-        <FlexBodyText color="text.secondary" mb={'xxs'}>
-          <CalendarIcon name="calendar" />
-          {formatStartDateTime}
-        </FlexBodyText>
-      ) : null}
-      {formatStartDateTime && formatEndDateTime ? timeDivider : null}
-      {formatEndDateTime ? (
-        <FlexBodyText color="text.secondary" mb={'xxs'}>
-          <CalendarIcon name="clock" />
-          {formatEndDateTime}
-        </FlexBodyText>
+      {(formatStartDateTime || formatEndDateTime) && location ? infoDivider : null}
+      {formatStartDateTime || formatEndDateTime ? (
+        <Box display="flex" flexDirection={'row'} alignItems="flex-start" width="100%">
+          {formatStartDateTime ? (
+            <FlexBodyText color="text.secondary" mb={'xxs'}>
+              <CalendarIcon name="calendar" />
+              {formatStartDateTime}
+            </FlexBodyText>
+          ) : null}
+          {formatStartDateTime && formatEndDateTime ? timeDivider : null}
+          {formatEndDateTime ? (
+            <FlexBodyText color="text.secondary" mb={'xxs'}>
+              <CalendarIcon name="clock" />
+              {formatEndDateTime}
+            </FlexBodyText>
+          ) : null}
+        </Box>
       ) : null}
     </>
   );
