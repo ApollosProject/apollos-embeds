@@ -35,14 +35,17 @@ function VideoPlayer(props = {}) {
   const [progressTime, setProgressTime] = useState(0);
   const [paused, setPaused] = useState(false);
 
+  const hasSource = (video) => video.sources?.some((source) => source?.uri);
+
   // will find the first HLS video playlist provided
-  const hlsMedia = props.parentNode?.videos?.find(
-    (video) => video.sources?.length && video.sources[0].uri?.includes('.m3u8')
+  const hlsMedia = props.parentNode?.videos?.find((video) =>
+    video.sources?.some((source) => source?.uri?.includes('.m3u8'))
   );
-  const youtubeMedia = props.parentNode?.videos?.find(
-    (video) => video.sources?.length && video.sources[0].uri?.includes('youtu')
+  const youtubeMedia = props.parentNode?.videos?.find((video) =>
+    video.sources?.some((source) => source?.uri?.includes('youtu'))
   );
-  const videoMedia = youtubeMedia || hlsMedia;
+  const fallbackMedia = props.parentNode?.videos?.find(hasSource);
+  const videoMedia = youtubeMedia || hlsMedia || fallbackMedia;
 
   const userProgress = props.userProgress || { playhead: 0, complete: false };
 
@@ -243,8 +246,8 @@ function VideoPlayer(props = {}) {
   };
 
   const source = isLiveStreaming
-    ? props.parentNode?.stream?.sources[0]?.uri
-    : videoMedia?.sources[0]?.uri;
+    ? props.parentNode?.stream?.sources?.find((streamSource) => streamSource?.uri)?.uri
+    : videoMedia?.sources?.find((videoSource) => videoSource?.uri)?.uri;
 
   if (props.parentNode?.videos?.embedHtml) {
     return (
