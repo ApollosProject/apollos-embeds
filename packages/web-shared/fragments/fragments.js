@@ -18,6 +18,18 @@ const VIDEO_MEDIA_FIELDS = gql`
   }
 `;
 
+const AUDIO_MEDIA_FIELDS = gql`
+  fragment AudioMediaFields on AudioMedia {
+    __typename
+    id
+    key
+    name
+    sources {
+      uri
+    }
+  }
+`;
+
 const CONTENT_CARD_FRAGMENT = gql`
   fragment ContentCard on CardListItem {
     id
@@ -112,6 +124,7 @@ const EVENT_FRAGMENT = gql`
 
 export {
   VIDEO_MEDIA_FIELDS,
+  AUDIO_MEDIA_FIELDS,
   CONTENT_NODE_FRAGMENT,
   CONTENT_SINGLE_FRAGMENT,
   EVENT_FRAGMENT,

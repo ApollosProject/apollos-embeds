@@ -2,6 +2,7 @@ import { gql, useQuery } from '@apollo/client';
 
 import {
   VIDEO_MEDIA_FIELDS,
+  AUDIO_MEDIA_FIELDS,
   CONTENT_NODE_FRAGMENT,
   CONTENT_SINGLE_FRAGMENT,
   EVENT_FRAGMENT,
@@ -9,6 +10,7 @@ import {
 
 export const GET_CONTENT_ITEM = gql`
   ${VIDEO_MEDIA_FIELDS}
+  ${AUDIO_MEDIA_FIELDS}
   ${CONTENT_NODE_FRAGMENT}
   ${CONTENT_SINGLE_FRAGMENT}
   ${EVENT_FRAGMENT}
@@ -27,6 +29,9 @@ export const GET_CONTENT_ITEM = gql`
     }
     videos {
       ...VideoMediaFields
+    }
+    audios {
+      ...AudioMediaFields
     }
   }
 
@@ -76,6 +81,9 @@ export const GET_CONTENT_ITEM = gql`
         }
         videos {
           ...VideoMediaFields
+        }
+        audios {
+          ...AudioMediaFields
         }
         parentItem {
           ...SubCardFragment
