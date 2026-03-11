@@ -274,9 +274,9 @@ function ContentSingle(props = {}) {
               title: props.data?.title,
             }}
           />
-          {coverImage?.sources[0]?.uri || videoMedia ? (
+          {coverImage?.sources[0]?.uri || playableMedia ? (
             <Box mb="base" borderRadius="xl" overflow="hidden" width="100%">
-              {videoMedia ? (
+              {playableMedia ? (
                 <VideoPlayer
                   userProgress={userProgress}
                   parentNode={props.data}
