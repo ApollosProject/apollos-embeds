@@ -63,4 +63,30 @@ describe("VideoPlayer", () => {
       "https://example.com/audio.mp3"
     );
   });
+
+  it("renders an AudioMedia source when no videos are present", () => {
+    render(
+      <VideoPlayer
+        coverImage="https://example.com/cover.jpg"
+        parentNode={{
+          id: "content-2",
+          publishDate: "0",
+          title: "Audio only content",
+          audios: [
+            {
+              __typename: "AudioMedia",
+              id: "audio-1",
+              sources: [{ uri: "https://example.com/audio-only.mp3" }],
+            },
+          ],
+        }}
+        userProgress={{ complete: false, playhead: 0 }}
+      />
+    );
+
+    expect(screen.getByTestId("player-shell")).toHaveAttribute(
+      "data-url",
+      "https://example.com/audio-only.mp3"
+    );
+  });
 });

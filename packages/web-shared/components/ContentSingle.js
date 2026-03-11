@@ -135,11 +135,12 @@ function ContentSingle(props = {}) {
   const invalidPage = !props.loading && !props.data;
 
   // Video details
-  const videoMedia = props.data?.videos?.[0];
+  const playableMedia = props.data?.videos?.[0] || props.data?.audios?.[0];
+  const shouldLoadMediaProgress = playableMedia?.__typename === 'VideoMedia';
 
   const { userProgress } = useVideoMediaProgress({
-    variables: { id: videoMedia?.id },
-    skip: !videoMedia?.id,
+    variables: { id: playableMedia?.id },
+    skip: !shouldLoadMediaProgress || !playableMedia?.id,
   });
 
   useEffect(() => {

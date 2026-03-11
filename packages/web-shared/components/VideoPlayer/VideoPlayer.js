@@ -35,17 +35,21 @@ function VideoPlayer(props = {}) {
   const [progressTime, setProgressTime] = useState(0);
   const [paused, setPaused] = useState(false);
 
-  const hasSource = (video) => video.sources?.some((source) => source?.uri);
+  const mediaItems = props.parentNode?.videos?.length
+    ? props.parentNode.videos
+    : props.parentNode?.audios || [];
+  const hasSource = (media) => media.sources?.some((source) => source?.uri);
 
   // will find the first HLS video playlist provided
-  const hlsMedia = props.parentNode?.videos?.find((video) =>
-    video.sources?.some((source) => source?.uri?.includes('.m3u8'))
+  const hlsMedia = mediaItems.find((media) =>
+    media.sources?.some((source) => source?.uri?.includes('.m3u8'))
   );
-  const youtubeMedia = props.parentNode?.videos?.find((video) =>
-    video.sources?.some((source) => source?.uri?.includes('youtu'))
+  const youtubeMedia = mediaItems.find((media) =>
+    media.sources?.some((source) => source?.uri?.includes('youtu'))
   );
-  const fallbackMedia = props.parentNode?.videos?.find(hasSource);
-  const videoMedia = youtubeMedia || hlsMedia || fallbackMedia;
+  const fallbackMedia = mediaItems.find(hasSource);
+  const playableMedia = youtubeMedia || hlsMedia || fallbackMedia;
+  const shouldTrackProgress = playableMedia?.__typename === 'VideoMedia';
 
   const userProgress = props.userProgress || { playhead: 0, complete: false };
 
@@ -59,10 +63,10 @@ function VideoPlayer(props = {}) {
       }
       previouslyReportedPlayhead.current = data?.progress;
 
-      if (videoMedia.id) {
+      if (shouldTrackProgress && playableMedia?.id) {
         _interactWithNode({
           variables: {
-            nodeId: videoMedia.id,
+            nodeId: playableMedia.id,
             action,
             data,
           },
@@ -75,7 +79,7 @@ function VideoPlayer(props = {}) {
 
             cache.modify({
               id: cache.identify({
-                __typename: 'VideoMedia',
+                __typename: playableMedia.__typename,
                 id: variables.nodeId,
               }),
               fields: {
@@ -91,7 +95,7 @@ function VideoPlayer(props = {}) {
         });
       }
     },
-    [_interactWithNode, videoMedia, isLiveStreaming]
+    [_interactWithNode, playableMedia, isLiveStreaming, shouldTrackProgress]
   );
 
   // This *could* be extracted to a local hook.
@@ -111,15 +115,15 @@ function VideoPlayer(props = {}) {
         sessionId: sessionId.current,
         contentAssetId: get(props, 'parentNode.id'),
         parentOriginId: get(props, 'parentNode.originId'),
-        originId: get(props, 'parentNode.videos[0].originId'),
-        originSource: get(props, 'parentNode.videos[0].originType'),
+        originId: get(playableMedia, 'originId'),
+        originSource: get(playableMedia, 'originType'),
         videoPlayer: 'Apollos Web',
         sound: 1,
         fullScreen: true,
         livestream: false,
         timestamp: today.toUTCString(),
         title: get(props, 'parentNode.title'),
-        totalLength: get(props, 'parentNode.videos[0].duration'),
+        totalLength: get(playableMedia, 'duration'),
         publishedAt: new Date(parseInt(get(props, 'parentNode.publishDate', '0'), 10)),
         ...livestreamProperties,
         ..._analyticsData,
@@ -247,14 +251,14 @@ function VideoPlayer(props = {}) {
 
   const source = isLiveStreaming
     ? props.parentNode?.stream?.sources?.find((streamSource) => streamSource?.uri)?.uri
-    : videoMedia?.sources?.find((videoSource) => videoSource?.uri)?.uri;
+    : playableMedia?.sources?.find((mediaSource) => mediaSource?.uri)?.uri;
 
-  if (props.parentNode?.videos?.embedHtml) {
+  if (playableMedia?.embedHtml) {
     return (
       <EmbededPlayer
         {...props}
         dangerouslySetInnerHTML={{
-          __html: parseHTMLContent(props.parentNode?.videos?.embedHtml, {
+          __html: parseHTMLContent(playableMedia.embedHtml, {
             sanitizeOptions: {
               ALLOWED_TAGS: ['iframe'],
               ADD_ATTR: ['allow', 'allowfullscreen', 'frameborder', 'scrolling'],
@@ -321,6 +325,7 @@ VideoPlayer.propTypes = {
     summary: PropTypes.string,
     title: PropTypes.string,
     videos: PropTypes.arrayOf(VideoMedia),
+    audios: PropTypes.arrayOf(VideoMedia),
   }),
   onVideoEnd: PropTypes.func,
   livestream: PropTypes.shape({
