@@ -38,6 +38,10 @@ const Longform = styled.div`
     margin-bottom: ${themeGet('space.base')};
   }
 
+  img {
+    height: auto;
+  }
+
   > ul,
   > ol {
     margin-left: ${themeGet('space.base')} !important;
