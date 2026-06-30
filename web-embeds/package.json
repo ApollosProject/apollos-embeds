@@ -3,6 +3,11 @@
   "description": "Apollos React embed widgets",
   "version": "0.0.1",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ApollosProject/apollos-embeds.git",
+    "directory": "web-embeds"
+  },
   "eslintIgnore": [
     "/node_modules",
     "/build"
