@@ -7,16 +7,22 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v6
         with:
+          node-version: 24
+          package-manager-cache: false
           registry-url: https://registry.npmjs.org/
 
       - name: Yarn Install
@@ -27,9 +33,8 @@ jobs:
         run: |
           ./scripts/bump.sh
           yarn build
-          npm publish
+          npm publish --access public
           ./flush-cdn-cache.sh
         working-directory: web-embeds
         env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
           YARN_REGISTRY: https://registry.npmjs.org/
