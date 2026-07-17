@@ -49,8 +49,9 @@ function App() {
     : false;
 
   const hideTrendingSearches = hideTrendingSearchesElement
-    ? hideTrendingSearchesElement.getAttribute("data-hide-trending-searches") ===
-      "true"
+    ? hideTrendingSearchesElement.getAttribute(
+        "data-hide-trending-searches"
+      ) === "true"
     : false;
 
   const router = createBrowserRouter([
