@@ -43,6 +43,7 @@ function AppProvider(props = {}) {
                 searchFeed={props.searchFeed}
                 searchProfileSize={props.searchProfileSize}
                 customPlaceholder={props.customPlaceholder}
+                hideTrendingSearches={props.hideTrendingSearches}
               >
                 <ModalProvider>
                   <ThemeProvider>{props.children}</ThemeProvider>

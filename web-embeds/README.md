@@ -61,6 +61,14 @@ For the Search embed type, to control the width of the Profile modal that appear
 <div class="apollos-widget" data-type="Search" data-church="bayside" data-search-profile-size="365px"></div>
 ```
 
+## Search type: Hiding Trending Searches:
+
+For the Search embed type, to hide the "Trending Searches" suggestions shown when the search box is focused with an empty query, add the `data-hide-trending-searches="true"` attribute.
+
+```
+<div class="apollos-widget" data-type="Search" data-church="bayside" data-search-feed="FeatureFeed:..." data-hide-trending-searches="true"></div>
+```
+
 ### Enabling Caching for Local Frustration
 
 For local development and testing purposes, you might want to enable caching to ensure you're not receiving the latest responses directly from the API. To do this, please refer to the Apollo client configuration file:

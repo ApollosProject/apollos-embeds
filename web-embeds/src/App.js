@@ -23,6 +23,9 @@ function App() {
   const apollosIdParamElement = document.querySelector(
     "[data-apollos-id-param]"
   );
+  const hideTrendingSearchesElement = document.querySelector(
+    "[data-hide-trending-searches]"
+  );
 
   const searchFeed = searchElement
     ? searchElement.getAttribute("data-search-feed")
@@ -43,6 +46,11 @@ function App() {
 
   const useApollosIdParam = apollosIdParamElement
     ? apollosIdParamElement.getAttribute("data-apollos-id-param") === "true"
+    : false;
+
+  const hideTrendingSearches = hideTrendingSearchesElement
+    ? hideTrendingSearchesElement.getAttribute("data-hide-trending-searches") ===
+      "true"
     : false;
 
   const router = createBrowserRouter([
@@ -68,6 +76,7 @@ function App() {
       church={church}
       searchFeed={searchFeed}
       searchProfileSize={searchProfileSize}
+      hideTrendingSearches={hideTrendingSearches}
       customPlaceholder={customPlaceholder}
       usePathRouter={usePathRouter}
       useApollosIdParam={useApollosIdParam}

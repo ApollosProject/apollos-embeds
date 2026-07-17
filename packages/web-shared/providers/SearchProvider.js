@@ -11,6 +11,7 @@ const initialState = {
   searchFeed: null,
   searchProfileSize: null,
   customPlaceholder: null,
+  hideTrendingSearches: false,
   loading: true,
 };
 
@@ -41,6 +42,7 @@ function SearchProvider(props = {}) {
     searchFeed: props.searchFeed, // add search feed id to state
     searchProfileSize: props.searchProfileSize, // specify a custom width for the profile popup
     customPlaceholder: props.customPlaceholder, // add search custom placeholder to state
+    hideTrendingSearches: !!props.hideTrendingSearches, // hide the "Trending Searches" suggestions when the query is empty
   });
 
   return (

@@ -217,7 +217,10 @@ const SearchResults = ({ autocompleteState, autocomplete }) => {
           const { source, items } = collection;
 
           // Rendering of Query Suggestions
-          if (['querySuggestionsPlugin'].includes(collection.source.sourceId)) {
+          if (
+            ['querySuggestionsPlugin'].includes(collection.source.sourceId) &&
+            !searchState.hideTrendingSearches
+          ) {
             return (
               <div key={`source-${index}`} className="aa-Source">
                 {collection.source.sourceId === 'querySuggestionsPlugin' && !inputProps.value && (
