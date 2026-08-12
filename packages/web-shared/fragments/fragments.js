@@ -60,6 +60,10 @@ const CONTENT_CARD_FRAGMENT = gql`
       ... on Url {
         url
       }
+      ... on Event {
+        start
+        end
+      }
     }
   }
 `;

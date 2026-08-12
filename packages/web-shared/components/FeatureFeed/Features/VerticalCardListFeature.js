@@ -37,6 +37,7 @@ function VerticalCardListFeature(props = {}) {
           summary={cards[0].summary}
           onClick={() => handleActionPress(cards[0])}
           videoMedia={cards[0].relatedNode?.videos ? cards[0].relatedNode.videos[0] : null}
+          relatedNode={cards[0].relatedNode}
           horizontal={true}
         />
       ) : (
@@ -49,6 +50,7 @@ function VerticalCardListFeature(props = {}) {
               summary={item.summary}
               onClick={() => handleActionPress(item)}
               videoMedia={item.relatedNode?.videos?.[0]}
+              relatedNode={item.relatedNode}
             />
           ))}
         </Styled.Container>
