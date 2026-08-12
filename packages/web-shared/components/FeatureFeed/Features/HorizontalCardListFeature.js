@@ -73,6 +73,7 @@ function HorizontalCardListFeature(props = {}) {
                 summary={item.summary}
                 onClick={() => handleActionPress(item)}
                 videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+                relatedNode={item.relatedNode}
               />
             ))}
           </Box>
@@ -97,6 +98,7 @@ function HorizontalCardListFeature(props = {}) {
               channelLabel={item?.relatedNode?.parentItem?.title}
               onClick={() => handleActionPress(item)}
               videoMedia={get(item, 'relatedNode?.videos[0]', null)}
+              relatedNode={item.relatedNode}
               m={'0 20px 0 1px'}
             />
           ))}

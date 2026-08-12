@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Check } from '@phosphor-icons/react';
 import { withTheme } from 'styled-components';
@@ -17,12 +17,41 @@ function ContentCard({
   channelLabel,
   horizontal,
   onClick,
+  relatedNode,
   ...props
 }) {
   const { userProgress, loading: videoProgressLoading } = useVideoMediaProgress({
     variables: { id: videoMedia?.id },
     skip: !videoMedia?.id,
   });
+
+  const format = (date) => {
+    return new Date(date).toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'short',
+      day: 'numeric',
+    });
+  };
+
+  const finalSummary = useMemo(() => {
+    let finalSummary = summary;
+    if (relatedNode?.__typename === 'Event') {
+      let start = relatedNode.start;
+      let end = relatedNode.end;
+
+      if (start && end) {
+        start = format(start);
+        end = format(end);
+        if (start === end) {
+          finalSummary = start;
+        } else {
+          finalSummary = `${start} - ${end}`;
+        }
+      }
+    }
+
+    return finalSummary;
+  }, [relatedNode, summary]);
 
   const percentWatched = getPercentWatched({
     duration: videoMedia?.duration,
@@ -76,7 +105,7 @@ function ContentCard({
         {channelLabel ? <ChannelLabel color="text.secondary">{channelLabel}</ChannelLabel> : null}
         <SmallBodyText color="text.secondary">{subtitle}</SmallBodyText>
         <Title>{title}</Title>
-        <Summary color="text.secondary">{summary} </Summary>
+        <Summary color="text.secondary">{finalSummary} </Summary>
       </Box>
     </Box>
   );
